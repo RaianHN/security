@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xe="http://www.ibm.com/xsp/coreex"
+	xmlns:xc="http://www.ibm.com/xsp/custom">
+
+	<xp:this.resources>
+		<xp:script src="/baseactions.jss" clientSide="false"></xp:script>
+	</xp:this.resources>
+	<xe:djBorderContainer id="djBorderContainer1"
+		style="height:635px;width:100%;">
+
+		<xe:djBorderPane id="djBorderPane3" region="top" splitter="true"
+			dragRestriction="false">
+			<xp:panel id="appactionbar">
+
+				<xp:button value="CreateAssociation" id="button1">
+					<xp:eventHandler event="onclick" submit="true"
+						refreshMode="partial" refreshId="relationship">
+						<xp:this.action>
+							<xp:executeScript>
+								<xp:this.script><![CDATA[#{javascript:println("Inside Create Relation")
+CreateAssocation();
+CreateDocAssociation();}]]></xp:this.script>
+							</xp:executeScript>
+						</xp:this.action>
+					</xp:eventHandler>
+				</xp:button>
+				Search:
+				<xp:inputText id="inputText1" value="#{requestScope.findme}">
+			<xp:typeAhead mode="full" minChars="3"></xp:typeAhead>
+			
+			
+			<xp:eventHandler event="onkeyup" submit="true"
+				refreshMode="partial" refreshId="viewcontainer">
+				<!-- <xp:this.onComplete><![CDATA[XSP.partialRefreshPost("#{id:dataView2}", {
+
+  onComplete: function() {
+
+    XSP.partialRefreshPost("#{id:dataView1}");
+    }
+    }]]></xp:this.onComplete> -->
+			</xp:eventHandler></xp:inputText>
+				<xp:button value="New User" id="button2"><xp:eventHandler event="onclick" submit="true" refreshMode="partial" refreshId="container">
+	<xp:this.action>
+		<xp:executeScript>
+			<xp:this.script><![CDATA[#{javascript:sessionScope.put('userdocumentId',"");
+var c= getComponent('container');
+
+if(sessionScope.get('Beanid')=="user"){
+	println("from user uiuser being reset");
+	uiuser.resetBean();
+	uiuser.resetUI(c, facesContext,"/ccUser.xsp");
+}else{println("from activity uiuser being reset");
+	
+	user.reset();
+	sessionScope.put('Beanid',"user");
+	bsuite.weber.tools.CompUtil.create(c,facesContext,"/ccUser.xsp");
+}
+
+}]]></xp:this.script>
+		</xp:executeScript>
+	</xp:this.action></xp:eventHandler></xp:button>
+				<xp:button value="New Activity" id="button3"><xp:eventHandler event="onclick" submit="true" refreshMode="partial" refreshId="container">
+	<xp:this.action>
+		<xp:executeScript>
+			<xp:this.script><![CDATA[#{javascript:sessionScope.put('actdocumentId',"");
+var c= getComponent('container');
+
+if(sessionScope.get('Beanid')=="activity"){
+	println("from activity uiactivity being reset");
+	uiactivity.resetBean();
+	uiactivity.resetUI(c, facesContext,"/ccActivity.xsp");
+}else{println("from user uiactivity being reset");
+		
+	activity.reset();
+	sessionScope.put('Beanid',"activity");
+	bsuite.weber.tools.CompUtil.create(c,facesContext,"/ccActivity.xsp");
+}}]]></xp:this.script>
+		</xp:executeScript>
+	</xp:this.action></xp:eventHandler></xp:button></xp:panel>
+		</xe:djBorderPane>
+		<xe:djBorderPane id="djBorderPane1" region="left"
+			
+			title="DataGrid" style="width:50%;">
+			<xp:panel id="viewcontainer">
+				<xc:ccDisplayUser></xc:ccDisplayUser>
+				<xc:ccDisplayActivity></xc:ccDisplayActivity>
+			</xp:panel>
+		</xe:djBorderPane>
+		<xe:djBorderPane id="djBorderPane2" region="right"
+			 style="width:50%;">
+			<xp:panel id="container">
+			<xc:ccUser></xc:ccUser></xp:panel>
+		</xe:djBorderPane>
+		<xe:djBorderPane id="djBorderPane4" region="bottom"
+			splitter="true" dragRestriction="true">
+			<xp:panel id="relationship">
+				<xc:ccRelationshipview></xc:ccRelationshipview>
+			</xp:panel>
+
+		</xe:djBorderPane>
+		
+	</xe:djBorderContainer>
+
+</xp:view>

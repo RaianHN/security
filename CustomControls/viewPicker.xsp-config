@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config>
+  <faces-config-extension>
+    <namespace-uri>http://www.ibm.com/xsp/custom</namespace-uri>
+    <default-prefix>xc</default-prefix>
+  </faces-config-extension>
+  <composite-component>
+    <component-type>viewPicker</component-type>
+    <composite-name>viewPicker</composite-name>
+    <composite-file>/viewPicker.xsp</composite-file>
+    <composite-extension>
+      <designer-extension>
+        <in-palette>true</in-palette>
+        <render-markup>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&#xd;
+&lt;xp:view xmlns:xp="http://www.ibm.com/xsp/core" xmlns:xp_1="http://www.ibm.com/xsp/coreex"&gt;&#xd;
+&lt;xp:button value="View Pick List v3.0"&#xd;
+		id="button2" style="font-weight:bold;display:inline-block;"&gt;&#xd;
+&lt;/xp:button&gt;&#xd;
+&lt;xp:label value="  Bsuite.com" id="label1" style="font-weight:bold;color:rgb(0,94,187)"&gt;&lt;/xp:label&gt;&#xd;
+&lt;/xp:view&gt;</render-markup>
+      </designer-extension>
+    </composite-extension>
+    <property>
+      <property-name>onReturn</property-name>
+      <property-class>string</property-class>
+      <display-name>onReturn</display-name>
+      <property-extension>
+        <designer-extension>
+          <editor>com.ibm.workplace.designer.property.editors.comboParameterEditor</editor>
+          <editor-parameter>&#xd;
+	    Set Field Value&#xd;
+          Set Scope Value&#xd;
+          Set Document Value&#xd;
+          </editor-parameter>
+        </designer-extension>
+      </property-extension>
+    </property>
+    <property>
+      <property-name>varName</property-name>
+      <property-class>string</property-class>
+      <display-name>varName</display-name>
+      <description>The variable for Set Scope or set Document Value, depending on what is chosen.&#xd;
+example: document1.city&#xd;
+example2: sessionScope.city</description>
+      <property-extension>
+        <designer-extension>
+          <visible>onReturn.toString() == "Set Scope Value" || onReturn.toString() == "Set Document Value"</visible>
+        </designer-extension>
+      </property-extension>
+    </property>
+    <property>
+      <property-name>dialogID</property-name>
+      <property-class>string</property-class>
+      <display-name>Dialog ID</display-name>
+    </property>
+    <property>
+      <property-name>fieldId</property-name>
+      <property-class>string</property-class>
+      <display-name>fieldid</display-name>
+    </property>
+    <property>
+      <property-name>picklistButtonText</property-name>
+      <property-class>string</property-class>
+      <display-name>picklistButtonText</display-name>
+    </property>
+    <property>
+      <property-name>addrefreshid</property-name>
+      <property-class>string</property-class>
+      <display-name>addrefreshid</display-name>
+    </property>
+    <property>
+      <property-name>varDb</property-name>
+      <property-class>string</property-class>
+      <display-name>varDb</display-name>
+    </property>
+  </composite-component>
+</faces-config>

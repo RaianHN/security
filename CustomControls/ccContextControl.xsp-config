@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config>
+  <faces-config-extension>
+    <namespace-uri>http://www.ibm.com/xsp/custom</namespace-uri>
+    <default-prefix>xc</default-prefix>
+  </faces-config-extension>
+  <composite-component>
+    <component-type>ccContextControl</component-type>
+    <composite-name>ccContextControl</composite-name>
+    <composite-file>/ccContextControl.xsp</composite-file>
+    <composite-extension>
+      <designer-extension>
+        <in-palette>true</in-palette>
+      </designer-extension>
+    </composite-extension>
+    <property>
+      <property-name>databasename</property-name>
+      <property-class>string</property-class>
+      <display-name>databasename</display-name>
+    </property>
+    <property>
+      <property-name>viewname</property-name>
+      <property-class>string</property-class>
+      <display-name>viewname</display-name>
+    </property>
+    <property>
+      <property-name>selectionkey</property-name>
+      <property-class>int</property-class>
+      <display-name>selectionkey</display-name>
+    </property>
+  </composite-component>
+</faces-config>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+
+	<xp:viewPanel rows="30" id="viewPanel1" var="viewentry">
+		<xp:this.facets>
+			<xp:pager partialRefresh="true" layout="Previous Group Next"
+				xp:key="headerPager" id="pager1">
+			</xp:pager>
+		</xp:this.facets>
+		<xp:this.data>
+			<xp:dominoView var="view1" databaseName="Demo2/relation.nsf"
+				viewName="relationUser">
+				<xp:this.keys><![CDATA[#{javascript:sessionScope.get("actdocumentId");}]]></xp:this.keys>
+			</xp:dominoView>
+		</xp:this.data>
+		<xp:viewColumn columnName="src_data" id="viewColumn1"
+			displayAs="link">
+			<xp:viewColumnHeader value="Full Name"
+				id="viewColumnHeader1">
+			</xp:viewColumnHeader>
+			<xp:eventHandler event="onclick" submit="true"
+				refreshMode="norefresh">
+				<xp:this.action>
+					<xp:actionGroup>
+
+
+
+						<xp:executeScript>
+							<xp:this.script><![CDATA[#{javascript:var doc=viewentry.getDocument();
+if(sessionScope.get("Beanid")!="user"){
+	user.reset();
+	sessionScope.put("Beanid","user");
+}
+sessionScope.put('userdocumentId',doc.getItemValueString("sourceid"));
+sessionScope.put('docrelId',doc.getItemValueString("sourceid"));
+var c= getComponent('container');
+uiuser.resetUI(c, facesContext,"/ccUser.xsp");}]]></xp:this.script>
+						</xp:executeScript>
+					</xp:actionGroup>
+				</xp:this.action></xp:eventHandler>
+		</xp:viewColumn>
+	</xp:viewPanel></xp:view>

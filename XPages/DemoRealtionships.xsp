@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xc="http://www.ibm.com/xsp/custom" dojoParseOnLoad="true"
+	dojoTheme="true">
+
+	<xp:this.resources>
+		<xp:script src="/baseactions.jss" clientSide="false"></xp:script>
+	</xp:this.resources>
+	<xp:this.data>
+		<xp:dominoView var="view1" databaseName="Demo2\user.nsf"
+			viewName="AllDocuments">
+		</xp:dominoView>
+		<xp:dominoView var="view2" databaseName="Demo2\activity.nsf"
+			viewName="AllDocs">
+		</xp:dominoView>
+	</xp:this.data>
+	<xp:panel>
+		<xp:table id="relcontainer">
+			<xp:tr>
+				<xp:td id="viewcontainer">
+					<xc:ccRelationTypeView></xc:ccRelationTypeView>
+				</xp:td>
+				<xp:td></xp:td>
+				<xp:td id="formcontainer">
+					<xc:ccRelationshipType></xc:ccRelationshipType>
+				</xp:td>
+				<xp:td></xp:td>
+			</xp:tr>
+			<xp:tr>
+				<xp:td>
+
+
+				</xp:td>
+				<xp:td></xp:td>
+				<xp:td></xp:td>
+				<xp:td>
+
+				</xp:td>
+			</xp:tr>
+			<xp:tr>
+				<xp:td>
+
+
+
+				</xp:td>
+				<xp:td>
+
+				</xp:td>
+				<xp:td>
+
+				</xp:td>
+				<xp:td>
+
+				</xp:td>
+			</xp:tr>
+		</xp:table>
+	</xp:panel>
+	<xp:panel>
+
+		<xc:ccbuildrelationship></xc:ccbuildrelationship>
+	</xp:panel>
+	<xp:panel id="relation">
+
+		<xp:table>
+			<xp:tr>
+				<xp:td></xp:td>
+				<xp:td></xp:td>
+				<xp:td></xp:td>
+			</xp:tr>
+			<xp:tr>
+				<xp:td>
+					<xc:ccRelationshipview></xc:ccRelationshipview>
+				</xp:td>
+				<xp:td></xp:td>
+				<xp:td>
+					<xc:ccInvRelationshipview></xc:ccInvRelationshipview>
+				</xp:td>
+			</xp:tr>
+		</xp:table>
+
+	</xp:panel>
+	<div id="container"></div>
+</xp:view>

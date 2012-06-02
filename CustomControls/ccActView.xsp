@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+
+	<xp:viewPanel rows="10" id="viewPanel2" var="viewentry">
+		<xp:this.facets>
+			<xp:pager partialRefresh="true" layout="Previous Group Next"
+				xp:key="headerPager" id="pager1">
+			</xp:pager>
+		</xp:this.facets>
+		<xp:this.data>
+			<xp:dominoView var="view1" databaseName="Demo2\activity.nsf"
+				viewName="alldocuments">
+			</xp:dominoView>
+		</xp:this.data>
+		<xp:viewColumn columnName="subject" id="viewColumn1"
+			showCheckbox="true" displayAs="link">
+			<xp:viewColumnHeader value="Subject"
+				id="viewColumnHeader1">
+			</xp:viewColumnHeader>
+			<xp:eventHandler event="onclick" submit="true"
+				refreshMode="norefresh">
+				<xp:this.action>
+
+					<xp:actionGroup>
+
+
+
+
+
+
+
+
+
+						<xp:executeScript>
+							<xp:this.script><![CDATA[#{javascript://var doc=viewentry.getDocument();
+//sessionScope.put('docunid',doc.getUniversalID());
+//println("docidss"+ doc.getUniversalID());
+//var activity=doc.getItemValueString("subject");
+sessionScope.put("Beanid","activity");
+var doc=viewentry.getDocument();
+sessionScope.put('actdocumentId',doc.getUniversalID());
+sessionScope.put('docrelId',doc.getUniversalID());
+var c= getComponent('container');
+uiactivity.resetUI(c, facesContext,"/ccActivity.xsp");}]]></xp:this.script>
+						</xp:executeScript>
+					</xp:actionGroup>
+				</xp:this.action>
+				<xp:this.onComplete><![CDATA[XSP.partialRefreshPost("#{id:container}");]]></xp:this.onComplete>
+			</xp:eventHandler>
+		</xp:viewColumn>
+
+	</xp:viewPanel></xp:view>

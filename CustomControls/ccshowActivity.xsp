@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+
+	<xp:viewPanel rows="30" id="viewPanel1" var="viewentry">
+		<xp:this.facets>
+			<xp:pager partialRefresh="true" layout="Previous Group Next"
+				xp:key="headerPager" id="pager1">
+			</xp:pager>
+		</xp:this.facets>
+		<xp:this.data>
+			<xp:dominoView var="view1" databaseName="Demo2\relation.nsf"
+				viewName="relationdetails">
+				<xp:this.keys><![CDATA[#{javascript:	sessionScope.get('userdocumentId');
+}]]></xp:this.keys>
+			</xp:dominoView>
+		</xp:this.data>
+		<xp:viewColumn columnName="trg_data" id="viewColumn1"
+			displayAs="link">
+			<xp:viewColumnHeader value="Target Data"
+				id="viewColumnHeader1">
+			</xp:viewColumnHeader>
+			<xp:eventHandler event="onclick" submit="true"
+				refreshMode="norefresh" >
+				<xp:this.action>
+					<xp:actionGroup>
+
+						<xp:executeScript>
+							<xp:this.script><![CDATA[#{javascript://var doc=viewentry.getDocument();
+//viewScope.put('docunid',doc.getUniversalID());
+//println("unid"+ doc.getUniversalID());
+//var activity=doc.getItemValueString("trg_data");
+//sessionScope.put("activity1",activity);
+
+var doc=viewentry.getDocument();
+var uid=doc.getItemValueString("targetid");
+println("unid"+ doc.getUniversalID());
+sessionScope.put('actdocumentId',uid);
+sessionScope.put('relationtId',uid);
+var c= getComponent('container');
+if(sessionScope.get("Beanid")!="activity"){
+	activity.reset();
+	sessionScope.put("Beanid","activity");
+}
+uiactivity.resetUI(c, facesContext,"/ccActivity.xsp");}]]></xp:this.script>
+						</xp:executeScript>
+					</xp:actionGroup>
+				</xp:this.action>
+				<xp:this.onComplete><![CDATA[XSP.partialRefreshPost("#{id:container}");]]></xp:this.onComplete>
+			</xp:eventHandler></xp:viewColumn>
+	</xp:viewPanel></xp:view>

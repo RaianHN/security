@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view
+	xmlns:xp="http://www.ibm.com/xsp/core"
+	style="display:inline-block"
+>
+	<xp:this.resources>
+		<xp:script
+			src="/CustomControlLib.js"
+			clientSide="true"
+		>
+		</xp:script>
+		<xp:styleSheet href="/MVDBCC.css"></xp:styleSheet>
+	</xp:this.resources>
+	<div
+		class="multicculstyle"
+		style="width:#{javascript:compositeData.maxBoxWidth};"
+	>
+		<ul class="multicculstyle2">
+			<xp:repeat
+				rows="300"
+				var="collection1"
+				indexVar="index1"
+			>
+				<xp:this.value><![CDATA[#{javascript:var array1 =  getComponent(compositeData.fieldID).getValue()
+if(array1 != null){
+print(typeof(array1))
+if(typeof(array1) == "java.util.Vector"){
+var array2 = new Array();
+for(x in array1){
+if(x != ""){
+array2.push(x)
+}
+}
+array2
+
+}else{
+array1.toString().split(compositeData.multipleSeparator)
+}
+
+
+}
+
+//var testhtis = "#{" +  compositeData.fieldDataSource + "}"
+//return testhtis}]]></xp:this.value>
+				<xp:this.id><![CDATA[${javascript:"repeat1" + compositeData.fieldID}]]></xp:this.id>
+				<li
+					id="#{javascript:'repeat1' + compositeData.fieldID+ index1}"
+					class="multiccli"
+					style="display:#{javascript:compositeData.displayStyle};"
+				>
+					<xp:text
+						escape="false"
+						id="computedField1"
+					>
+						<xp:this.value><![CDATA[#{javascript:var closetype1 = ""
+if(@Trim(compositeData.removeType) == "Image"){
+closetype1 = "<image src = '" + compositeData.removeImg + "'/>"
+}else{
+closetype1 =compositeData.removeText
+}
+
+'<span ' +
+'id="span1"' +
+"onclick='" + 
+'var test1 =' + '"#{id:' + compositeData.fieldID+ '}"'+
+'; multiselectboxcc.deletevalue("'
+ + 'repeat1' +
+compositeData.fieldID + 
+index1 +
+'","' +
+  compositeData.fieldID  + "style" +
+//city3.getClientId() +
+   '" , "' + 
+   collection1 + 
+   '","' +
+compositeData.multipleSeparator + 
+'")' + "' " +
+' class="multiccspanstyle">'  +
+closetype1
+ + '</span>'}]]></xp:this.value>
+					</xp:text>
+					<xp:text escape="true">
+						<xp:this.value><![CDATA[#{javascript:collection1
+}]]></xp:this.value>
+					</xp:text>
+				</li>
+			</xp:repeat>
+		</ul>
+		<xp:inputText
+			id="${javascript:compositeData.fieldID}"
+			style="display:none"
+			disableValidators="false"
+			multipleSeparator="#{javascript:compositeData.multipleSeparator}"
+		>
+			<xp:this.value><![CDATA[${javascript: "#{" +  compositeData.fieldDataSource + "}"
+}]]></xp:this.value>
+			<xp:this.styleClass><![CDATA[#{javascript:compositeData.fieldID + "style"}]]></xp:this.styleClass>
+			<xp:this.required><![CDATA[#{javascript:compositeData.RequiredField
+}]]></xp:this.required>
+			<xp:this.validators>
+				<xp:validateRequired
+					message="#{javascript:compositeData.ValidationMessage}"
+				>
+				</xp:validateRequired>
+			</xp:this.validators></xp:inputText>
+	</div>
+</xp:view>

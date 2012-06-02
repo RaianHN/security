@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core" xmlns:xc="http://www.ibm.com/xsp/custom">
+<xp:panel id="panel3">
+		<xp:table>
+			<xp:tr>
+				<xp:td>
+
+				</xp:td>
+				<xp:td
+					style="font-weight:bold;font-style:italic;font-size:11pt">
+					Source
+				</xp:td>
+				<xp:td
+					style="font-weight:bold;font-size:11pt;font-style:italic">
+					RelationShip
+				</xp:td>
+				<xp:td
+					style="font-weight:bold;font-size:12pt;font-style:italic">
+					Target
+				</xp:td>
+				<xp:td></xp:td>
+			</xp:tr>
+			<xp:tr>
+				<xp:td>
+				<!--  	<xp:inputText id="inputText1"
+						value="#{viewScope.srcid}">
+					</xp:inputText>-->
+				</xp:td>
+				<xp:td>
+					<xc:MultiValueDeselectBox removeText="x"
+						removeType="Text" displayStyle="inline-block"
+						RequiredField="false" fieldDataSource="viewScope.source"
+						fieldID="input2">
+					</xc:MultiValueDeselectBox>
+				</xp:td>
+				<xp:td>
+					<xp:comboBox id="comboBox1"
+						value="#{viewScope.relid}">
+
+						<xp:selectItems id="selectItems1">
+							<xp:this.value><![CDATA[#{javascript:var path =database.getFilePath();
+var dbpath =  @LeftBack(path ,"/");
+var db= dbpath+"/relation.nsf";
+var serv = @Word(@Implode(@DbName(),", "),", ", 1);
+var com = new Array(serv,db);
+var x= @DbColumn(com,  "Relationships", 3);
+@Explode(x,",;",true);}]]></xp:this.value>
+						</xp:selectItems>
+					</xp:comboBox>
+				</xp:td>
+				<xp:td>
+					<!--  <xp:inputText id="inputText2"
+						value="#{viewScope.trgid}"> 
+					</xp:inputText> -->
+					<xc:MultiValueDeselectBox removeText="x"
+						removeType="Text" displayStyle="inline-block"
+						RequiredField="false" fieldDataSource="viewScope.target"
+						fieldID="input3">
+					</xc:MultiValueDeselectBox>
+				</xp:td>
+				<xp:td>
+					<xp:button value="Create Relationship"
+						id="button1" style="padding-left:10.0px;padding-right:10.0px;padding-top:5.0px;padding-bottom:30.0px;font-size:9pt;font-weight:bold">
+						<xp:eventHandler event="onclick" submit="true"
+							refreshMode="partial" id="eventHandler1" refreshId="relation">
+							<xp:this.action><![CDATA[#{javascript:var path =database.getFilePath();
+var dbpath =  @LeftBack(path ,"/");
+var db= dbpath+"/relation.nsf";
+var serv = @Word(@Implode(@DbName(),", "),", ", 1);
+var taar:NotesDatabase=session.getDatabase(serv,db)
+
+var docrel:NotesDocument=taar.createDocument();
+docrel.replaceItemValue("form","association");
+docrel.replaceItemValue("sourceid", viewScope.get('srcid'));
+docrel.replaceItemValue("sourcedb",viewScope.get('srcDb'));
+docrel.replaceItemValue("src_data", viewScope.get('source'));
+docrel.replaceItemValue("targetdb",viewScope.get('trgDb'));
+docrel.replaceItemValue("trg_data",viewScope.get('target'));
+docrel.replaceItemValue("targetid",viewScope.get('trgid'));
+
+docrel.replaceItemValue("relationid",viewScope.get('relid'));
+docrel.save(true,false);
+viewScope.put('srcid','');
+viewScope.put('srcDb','');
+viewScope.put('source','');
+//viewScope.put('','');
+
+viewScope.put('trgDb','');
+viewScope.put('target','');
+viewScope.put('trgid','');
+//viewScope.put('','');
+
+
+
+
+print(viewScope.get('srcDb'));
+print(viewScope.get('source'));
+print(viewScope.get('srcid'));
+print(viewScope.get('trgDb'));
+print(viewScope.get('target'));
+print(viewScope.get('trgid'));
+print(viewScope.get('relid'));
+}]]></xp:this.action>
+							<xp:this.onComplete><![CDATA[XSP.partialRefreshPost("#{id:panel3}")]]></xp:this.onComplete>
+						</xp:eventHandler>
+					</xp:button>
+				</xp:td>
+			</xp:tr>
+			<xp:tr>
+				<xp:td>
+					<xc:viewPicker dialogID="view1"
+						onReturn="Set Scope Value" varName="viewScope.source"
+						fieldId="viewScope.srcid" picklistButtonText="Source"
+						addrefreshid="panel3" varDb="viewScope.srcDb">
+					</xc:viewPicker>
+				</xp:td>
+				<xp:td></xp:td>
+				<xp:td></xp:td>
+				<xp:td>
+					<xc:viewPicker dialogID="view2"
+						onReturn="Set Scope Value" picklistButtonText="Target"
+						varName="viewScope.target" addrefreshid="panel3"
+						fieldId="viewScope.trgid" varDb="viewScope.trgDb">
+					</xc:viewPicker>
+				</xp:td>
+				<xp:td></xp:td>
+			</xp:tr>
+			<xp:tr>
+				<xp:td></xp:td>
+				<xp:td>
+					</xp:td>
+				<xp:td></xp:td>
+				<xp:td>
+					</xp:td>
+				<xp:td></xp:td>
+			</xp:tr>
+		</xp:table>
+	</xp:panel>
+</xp:view>

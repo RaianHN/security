@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+
+	<xp:this.beforePageLoad><![CDATA[#{javascript:/*
+var doc:NotesDocument = currentDocument.getDocument();
+	var unid = doc.getUniversalID();
+	sessionScope.put('unids',unid);
+	println("bEFORE PAGE LOAD"+ unid);
+	*/}]]></xp:this.beforePageLoad>
+	<xp:button value="Label" id="button1">
+		<xp:eventHandler event="onclick" submit="true"
+			refreshMode="complete">
+			<xp:this.action><![CDATA[#{javascript:var com= getComponent('email1');
+if(com.getValue()!=null){
+	println("email1 present");
+	var table = getComponent('customDataTable');
+
+	if(table.getChildren().remove(com.getParent().getParent())){
+	println("removed email1")
+	}
+facesContext.getApplication().createValueBinding("{#user}").getValue(facesContext).resetBean();
+FacesContext.getCurrentInstance().getExternalContext().getRequestMap()
+}}]]></xp:this.action>
+		</xp:eventHandler></xp:button>
+	<xp:viewPanel rows="30" id="viewPanel1">
+		<xp:this.facets>
+			<xp:pager partialRefresh="true" layout="Previous Group Next"
+				xp:key="headerPager" id="pager1">
+			</xp:pager>
+		</xp:this.facets>
+		<xp:this.data>
+			<xp:dominoView var="view1" databaseName="Demo1/user.nsf"
+				viewName="userprofile">
+			</xp:dominoView>
+		</xp:this.data>
+		<xp:viewColumn columnName="display_field" id="viewColumn1" showCheckbox="true">
+			<xp:viewColumnHeader value="Full Name"
+				id="viewColumnHeader1">
+			</xp:viewColumnHeader>
+		</xp:viewColumn>
+		<xp:viewColumn columnName="email" id="viewColumn2">
+			<xp:viewColumnHeader value="Email" id="viewColumnHeader2"></xp:viewColumnHeader>
+		</xp:viewColumn>
+		<xp:viewColumn columnName="contact" id="viewColumn3">
+			<xp:viewColumnHeader value="Contact"
+				id="viewColumnHeader3">
+			</xp:viewColumnHeader>
+		</xp:viewColumn>
+		<xp:viewColumn columnName="location" id="viewColumn4">
+			<xp:viewColumnHeader value="Location"
+				id="viewColumnHeader4">
+			</xp:viewColumnHeader>
+		</xp:viewColumn>
+	</xp:viewPanel></xp:view>
+	
+	
+	

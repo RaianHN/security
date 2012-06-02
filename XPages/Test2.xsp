@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xc="http://www.ibm.com/xsp/custom" dojoParseOnLoad="false">
+
+
+
+	<xc:viewPicker2 dialogID="view1" fieldId="viewScope.id"
+		onReturn="Set Scope Value" varName="viewScope.disp" addrefreshid="p1"
+		varDb="viewScope.mdb">
+	</xc:viewPicker2>
+	 <xp:panel id="p1">
+		<xp:inputText id="inputText2" value="#{viewScope.disp}"></xp:inputText>
+		<xp:inputText id="inputText1" value="#{viewScope.id}"></xp:inputText>
+		<xp:inputText id="inputText3" value="#{viewScope.mdb}"></xp:inputText>
+	</xp:panel>
+	<xp:scriptBlock id="scriptBlock1">
+	 	<xp:this.value><![CDATA[
+	
+var refreshpanelId = "#{id:p1}";
+]]></xp:this.value>
+	 </xp:scriptBlock>
+</xp:view>

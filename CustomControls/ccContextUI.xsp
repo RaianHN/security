@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xc="http://www.ibm.com/xsp/custom">
+
+	<xp:table>
+		<xp:tr>
+			<xp:td></xp:td>
+			<xp:td></xp:td>
+			<xp:td></xp:td>
+		</xp:tr>
+		<xp:tr>
+			<xp:td>
+				<xc:ccContextControl selectionkey="2"
+					viewname="relationBySource">
+					<xc:this.databasename><![CDATA[#{javascript:var path =database.getFilePath();
+var dbpath =  @LeftBack(path ,"/");
+return dbpath+"/relation.nsf";}]]></xc:this.databasename>
+				</xc:ccContextControl>
+			</xp:td>
+			<xp:td></xp:td>
+			<xp:td>
+				<xc:ccContextControl viewname="relationBytarget"
+					selectionkey="3">
+					<xc:this.databasename><![CDATA[#{javascript:var path =database.getFilePath();
+var dbpath =  @LeftBack(path ,"/");
+var db= dbpath+"/relation.nsf";}]]></xc:this.databasename>
+				</xc:ccContextControl></xp:td>
+		</xp:tr>
+	</xp:table>
+</xp:view>

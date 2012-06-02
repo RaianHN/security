@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257A11001D5079" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="31e" sequence="19" unid="0743DF24B893B3076525792A00421D99">
+<created><datetime>20111015T173209,53+0530</datetime></created>
+<modified><datetime>20120602T105014,26+0530</datetime></modified>
+<revised><datetime>20111015T180127,24+0530</datetime></revised>
+<lastaccessed><datetime>20120602T105014,26+0530</datetime></lastaccessed>
+<addedtofile><datetime>20120602T105014,26+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Admin BSUITE/O=Development</name></updatedby>
+<item name="$Flags"><text>gC~4;</text></item>
+<item name="$TITLE"><text>ccbuildrelationship.xsp</text></item>
+
+
+
+
+
+<item name="$FileNames" sign="true"><text>ccbuildrelationship.xsp</text></item>
+<item name="$DesignerVersion"><text>8.5.1</text></item>
+
+
+
+</note>

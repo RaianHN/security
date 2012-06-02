@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xe="http://www.ibm.com/xsp/coreex"
+	xmlns:xc="http://www.ibm.com/xsp/custom">
+
+
+	<xp:panel id="container"></xp:panel>
+		<xp:eventHandler id="eventHandler1" event="onClick"
+			refreshMode="partial" execMode="partial">
+		</xp:eventHandler>
+		<xp:div id="new1" binding="#{uientity.entity}"> </xp:div>	
+		
+</xp:view>

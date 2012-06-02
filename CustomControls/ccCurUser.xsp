@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xe="http://www.ibm.com/xsp/coreex">
+	
+
+	<xp:table>
+		<xp:tr>
+			<xp:td>
+				<xp:label value="First Name" id="label1"></xp:label>
+			</xp:td>
+			<xp:td>
+				<xp:inputText value="#{user.first_name}"
+					id="fname">
+				</xp:inputText>
+			</xp:td>
+		</xp:tr>
+		<xp:tr>
+			<xp:td>
+				<xp:label value="Middle Name" id="label3"></xp:label>
+			</xp:td>
+			<xp:td>
+				<xp:inputText id="inputText2"
+					value="#{user.lmiddle_name}">
+				</xp:inputText>
+			</xp:td>
+		</xp:tr>
+		<xp:tr>
+			<xp:td>
+				<xp:label value="Last Name" id="label4"></xp:label>
+			</xp:td>
+			<xp:td>
+				<xp:inputText value="#{user.last_name}"
+					id="lname">
+				</xp:inputText>
+			</xp:td>
+		</xp:tr>
+		<xp:tr>
+			<xp:td>
+				<xp:label value="Email" id="label5"></xp:label>
+			</xp:td>
+			<xp:td>
+				<xp:inputText id="inputText4"
+					value="#{user.email}">
+				</xp:inputText>
+			</xp:td>
+		</xp:tr>
+		<xp:tr>
+			<xp:td>
+				<xp:label value="Contact" id="label6"></xp:label>
+			</xp:td>
+			<xp:td>
+				<xp:inputText id="inputText5"
+					value="#{user.contact}">
+				</xp:inputText>
+			</xp:td>
+		</xp:tr>
+		<xp:tr>
+			<xp:td>
+				<xp:label value="Location" id="label7"></xp:label>
+			</xp:td>
+			<xp:td>
+				<xp:inputText id="inputText6"
+					value="#{user.location}">
+				</xp:inputText>
+			</xp:td>
+		</xp:tr>
+
+	</xp:table>
+	
+	<xp:button value="Save" id="button1">
+		<xp:eventHandler event="onclick" submit="true"
+			refreshMode="complete">
+			<xp:this.action><![CDATA[#{javascript:actions["save"].execute("user");
+context.redirectToPage("UserView");}]]></xp:this.action>
+		</xp:eventHandler></xp:button></xp:view>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+	<xp:br></xp:br>
+	<xp:br></xp:br>
+	<xp:br></xp:br>==My Followers Custom Control==<xp:br></xp:br>
+
+	<xp:panel>
+		<xp:this.data>
+			<xp:dominoView var="myIncoming"
+				databaseName="Demo2\relation.nsf" viewName="relationBytarget">
+			</xp:dominoView>
+		</xp:this.data>
+		<xp:panel>
+			<xp:this.data>
+				<xp:dominoView var="detailsView" viewName="details"></xp:dominoView>
+			</xp:this.data>
+			<xp:table>
+			<tr>
+					<td class="xspPanelViewColumnHeader">Follower</td>
+					<td class="xspPanelViewColumnHeader">Relationship</td>
+				</tr>
+			
+			<xp:this.rendered><![CDATA[#{javascript:viewScope.get("renderRelationship")}]]></xp:this.rendered>
+			<xp:repeat id="repeat1" rows="30" var="detailRow">
+				<xp:this.value><![CDATA[#{javascript:myFollowers.getAllEntriesByKey(viewScope.get("contactKey"))}]]></xp:this.value>
+				
+					<xp:tr>
+						<xp:td>
+							<xp:text escape="true"
+								id="computedField3">
+								<xp:this.value><![CDATA[#{javascript://detailRow.getDocument().getItemValueString("detailowner")
+var key = detailRow.getColumnValues()[1];
+
+var lookup = @DbLookup(@DbName(), "contactsbykey", key, 2);
+return lookup
+}]]></xp:this.value>
+							</xp:text>
+						</xp:td>
+						<xp:td>
+							<xp:text escape="true"
+								id="computedField4">
+								<xp:this.value><![CDATA[#{javascript://detailRow.getDocument().getItemValueString("detailowner")
+var key = detailRow.getColumnValues()[2];
+
+var lookup = @DbLookup(@DbName(), "relationshipsbykey", key, 2);
+return lookup}]]></xp:this.value>
+							</xp:text>
+						</xp:td>
+					</xp:tr>
+				
+			</xp:repeat>
+			</xp:table>
+			</xp:panel>
+			<xp:br></xp:br>== End MyFollowers Custom Control==
+		</xp:panel></xp:view>

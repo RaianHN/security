@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config>
+  <faces-config-extension>
+    <namespace-uri>http://www.ibm.com/xsp/custom</namespace-uri>
+    <default-prefix>xc</default-prefix>
+  </faces-config-extension>
+  <composite-component>
+    <component-type>MultiValueDeselectBox</component-type>
+    <composite-name>MultiValueDeselectBox</composite-name>
+    <composite-file>/MultiValueDeselectBox.xsp</composite-file>
+    <composite-extension>
+      <designer-extension>
+        <in-palette>true</in-palette>
+        <render-markup>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&#xd;
+&lt;xp:view xmlns:xp="http://www.ibm.com/xsp/core" xmlns:xp_1="http://www.ibm.com/xsp/coreex"&gt;&#xd;
+&lt;xp:label value=" MultiValue Deselect CC v3.1  HughesConnect.com" id="label1" style="font-weight:bold;color:rgb(0,94,187);border: 1px solid #B3B3B3;min-height:24px;padding:3px;"&gt;&lt;/xp:label&gt;&#xd;
+&lt;/xp:view&gt;</render-markup>
+      </designer-extension>
+    </composite-extension>
+    <property>
+      <property-name>fieldID</property-name>
+      <property-class>string</property-class>
+      <display-name>fieldID</display-name>
+      <description>The id of the hidden field, must be unique to the page!</description>
+    </property>
+    <property>
+      <property-name>fieldDataSource</property-name>
+      <property-class>string</property-class>
+      <display-name>fieldDataSource</display-name>
+      <description>The data source bound to the field, as a string&#xd;
+&#xd;
+example:  document1.city or sessionScope.varthis </description>
+    </property>
+    <property>
+      <property-name>multipleSeparator</property-name>
+      <property-class>string</property-class>
+      <display-name>multipleSeparator</display-name>
+      <description>the speporator value for the field</description>
+    </property>
+    <property>
+      <property-name>maxBoxWidth</property-name>
+      <property-class>string</property-class>
+      <display-name>maxBoxWidth</display-name>
+      <description>The width of the field</description>
+    </property>
+    <property>
+      <property-name>removeText</property-name>
+      <property-class>string</property-class>
+      <display-name>removeText</display-name>
+      <property-extension>
+        <designer-extension>
+          <default-value>x</default-value>
+          <visible>closeType == "Text"</visible>
+        </designer-extension>
+      </property-extension>
+      <description>The text shown in the far right hand side of the box that removes the value</description>
+    </property>
+    <property>
+      <property-name>removeImg</property-name>
+      <property-class>string</property-class>
+      <display-name>removeImg</display-name>
+      <description>The image path for the remove button</description>
+      <property-extension>
+        <designer-extension>
+          <visible>closeType == "Image"</visible>
+        </designer-extension>
+      </property-extension>
+    </property>
+    <property>
+      <property-name>removeType</property-name>
+      <property-class>string</property-class>
+      <display-name>removeType</display-name>
+      <property-extension>
+        <designer-extension>
+          <editor>com.ibm.workplace.designer.property.editors.comboParameterEditor</editor>
+          <editor-parameter>Image&#xd;
+Text</editor-parameter>
+          <default-value>Text</default-value>
+        </designer-extension>
+      </property-extension>
+      <description>Use an image to remove the item or text.</description>
+    </property>
+    <property>
+      <property-name>displayStyle</property-name>
+      <property-class>string</property-class>
+      <display-name>displayStyle</display-name>
+      <property-extension>
+        <designer-extension>
+          <editor>com.ibm.workplace.designer.property.editors.comboParameterEditor</editor>
+          <editor-parameter>inline-block&#xd;
+block</editor-parameter>
+          <default-value>inline-block</default-value>
+        </designer-extension>
+      </property-extension>
+      <description>Do you want the items horizontal(inline-block) or vertical(block) in the box</description>
+    </property>
+    <property>
+      <property-name>RequiredField</property-name>
+      <property-class>boolean</property-class>
+      <display-name>RequiredField</display-name>
+      <property-extension>
+        <designer-extension>
+          <editor>com.ibm.std.Boolean</editor>
+          <default-value>false</default-value>
+        </designer-extension>
+      </property-extension>
+    </property>
+    <property>
+      <property-name>ValidationMessage</property-name>
+      <property-class>string</property-class>
+      <display-name>ValidationMessage</display-name>
+    </property>
+  </composite-component>
+</faces-config>

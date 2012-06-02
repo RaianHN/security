@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+
+	<xp:this.data>
+		<xp:dominoDocument var="relationship"
+			databaseName="Demo2\relation.nsf" formName="relationship"
+			action="editDocument"
+			documentId="#{javascript:viewScope.get('relationdocid');}">
+
+		</xp:dominoDocument>
+	</xp:this.data>
+	<xp:panel>
+		<xp:button value="Save" id="button1"><xp:eventHandler event="onclick" submit="true" refreshMode="partial" refreshId="viewcontainer">
+	<xp:this.action>
+		<xp:saveDocument></xp:saveDocument>
+	</xp:this.action></xp:eventHandler></xp:button></xp:panel>
+	<xp:table>
+		<xp:tr>
+			<xp:td>
+				<xp:label value="Rel_name:" id="rel_name_Label1"
+					for="rel_name1">
+				</xp:label>
+			</xp:td>
+			<xp:td>
+				<xp:inputText value="#{relationship.rel_name}"
+					id="rel_name1">
+				</xp:inputText>
+			</xp:td>
+		</xp:tr>
+		<xp:tr>
+			<xp:td>
+				<xp:label value="Inv_name:" id="inv_name_Label1"
+					for="inv_name1">
+				</xp:label>
+			</xp:td>
+			<xp:td>
+				<xp:inputText value="#{relationship.inv_name}"
+					id="inv_name1">
+				</xp:inputText>
+			</xp:td>
+		</xp:tr>
+	</xp:table></xp:view>

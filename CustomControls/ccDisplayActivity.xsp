@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xe="http://www.ibm.com/xsp/coreex">
+	<xp:this.data>
+		<xp:dominoView var="view1" databaseName="Demo2\activity.nsf"
+			viewName="AllDocs"
+			search="#{javascript:requestScope.get('findme');}">
+		</xp:dominoView>
+	</xp:this.data>
+
+	
+	
+	<xe:dataView rows="30" id="dataView2" value="#{view1}"
+		var="viewEntry" showCheckbox="true" columnTitles="true">
+		<xe:this.summaryColumn>
+			<xe:viewSummaryColumn columnTitle="Subject"></xe:viewSummaryColumn>
+		</xe:this.summaryColumn>
+		<xp:this.facets>
+			<xp:panel id="summarypanel1" xp:key="summary">
+				
+				<xp:link escape="true" id="link1">
+
+					<xp:this.text><![CDATA[#{viewEntry["display_field"]}]]></xp:this.text>
+					<xp:eventHandler event="onclick" submit="true"
+						refreshMode="partial" refreshId="container">
+						<xp:this.action>
+							<xp:executeScript>
+								<xp:this.script><![CDATA[#{javascript:var doc=viewEntry.getDocument();
+sessionScope.put('actdocumentId',doc.getUniversalID());
+sessionScope.put('docrelId',doc.getUniversalID());
+var c= getComponent('container');
+if(sessionScope.get("Beanid")!="activity"){
+	activity.reset();
+	sessionScope.put("Beanid","activity");
+}
+uiactivity.resetUI(c, facesContext,"/ccActivity.xsp");}]]></xp:this.script>
+							</xp:executeScript>
+						</xp:this.action></xp:eventHandler>
+				</xp:link>
+			</xp:panel>
+			<xp:pager layout="Previous Group Next" id="pager3"
+				xp:key="pagerTopRight" partialRefresh="true"
+				partialExecute="true">
+			</xp:pager>
+		</xp:this.facets>
+	</xe:dataView>
+</xp:view>

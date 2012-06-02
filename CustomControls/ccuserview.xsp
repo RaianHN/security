@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+
+	<xp:panel>
+		<xp:button id="button1" value="Delete"><xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+	<xp:this.action>
+		<xp:deleteSelectedDocuments view="viewPanel1"
+			message="Doucment is deleted">
+		</xp:deleteSelectedDocuments>
+	</xp:this.action></xp:eventHandler></xp:button>
+		<xp:inputText id="inputText1" value="#{requestScope.findme}">
+			<xp:typeAhead mode="full" minChars="3"></xp:typeAhead>
+			
+			<xp:eventHandler event="onclick" submit="true"
+				refreshMode="partial" refreshId="viewPanel1">
+			</xp:eventHandler>
+			<xp:eventHandler event="onkeyup" submit="true"
+				refreshMode="partial" refreshId="viewPanel1">
+			</xp:eventHandler></xp:inputText></xp:panel>
+	<xp:viewPanel rows="10" id="viewPanel1" var="viewentry">
+		<xp:this.facets>
+			<xp:pager partialRefresh="true" layout="Previous Group Next"
+				xp:key="headerPager" id="pager1">
+			</xp:pager>
+		</xp:this.facets>
+
+
+
+
+		<xp:this.data>
+			<xp:dominoView var="view1" databaseName="Demo2\user.nsf"
+				viewName="userprofile">
+				<xp:this.search><![CDATA[#{javascript:requestScope.get("findme");}]]></xp:this.search>
+			</xp:dominoView>
+		</xp:this.data>
+
+
+
+		<xp:viewColumn columnName="first_name" id="viewColumn1"
+			showCheckbox="true" displayAs="link">
+			<xp:viewColumnHeader value="First Name"
+				id="viewColumnHeader1">
+			</xp:viewColumnHeader>
+			<xp:eventHandler event="onclick" submit="true"
+				refreshMode="norefresh" id="eventHandler1">
+				<xp:this.action>
+					<xp:actionGroup>
+
+
+
+
+						<xp:executeScript>
+							<xp:this.script><![CDATA[#{javascript:sessionScope.put("Beanid","user");
+var doc=viewentry.getDocument();
+sessionScope.put('userdocumentId',doc.getUniversalID());
+var c= getComponent('container');
+uiuser.resetUI(c, facesContext,"/ccUser.xsp");
+//bsuite.weber.tools.CompUtil.create(c, facesContext,"/ccUser.xsp")}]]></xp:this.script>
+						</xp:executeScript>
+					</xp:actionGroup>
+				</xp:this.action>
+				<xp:this.onComplete><![CDATA[XSP.partialRefreshPost("#{id:container}");]]></xp:this.onComplete>
+			</xp:eventHandler>
+		</xp:viewColumn>
+
+		<xp:viewColumn id="viewColumn3" columnName="lmiddle_name">
+
+			<xp:viewColumnHeader xp:key="header" id="viewColumnHeader3"
+				value="Middle  name">
+			</xp:viewColumnHeader>
+
+		</xp:viewColumn>
+		<xp:viewColumn columnName="last_name" id="viewColumn2">
+			<xp:viewColumnHeader value="Last Name"
+				id="viewColumnHeader2">
+			</xp:viewColumnHeader>
+		</xp:viewColumn>
+
+		<xp:viewColumn columnName="email" id="viewColumn4">
+			<xp:viewColumnHeader value="Email" id="viewColumnHeader4"></xp:viewColumnHeader>
+		</xp:viewColumn>
+		<xp:viewColumn columnName="contact" id="viewColumn5">
+			<xp:viewColumnHeader value="Contact"
+				id="viewColumnHeader5">
+			</xp:viewColumnHeader>
+		</xp:viewColumn>
+		<xp:viewColumn columnName="location" id="viewColumn6">
+			<xp:viewColumnHeader value="Location"
+				id="viewColumnHeader6">
+			</xp:viewColumnHeader>
+		</xp:viewColumn>
+		<xp:viewColumn id="viewColumn7" columnName="HrManager">
+			<xp:this.facets>
+				<xp:viewColumnHeader xp:key="header"
+					id="viewColumnHeader7" value="Hr manager">
+				</xp:viewColumnHeader>
+			</xp:this.facets>
+		</xp:viewColumn>
+		<xp:viewColumn id="viewColumn8" columnName="Manager">
+			<xp:this.facets>
+				<xp:viewColumnHeader xp:key="header"
+					id="viewColumnHeader8" value="Manager">
+				</xp:viewColumnHeader>
+			</xp:this.facets>
+		</xp:viewColumn>
+		<xp:viewColumn id="viewColumn11" columnName="Department">
+			<xp:this.facets>
+				<xp:viewColumnHeader xp:key="header"
+					id="viewColumnHeader11" value="Department">
+				</xp:viewColumnHeader>
+			</xp:this.facets>
+		</xp:viewColumn>
+		<xp:viewColumn id="viewColumn10" columnName="Status">
+			<xp:this.facets>
+				<xp:viewColumnHeader xp:key="header"
+					id="viewColumnHeader10" value="Status">
+				</xp:viewColumnHeader>
+			</xp:this.facets>
+		</xp:viewColumn>
+	</xp:viewPanel>
+
+</xp:view>

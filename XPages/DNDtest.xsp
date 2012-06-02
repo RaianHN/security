@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	dojoParseOnLoad="false">
+	
+
+	<xp:this.resources>
+		<xp:styleSheet href="/dnd3.css"></xp:styleSheet>
+		<xp:dojoModule name="dojo.dnd.Source"></xp:dojoModule>
+		<xp:dojoModule name="dojo.parser"></xp:dojoModule>
+		<xp:dojoModule name="dojo.dnd.move"></xp:dojoModule>
+		<xp:styleSheet
+			href="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojo/resources/dnd.css">
+		</xp:styleSheet>
+		<xp:script src="/dragndrop.js" clientSide="true"></xp:script>
+		
+	</xp:this.resources>
+	<xp:label value="Source :" id="label1" for="inputText1"></xp:label>
+		&#160;&#160;&#160;&#160;&#160;<xp:this.beforePageLoad><![CDATA[#{javascript:sessionScope.put("result", false);}]]></xp:this.beforePageLoad><xp:inputText id="inputText1" style="width:100px"></xp:inputText>
+		<xp:inputHidden id="source"></xp:inputHidden>
+		<xp:button value="Clear S" id="button1">
+			<xp:eventHandler event="onclick" submit="true"
+				refreshMode="partial" refreshId="inputText1">
+				<xp:this.action><![CDATA[#{javascript:var com = getComponent("inputText1");
+var com1 = getComponent("source");
+com.setValue("");
+com1.setValue("");}]]></xp:this.action>
+			</xp:eventHandler>
+		</xp:button>
+	
+&#160;&#160;&#160;
+
+
+	
+		&#160;<xp:label value="Target :" id="label2" for="inputText2"></xp:label>
+		&#160;&#160;&#160;&#160;
+		<xp:inputText id="inputText2" style="width:100px"></xp:inputText>
+		<xp:inputHidden id="target"></xp:inputHidden>
+		<xp:button value="Clear T" id="button2">
+			<xp:eventHandler event="onclick" submit="true"
+				refreshMode="partial" refreshId="inputText2">
+				<xp:this.action><![CDATA[#{javascript:var com = getComponent("inputText2");
+var com1 = getComponent("target");
+com.setValue("");
+com1.setValue("");}]]></xp:this.action>
+			</xp:eventHandler>
+		</xp:button>
+	
+
+
+	<xp:br></xp:br>
+	<xp:br></xp:br>
+	<xp:button value="Show S Unid" id="button3" rendered="true">
+		<xp:eventHandler event="onclick" submit="true"
+			refreshMode="partial" refreshId="inputText3">
+			<xp:this.action><![CDATA[#{javascript:var com = getComponent("source");
+var text = getComponent("inputText3");
+text.setValue(com.getValue());}]]></xp:this.action>
+		</xp:eventHandler>
+	</xp:button>
+	<xp:inputText id="inputText3" style="width:250px"
+		rendered="true">
+	</xp:inputText>
+	<xp:br></xp:br>
+	<xp:br></xp:br>
+	
+	<xp:button value="Show T Unid" id="button4" rendered="true">
+		<xp:eventHandler event="onclick" submit="true"
+			refreshMode="partial" refreshId="inputText4">
+			<xp:this.action><![CDATA[#{javascript:var com = getComponent("target");
+var text = getComponent("inputText4");
+text.setValue(com.getValue());}]]></xp:this.action>
+		</xp:eventHandler>
+</xp:button>
+	<xp:inputText id="inputText4" style="width:250px"
+		rendered="true">
+	</xp:inputText>
+	
+	
+	<xp:br></xp:br>
+	
+	<xp:br></xp:br>
+	<xp:this.data>
+		<xp:dominoView var="view1" viewName="userprofile"
+			databaseName="Demo2\user.nsf">
+		</xp:dominoView>
+	</xp:this.data>
+	<xp:dataTable id="dataTable1" rows="30" var="rowData"
+		indexVar="rowIndex" value="#{view1}" caption="Main"
+		styleClass="main_table container" rowClasses="dojoDndItem"
+		style="border-color:rgb(0,0,0);border-style:solid;border-width:thin">
+		<xp:this.facets>
+			<xp:pager partialRefresh="true" layout="Previous Group Next"
+				xp:key="header" id="pager1">
+			</xp:pager>
+		</xp:this.facets>
+
+		<xp:column id="column1">
+			<xp:this.facets>
+				<xp:span xp:key="header">Name</xp:span>
+			</xp:this.facets>
+			<xp:text escape="true" id="computedField1"
+				value="#{rowData.first_name}">
+			</xp:text>
+		</xp:column>
+		<xp:column id="column2" disableTheme="true">
+			<xp:text escape="false" disableTheme="true">
+				<xp:this.value><![CDATA[#{javascript:'<input type="hidden" value="' + rowData.getDocument().getUniversalID() + '">'}]]></xp:this.value>
+			</xp:text>
+		</xp:column>
+	</xp:dataTable>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<xp:scriptBlock id="scriptBlock1">
+		<xp:this.value><![CDATA[var mainTableId = "#{id:dataTable1}";
+var sourceControl = "#{id:inputText1}";
+var targetControl = "#{id:inputText2}";
+var sourceUnid = "#{id:source}";
+var targetUnid = "#{id:target}";
+
+]]></xp:this.value>
+	</xp:scriptBlock>
+	
+
+
+
+
+
+</xp:view>

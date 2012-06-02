@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config>
+  <faces-config-extension>
+    <namespace-uri>http://www.ibm.com/xsp/custom</namespace-uri>
+    <default-prefix>xc</default-prefix>
+  </faces-config-extension>
+  <composite-component>
+    <component-type>viewPicker2</component-type>
+    <composite-name>viewPicker2</composite-name>
+    <composite-file>/viewPicker2.xsp</composite-file>
+    <composite-extension>
+      <designer-extension>
+        <in-palette>true</in-palette>
+      </designer-extension>
+    </composite-extension>
+    <property>
+      <property-name>onReturn</property-name>
+      <property-class>string</property-class>
+      <display-name>onReturn</display-name>
+      <property-extension>
+        <designer-extension>
+          <editor>com.ibm.workplace.designer.property.editors.comboParameterEditor</editor>
+          <editor-parameter>&#xd;
+	    Set Field Value&#xd;
+          Set Scope Value&#xd;
+          Set Document Value&#xd;
+          </editor-parameter>
+        </designer-extension>
+      </property-extension>
+    </property>
+    <property>
+      <property-name>fieldId</property-name>
+      <property-class>string</property-class>
+      <display-name>fieldId</display-name>
+    </property>
+    <property>
+      <property-name>varName</property-name>
+      <property-class>string</property-class>
+      <display-name>varName</display-name>
+    </property>
+    <property>
+      <property-name>dialogID</property-name>
+      <property-class>string</property-class>
+      <display-name>Dialog ID</display-name>
+    </property>
+    <property>
+      <property-name>addrefreshid</property-name>
+      <property-class>string</property-class>
+      <display-name>addrefreshid</display-name>
+    </property>
+    <property>
+      <property-name>varDb</property-name>
+      <property-class>string</property-class>
+      <display-name>varDb</display-name>
+    </property>
+  </composite-component>
+</faces-config>

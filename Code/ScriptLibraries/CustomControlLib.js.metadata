@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><note class="filter" maintenanceversion="3.0" replicaid="65257A11001D5079" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="2ca" sequence="37" unid="0627576BA4F85FA0652579250037A93C">
+<created><datetime>20111010T153758,04+0530</datetime></created>
+<modified><datetime>20120602T105013,84+0530</datetime></modified>
+<revised><datetime>20111020T204434,52+0530</datetime></revised>
+<lastaccessed><datetime>20120602T105013,84+0530</datetime></lastaccessed>
+<addedtofile><datetime>20120602T105013,84+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Mark Hughes/O=rcc</name><name>CN=Admin BSUITE/O=Development</name></updatedby>
+<item name="$DesignerVersion"><text>8.5.3</text></item>
+<item name="$TITLE" sign="true"><text>CustomControlLib</text></item>
+<item name="$Flags"><text>h534Q</text></item>
+<item name="$PublicAccess" sign="true"><text>1</text></item>
+</note>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xc="http://www.ibm.com/xsp/custom">
+
+	<xp:this.data>
+		<xp:dominoDocument var="document1" databaseName="Demo1/user.nsf"
+			action="openDocument" formName="users"
+			documentId="#{javascript:viewScope.get('docunid');}">
+		</xp:dominoDocument>
+	</xp:this.data>
+	<xp:this.beforePageLoad><![CDATA[#{javascript:var doc:NotesDocument = currentDocument.getDocument();
+	var unid = doc.getUniversalID();
+	sessionScope.put('unids',unid);
+	println("bEFORE PAGE LOAD"+ unid);}]]></xp:this.beforePageLoad>
+	<xp:table>
+		<xp:tr>
+			<xp:td>
+				<xp:label value="First Name:" id="label1"></xp:label>
+			</xp:td>
+			<xp:td>
+				<xp:inputText id="inputText1"
+					value="#{document1.first_name}">
+				</xp:inputText>
+			</xp:td>
+		</xp:tr>
+		<xp:tr>
+			<xp:td>
+				<xp:label value="Middle Name:" id="label2"></xp:label>
+			</xp:td>
+			<xp:td>
+				<xp:inputText id="inputText2"
+					value="#{document1.lmiddle_name}">
+				</xp:inputText>
+			</xp:td>
+		</xp:tr>
+		<xp:tr>
+			<xp:td>
+				<xp:label value="Last Name:" id="label3"></xp:label>
+			</xp:td>
+			<xp:td>
+				<xp:inputText id="inputText3"
+					value="#{document1.last_name}">
+				</xp:inputText>
+			</xp:td>
+		</xp:tr>
+		<xp:tr>
+			<xp:td>
+				<xp:label value="Contact" id="label4"></xp:label>
+			</xp:td>
+			<xp:td>
+				<xp:inputText id="inputText4"
+					value="#{document1.contact}">
+				</xp:inputText>
+			</xp:td>
+		</xp:tr>
+		<xp:tr>
+			<xp:td>
+				<xp:label value="Email" id="label5"></xp:label>
+			</xp:td>
+			<xp:td>
+				<xp:inputText id="inputText5"
+					value="#{document1.email}">
+				</xp:inputText>
+			</xp:td>
+		</xp:tr>
+		<xp:tr>
+			<xp:td>
+				<xp:label value="Location" id="label6"></xp:label>
+			</xp:td>
+			<xp:td>
+				<xp:inputText id="inputText6"
+					value="#{document1.location}">
+				</xp:inputText>
+			</xp:td>
+		</xp:tr>
+	</xp:table>
+
+	<xp:table>
+
+		<xp:tr>
+			<xp:td></xp:td>
+
+		</xp:tr>
+		<xp:tr>
+			<xp:td>
+				<xp:section id="section1" header="Activity"
+					initClosed="true">
+				<xc:ccshowActivity></xc:ccshowActivity>
+				</xp:section>
+			</xp:td>
+
+		</xp:tr>
+	</xp:table>
+</xp:view>

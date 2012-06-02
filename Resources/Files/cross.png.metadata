@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257A11001D5079" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="2e2" sequence="1" unid="B4CF38ACACB39E1865257925004A037C">
+<created><datetime>20111010T185825,56+0530</datetime></created>
+<modified><datetime>20120602T105013,96+0530</datetime></modified>
+<revised><datetime>20111010T185825,60+0530</datetime></revised>
+<lastaccessed><datetime>20120602T105013,96+0530</datetime></lastaccessed>
+<addedtofile><datetime>20120602T105013,96+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Mark Hughes/O=rcc</name><name>CN=Admin BSUITE/O=Development</name></updatedby>
+<item name="$TITLE"><text>cross.png</text></item>
+<item name="$Flags"><text>345CgQ</text></item>
+<item name="$FlagsExt"><text>D</text></item>
+
+<item name="$FileModDT" sign="true"><datetime dst="true">20100610T114250,30-05</datetime></item>
+
+<item name="$FileNames" sign="true"><text>cross.png</text></item>
+<item name="$DesignerVersion"><text>8.5.3</text></item></note>

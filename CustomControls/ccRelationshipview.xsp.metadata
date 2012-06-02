@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257A11001D5079" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="232" sequence="60" unid="069F55D76197F79C6525790700464470">
+<created><datetime>20110910T181730,40+0530</datetime></created>
+<modified><datetime>20120602T105013,08+0530</datetime></modified>
+<revised><datetime>20111016T143858,04+0530</datetime></revised>
+<lastaccessed><datetime>20120602T105013,08+0530</datetime></lastaccessed>
+<addedtofile><datetime>20120602T105013,08+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Test User1/O=Development</name><name>CN=Admin BSUITE/O=Development</name><name>CN=Test User1/O=Development</name><name>CN=Admin BSUITE/O=Development</name></updatedby>
+<item name="$Flags"><text>gC~4;</text></item>
+<item name="$TITLE"><text>ccRelationshipview.xsp</text></item>
+
+
+
+<item name="$DesignerVersion"><text>8.5</text></item>
+
+
+
+
+
+
+<item name="$FileNames" sign="true"><text>ccRelationshipview.xsp</text></item></note>

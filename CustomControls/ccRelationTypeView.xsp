@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+
+	<xp:this.data>
+		<xp:dominoView var="relationtypes"
+			databaseName="Demo2\relation.nsf" viewName="Relationships">
+		</xp:dominoView>
+	</xp:this.data>
+	
+	<xp:panel>
+		<xp:button value="Delete relationship" id="button1"><xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+	<xp:this.action>
+		<xp:deleteSelectedDocuments view="relationsPanel1"
+			message="Document deleted">
+		</xp:deleteSelectedDocuments>
+	</xp:this.action></xp:eventHandler></xp:button>
+		<xp:button value="New Relationship" id="button2">
+			<xp:eventHandler event="onclick" submit="true"
+				refreshMode="partial" refreshId="relcontainer">
+			<xp:this.action>
+				<xp:executeScript>
+					<xp:this.script><![CDATA[#{javascript:viewScope.put('relationdocid',"");
+var c = getComponent('formcontainer');
+bsuite.weber.tools.CompUtil.create(c,facesContext,"/ccRelationshipType.xsp");}]]></xp:this.script>
+				</xp:executeScript>
+			</xp:this.action></xp:eventHandler></xp:button></xp:panel>
+	<xp:viewPanel value="#{relationtypes}" id="relationsPanel1"
+		var="viewEntry">
+		<xp:this.facets>
+			<xp:pager partialRefresh="true" layout="Previous Group Next"
+				xp:key="headerPager" id="pager1">
+			</xp:pager>
+		</xp:this.facets>
+
+
+		<xp:viewColumn columnName="rel_name" id="viewColumn1"
+			showCheckbox="true" displayAs="link">
+			<xp:this.facets>
+				<xp:viewColumnHeader value="Forward" xp:key="header"
+					id="viewColumnHeader1">
+				</xp:viewColumnHeader>
+			</xp:this.facets>
+			<xp:eventHandler event="onclick" submit="true"
+				refreshMode="partial" refreshId="relcontainer">
+				<xp:this.action>
+					<xp:executeScript>
+						<xp:this.script><![CDATA[#{javascript:var doc=viewEntry.getDocument();
+viewScope.put('relationdocid',doc.getUniversalID());
+var x= getComponent('formcontainer');
+bsuite.weber.tools.CompUtil.create(x,facesContext,"/ccRelationshipType.xsp");}]]></xp:this.script>
+					</xp:executeScript>
+				</xp:this.action></xp:eventHandler>
+		</xp:viewColumn>
+		<xp:viewColumn columnName="inv_name" id="viewColumn2">
+			<xp:this.facets>
+				<xp:viewColumnHeader value="Inverse" xp:key="header"
+					id="viewColumnHeader2">
+				</xp:viewColumnHeader>
+			</xp:this.facets>
+		</xp:viewColumn>
+	</xp:viewPanel></xp:view>

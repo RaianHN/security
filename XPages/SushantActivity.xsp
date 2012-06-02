@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xc="http://www.ibm.com/xsp/custom"
+	xmlns:xe="http://www.ibm.com/xsp/coreex">
+	
+	
+
+	<xp:table>
+		<xp:tr>
+			<xp:td></xp:td>
+			<xp:td>
+				<xp:button value="User" id="button1">
+					<xp:eventHandler event="onclick" submit="true"
+						refreshMode="complete" id="eventHandler1">
+						<xp:this.action>
+
+							<xp:actionGroup>
+
+
+								<xp:executeScript>
+									<xp:this.script><![CDATA[#{javascript:sessionScope.put('userdocumentId',"");
+var x='uiuser';
+if(requestScope.containsKey(x)){
+	requestScope.remove(x);
+}
+
+println("entset"+sessionScope.entrySet());
+println("keyset"+sessionScope.keySet());
+println("values"+sessionScope.values());
+//sessionScope.put('uiuser',"");}]]></xp:this.script>
+								</xp:executeScript>
+								<xp:openPage name="/User.xsp">
+								</xp:openPage>
+							</xp:actionGroup>
+						</xp:this.action>
+					</xp:eventHandler>
+				</xp:button>
+			</xp:td>
+			<xp:td></xp:td>
+		</xp:tr>
+		<xp:tr>
+			<xp:td></xp:td>
+			<xp:td>
+				<xp:button value="UserList" id="button2">
+					<xp:eventHandler event="onclick" submit="true"
+						refreshMode="complete" id="eventHandler2">
+						<xp:this.action>
+
+							<xp:actionGroup>
+
+								<xp:executeScript>
+									<xp:this.script><![CDATA[#{javascript:sessionScope.put('userdocumentId',"");
+println("entset"+sessionScope.entrySet());
+println("keyset"+sessionScope.keySet());
+println("values"+sessionScope.values());}]]></xp:this.script>
+								</xp:executeScript>
+								<xp:openPage name="/UserView.xsp"></xp:openPage>
+							</xp:actionGroup>
+						</xp:this.action>
+					</xp:eventHandler>
+				</xp:button>
+			</xp:td>
+			<xp:td></xp:td>
+		</xp:tr>
+		<xp:tr>
+			<xp:td></xp:td>
+			<xp:td>
+				<xp:button value="Demo User" id="button3" style="padding-left:11.0%;padding-right:11.0%">
+					<xp:eventHandler event="onclick" submit="true"
+						refreshMode="complete" id="eventHandler3">
+						<xp:this.action>
+
+							<xp:actionGroup>
+
+
+								<xp:executeScript>
+									<xp:this.script><![CDATA[#{javascript:sessionScope.put('userdocumentId',"");
+sessionScope.put("Beanid","user");}]]></xp:this.script>
+								</xp:executeScript>
+								<xp:openPage name="/DemoUser.xsp"></xp:openPage>
+							</xp:actionGroup>
+						</xp:this.action>
+					</xp:eventHandler>
+				</xp:button>
+			</xp:td>
+			<xp:td>
+				
+			</xp:td>
+		</xp:tr>
+		<xp:tr>
+			<xp:td></xp:td>
+			<xp:td>
+				<xp:button value="DemoActivity" id="button4" style="padding-left:5.0%;padding-right:5.0%"><xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+	<xp:this.action>
+
+		<xp:actionGroup>
+
+
+			<xp:executeScript>
+				<xp:this.script><![CDATA[#{javascript:sessionScope.put('actdocumentId',"");
+sessionScope.put("Beanid","activity");}]]></xp:this.script>
+			</xp:executeScript>
+			<xp:openPage name="/DemoActivity.xsp"></xp:openPage>
+		</xp:actionGroup>
+	</xp:this.action></xp:eventHandler></xp:button></xp:td>
+			<xp:td></xp:td>
+		</xp:tr>
+		<xp:tr>
+			<xp:td></xp:td>
+			<xp:td>
+				<xp:button value="DemoBundle" id="button5"><xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+	<xp:this.action>
+
+		<xp:actionGroup>
+			<xp:executeScript>
+				<xp:this.script><![CDATA[#{javascript:sessionScope.put('userdocumentId',"");
+				sessionScope.put('relationId',"");
+sessionScope.put('actdocumentId',"");sessionScope.put("Beanid","user");}]]></xp:this.script>
+			</xp:executeScript>
+			<xp:openPage name="/Demobundle.xsp"></xp:openPage>
+		</xp:actionGroup>
+	</xp:this.action></xp:eventHandler></xp:button></xp:td>
+			<xp:td></xp:td>
+		</xp:tr>
+		<xp:tr>
+			<xp:td></xp:td>
+			<xp:td>
+				<xp:button value="DemoRelationships" id="button6"><xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+	<xp:this.action>
+		<xp:openPage name="/DemoRealtionships.xsp"></xp:openPage>
+	</xp:this.action></xp:eventHandler></xp:button></xp:td>
+			<xp:td></xp:td>
+		</xp:tr>
+	</xp:table></xp:view>

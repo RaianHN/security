@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+xmlns:xe="http://www.ibm.com/xsp/coreex"
+	xmlns:xc="http://www.ibm.com/xsp/custom">
+	<xe:djBorderContainer id="djBorderContainer1"	style="height:682px;width:100%;">
+		<xe:djBorderPane id="djBorderPane1" region="left"
+			style="WIDTH:139PX;" dragRestriction="false" splitter="true">
+
+			<xc:ccActView></xc:ccActView>
+
+		</xe:djBorderPane>
+		<xe:djBorderPane id="djBorderPane2" region="center"
+			splitter="true">
+			<xp:panel id="container">
+				<xc:ccActivity></xc:ccActivity></xp:panel>
+		</xe:djBorderPane>
+	</xe:djBorderContainer>
+</xp:view>

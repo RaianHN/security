@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+<xp:button value="Delete" id="button1"><xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+	<xp:this.action>
+		<xp:deleteSelectedDocuments view="viewPanel4"></xp:deleteSelectedDocuments>
+	</xp:this.action></xp:eventHandler></xp:button>
+	<xp:span style="font-weight:bold">
+		</xp:span><xp:span style="font-weight:bold;font-size:10pt">Inverse Relationship Table</xp:span><xp:span style="font-weight:bold">
+	</xp:span>
+	
+	<xp:viewPanel rows="10" id="viewPanel4" value="#{view1}" >
+		<xp:this.facets>
+			<xp:pager partialRefresh="true" layout="Previous Group Next"
+				xp:key="headerPager" id="pager1">
+			</xp:pager>
+		</xp:this.facets>
+		<xp:this.data>
+			<xp:dominoView var="view1" databaseName="Demo2\relation.nsf"
+				viewName="relationdetails">
+			</xp:dominoView>
+		</xp:this.data>
+<xp:viewColumn columnName="trg_data" id="viewColumn4" showCheckbox="true">
+			<xp:viewColumnHeader value="Target Data"
+				id="viewColumnHeader4">
+			</xp:viewColumnHeader>
+		</xp:viewColumn>
+		
+<xp:viewColumn id="viewColumn3">
+			<xp:this.facets>
+				<xp:viewColumnHeader xp:key="header"
+					id="viewColumnHeader3" value="InverseRelationship">
+				</xp:viewColumnHeader>
+			</xp:this.facets>
+		<xp:this.value><![CDATA[#{javascript:var path =database.getFilePath();
+var dbpath =  @LeftBack(path ,"/");
+var db= dbpath+"/relation.nsf";
+var serv = @Word(@Implode(@DbName(),", "),", ", 1);
+var com = new Array(serv,db);
+var key = viewEntry.getColumnValue("Relationid")
+var lookup = @DbLookup(com, "relationBykey", key, 3);
+return lookup}]]></xp:this.value></xp:viewColumn>
+
+<xp:viewColumn columnName="src_data" id="viewColumn2">
+			<xp:viewColumnHeader value="Source Data"
+				id="viewColumnHeader2">
+			</xp:viewColumnHeader>
+		</xp:viewColumn>
+		
+		<xp:viewColumn columnName="relationid" id="viewColumn1" rendered="false">
+			<xp:this.facets>
+				<xp:viewColumnHeader value="Relationid" xp:key="header"
+					id="viewColumnHeader1" rendered="false">
+				</xp:viewColumnHeader>
+			</xp:this.facets>
+		</xp:viewColumn>
+		</xp:viewPanel>
+</xp:view>

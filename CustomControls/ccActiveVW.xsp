@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core" xmlns:xe="http://www.ibm.com/xsp/coreex">
+
+	<xp:dataTable id="dataTable1" rows="30" var="currentActivity"
+		value="#{ActivityList.activities}">
+		<xp:column id="column1">
+
+			<xp:text escape="true" id="computedField1"
+				value="#{currentActivity.subject}">
+			</xp:text>
+			<xp:this.facets>
+				<xp:span xp:key="header">Subject</xp:span>
+			</xp:this.facets>
+		</xp:column>
+		<xp:column id="column4"></xp:column>
+	</xp:dataTable>
+
+</xp:view>

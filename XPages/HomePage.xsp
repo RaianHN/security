@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+
+
+	<xp:this.resources>
+		<xp:script src="/baseactions.jss" clientSide="false"></xp:script>
+	</xp:this.resources>
+	
+	<xp:table>
+		<xp:tr>
+			<xp:td>
+				
+			</xp:td>
+			<xp:td>
+				
+			</xp:td>
+		</xp:tr>
+		<xp:tr>
+		<xp:td><xp:panel>
+		<xp:button value="Create Relation" id="button2">
+			
+		<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+			<xp:this.action>
+				<xp:executeScript>
+					<xp:this.script><![CDATA[#{javascript:println("Inside Create Relation")
+CreateAssocation();
+CreateDocAssociation();
+/*
+var x=viewScope.get("select")
+print(x);
+var currentdb=session.getCurrentDatabase();
+var serv=currentdb.getServer();
+var dbpath=currentdb.getFilePath();
+var pathname=@LeftBack(dbpath,17);
+var tadb : NotesDatabase=session.getDatabase(serv, pathname + "user.nsf");
+println("database"+tadb);
+println("pathname"+pathname);
+
+
+
+
+var taac:NotesDatabase=session.getDatabase(serv, pathname + "activity.nsf");
+var taar:NotesDatabase=session.getDatabase(serv,pathname+"relation.nsf")
+//var subject=viewScope.get("subject");
+
+println("sel: "+ select);
+
+if(select!="")
+	{
+	
+var doc:NotesDocument=tadb.getDocumentByID(seldocids[0]);
+var doc1:NotesDocument=taac.getDocumentByID(seldocids2[0]);
+var unid=doc.getUniversalID();
+var unid1=doc1.getUniversalID();
+println("user unid" + unid);
+println("activity unid"+ unid1);
+
+var fullname=doc.getItemValueString("display_field");
+var fullname1=doc1.getItemValueString("display_field");
+println("hi");
+viewScope.put('unids',unid);
+
+
+println("for testing unids"+ unid);
+var docrel:NotesDocument=taar.createDocument();
+docrel.replaceItemValue("form","association");
+docrel.replaceItemValue("sourceid",unid);
+docrel.replaceItemValue("sourcedb",tadb.getFileName().toString());
+docrel.replaceItemValue("src_data", fullname);
+docrel.replaceItemValue("targetdb",taac.getFileName().toString());
+docrel.replaceItemValue("trg_data", fullname1);
+docrel.replaceItemValue("targetid",unids);
+
+docrel.computeWithForm(true,false);
+docrel.save(true,false);
+
+println("end of code");
+	}
+
+	*/
+}]]></xp:this.script>
+				</xp:executeScript>
+			</xp:this.action></xp:eventHandler></xp:button>
+	</xp:panel></xp:td>
+		</xp:tr>
+		<xp:tr>
+		
+			<xp:td>
+				<xp:panel style="width:28.0px">
+					<xp:include pageName="/Relations.xsp"
+						id="include3">
+					</xp:include>
+				</xp:panel>
+			</xp:td>
+			<xp:td></xp:td>
+		</xp:tr>
+	</xp:table>
+</xp:view>

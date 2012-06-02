@@ -1,0 +1,46 @@
+
+.multicculstyle{
+border: 1px solid #B3B3B3;
+overflow: hidden;
+position: relative;
+height:auto;
+min-height:24px;
+width: auto;
+min-width:200px;
+display:inline-block;
+margin-top:0px;
+margin-bottom:0px;
+-webkit-padding-start: 5px;
+ -moz-padding-start: 5px; 
+ padding-start: 5px; 
+-webkit-border-radius:4px ;
+}
+.multicculstyle2{
+overflow: hidden;
+position: relative;
+margin-top:0px;
+margin-bottom:0px;
+-webkit-padding-start: 5px;
+ -moz-padding-start: 5px; 
+ padding-left: 5px; 
+}
+.multiccli{
+overflow: hidden;
+height: auto;
+margin: 3px;
+padding: 1px 3px;
+background-color: #EFF2F7;
+color: black;
+cursor: default;
+border: 1px solid #CCD5E4;
+font-size: 11px;
+-webkit-border-radius:4px ;
+white-space: nowrap;
+}
+
+
+.multiccspanstyle{color: #A6B3CF;
+margin-left: 5px;
+font-weight: bold;
+cursor: pointer;
+float:right}

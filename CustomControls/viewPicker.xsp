@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+
+
+	<xp:this.resources>
+		<xp:script src="/CustomControlLib.js" clientSide="true"></xp:script>
+		
+		<xp:styleSheet href="/viewpicklistCC.css"></xp:styleSheet>
+		<xp:styleSheet href="/MVDBCC.css"></xp:styleSheet>
+	</xp:this.resources>
+	
+		<xp:button
+		value="#{javascript:compositeData.picklistButtonText}"
+		icon="#{javascript:compositeData.picklistButtonImg}">
+		
+		<xp:this.id><![CDATA[${javascript:compositeData.dialogID + "button5999"}]]></xp:this.id>
+		<xp:this.styleClass><![CDATA[#{javascript:compositeData.picklistButtonClass + " domfindmebutton5999"}]]></xp:this.styleClass>
+		<xp:eventHandler event="onclick" submit="true"
+			refreshMode="partial" disableValidators="true">
+			<xp:this.script><![CDATA[dijit.byId('#{javascript:getClientId(compositeData.dialogID)}').show()]]></xp:this.script>
+			<xp:this.action><![CDATA[#{javascript:
+
+var mylist = new java.util.ArrayList()
+var thisarray = sessionScope.put("selections", mylist)
+
+var setvalue = ""
+
+if(compositeData.onReturn.toString() == "Set Field Value"){
+var scope1 =  sessionScope.get("selections")
+setvalue =(compositeData.fieldId)
+var value1 = getComponent(setvalue).getValue()
+if(compositeData.multiValueSeparator.toString() == ""){
+		var sep1 = ","
+	}else{
+	var sep1 = compositeData.multiValueSeparator
+	}
+	
+if(@Trim(value1) != ""){
+
+	var existingitems = value1.split(sep1)
+	var array1 =(existingitems.constructor == Array) ? existingitems : [ existingitems ];
+	for(x in array1){
+	scope1.add(array1[x])
+	}	
+	}
+
+}else{
+	if(compositeData.onReturn.toString() == "Set Scope Value"){
+	var scope1 =  sessionScope.get("selections")
+	var computedvalue1 = @Left((compositeData.varName), ".") + ".get('" + @Right((compositeData.varName), ".") +  "')"
+	var vector1 = eval(computedvalue1 )	
+	for(x in vector1){
+		scope1.add(x)
+	}	
+	}else{
+	var computedvalue1  = @Left((compositeData.varName), ".") + ".getItemValue('" + @Right((compositeData.varName), ".") +  "')"
+	var computedvalue2:java.util.Vector  = (eval(computedvalue1 ))
+			var scope1 =  sessionScope.get("selections")
+	for(x in computedvalue2){
+	if(@Trim(x) != ""){
+	scope1.add(x)
+	}				
+				}
+			}
+		}
+
+}]]></xp:this.action>
+			<xp:this.refreshId><![CDATA[#{javascript:compositeData.dialogID + "panel" }]]></xp:this.refreshId>
+		</xp:eventHandler>
+		</xp:button>
+	
+	
+	<xp:panel id="${javascript:compositeData.dialogID}" dojoType="com.ZetaOne.widget.Dialog"
+		style="width:#{javascript:compositeData.dialogWidth};height:#{javascript:compositeData.dialogHeight};display:none">
+	
+		
+		<xp:this.dojoAttributes>
+			<xp:dojoAttribute name="title"
+				value="#{javascript:compositeData.dialogTitle}" />
+		</xp:this.dojoAttributes>
+		
+		<xp:panel>
+			<xp:this.id><![CDATA[${javascript:compositeData.dialogID + "panel"}]]></xp:this.id>
+	<xp:panel id="searchPanel1">
+		<xp:inputText id="searchText1"
+			value="#{viewScope.quicksearch}">
+		</xp:inputText>
+		<xp:button value="Search" id="button3">
+			<xp:eventHandler event="onclick" submit="true"
+				refreshMode="partial">
+				<xp:this.action><![CDATA[#{javascript:DataList.findbykey();}]]></xp:this.action>
+				<xp:this.refreshId><![CDATA[#{javascript:compositeData.dialogID + "table"}]]></xp:this.refreshId>
+			</xp:eventHandler>
+		</xp:button>	<xp:text escape="true" id="computedField3">
+		<xp:this.value><![CDATA[#{javascript:var computedvalue1 = @Left((compositeData.varName), ".") + ".get('" + @Right((compositeData.varName), ".") +  "')"
+var vector1 = eval(computedvalue1 )	;
+ vector1;
+ }]]></xp:this.value>
+	</xp:text>
+	</xp:panel>
+	<xp:panel id="viewPanel1">
+		<xp:pager id="pager1" layout="Previous Group Next"
+			partialRefresh="true">
+			<xp:this.for><![CDATA[#{javascript:compositeData.dialogID + "table"}]]></xp:this.for>
+		</xp:pager>
+		<xp:dataTable rows="10" value="#{DataList.datalist}">
+			<xp:this.id><![CDATA[${javascript:compositeData.dialogID + "table"}]]></xp:this.id>
+			<xp:this.var><![CDATA[${javascript:compositeData.dialogID + "list"}]]></xp:this.var>
+			<xp:column id="coulmn2">
+				<xp:button id="button1">
+					<xp:this.rendered><![CDATA[#{javascript:/*var keyCode = datalist1.getUNID();
+var myArray = sessionScope.get("myList");
+
+if (!myArray.contains(keyCode)) {
+return true;
+}
+else {
+	return false;
+}*/
+
+
+	return true;
+
+}]]></xp:this.rendered>
+					<xp:this.value><![CDATA[#{javascript:var1 = "+";
+var2="-";
+var3= eval(compositeData.dialogID + "list");
+
+var keyCode = var3.getDisplay_field();
+var computedvalue1 = @Left((compositeData.varName), ".") + ".get('" + @Right((compositeData.varName), ".") +  "')"
+var vector1 = eval(computedvalue1 )	;
+
+if(vector1!=keyCode){
+ var1
+}else{
+var2;
+}}]]></xp:this.value>
+					<xp:eventHandler event="onclick" submit="true"
+						refreshMode="partial"
+						refreshId="#{javascript:compositeData.addrefreshid}">
+						<xp:this.action><![CDATA[#{javascript:// get the universalID of the document
+//var keyCode =datalist1.getUNID();
+
+// Create an Array
+//var myArray = sessionScope.get("myList");
+
+//If it's not already in the Array then add it.
+//if (!myArray.contains(keyCode)) {
+//myArray.add(keyCode);
+//}
+ var3= eval(compositeData.dialogID + "list");
+valueselected = var3.getDisplay_field();
+selectedunid = var3.getUNID();
+selectdb = var3.getDocdb();
+print(selectdb)
+testdisp = @Left((compositeData.varName), ".") + ".get('" + @Right((compositeData.varName), ".") +  "')";
+var tdisp= eval(testdisp);
+if(tdisp!= valueselected){
+
+//set display
+	var disp = @Left((compositeData.varName), ".") + ".put('" + @Right((compositeData.varName), ".") + "','"  + valueselected +  "')"
+	eval(disp);
+
+//set unid
+//setvalue =(compositeData.fieldId);
+//getComponent(setvalue).setValue(selectedunid.toString());
+	var uid = @Left((compositeData.fieldId), ".") + ".put('" + @Right((compositeData.fieldId), ".") + "','"  + selectedunid +  "')";
+	eval(uid);
+//set the parentdb
+	
+var vdb =@Left((compositeData.varDb), ".") + ".put('" + @Right((compositeData.varDb), ".") + "','"  + selectdb +  "')";
+	eval(vdb)
+}else{
+	
+}
+//----------------------
+}]]></xp:this.action>
+						<xp:this.onComplete><![CDATA[XSP.partialRefreshGet("#{id:view1panel}");]]></xp:this.onComplete>
+					</xp:eventHandler>
+				</xp:button>
+
+				<xp:button value="-" id="button2">
+					<xp:this.rendered><![CDATA[#{javascript:/*var keyCode = datalist1.getUNID();
+var myArray = sessionScope.get("myList");
+
+if (!myArray.contains(keyCode)) {
+	return false;
+}
+else {
+	return true;
+}*/}]]></xp:this.rendered>
+					<xp:eventHandler event="onclick" submit="true"
+						refreshMode="partial"
+						refreshId="#{javascript:compositeData.addrefreshid}">
+						<xp:this.action><![CDATA[#{javascript:/*var keyCode = datalist1.getUNID();
+var myArray = sessionScope.get("myList");
+
+myArray.remove(keyCode)*/
+
+
+//sessionScope.keys.push(rowData.getDocument().getUniversalID())
+
+}]]></xp:this.action>
+					</xp:eventHandler>
+				</xp:button>
+				<xp:td>
+					<xp:text id="computedField2" escape="false">
+						<xp:this.value><![CDATA[#{javascript:var3=eval(compositeData.dialogID + "list");
+return var3.display_field;}]]></xp:this.value>
+					</xp:text>
+				</xp:td>
+			</xp:column>
+			<xp:column id="column1">
+
+				<xp:td></xp:td>
+
+
+
+			</xp:column>
+			<xp:this.facets>
+
+				<xp:span xp:key="header">
+					Display
+
+					<xp:repeat id="repeat2" rows="30"
+						value="#{sessionScope.myList}" var="listData">
+
+						<xp:text escape="true" id="computedField1">
+							<xp:this.value><![CDATA[#{javascript:listData + " , "}]]></xp:this.value>
+						</xp:text>
+					</xp:repeat>
+
+				</xp:span>
+			</xp:this.facets>
+		</xp:dataTable>
+	</xp:panel>
+		</xp:panel>
+</xp:panel>
+<xp:panel id="computePanel1">
+		
+		
+		<xp:text escape="true" id="computedField4" rendered="true">
+			<xp:this.value><![CDATA[#{javascript:print("+++++starting test 7+++++");
+try {
+	dragdata = getComponent("inputHidden1").getValue();
+	if (dragdata == "") {
+		print("dragdata is empty");
+		return;
+	}
+	ddObject = fromJson(dragdata);
+	archiveAction = (ddObject.table == "dataTable2") ? "Y" : "N";	
+	for (i=0;i<ddObject.docs.length;i++){
+		print(i + ": " + ddObject.docs[i]);
+		doc = database.getDocumentByUNID(ddObject.docs[i]);
+		doc.replaceItemValue("Archive",archiveAction);
+		doc.save(true,true);
+	}
+	getComponent("inputHidden1").setValue("")	
+}
+catch (e) {
+	print(e)
+}
+print("+++++ending test 7+++++");}]]></xp:this.value>
+		</xp:text><xp:br></xp:br>
+		<xp:inputHidden id="inputHidden1" value=""></xp:inputHidden></xp:panel>
+	<xp:br></xp:br>
+	 <xp:scriptBlock id="scriptBlock1">
+	 	<xp:this.value><![CDATA[
+var mainTableId = "#{id:view1table}";		
+var mainTableId2 = "#{id:view2table}";	
+var panelId = "#{id:viewPanel1}";
+var hiddenFldId = "#{id:inputHidden1}";
+var computePanelId = "#{id:computePanel1}";]]></xp:this.value>
+	 </xp:scriptBlock>
+	
+
+</xp:view>

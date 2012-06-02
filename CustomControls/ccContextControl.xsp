@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+<xp:this.rendered><![CDATA[#{javascript:if(	sessionScope.get('userdocumentId')==""){
+
+return false;}
+else return true;}]]></xp:this.rendered>
+	<xp:viewPanel rows="30" id="viewPanel1">
+		<xp:this.facets>
+			<xp:pager partialRefresh="true" layout="Previous Group Next"
+				xp:key="headerPager" id="pager1">
+			</xp:pager>
+		</xp:this.facets>
+		<xp:this.data>
+			<xp:dominoView var="view1"
+				databaseName="#{javascript:compositeData.databasename;}"
+				viewName="#{javascript:compositeData.viewname;}"
+				keys="#{javascript:sessionScope.get('userdocumentId');}">
+			</xp:dominoView>
+		</xp:this.data>
+		<xp:viewColumn id="viewColumn1">
+			<xp:this.value><![CDATA[#{javascript:var path =database.getFilePath();
+var dbpath =  @LeftBack(path ,"/");
+var db= dbpath+"/relation.nsf";
+var serv = @Word(@Implode(@DbName(),", "),", ", 1);
+var com = new Array(serv,db);
+var key = viewEntry.getColumnValue("Relationid")
+var tq = compositeData.selectionkey
+var lookup = @DbLookup(com, "relationBykey", key, tq);
+return lookup}]]></xp:this.value>
+			<xp:viewColumnHeader id="viewColumnHeader1"
+				value="Has relationship">
+			</xp:viewColumnHeader>
+		</xp:viewColumn>
+		<xp:viewColumn columnName="trg_data" id="viewColumn2">
+			<xp:this.rendered><![CDATA[#{javascript:if(compositeData.selectionkey == 2){
+return true;
+}else{
+	return false;
+}}]]></xp:this.rendered><xp:viewColumnHeader value="targetdata"
+				id="viewColumnHeader2">
+			</xp:viewColumnHeader>
+		<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+			<xp:this.action>
+				<xp:executeScript>
+					<xp:this.script><![CDATA[#{javascript:var dbname=viewEntry.getColumnValue("Targetdb");
+var db :NotesDatabase = session.getDatabase("","Demo2/"+dbname);
+var uid=viewEntry.getColumnValue("Targetid");
+var realdoc:NotesDocument=db.getDocumentByUNID(uid);
+var beanid=realdoc.getItemValueString("form");
+print(beanid)
+beanid=@LowerCase(beanid);
+print(beanid);
+sessionScope.put('docrelId',uid);
+var c= getComponent('container');
+if(sessionScope.get("Beanid")!=beanid){
+	eval(beanid+".reset()")
+	sessionScope.put("Beanid",beanid);
+	
+}
+if(sessionScope.get("Beanid")=="activity"){
+	sessionScope.put('actdocumentId',uid);
+	uiactivity.resetUI(c, facesContext,"/ccActivity.xsp");
+}else if(sessionScope.get("Beanid")=="user"){
+	sessionScope.put('userdocumentId',uid);
+	uiuser.resetUI(c, facesContext,"/ccUser.xsp");
+}}]]></xp:this.script>
+				</xp:executeScript>
+			</xp:this.action></xp:eventHandler></xp:viewColumn>
+		<xp:viewColumn columnName="src_data"
+						id="viewColumn4" displayAs="link">
+						<xp:this.rendered><![CDATA[#{javascript:if(compositeData.selectionkey == 3){
+return true;
+}else{
+	return false;
+}}]]></xp:this.rendered><xp:viewColumnHeader value="Source data"
+							id="viewColumnHeader4">
+						</xp:viewColumnHeader>
+
+						
+					<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+						<xp:this.action>
+							<xp:executeScript>
+								<xp:this.script><![CDATA[#{javascript:var dbname=viewEntry.getColumnValue("Source db");
+var db :NotesDatabase = session.getDatabase("","Demo2/"+dbname);
+
+var uid=viewEntry.getColumnValue("Source id");
+
+
+var realdoc:NotesDocument=db.getDocumentByUNID(uid);
+var beanid=realdoc.getItemValueString("form");
+
+beanid=@LowerCase(beanid);
+sessionScope.put('docrelId',uid);
+var c= getComponent('container');
+if(sessionScope.get("Beanid")!=beanid){
+	eval(beanid+".reset()")
+	sessionScope.put("Beanid",beanid);
+	
+}
+if(sessionScope.get("Beanid")=="activity"){
+	sessionScope.put('actdocumentId',uid);
+	uiactivity.resetUI(c, facesContext,"/ccActivity.xsp");
+}else if(sessionScope.get("Beanid")=="user"){
+	sessionScope.put('userdocumentId',uid);
+	uiuser.resetUI(c, facesContext,"/ccUser.xsp");
+}}]]></xp:this.script>
+							</xp:executeScript>
+						</xp:this.action></xp:eventHandler></xp:viewColumn>
+		
+		<xp:viewColumn id="viewColumn3"
+						columnName="relationid" rendered="false">
+						<xp:this.facets>
+							<xp:viewColumnHeader xp:key="header"
+								id="viewColumnHeader3" value="Relation key">
+							</xp:viewColumnHeader>
+						</xp:this.facets>
+					</xp:viewColumn>
+	</xp:viewPanel></xp:view>
+
+

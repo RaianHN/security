@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xc="http://www.ibm.com/xsp/custom">
+
+	<xp:div binding="#{uiuser.userPanel}"></xp:div>
+	<xp:section id="section1" header="Contextual UI"
+		initClosed="false">
+		<xp:this.rendered><![CDATA[#{javascript:if(	sessionScope.get('userdocumentId')==""){
+
+return false;}
+else return true;}]]></xp:this.rendered>
+
+		<xc:ccContextUI></xc:ccContextUI>
+		<xc:ccContextual_UI></xc:ccContextual_UI></xp:section>
+</xp:view>
