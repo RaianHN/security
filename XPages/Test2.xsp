@@ -14,6 +14,7 @@
 		<xp:inputText id="inputText3" value="#{viewScope.mdb}"></xp:inputText>
 	</xp:panel>
 	<xp:scriptBlock id="scriptBlock1">
+	
 	 	<xp:this.value><![CDATA[
 	
 var refreshpanelId = "#{id:p1}";
