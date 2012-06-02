@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xc="http://www.ibm.com/xsp/custom"
+	xmlns:xe="http://www.ibm.com/xsp/coreex">
+
+
+	<xp:div id="maindiv">
+
+		<xc:BsuiteBanner></xc:BsuiteBanner>
+
+		<xc:BsuiteTitleBar></xc:BsuiteTitleBar>
+
+
+		
+
+
+
+		<xe:djTabContainer id="djTabContainer1"
+			style="width:70.0%;height50%;height:500.0px">
+
+
+
+
+			<xe:djTabPane id="djTabPane1" title="sssssss">
+				<xp:button value="kkkkk" id="button4"></xp:button>
+			</xe:djTabPane>
+
+
+
+			<xe:djTabPane id="djTabPane2" title="wwwww"
+				closable="false">
+				<xp:button value="22222" id="button5"></xp:button>
+			</xe:djTabPane>
+			<xe:djTabPane id="djTabPane3" title="Tab123"></xe:djTabPane>
+		</xe:djTabContainer>
+
+
+
+	</xp:div>
+</xp:view>

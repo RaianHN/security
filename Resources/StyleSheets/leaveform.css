@@ -1,0 +1,16 @@
+.xspButtonCommand{
+	color:white;
+	border:0px;
+	background-color:transparent;
+	cursor:pointer;
+}
+
+.xspButtonCommand:hover{
+	text-decoration: underline;
+	 background-repeat: repeat-x;
+    font-weight: bold;
+    background-color: #DEDEDE;
+    background-image: url("../images/btnBkgd.png");
+    color: #222222;
+
+}

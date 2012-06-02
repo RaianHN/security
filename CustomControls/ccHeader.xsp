@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xe="http://www.ibm.com/xsp/coreex"
+	xmlns:xc="http://www.ibm.com/xsp/custom">
+		<xp:table styleClass="portletHeader" style="width:100%" id="headertab">
+			<xp:tr>
+				<xp:td style="font-weight:bold" id="hcell1">
+					<xp:text escape="true" id="idvalue"
+						styleClass="bold">
+						<xp:this.value><![CDATA[#{javascript:getComponent("idvalue").getParent().getParent().getParent().getParent().getParent().getId();}]]></xp:this.value>
+					</xp:text>
+					<xp:text escape="true" id="num1"
+						value="#{sessionScope.ttno}" styleClass="bold">
+
+						<xp:this.rendered><![CDATA[#{javascript:var field = getComponent('idvalue');
+  var value = field.getValue(); 
+  if( "Ticket" == value ){ 
+         // else not yet submitted 
+        return true
+  }
+  else{return false
+  }
+ 
+  }]]></xp:this.rendered>
+					</xp:text></xp:td>
+				
+				<xp:td align="right"
+					style="white-space:nowrap;padding-left:80px" id="hcell2">
+					
+					&#160;&#160;
+					<xp:image url="/close_icon.gif" id="image5"
+						title="Close Others" styleClass="image">
+						<xp:eventHandler event="onclick" submit="true"
+							refreshMode="partial" refreshId="mainpane">
+							<xp:this.action><![CDATA[#{javascript:closeOtherPortlets()}]]></xp:this.action>
+							<xp:this.onComplete><![CDATA[XSP.partialRefreshGet("#{id:banner1}");]]></xp:this.onComplete>
+						</xp:eventHandler>
+					</xp:image>
+					&#160;&#160;
+
+					<xp:image url="/arrow_jump.gif" id="image3"
+						title="Jump" styleClass="image">
+						<xp:eventHandler event="onmouseover"
+							submit="false">
+							<xp:this.script><![CDATA[XSP.openMenu(thisEvent,#{javascript:getComponent('popupoptions').getMenuCtor()});]]></xp:this.script>
+						</xp:eventHandler>
+					</xp:image>
+					&#160;&#160;
+
+					<xp:image id="image4" styleClass="image"
+						title="Expand/Collapse">
+						<xp:this.url><![CDATA[#{javascript:
+/*
+var id=getComponent("idvalue").getValue();
+var style=getComponent(id+"pane").getStyle();
+
+if (style=="" || style==null || style=="display:"){
+	return "/minimizetrial.gif";
+}else {
+	return "/maximizetrial.gif";
+}
+*/
+
+
+var id=getComponent("idvalue").getValue();
+var style=getComponent(id+"pane").getStyle();
+
+if (style == null)
+{
+	return "/minimizetrial.gif";
+}
+else 
+{	
+	var arr = style.split(";");
+	var len = arr.length;
+	println("arr[0]"+ arr[0]);
+	if (arr[0] == "display:none")
+	{
+		return "/maximizetrial.gif";
+	} 
+	else if (arr[0] == "display: ")
+	{
+		return "/minimizetrial.gif";
+	}
+	else if ((len == 2) && (arr[0] != "display:none") && (arr[0] != "display: "))
+	{
+		return "/minimizetrial.gif";
+	}
+	
+}
+}]]></xp:this.url>
+						<xp:eventHandler event="onclick" submit="true"
+							refreshMode="partial"
+							refreshId='#{javascript:var id = getComponent("idvalue").getValue();
+var toggle = viewScope.get("moveableToggle");
+if (toggle == "0")
+{
+
+	return "dnd";
+}
+else if (toggle == "1")
+{
+	return id;
+	
+}
+}'
+							id="eventHandler3">
+
+							<xp:this.action><![CDATA[#{javascript:/*
+var id=getComponent("idvalue").getValue();
+var style=getComponent(id+"pane").getStyle();
+if (style=="" || style==null || style=="display:"){
+	getComponent(id+"pane").setStyle("display:none");
+}else {
+	getComponent(id+"pane").setStyle("display:");
+}
+*/
+
+
+
+var id = getComponent("idvalue").getValue();
+var con = getComponent(id+"pane");
+var toggle = viewScope.get("moveableToggle");
+println("con"+ con);
+var style= con.getStyle();
+if (style == null)
+{
+	con.setStyle("display:none;");
+	if (toggle == "0")
+	{
+		getComponent("tomoveable").setValue("reorder");
+	}
+	return;
+}
+else 
+{	
+	var arr = style.split(";");
+	var len = arr.length;
+	if (len == 2)
+	{
+		if (arr[0] == "display: ")
+		{
+			con.setStyle("display:none;");
+		}
+		else if (arr[0] == "display:none")
+		{
+			con.setStyle("display: ;");
+		}
+		else 
+		{
+			con.setStyle("display:none;" + arr[0]+";"+arr[1]);
+		}
+	}
+	else 
+	{
+		if (arr[0] == "display: ")
+		{
+			con.setStyle("display:none;" + arr[1]+";"+arr[2]);
+		}
+		else if (arr[0] == "display:none")
+		{
+			con.setStyle("display: ;" + arr[1]+";"+arr[2]);
+		}
+	}
+	
+}
+if (toggle == "0")
+	{
+		getComponent("tomoveable").setValue("reorder");
+	}
+
+
+}]]></xp:this.action>
+
+							<xp:this.onComplete><![CDATA[XSP.partialRefreshPost("#{id:homepanel}");]]></xp:this.onComplete>
+
+
+						</xp:eventHandler>
+					</xp:image>
+					&#160;
+					<xp:image id="image2"
+						style="height:16.0px;width:16.0px" styleClass="image">
+						<xp:this.url><![CDATA[#{javascript:var id=getComponent("idvalue").getValue();
+var style=getComponent(id+"pane").getStyle();
+println(style);
+if (style == null)
+{
+	return "/max.JPG";
+}
+else 
+{
+	var arr = style.split(";");
+	
+	if (arr[1] == "")
+	{
+		return "/max.JPG";
+	}
+	else 
+	{
+		 return "/restore.JPG";
+	} 
+
+	
+}}]]></xp:this.url>
+						<xp:this.rendered><![CDATA[#{javascript:var toggle = viewScope.get("moveableToggle");
+if (toggle == "1")
+{
+	return true;
+}
+else if (toggle == "0")
+{
+	return false;
+}}]]></xp:this.rendered>
+
+						<xp:this.title><![CDATA[#{javascript:var id=getComponent("idvalue").getValue();
+var style=getComponent(id+"pane").getStyle();
+println(style);
+if (style == null)
+{
+	return "max";
+}
+else 
+{
+	var arr = style.split(";");
+	
+	if (arr[1] == "")
+	{
+		return "max";
+	}
+	else 
+	{
+		 return "restore";
+	} 
+
+	
+}}]]></xp:this.title>
+						<xp:eventHandler event="onclick" submit="true"
+							refreshMode="partial"
+							refreshId='#{javascript:var id=getComponent("idvalue").getValue();
+return id+"moveable";}'>
+							<xp:this.action><![CDATA[#{javascript:
+
+var id = getComponent("idvalue").getValue();
+
+con = getComponent(id+"pane");
+
+var style = con.getStyle();
+println("style1:"+style);
+
+
+if (style == null)
+{
+	var hidden = getComponent("screenSize");
+	
+	println("hidden"+hidden.getValue());
+	if (hidden != null)
+	{if(hidden.getValue()==null){
+		return;
+		}
+		var sarr = hidden.getValue().split("-");
+		
+		var moveable = getComponent(id+"moveable");
+		var position = moveable.getStyle();
+		//var position = sessionScope.get(id+"position");
+		var attr = position.split(";");
+		var zindex= java.lang.Integer.valueOf(viewScope.zIndex)+1 ;
+		//var zindex = java.lang.Integer.valueOf(attr[3].split(":")[1]) +1;
+		println("moveable:"+ position);
+		sessionScope.put(id+"position", position);
+		moveable.setStyle("position: absolute; left: 0px ; top: 0px;"+ "z-index:"+zindex);
+		con.setStyle("display: ; height:"+ sarr[0]+"px; width:"+sarr[1]+"px");
+	}
+	
+}
+else 
+{	
+	var arr = style.split(";");
+	var len = arr.length; 
+	if (len == 2)
+	{
+		var hidden = getComponent("screenSize");
+		
+		println("hidden"+hidden.getValue());
+		if (hidden != null)
+		{
+		if(hidden.getValue()==null){
+		return;
+		}
+			var sarr = hidden.getValue().split("-");
+			var moveable = getComponent(id+"moveable");
+	   		var position = moveable.getStyle();
+	   		//var position = sessionScope.get(id+"position");
+	    	var attr = position.split(";");
+			var zindex= java.lang.Integer.valueOf(viewScope.zIndex)+1 ;
+		//var zindex = java.lang.Integer.valueOf(attr[3].split(":")[1]) +1;
+	    	sessionScope.put(id+"position", position);
+	    	moveable.setStyle("position: absolute; left:0px ; top: 0px;"+ "z-index:"+zindex);
+			con.setStyle(arr[0]+ ";" + "height:"+ sarr[0]+"px; width:"+ sarr[1]+"px");
+		}
+	}
+	else if (len == 3)
+	{
+		var position = sessionScope.get(id+"position");
+		if (position != null)
+		{
+			 getComponent(id+"moveable").setStyle(position);
+		}
+		con.setStyle(arr[0]+ ";");
+	}
+	
+	
+}}]]></xp:this.action>
+						</xp:eventHandler>
+					</xp:image>
+					&#160;
+					<xp:image url="/close_red.gif" id="image1"
+						styleClass="image" style="height:16.0px;width:16.0px"
+						title="Close">
+						<xp:eventHandler event="onclick"
+							refreshMode="partial" id="eventHandler4" submit="true"
+							refreshId="mainpane">
+							<xp:this.action><![CDATA[#{javascript:var id=getComponent("idvalue").getValue();
+println("deleteid:"+id);
+var con = getComponent("container");
+var port = getComponent(id);
+var lnklst = getComponent("linklist");
+var lnk = getComponent(id+"link");
+if (viewScope.moveableToggle=="1"){
+	var moveableport = getComponent(id+"moveable");
+	com.weberon.DynamicCC1.removePortlet(con, moveableport);
+}else if(viewScope.moveableToggle=="0"){
+	com.weberon.DynamicCC1.removePortlet(con, port);
+}
+com.weberon.DynamicCC1.removeLink(lnklst, lnk); 
+}]]></xp:this.action>
+							<xp:this.onComplete><![CDATA[XSP.partialRefreshGet("#{id:banner1}");
+]]></xp:this.onComplete>
+						</xp:eventHandler>
+
+					</xp:image>
+				</xp:td>
+			</xp:tr>
+		</xp:table>
+
+		<xe:popupMenu id="popupoptions">
+			<xp:eventHandler id="eventHandler7" event="onItemClick"
+				refreshMode="partial" submit="true" refreshId="mainpane">
+
+
+				<xp:this.onError><![CDATA[alert("error");]]></xp:this.onError>
+
+
+
+			</xp:eventHandler>
+			<xe:this.treeNodes>
+
+				<xe:beanTreeNode nodeBean="jump"></xe:beanTreeNode>
+
+
+
+			</xe:this.treeNodes>
+		</xe:popupMenu>
+</xp:view>

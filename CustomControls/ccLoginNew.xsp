@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xe="http://www.ibm.com/xsp/coreex">
+	
+	<xe:dialog id="dialoglogin" title="Bsuite Login">
+			
+			<xp:panel styleClass="loginMessageText">
+
+				<xp:text escape="true" id="computedField10">
+					<xp:this.value><![CDATA[#{javascript:compositeData.get("loginMessage")}]]></xp:this.value>
+				</xp:text>
+			</xp:panel>
+			<xp:panel styleClass="loginErrorText" id="loginErrorPanel">
+			</xp:panel>
+			<xp:panel styleClass="loginFieldsGroup">
+				<xp:table >
+					<xp:tr>
+						<xp:td style="border:0;width:68.0px;">
+							<xp:label value="User" id="lblUser"
+								>
+							</xp:label>
+						</xp:td>
+						<xp:td style="width:203.0px;border:0;">
+							<xp:inputText id="inpUser"
+								style="width:95%">
+							</xp:inputText>
+						</xp:td>
+					</xp:tr>
+					<xp:tr>
+						<xp:td style="border:0;width:68.0px;">
+							<xp:label value="Password" id="lblPassword"
+								>
+							</xp:label>
+						</xp:td>
+						<xp:td style="width:203.0px;border:0;">
+							<xp:inputText id="inpPassword"
+								password="true" style="width:95%">
+							</xp:inputText>
+						</xp:td>
+					</xp:tr>
+				</xp:table>
+			</xp:panel>
+
+			<xp:panel styleClass="loginButtonContainer">
+				<xp:text escape="false" id="computedField11"
+					style="margin:15px;width:100px;">
+					<xp:this.value><![CDATA[<script language="javascript">
+processLogin = function() {
+dojo.xhrPost({
+    url : '#{javascript:compositeData.get("loginURL");}',
+    handleAs : "text",
+    preventCache : true,
+    content: {
+    	"UserName": dojo.byId('#{javascript:getClientId("inpUser")}').value,
+    	"Password": dojo.byId('#{javascript:getClientId("inpPassword")}').value
+    },
+    load : function(response, ioArgs) {
+    					if (response.indexOf('action="/names.nsf?Login"')==-1){
+    						document.cookie = "BackupSesID=; expires=Thu, 01-Jan-70 00:00:01 GMT";
+    						window.location.href = '#{javascript:compositeData.get("successURL");}';
+    					}else{
+    						dojo.xhrGet({
+    							url : '#{javascript:compositeData.get("logoutURL");}',
+    							handleAs : "text",
+							preventCache : true,
+    							load : function(response, ioArgs) {
+    								if (document.cookie.indexOf('BackupSesId=')!=-1){
+    									document.cookie = "DomAuthSessId=" + document.cookie.split('BackupSesID=')[1].substr(0, 32);
+    								}
+    								document.cookie = "BackupSesId=; expires=Thu, 01-Jan-70 00:00:01 GMT";
+    								dojo.byId('#{javascript:getClientId("loginErrorPanel")}').innerHTML = "You have entered an invalid username or password, or do not have sufficient credentials.";
+    							},
+    							error : function(response, ioArgs) {
+    								dojo.byId('#{javascript:getClientId("loginErrorPanel")}').innerHTML = "You have entered an invalid username or password, or do not have sufficient credentials.";
+    							}    							
+    						})
+    					}    					    					
+    				},
+    				error : function(response, ioArgs) {
+    					dojo.byId('#{javascript:getClientId("loginErrorPanel")}').innerHTML = "You have entered an invalid username or password, or do not have sufficient credentials.";
+    				}
+    			});
+} //processLogin
+</script>
+<button id="loginButton" style="margin:10px;" type="button" name="loginButton" onClick="processLogin()">Log In</button>]]></xp:this.value>
+				</xp:text>
+			</xp:panel>
+		</xe:dialog>
+	
+	<xp:link escape="true" id="link1" styleClass="bsuiteTitleText">
+		<xp:this.text><![CDATA[#{javascript:@Name("[CN]",@UserName())}]]></xp:this.text>
+		
+		<xp:eventHandler event="onmouseover" submit="false">
+			<xp:this.script><![CDATA[XSP.openMenu(thisEvent,#{javascript:getComponent('popuplogin').getMenuCtor()})]]></xp:this.script>
+		</xp:eventHandler></xp:link>
+
+	<xp:panel id="ref"></xp:panel>
+	<xe:popupMenu id="popuplogin">
+	<xp:eventHandler id="eventHandler11" event="onItemClick"
+		refreshMode="partial" refreshId="ref" submit="true">
+
+		<xp:this.onError><![CDATA[alert("error");]]></xp:this.onError>
+
+		<xp:this.action><![CDATA[#{javascript:
+		var user=@LowerCase(@Text(@Name("[CN]",@UserName())));
+							if (user != "anonymous"){
+							var logoff=compositeData.get("logoutURL");
+							facesContext.externalContext.redirect( logoff); 
+							}
+
+
+}]]></xp:this.action>
+		<xp:this.onComplete><![CDATA[
+
+var user='#{javascript:@LowerCase(@Text(@Name("[CN]",@UserName())))}';
+					if (user == "anonymous"){
+					XSP.openDialog("#{id:dialoglogin}");
+					}
+					
+
+]]></xp:this.onComplete>
+
+	</xp:eventHandler>
+
+	<xe:this.treeNodes>
+						
+			<xe:basicLeafNode  submitValue="something">
+			<xe:this.label><![CDATA[#{javascript:var userName = @LowerCase(@Text(@Name("[CN]",@UserName())));
+if (userName == "anonymous") {
+	return(compositeData.get("loginText"))
+} else {
+	return(compositeData.get("logoutText"))
+}}]]></xe:this.label>
+			
+			
+			</xe:basicLeafNode>
+		</xe:this.treeNodes>
+	</xe:popupMenu>
+	
+
+	
+</xp:view>
+

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257A11002504D0" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="7a6" sequence="1" unid="E68FDCA72050552565257A11003683BE">
+<created><datetime>20120602T152526,70+0530</datetime></created>
+<modified><datetime>20120602T152527,60+0530</datetime></modified>
+<revised><datetime>20120602T152527,59+0530</datetime></revised>
+<lastaccessed><datetime>20120602T152527,60+0530</datetime></lastaccessed>
+<addedtofile><datetime>20120602T152527,60+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Admin BSUITE/O=Development</name><name>CN=Test User1/O=Development</name><name>CN=Admin BSUITE/O=Development</name><name>CN=INB82/O=Development</name><name>CN=Test User1/O=Development</name><name>CN=INB82/O=Development</name><name>CN=Jaya K Prakash/O=Weberon</name><name>CN=Tenzing Sangmo/O=Weberon</name></updatedby>
+<wassignedby><name>CN=Tenzing Sangmo/O=Weberon</name></wassignedby>
+<item name="$TITLE"><text>silver.css</text></item>
+<item name="$Flags"><text>34C=Q</text></item>
+<item name="$FlagsExt" sign="true"><text>D</text></item>
+<item name="$FileModDT" sign="true"><datetime>20110716T133744,70+0530</datetime></item>
+<item name="$DesignerVersion" sign="true"><text>8.5.2</text></item>
+
+
+<item name="$FileNames" sign="true"><text>silver.css</text></item></note>
