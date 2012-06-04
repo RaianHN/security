@@ -1,16 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257A11002504D0" version="8.5" xmlns="http://www.lotus.com/dxl">
-<noteinfo noteid="7ae" sequence="1" unid="BEC4E2526589757265257A1100368F3F">
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257A11003683CF" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="3c2" sequence="21" unid="BEC4E2526589757265257A1100368F3F">
 <created><datetime>20120602T152556,15+0530</datetime></created>
-<modified><datetime>20120602T152556,19+0530</datetime></modified>
-<revised><datetime>20120602T152556,18+0530</datetime></revised>
-<lastaccessed><datetime>20120602T152556,19+0530</datetime></lastaccessed>
-<addedtofile><datetime>20120602T152556,19+0530</datetime></addedtofile></noteinfo>
-<updatedby><name>CN=Test User1/O=Development</name><name>CN=Admin BSUITE/O=Development</name><name>CN=INB82/O=Development</name><name>CN=Admin BSUITE/O=Development</name><name>CN=INB82/O=Development</name><name>CN=Test User1/O=Development</name><name>CN=INB82/O=Development</name><name>CN=Jaya K Prakash/O=Weberon</name><name>CN=Tenzing Sangmo/O=Weberon</name></updatedby>
-<wassignedby><name>CN=Tenzing Sangmo/O=Weberon</name></wassignedby>
+<modified><datetime>20120604T133852,31+0530</datetime></modified>
+<revised><datetime>20120604T133852,30+0530</datetime></revised>
+<lastaccessed><datetime>20120604T133852,31+0530</datetime></lastaccessed>
+<addedtofile><datetime>20120602T154019,46+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Tenzing Sangmo/O=Weberon</name></updatedby>
 <item name="$Flags"><text>34567Cg~`</text></item>
 <item name="$TITLE" sign="true"><text>bsuiteBlue.theme</text></item>
-<item name="$DesignerVersion" sign="true"><text>8.5.2</text></item>
+<item name="$DesignerVersion"><text>8.5.3</text></item>
 
 
 <item name="$FileNames" sign="true"><text>bsuiteBlue.theme</text></item>
-<item name="$CSSFiles" sign="true"><textlist><text>/.ibmxspres/dojoroot/dojox/widget/Portlet/Portlet.css</text><text>/.ibmxspres/domino/oneuiv2/defaultTheme/defaultTheme.css</text><text>/.ibmxspres/domino/oneuiv2/defaultTheme/dojoTheme.css</text><text>blue.css</text></textlist></item></note>
+<item name="$CSSFiles"><textlist><text>/.ibmxspres/dojoroot/dojox/widget/Portlet/Portlet.css</text><text>/.ibmxspres/domino/oneuiv2/defaultTheme/defaultTheme.css</text><text>/.ibmxspres/domino/oneuiv2/defaultTheme/dojoTheme.css</text><text>blue.css</text></textlist></item></note>

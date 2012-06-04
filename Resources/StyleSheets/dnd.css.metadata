@@ -1,14 +1,16 @@
-<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257A11001D5079" version="8.5" xmlns="http://www.lotus.com/dxl">
-<noteinfo noteid="31a" sequence="1" unid="82FC75394C2541876525792A001C25E2">
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257A11003683CF" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="36e" sequence="20" unid="82FC75394C2541876525792A001C25E2">
 <created><datetime>20111015T103727,06+0530</datetime></created>
-<modified><datetime>20120602T105014,24+0530</datetime></modified>
-<revised><datetime>20111015T103727,06+0530</datetime></revised>
-<lastaccessed><datetime>20120602T105014,24+0530</datetime></lastaccessed>
-<addedtofile><datetime>20120602T105014,24+0530</datetime></addedtofile></noteinfo>
-<updatedby><name>CN=Jake Ochs/O=CMTI</name><name>CN=Admin BSUITE/O=Development</name></updatedby>
+<modified><datetime>20120604T133852,01+0530</datetime></modified>
+<revised><datetime>20120604T133852,00+0530</datetime></revised>
+<lastaccessed><datetime>20120604T133852,01+0530</datetime></lastaccessed>
+<addedtofile><datetime>20120602T154019,04+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Tenzing Sangmo/O=Weberon</name></updatedby>
+<wassignedby><name>CN=Tenzing Sangmo/O=Weberon</name></wassignedby>
 <item name="$TITLE"><text>dnd.css</text></item>
 <item name="$MimeType"><text>text/css</text></item>
 <item name="$Flags"><text>34C=Q</text></item>
+<item name="$DesignerVersion"><text>8.5.3</text></item>
 
 
 <item name="$FileNames" sign="true"><text>dnd.css</text></item></note>

@@ -1,12 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?><note class="filter" maintenanceversion="3.0" replicaid="65257A11001D5079" version="8.5" xmlns="http://www.lotus.com/dxl">
-<noteinfo noteid="33e" sequence="41" unid="AD2B251DA4AD834865257935001FF44F">
+<?xml version="1.0" encoding="UTF-8"?><note class="filter" maintenanceversion="3.0" replicaid="65257A11003683CF" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="462" sequence="20" unid="AD2B251DA4AD834865257935001FF44F">
 <created><datetime>20111026T111901,59+0530</datetime></created>
-<modified><datetime>20120602T105014,42+0530</datetime></modified>
-<revised><datetime>20111027T180552,71+0530</datetime></revised>
-<lastaccessed><datetime>20120602T105014,42+0530</datetime></lastaccessed>
-<addedtofile><datetime>20120602T105014,42+0530</datetime></addedtofile></noteinfo>
-<updatedby><name>CN=Admin BSUITE/O=Development</name></updatedby>
+<modified><datetime>20120604T133849,26+0530</datetime></modified>
+<revised><datetime>20120604T133849,25+0530</datetime></revised>
+<lastaccessed><datetime>20120604T133849,26+0530</datetime></lastaccessed>
+<addedtofile><datetime>20120602T154020,26+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Tenzing Sangmo/O=Weberon</name></updatedby>
+<wassignedby><name>CN=Tenzing Sangmo/O=Weberon</name></wassignedby>
 <item name="$TITLE" sign="true"><text>vectorui</text></item>
 <item name="$Flags"><text>h534Q</text></item>
 <item name="$PublicAccess" sign="true"><text>1</text></item>
+<item name="$DesignerVersion"><text>8.5.3</text></item>
 </note>

@@ -1,17 +1,17 @@
-<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257A11002504D0" version="8.5" xmlns="http://www.lotus.com/dxl">
-<noteinfo noteid="7a2" sequence="1" unid="A490A5C095C5722965257A11003683BD">
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257A11003683CF" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="4c2" sequence="13" unid="A490A5C095C5722965257A11003683BD">
 <created><datetime>20120602T152526,69+0530</datetime></created>
-<modified><datetime>20120602T152527,44+0530</datetime></modified>
-<revised><datetime>20120602T152527,43+0530</datetime></revised>
-<lastaccessed><datetime>20120602T152527,44+0530</datetime></lastaccessed>
-<addedtofile><datetime>20120602T152527,44+0530</datetime></addedtofile></noteinfo>
-<updatedby><name>CN=Admin BSUITE/O=Development</name><name>CN=Test User1/O=Development</name><name>CN=Admin BSUITE/O=Development</name><name>CN=INB82/O=Development</name><name>CN=Test User1/O=Development</name><name>CN=INB82/O=Development</name><name>CN=Jaya K Prakash/O=Weberon</name><name>CN=Tenzing Sangmo/O=Weberon</name></updatedby>
+<modified><datetime>20120604T133852,11+0530</datetime></modified>
+<revised><datetime>20120604T133852,10+0530</datetime></revised>
+<lastaccessed><datetime>20120604T133852,11+0530</datetime></lastaccessed>
+<addedtofile><datetime>20120602T154020,74+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Tenzing Sangmo/O=Weberon</name></updatedby>
 <wassignedby><name>CN=Tenzing Sangmo/O=Weberon</name></wassignedby>
 <item name="$TITLE"><text>red.css</text></item>
 <item name="$Flags"><text>D34C=Q</text></item>
 <item name="$FlagsExt" sign="true"><text>D</text></item>
 <item name="$FileModDT" sign="true"><datetime>20110716T110609,00+0530</datetime></item>
-<item name="$DesignerVersion" sign="true"><text>8.5.2</text></item>
+<item name="$DesignerVersion"><text>8.5.3</text></item>
 
 
 <item name="$FileNames" sign="true"><text>red.css</text></item></note>

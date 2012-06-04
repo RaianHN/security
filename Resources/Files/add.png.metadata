@@ -1,17 +1,18 @@
-<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257A11001D5079" version="8.5" xmlns="http://www.lotus.com/dxl">
-<noteinfo noteid="2de" sequence="1" unid="75F42B8FC984E87765257925004A037B">
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257A11003683CF" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="33e" sequence="20" unid="75F42B8FC984E87765257925004A037B">
 <created><datetime>20111010T185825,55+0530</datetime></created>
-<modified><datetime>20120602T105013,94+0530</datetime></modified>
-<revised><datetime>20111010T185825,55+0530</datetime></revised>
-<lastaccessed><datetime>20120602T105013,94+0530</datetime></lastaccessed>
-<addedtofile><datetime>20120602T105013,94+0530</datetime></addedtofile></noteinfo>
-<updatedby><name>CN=Mark Hughes/O=rcc</name><name>CN=Admin BSUITE/O=Development</name></updatedby>
+<modified><datetime>20120604T133851,75+0530</datetime></modified>
+<revised><datetime>20120604T133851,74+0530</datetime></revised>
+<lastaccessed><datetime>20120604T133851,75+0530</datetime></lastaccessed>
+<addedtofile><datetime>20120602T154018,80+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Tenzing Sangmo/O=Weberon</name></updatedby>
+<wassignedby><name>CN=Tenzing Sangmo/O=Weberon</name></wassignedby>
 <item name="$TITLE"><text>add.png</text></item>
 <item name="$FlagsExt"><text>D</text></item>
-
 <item name="$FileModDT" sign="true"><datetime>20060312T194816,00-06</datetime></item>
-
-<item name="$FileNames" sign="true"><text>add.png</text></item>
-<item name="$DesignerVersion"><text>8.5</text></item>
 <item name="$EditFilePath"><text>C:\Users\mhughes.RCC\AppData\Local\Temp\notes142542\~add.png</text></item>
-<item name="$Flags"><text>345CgQ$</text></item></note>
+<item name="$Flags"><text>345CgQ$</text></item>
+<item name="$DesignerVersion"><text>8.5.3</text></item>
+
+
+<item name="$FileNames" sign="true"><text>add.png</text></item></note>
