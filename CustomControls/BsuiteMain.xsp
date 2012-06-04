@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+xmlns:xe="http://www.ibm.com/xsp/coreex">
+
+
+
+	<xp:panel>
+		<xe:djTabContainer id="djTabContainer1"
+			style="height:682px;width:100%;">
+
+			<xe:djTabPane id="djTabPane1" title="Employees">
+				<xp:inputText id="inputText1" value="#{role.roleName}"></xp:inputText>
+			</xe:djTabPane>
+				<xe:djTabPane id="djTabPane2" title="InOut">
+					
+				</xe:djTabPane>
+				<xe:djTabPane id="djTabPane3" title="Documents">
+			</xe:djTabPane>
+		</xe:djTabContainer></xp:panel></xp:view>
