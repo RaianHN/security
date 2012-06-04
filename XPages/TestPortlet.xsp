@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+
+	<xp:eventHandler event="onClientLoad" submit="true"
+		refreshMode="partial" refreshId="mainpane">
+		<xp:this.action><![CDATA[#{javascript:var r = getComponent('container'); 
+var s = facesContext; 
+var ccheader="/ccHeader.xsp";
+//var ccheader=null;
+viewScope.moveableToggle="1";
+	viewScope.position="10";
+	viewScope.zIndex= "1";
+if(r==null){
+println("r is null");
+}
+com.weberon.DynamicCC1.createPortlet(s, r,ccheader,'/TetPortlet.xsp','Home','Home');}]]></xp:this.action>
+	</xp:eventHandler>
+	<xp:panel id="mainpane"><xp:div id="container"></xp:div></xp:panel>
+	
+</xp:view>

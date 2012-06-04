@@ -1,15 +1,15 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE note SYSTEM 'xmlschemas/domino_8_5_3.dtd'>
 <note default='true' class='icon' xmlns='http://www.lotus.com/dxl' version='8.5'
- maintenanceversion='3.0' replicaid='65257A11001D5079'>
-<noteinfo noteid='11a' unid='AC4CB44627B9840D652579070019B288' sequence='11'>
-<created><datetime>20110910T101041,04+0530</datetime></created>
-<modified><datetime>20120602T105014,46+0530</datetime></modified>
-<revised><datetime>20120602T105014,45+0530</datetime></revised>
-<lastaccessed><datetime>20120602T105014,46+0530</datetime></lastaccessed>
-<addedtofile><datetime>20120602T105011,68+0530</datetime></addedtofile></noteinfo>
-<updatedby><name>CN=Admin BSUITE/O=Development</name><name>CN=Test User1/O=Development</name><name
->CN=Admin BSUITE/O=Development</name></updatedby>
+ maintenanceversion='3.0' replicaid='65257A11002504D0'>
+<noteinfo noteid='11a' unid='E595BF7010C638F065257A11002504F1' sequence='0'>
+<created><datetime>20120602T121420,97+0530</datetime></created>
+<modified><datetime>20120602T154554,92+0530</datetime></modified>
+<revised><datetime>20120602T153505,40+0530</datetime></revised>
+<lastaccessed><datetime>20120602T154554,92+0530</datetime></lastaccessed>
+<addedtofile><datetime>20120602T121421,01+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Tenzing Sangmo/O=Weberon</name></updatedby>
+<wassignedby><name>CN=Tenzing Sangmo/O=Weberon</name></wassignedby>
 <item name='IconBitmap' summary='true'>
 <rawitemdata type='6'>
 AiAgAQAA///////wD///gAH//gAAf/wAAD/4AAAf8AAAD+AAAAfgAAAHwAAAA8AAAAPAAAADgAAA
@@ -29,6 +29,7 @@ AAAAUEECICABAAD/////+A4DgA==
 <item name='$Flags'><text>J!?</text></item>
 <item name='$FlagsNoRefresh'><text/></item>
 <item name='$DefaultClientXPage'><text>SushantActivity.xsp</text></item>
-<item name='$Daos'><text>0</text></item>
-<item name='$TITLE'><text>Employees MVC Phase2</text></item></note>
+<item name='$TITLE'><text>Employees MVC Phase2</text></item>
+<item name='$DBTheme'><text>bsuiteBlue.theme</text></item>
+<item name='$Daos'><text>0</text></item></note>
 

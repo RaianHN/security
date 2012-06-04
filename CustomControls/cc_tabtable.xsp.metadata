@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257A11002504D0" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="632" sequence="11" unid="ABEE148789FBF7F465257A1100325E4A">
+<created><datetime>20120602T144009,38+0530</datetime></created>
+<modified><datetime>20120602T145419,80+0530</datetime></modified>
+<revised><datetime>20120602T145303,62+0530</datetime></revised>
+<lastaccessed><datetime>20120602T145419,80+0530</datetime></lastaccessed>
+<addedtofile><datetime>20120602T145419,80+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Tenzing Sangmo/O=Weberon</name></updatedby>
+<wassignedby><name>CN=Tenzing Sangmo/O=Weberon</name></wassignedby>
+<item name="$Flags"><text>gC~4;</text></item>
+<item name="$TITLE"><text>cc_tabtable.xsp</text></item>
+
+
+
+<item name="$DesignerVersion"><text>8.5</text></item>
+
+
+
+
+<item name="$FileNames" sign="true"><text>cc_tabtable.xsp</text></item>
+
+</note>

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xc="http://www.ibm.com/xsp/custom"
+	xmlns:xe="http://www.ibm.com/xsp/coreex">
+
+	<xp:this.afterPageLoad><![CDATA[#{javascript:viewScope.opterr="false"}]]></xp:this.afterPageLoad>
+	<xp:panel id="titleerr">
+		
+		<xp:inputHidden id="settingerr" value="#{viewScope.opterr}">
+		</xp:inputHidden>
+
+		<xp:inputHidden id="settingch" value="#{viewScope.optchoice}">
+		</xp:inputHidden>
+		</xp:panel>
+	
+	<xp:table styleClass="bsuiteTitleBar">
+		<xp:tr>
+			<xp:td>
+				<xp:label value="#{javascript:database.getTitle();}"
+					id="label1" styleClass="bsuiteTitleText">
+				</xp:label>
+			</xp:td>
+			<xp:td colspan="3">
+				
+			</xp:td>
+
+
+			<xp:td colspan="12" align="right">
+
+				
+
+
+
+
+			<!-- 	<xp:label id="label9" value="|"
+					styleClass="bsuiteTitleText">
+				</xp:label>
+				<xc:login loginText="Log In" loginURL="/names.nsf?Login"
+					logoutText="Log Off"
+					successURL="${javascript:'/' + database.getFilePath() + '/LoginSuccess.xsp';}"
+					verifyAccessURL="${javascript:'/' + database.getFilePath() + '/verifyLogin.xsp';}"
+					loginMessage="Please Enter Your Username and Password Below"
+					titleBar="Bsuite Login!">
+					<xc:this.logoutURL><![CDATA[${javascript:'/names.nsf?logout&RedirectTo=/' + database.getFilePath() + '/LogoutSuccess.xsp';}]]></xc:this.logoutURL>
+				</xc:login>-->
+
+
+
+
+
+
+
+
+			
+			<xp:button id="button1" icon="/options.gif" style="height:22.0px">
+					<xp:this.rendered><![CDATA[#{javascript:var user=@LowerCase(@Text(@Name("[CN]",@UserName())));
+if (user == "anonymous"){
+	return false;
+}else{
+	return true;
+}}]]></xp:this.rendered><xp:eventHandler event="onclick" submit="false">
+						<xp:this.script><![CDATA[XSP.openMenu(thisEvent,#{javascript:getComponent('popupsettings').getMenuCtor()});
+]]></xp:this.script>
+					</xp:eventHandler></xp:button>
+			<xp:label value="|" id="label2"
+					styleClass="bsuiteTitleText">
+				<xp:this.rendered><![CDATA[#{javascript:var user=@LowerCase(@Text(@Name("[CN]",@UserName())));
+if (user == "anonymous"){
+	return false;
+}else{
+	return true;
+}}]]></xp:this.rendered></xp:label>
+				
+				<xc:ccLoginNew loginText="Log In" loginURL="/names.nsf?Login"
+					logoutText="Log Off"
+					successURL="${javascript:'/' + database.getFilePath() + '/LoginSuccess.xsp';}"
+					verifyAccessURL="${javascript:'/' + database.getFilePath() + '/verifyLogin.xsp';}"
+					loginMessage="Please Enter Your Username and Password Below"
+					titleBar="Bsuite Login!"><xc:this.logoutURL><![CDATA[${javascript:'/names.nsf?logout&RedirectTo=/' + database.getFilePath() + '/LogoutSuccess.xsp';}]]></xc:this.logoutURL>
+					</xc:ccLoginNew></xp:td>
+					
+		<xe:popupMenu id="popupsettings">
+					<xe:this.treeNodes>
+						<xe:basicLeafNode label="Change Password"
+							submitValue="changepasswd">
+						</xe:basicLeafNode>
+						<xe:basicLeafNode label="Set Theme"
+							submitValue="settheme">
+						</xe:basicLeafNode>
+						<xe:basicLeafNode label="Support"
+							submitValue="support">
+						</xe:basicLeafNode>
+						<xe:basicLeafNode label="Feedback"
+							submitValue="feedback">
+						</xe:basicLeafNode>
+					</xe:this.treeNodes>
+
+
+					<xp:eventHandler event="onItemClick"
+						refreshMode="partial" id="eventHandler12"
+						submit="true" refreshId="titleerr">
+						<xp:this.action><![CDATA[#{javascript:choice=context.getSubmittedValue();
+viewScope.optchoice = choice;
+if(choice=="support"){
+	bsuite.helper.Support().getSupportPersonnel();
+}}]]></xp:this.action>
+						<xp:this.onComplete><![CDATA[var ercheck=XSP.getElementById("#{id:settingerr}");
+var choice1=XSP.getElementById("#{id:settingch}");
+if(ercheck.value=="false"){
+
+switch (choice1.value){ 
+ case "changepasswd"	:	XSP.openDialog("#{id:dialogpicklistboolmark}");
+ 						break;
+ case "settheme"		:	XSP.openDialog("#{id:setthemeid}");
+ 						break;
+ case "support"			: XSP.openDialog('#{id:dialogsupport}');
+ 						break;
+ case "feedback"		:window.open(XSP.getElementById("#{id:feedbackurl}").value,'_newtab');
+ 						break;						
+ }
+}	]]></xp:this.onComplete>
+					</xp:eventHandler>
+				</xe:popupMenu>
+
+
+
+
+
+
+
+
+			<xp:td>
+				<xp:inputHidden id="feedbackurl">
+					<xp:this.defaultValue><![CDATA[#{javascript:var var1=@Name("[CN]",@UserName());
+var uname=@ReplaceSubstring(var1," ","+");
+var db=@Word(@Implode(@DbName(), ";"),";",2);
+var dbpath=@LeftBack(db,19);
+var mbdb=dbpath+"admntool.nsf";
+var serv=@Word(@Implode(@DbName(),";"),";",1);
+println("server:"+serv);
+var dbname=@List(serv,mbdb);
+
+var var7=@DbColumn(dbname,"setupprofile",17);//company name
+
+var companyname=@ReplaceSubstring(var7," ","+");
+
+var var9=@Implode(@DbColumn(dbname,"moduleprofile",2),",");
+
+var var10=@If(@IsError(var9),"Portal",var9);
+
+var var11=@Implode(@DbColumn(dbname,"moduleprofile",2),",");
+
+var var12=@ReplaceSubstring(db," ","+");
+var var13=@ReplaceSubstring(serv," ","+");
+var var99=@DbColumn(dbname,"setupprofile",18);//feedbackurl
+
+var exCon=facesContext.getExternalContext();
+var response=exCon.getResponse();
+//attrURL=var99+"/Feedback_form.xsp?"+uname+"*"+companyname+"^"+var10+"{"+var11+"}"+var12+"~"+var13;
+attrURL="http://www.weberon.com";
+//attrURL="http://192.72.10.17/Test/custfeed.nsf/Feedback_form.xsp?"+uname+"*"+companyname+"^"+var10+"{"+var11+"}"+var12+"~"+var13;
+
+return attrURL;
+
+}]]></xp:this.defaultValue>
+				</xp:inputHidden></xp:td>
+		</xp:tr>
+	</xp:table>
+	<xe:dialog id="setthemeid" >
+		<xc:settheme></xc:settheme>
+	</xe:dialog>
+	<xe:dialog id="dialogsupport" >
+		<xc:dialog_support></xc:dialog_support>
+	</xe:dialog>
+	
+	
+	</xp:view>

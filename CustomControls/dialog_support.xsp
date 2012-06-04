@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+
+	<xp:panel><xp:div style="text-align:center;font-size:11pt"><xp:span style="font-weight:bold;padding-top:0.0px;font-size:11pt">Support Personnel for</xp:span>
+		<xp:text escape="true" id="computedField1" value="#{viewScope.office}" style="font-weight:bold;color:rgb(0,0,128);padding-top:0.0px;font-size:11pt"></xp:text><xp:span style="padding-top:0.0px;font-size:11pt">  </xp:span><xp:span style="font-weight:bold;padding-top:0.0px;font-size:11pt">Location</xp:span></xp:div>
+		<xp:table style="margin-top:50.0px;margin-bottom:50px;border-color:rgb(192,192,192);border-style:solid;border-width:thin">
+			<xp:tr>
+				<xp:td>To give control of your system to Weberon's Support&#160;Personnel,
+					&#160;
+					<xp:link escape="true" text="Click Here" id="link1" style="font-weight:bold"></xp:link>
+					</xp:td>
+			</xp:tr>
+			<xp:tr>
+				<xp:td>To Log a Trouble Ticket, 
+					<xp:link escape="true" text="Click Here" id="link2" value="http://www.support.weberon.com/" style="font-weight:bold"  target="_newtab"></xp:link></xp:td>
+			</xp:tr>
+		</xp:table><xp:table style="font-weight:bold">
+			<xp:tr>
+				<xp:td styleClass="tablecell">
+					<xp:text escape="true" id="computedField2" value="#{viewScope.E1}" style="font-weight:bold"><xp:this.rendered><![CDATA[#{javascript:viewScope.E1!=""}]]></xp:this.rendered></xp:text><xp:br></xp:br>
+					<xp:text escape="true" id="computedField3" value="#{viewScope.T1}"><xp:this.rendered><![CDATA[#{javascript:viewScope.E1!=""}]]></xp:this.rendered></xp:text></xp:td>
+				<xp:td>
+					<xp:text escape="true" id="computedField4" value="#{viewScope.E2}" style="font-weight:bold"><xp:this.rendered><![CDATA[#{javascript:viewScope.E2!=""}]]></xp:this.rendered></xp:text><xp:br></xp:br>
+					<xp:text escape="true" id="computedField5" value="#{viewScope.T2}"><xp:this.rendered><![CDATA[#{javascript:viewScope.E2!=""}]]></xp:this.rendered></xp:text></xp:td>
+			</xp:tr>
+			<xp:tr>
+				<xp:td>
+					<xp:text escape="true" id="computedField6" value="#{viewScope.E3}" style="font-weight:bold"><xp:this.rendered><![CDATA[#{javascript:viewScope.E3!=""}]]></xp:this.rendered></xp:text>
+					<xp:br></xp:br><xp:text escape="true" id="computedField7" value="#{viewScope.T3}"><xp:this.rendered><![CDATA[#{javascript:viewScope.E3!=""}]]></xp:this.rendered></xp:text></xp:td>
+				<xp:td>
+					<xp:text escape="true" id="computedField8" value="#{viewScope.E4}" style="font-weight:bold"><xp:this.rendered><![CDATA[#{javascript:viewScope.E4!=""}]]></xp:this.rendered></xp:text><xp:br></xp:br>
+					<xp:text escape="true" id="computedField9" value="#{viewScope.T4}"><xp:this.rendered><![CDATA[#{javascript:viewScope.E4!=""}]]></xp:this.rendered></xp:text></xp:td>
+			</xp:tr>
+		</xp:table>
+		</xp:panel>
+	</xp:view>

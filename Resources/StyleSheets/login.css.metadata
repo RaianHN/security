@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257A11002504D0" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="7b6" sequence="1" unid="39C614A171DDB93A65257A11003683BC">
+<created><datetime>20120602T152526,68+0530</datetime></created>
+<modified><datetime>20120602T152828,43+0530</datetime></modified>
+<revised><datetime>20120602T152527,24+0530</datetime></revised>
+<lastaccessed><datetime>20120602T152828,43+0530</datetime></lastaccessed>
+<addedtofile><datetime>20120602T152828,43+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=INB81/O=Development</name><name>CN=Test User1/O=Development</name><name>CN=Admin BSUITE/O=Development</name><name>CN=INB82/O=Development</name><name>CN=Admin BSUITE/O=Development</name><name>CN=INB82/O=Development</name><name>CN=Test User1/O=Development</name><name>CN=INB82/O=Development</name><name>CN=Jaya K Prakash/O=Weberon</name><name>CN=Tenzing Sangmo/O=Weberon</name></updatedby>
+<wassignedby><name>CN=Tenzing Sangmo/O=Weberon</name></wassignedby>
+<item name="$TITLE"><text>login.css</text></item>
+<item name="$MimeType" sign="true"><text>text/css</text></item>
+<item name="$Flags"><text>34C=Q</text></item>
+
+
+<item name="$FileNames" sign="true"><text>login.css</text></item></note>

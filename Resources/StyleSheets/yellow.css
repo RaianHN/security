@@ -1,0 +1,401 @@
+
+.bsuiteSizes li{
+	background-image: url("div-small.gif");
+    background-repeat: no-repeat;
+    background-position: Left Center;
+    display: inline;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+
+.bsuiteSizes ul {
+	padding:0px;
+	margin:0px;
+	
+	}
+	
+.bsuiteSizes li.lotusFirst{
+	color:gray;
+	background-image: none;
+}
+.bsuiteSizes li.lotusLast {
+	color:gray;
+	background-image: none;
+}
+
+
+.bsuiteError{
+	color:red;
+}
+
+.bsuiteUI{
+	background-color: white;
+}
+
+.bsuiteBanner{
+	height: 4.7em;
+	font-family: Verdana, sans-serif;
+	font-size: 11px;
+	color: #000080;
+	position:relative;
+}
+
+.bsuiteTitleBar{
+	background-image: url("top_title_full.gif");
+	position:relative;
+	height: 2.2em;
+	width:100%;
+}
+
+
+.bsuiteTitleText{
+	color: #000080;
+	font-family: Verdana, sans-serif;
+	font-size:11px;
+	font-weight: bold;
+	text-decoration:none;
+	padding-left: 5px;
+}
+
+.bsuiteContentHeader{
+	position:relative;
+	width:100%;
+	background-color : #B9B8AD;
+}
+
+.bsuiteActionBar{
+	height:28px;
+	width:100%;
+	background-color: #281A11 ;
+	margin-top: -3px;
+	
+	    }
+
+.bsuiteForm{
+	background-color: #E2F1FF;
+}
+
+.bsuiteFormTable{
+	width:100%;
+	padding:20px;
+	border:none;
+}
+
+.bsuiteLabel{
+	color: #000080;
+	width:15%;
+	vertical-align: top;
+}
+
+.bsuiteField{
+	color: #000080;
+	width:85%;
+	vertical-align: top;
+}
+
+
+
+.xspButtonCommand{
+	color:white;
+	border:0px;
+	background-color:transparent;
+	cursor:pointer;
+}
+
+.xspButtonCommand-hover{
+	text-decoration: underline;
+}
+
+.tundra .dijitSplitContainer-dijitContentPane, .tundra .dijitBorderContainer-dijitContentPane{
+	padding:0px;
+	overflow:auto;
+	background-color:#FFFCEB;
+}
+
+.tundra .dijitAccordionContainer-dijitContentPane{
+	background: #F3E875 url("Navleft.gif") repeat-y top left ;
+	padding:10px 20px;
+	paddind-top:10px;
+	color: #000000;
+	list-style-type:none;
+}
+
+.tundra .dijitTabContainerTop-dijitContentPane{
+    background-color:#FFAD01;
+    padding: 0px;
+}
+
+.tundra .dijitTabContainerTopStrip {
+    background: #FFFACD url("left-header.gif") repeat-x top left ;
+    border-left: 0px ;
+    border-right: 0px ;
+    border-top: 0px ;
+    padding-top: 2px;
+}
+
+.dijitTab * {
+  color: white;
+}
+
+.tundra .dijitTab {
+    background: #FFAD01 url("left-header.gif") repeat-x top left;
+}
+
+.tundra .dijitTabChecked {
+	font-weight: bold;
+	font-family: Verdana, sans-serif;
+	font-size:11px;
+	background-color:#281A11;
+	border-bottom:1px;
+	background-image: none;
+}
+
+.tundra .dijitTabContainer .dijitTabCheckedHover {
+    background-color: #FFAD01;
+    border: 0px;
+    color: inherit;
+}
+
+.tundra .dijitSplitContainer-child, .tundra .dijitBorderContainer-child {
+	border:0px;
+}
+
+.tundra .dijitAccordionTitle {
+	background: #1D578C url("left-header.gif") repeat-x top left ;
+	color:white;
+}
+
+.tundra .dijitAccordionTitle-hover {
+	background: #1D578C url("left-header.gif") repeat-x top left ;
+	color:white;
+}
+
+.tundra .dijitAccordionTitle-selected {
+	background: #1D578C url("left-header.gif") repeat-x top left ;
+	color:white;
+}
+
+.tundra .dijitSplitterV{
+    background: none repeat scroll 0 0 #010101;
+    border: 0 none;
+    width: 9px;
+    margin: 0px -2px 0px -2px;
+}
+
+
+.tundra .dijitSplitterH {
+    background: none repeat scroll 0 0 #010101;
+    border: 0 none;
+    height: 9px;
+}
+
+.tundra .dijitGutterH {
+	height: 0px;
+}
+
+
+
+.tundra .dijitSplitterActive {
+    background-color: #010101;
+    background-image: none;
+    font-size: 1px;
+    margin: 0;
+    opacity: 0.6;
+}
+
+.tundra .dijitBorderContainer {
+	padding: 0px;
+}
+
+.viewwidth{
+	width:99%;
+}
+	
+.even{
+	background-color: #ECF4FF; 
+	color: #000080;
+}
+
+.even:hover{
+	background-color: #ECF4FF;
+}
+
+.odd{
+	background-color: #E2F1FF;
+	color: #000080;
+}
+
+.odd:hover{
+	background-color: #E2F1FF;
+}
+
+.xspPanelViewColumnHeader{
+	background-color:#F3E875;
+	color:black;
+	font-weight: bold;
+	margin-top:-1px;
+	margin-bottom:-1px;
+}
+
+.xspPanelViewColumnHeader:hover{
+	background-color:#FFAD01;
+}
+
+.xspDataTable {
+   background-color:#F3E875;
+}
+
+.xspDataTableViewPanelHeaderStart{
+	background-color:#B9B8AD;
+	display:none;
+}
+
+.xspDataTableViewPanelHeaderMiddle{
+	background-color:#ECF4FF;
+	display:none;
+}
+
+.xspDataTableViewPanelHeaderEnd{
+	background-color:#ECF4FF;
+	display:none;
+}
+
+.xspDataTableViewPanelFooterStart{
+	background-color:#ECF4FF;
+	display:none;
+}
+
+.xspDataTableViewPanelFooterMiddle{
+	background-color:#ECF4FF;
+	display:none;
+}
+
+.xspDataTableViewPanelFooterEnd{
+	background-color:#ECF4FF;
+	display:none;
+}
+
+.xspPagerRight {
+    background-color: #B9B8AD;
+}
+
+.bsuitePane{
+	background-color: #B9B8AD;
+}
+
+.xspLinkViewColumn{
+	color: #FFFAD4;
+}
+
+.bsuiteActionImage{
+	cursor:pointer;
+	padding:2px;
+}	
+	
+.simpleCalendar{
+	height:170px;
+	width:134px;
+	border: 1px inset #CCCCCC;
+	background-color: #B9B8AD;
+}
+
+.calHeader{
+	border: 1px solid transparent;
+	width:15px;
+	float:left;
+	text-align: center;
+	margin: 1px;
+	margin-bottom:3px;
+	background-color: transparent;
+	color: #004080;
+	font-weight:bold;		
+}
+		
+.calBlank{
+	width:15px;
+	float:left;
+	border: 1px solid transparent;
+	margin: 1px;
+}
+
+.calDate{
+	margin: 1px;
+	border: 1px solid transparent;
+	float:left;
+	text-align: center;
+	width:15px;
+	color: #004080;
+}
+
+.today{
+	margin: 1px;
+	border: 1px solid transparent;
+	float:left;
+	text-align: center;
+	width:15px;
+	color: #004080;
+	font-weight:bold;
+}
+.header{
+    height: 25px;
+    margin-bottom: 2px;
+    padding-top: 7px;
+    text-align: center;
+    color: #004080;
+}
+
+.calendar{
+	width:100%;
+	height:500px;
+	background: #F3E875 url("Navleft.gif") repeat-y top left ;
+}
+
+.lotusWidget2 .lotusWidgetBody {
+    clear: both;
+    padding: 0px 0px;
+}
+
+.lotusWidgetBody div.lotusChunk {
+    clear: both;
+    margin-top: 0px;
+}
+
+
+
+
+
+
+.dijitBorderContainer .dojoxToggleSplitterTop, .dijitBorderContainer .dojoxToggleSplitterBottom {
+    height: 9px;
+
+}
+.dijitBorderContainer .dojoxToggleSplitterLeft, .dijitBorderContainer .dojoxToggleSplitterRight {
+    width: 9px;
+}
+.dijitBorderContainer .dijitSplitterH .dojoxToggleSplitterIcon {
+    cursor: pointer;
+    height: 9px;
+    top: 0;
+    width: 9px;
+    padding-right: 5px;
+}
+.dijitBorderContainer .dijitSplitterV .dojoxToggleSplitterIcon {
+    cursor: pointer;
+    height: 20px;
+    left: 0;
+    width: 15px;
+    margin-left: 2px;
+}
+.tundra .dojoxToggleSplitterTop .dojoxToggleSplitterIconOpen, .tundra .dojoxToggleSplitterBottom .dojoxToggleSplitterIconClosed {
+    background: transparent url("arrow-up.gif") no-repeat left ;
+}
+.tundra .dojoxToggleSplitterBottom .dojoxToggleSplitterIconOpen, .tundra .dojoxToggleSplitterTop .dojoxToggleSplitterIconClosed {
+    background:transparent url("arrow-down.gif") no-repeat   left;
+}
+.tundra .dojoxToggleSplitterLeft .dojoxToggleSplitterIconOpen, .tundra .dojoxToggleSplitterRight .dojoxToggleSplitterIconClosed {
+    background:transparent url("arrow-left.gif") no-repeat    left;
+}
+.tundra .dojoxToggleSplitterRight .dojoxToggleSplitterIconOpen, .tundra .dojoxToggleSplitterLeft .dojoxToggleSplitterIconClosed {
+    background:transparent url("arrow-right.gif") no-repeat    left;
+}

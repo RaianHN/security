@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+
+	<xp:table>
+		<xp:tr>
+			<xp:td>Settheme</xp:td>
+			<xp:td>
+				<xp:comboBox id="comboBox1">
+					<xp:selectItem itemLabel=""></xp:selectItem>
+					<xp:selectItem itemLabel="bsuiteBlue"></xp:selectItem>
+					<xp:selectItem itemLabel="bsuitegreen"></xp:selectItem>
+					<xp:selectItem itemLabel="bsuiteSilver"></xp:selectItem>
+					<xp:selectItem itemLabel="bsuiteYellow"></xp:selectItem>
+					<xp:eventHandler event="onchange" submit="true"
+						refreshMode="complete">
+						<xp:this.action><![CDATA[#{javascript:var f = "/"+@RightBack(context.getUrl().getAddress(),"/");
+var g = getComponent('comboBox1').getValue();
+context.setSessionProperty('xsp.theme', g);
+var profdoc:NotesDocument= database.getProfileDocument("userprofile",session.getEffectiveUserName());
+profdoc.replaceItemValue("currentTheme",g);
+profdoc.save(true,false);
+context.redirectToPage(f)}]]></xp:this.action>
+					</xp:eventHandler>
+					<xp:selectItem itemLabel="bsuiteRed"></xp:selectItem>
+
+				</xp:comboBox></xp:td>
+		</xp:tr>
+		<xp:tr>
+			<xp:td></xp:td>
+			<xp:td></xp:td>
+		</xp:tr>
+	</xp:table></xp:view>
