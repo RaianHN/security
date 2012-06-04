@@ -10,6 +10,12 @@ public class Module {
 	
 	
 	
+	public ArrayList<Entity> getEntities() {
+		return entities;
+	}
+	public void setEntities(ArrayList<Entity> entities) {
+		this.entities = entities;
+	}
 	public String getModuleName() {
 		return moduleName;
 	}
