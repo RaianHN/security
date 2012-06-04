@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257A11002504D0" version="8.5" xmlns="http://www.lotus.com/dxl">
-<noteinfo noteid="66e" sequence="14" unid="56181E1D96F4EFF365257A1100326033">
+<noteinfo noteid="382" sequence="6" unid="56181E1D96F4EFF365257A1100326033">
 <created><datetime>20120602T144014,27+0530</datetime></created>
-<modified><datetime>20120602T145536,94+0530</datetime></modified>
-<revised><datetime>20120602T144647,52+0530</datetime></revised>
-<lastaccessed><datetime>20120602T145536,94+0530</datetime></lastaccessed>
-<addedtofile><datetime>20120602T145536,94+0530</datetime></addedtofile></noteinfo>
+<modified><datetime>20120602T144056,40+0530</datetime></modified>
+<revised><datetime>20120602T144056,39+0530</datetime></revised>
+<lastaccessed><datetime>20120602T144056,40+0530</datetime></lastaccessed>
+<addedtofile><datetime>20120602T144014,28+0530</datetime></addedtofile></noteinfo>
 <updatedby><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
 <wassignedby><name>CN=Jaya K Prakash/O=Weberon</name></wassignedby>
 <item name="$Flags"><text>gC~4;</text></item>
 <item name="$TITLE"><text>TetPortlet.xsp</text></item>
 
 
-
-
-
-
-
-<item name="$FileNames" sign="true"><text>TetPortlet.xsp</text></item>
 <item name="$DesignerVersion"><text>8.5</text></item>
 
-</note>
+
+
+
+
+
+
+<item name="$FileNames" sign="true"><text>TetPortlet.xsp</text></item></note>

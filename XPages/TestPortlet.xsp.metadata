@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257A11002504D0" version="8.5" xmlns="http://www.lotus.com/dxl">
-<noteinfo noteid="666" sequence="9" unid="DF73FF077A77582565257A110032F25E">
+<noteinfo noteid="386" sequence="5" unid="DF73FF077A77582565257A110032F25E">
 <created><datetime>20120602T144628,46+0530</datetime></created>
-<modified><datetime>20120602T145536,86+0530</datetime></modified>
-<revised><datetime>20120602T145159,46+0530</datetime></revised>
-<lastaccessed><datetime>20120602T145536,86+0530</datetime></lastaccessed>
-<addedtofile><datetime>20120602T145536,86+0530</datetime></addedtofile></noteinfo>
+<modified><datetime>20120602T145137,67+0530</datetime></modified>
+<revised><datetime>20120602T145137,66+0530</datetime></revised>
+<lastaccessed><datetime>20120602T145137,67+0530</datetime></lastaccessed>
+<addedtofile><datetime>20120602T144628,48+0530</datetime></addedtofile></noteinfo>
 <updatedby><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
 <wassignedby><name>CN=Jaya K Prakash/O=Weberon</name></wassignedby>
 <item name="$Flags"><text>gC~4K</text></item>
 <item name="$TITLE"><text>TestPortlet.xsp</text></item>
-
 <item name="$DesignerVersion"><text>8.5</text></item>
 
 
 
 
-<item name="$FileNames" sign="true"><text>TestPortlet.xsp</text></item>
 
-</note>
+
+
+<item name="$FileNames" sign="true"><text>TestPortlet.xsp</text></item></note>
