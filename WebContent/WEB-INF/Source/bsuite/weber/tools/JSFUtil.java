@@ -244,4 +244,17 @@ public class JSFUtil {
         	return columns;
         }
         
+        
+        
+ //Added by Tenzing on 4th June'12
+        
+        public static String getlookupkey(String relunid,String sourceunid){
+    		
+			if(relunid==null){
+				System.out.println("reluid is null");return null;
+				}									
+			return (sourceunid+"|"+relunid);		
+	}
+
+        
 } 
