@@ -24,7 +24,10 @@ import com.ibm.xsp.extlib.util.ExtLibUtil;
 
 public class NSFPageDataProvider implements DataObjectExt {
 
-	private static final long serialVersionUID = -3776444898112966400L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1532054140313463648L;
 
 	private static final String VIEWSCOPE_DATADOCUMENT="bsuite.weber.data.NSFPageDataProvider.document";
 	
@@ -212,7 +215,9 @@ public class NSFPageDataProvider implements DataObjectExt {
 	 * @author Karsten Lehmann
 	 */
 	private static class DocumentRef implements Serializable {
-		private static final long serialVersionUID = 4624822959316765795L;
+		
+		private static final long serialVersionUID = -1954569034088424056L;
+		
 		/** document is transient to avoid serialization attempts of Domino
 		 * between multiple XPage requests */
 		private transient Document m_doc;
@@ -224,5 +229,21 @@ public class NSFPageDataProvider implements DataObjectExt {
 		public Document getDocument() {
 			return m_doc;
 		}
+	}
+	
+	public void delete(){
+		try{
+			
+			Document doc=getDocument();
+			doc.remove(true);
+			
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+
+		
+		
+		
+		
 	}
 }
