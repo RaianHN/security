@@ -37,7 +37,7 @@ public class Profile extends BsuiteWorkFlow {
 	}
 
 
-	public ArrayList getReadableFields(String moduleName, String entityName){
+	public ArrayList getReadonlyFields(String moduleName, String entityName){
 		ArrayList rFields = new ArrayList();
 		Entity entity = getEntity(moduleName,entityName);
 		for(Field f:entity.getFields()){
@@ -132,7 +132,7 @@ public class Profile extends BsuiteWorkFlow {
 	}
 
 
-	public ArrayList getReadableFieldsNames(String moduleName, String entityName){
+	public ArrayList getReadonlyFieldsNames(String moduleName, String entityName){
 		ArrayList rFields = new ArrayList();
 		Entity entity = getEntity(moduleName,entityName);
 		for(Field f:entity.getFields()){
@@ -179,6 +179,30 @@ public class Profile extends BsuiteWorkFlow {
 			}
 		}
 		return null;
+	}
+	
+	
+	public ArrayList getVisibleFieldsNames(String moduleName, String entityName){
+		ArrayList vFields = new ArrayList();
+		Entity entity = getEntity(moduleName,entityName);
+		for(Field f:entity.getFields()){
+			if(f.getVisible().equals("1")){
+				vFields.add(f.getFieldName());
+			}
+		}
+		
+		return vFields;
+	}
+	public ArrayList getVisibleFields(String moduleName, String entityName){
+		ArrayList vFields = new ArrayList();
+		Entity entity = getEntity(moduleName,entityName);
+		for(Field f:entity.getFields()){
+			if(f.getVisible().equals("1")){
+				vFields.add(f);
+			}
+		}
+		
+		return vFields;
 	}
 	
 	

@@ -115,5 +115,39 @@ public class Association extends BsuiteWorkFlow {
 		}
 		return null;
 	}
+	public String getEntityUnid(String entityName){
+		
+			try {
+				Database entitiesdb = session.getDatabase("", bsuitepath+"bentity.nsf");				
+				View allView = entitiesdb.getView("Entities");				
+				Document entityDoc = allView.getDocumentByKey(entityName);
+				return entityDoc.getUniversalID();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return "";
+		
+	}
+	
+	private String getParentEntity(String entityName){	
+		String entityUnid = getEntityUnid(entityName);
+		String relDocUnid = getRelationDocUnid("IS-A")
+		return "";
+	}
+	
+	private String getRelationDocUnid(String relName){
+		
+		try{
+			Database reldb = session.getDatabase("", bsuitepath
+					+ "relation.nsf");
+			
+			View relview = reldb.getView("CategoryRelation");
+			Document reldoc = relview.getDocumentByKey(relName);
+			return reldoc.getUniversalID();	
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		return "";
+	}
 
 }
