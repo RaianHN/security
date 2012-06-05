@@ -41,6 +41,17 @@ public class CompUtil {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public static void createLabel(UIComponent com,String value,boolean visible) 
+	{
+		XspOutputLabel lab = new  XspOutputLabel();
+		lab.setValue(value);
+		lab.setId("l"+value);
+		lab.setFor("i"+value);		
+		lab.setRendered(visible);
+		com.getChildren().add(lab);
+	}
+	
+	@SuppressWarnings("unchecked")
 	public static   void createInput(UIComponent com,  String fieldname ,String arg) 
 	{
 		XspInputText inp = new XspInputText();

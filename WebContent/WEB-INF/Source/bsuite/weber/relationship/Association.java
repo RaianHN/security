@@ -129,9 +129,15 @@ public class Association extends BsuiteWorkFlow {
 		
 	}
 	
-	private String getParentEntity(String entityName){	
+	public String getParentEntity(String entityName){	
 		String entityUnid = getEntityUnid(entityName);
-		String relDocUnid = getRelationDocUnid("IS-A")
+		String relDocUnid = getRelationDocUnid("IS_A");
+		String lookupkey = JSFUtil.getlookupkey(relDocUnid, entityUnid);
+		Vector tmp = new Vector();
+		tmp.add(lookupkey);
+		String targetunid = JSFUtil.DBLookupString("relation","SourceRelation", tmp, 4);
+		//Not complete
+		
 		return "";
 	}
 	

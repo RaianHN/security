@@ -12,7 +12,9 @@ xmlns:xe="http://www.ibm.com/xsp/coreex">
 				<xp:inputText id="inputText1" value="#{role.roleName}"></xp:inputText>
 			</xe:djTabPane>
 				<xe:djTabPane id="djTabPane2" title="InOut">
+					<xp:div binding="#{wrkspc.test}"></xp:div>
 					
+
 				</xe:djTabPane>
 				<xe:djTabPane id="djTabPane3" title="Documents">
 			</xe:djTabPane>
