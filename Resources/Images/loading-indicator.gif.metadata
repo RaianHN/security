@@ -1,22 +1,21 @@
-<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257A11003683CF" version="8.5" xmlns="http://www.lotus.com/dxl">
-<noteinfo noteid="6a2" sequence="1" unid="A5EA670081582FAC65257A1100460D67">
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257A11002504D0" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="12e6" sequence="6" unid="A5EA670081582FAC65257A1100460D67">
 <created><datetime>20120602T181509,51+0530</datetime></created>
-<modified><datetime>20120602T181514,58+0530</datetime></modified>
-<revised><datetime>20120602T181514,57+0530</datetime></revised>
-<lastaccessed><datetime>20120602T181514,58+0530</datetime></lastaccessed>
-<addedtofile><datetime>20120602T181514,58+0530</datetime></addedtofile></noteinfo>
-<updatedby><name>CN=Template Signer/O=Demo</name><name>CN=Test User1/O=Development</name><name>CN=Admin BSUITE/O=Development</name><name>CN=INB82/O=Development</name><name>CN=Admin BSUITE/O=Development</name><name>CN=INB82/O=Development</name><name>CN=Test User1/O=Development</name><name>CN=INB82/O=Development</name><name>CN=Jaya K Prakash/O=Weberon</name><name>CN=Tenzing Sangmo/O=Weberon</name></updatedby>
-<wassignedby><name>CN=Tenzing Sangmo/O=Weberon</name></wassignedby>
+<modified><datetime>20120606T133116,78+0530</datetime></modified>
+<revised><datetime>20120606T133116,77+0530</datetime></revised>
+<lastaccessed><datetime>20120606T133116,78+0530</datetime></lastaccessed>
+<addedtofile><datetime>20120604T125833,30+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
+<wassignedby><name>CN=Jaya K Prakash/O=Weberon</name></wassignedby>
 <item name="$TITLE"><text>loading-indicator.gif</text></item>
 <item name="$FlagsExt" sign="true"><text>D</text></item>
 <item name="$ImagesWide" sign="true"><number>1</number></item>
 <item name="$ImagesHigh" sign="true"><number>1</number></item>
 <item name="$ImagesColorize" sign="true"><number>0</number></item>
-<item name="$DesignerVersion" sign="true"><text>8.5</text></item>
-
-
-<item name="$MimeType" sign="true"><text>image/gif</text></item>
 <item name="$FileModDT" sign="true"><datetime dst="true">20100902T132049,22+02</datetime></item>
 <item name="$ImageNames" sign="true"><text>loading-indicator.gif</text></item>
 <item name="$Flags"><text>34CiQP$</text></item>
-<item name="$EditFilePath" sign="true"><text>C:\DOCUME~1\tuser1\LOCALS~1\Temp\notes87944B\~loading-indicator.gif</text></item></note>
+<item name="$EditFilePath" sign="true"><text>C:\DOCUME~1\tuser1\LOCALS~1\Temp\notes87944B\~loading-indicator.gif</text></item>
+<item name="$DesignerVersion"><text>8.5.3</text></item>
+
+</note>

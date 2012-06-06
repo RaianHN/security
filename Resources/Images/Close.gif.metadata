@@ -1,21 +1,20 @@
-<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257A11003683CF" version="8.5" xmlns="http://www.lotus.com/dxl">
-<noteinfo noteid="65e" sequence="1" unid="FBF27B42EB9C258465257A1100460D56">
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257A11002504D0" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="1252" sequence="6" unid="FBF27B42EB9C258465257A1100460D56">
 <created><datetime>20120602T181509,34+0530</datetime></created>
-<modified><datetime>20120602T181511,64+0530</datetime></modified>
-<revised><datetime>20120602T181511,63+0530</datetime></revised>
-<lastaccessed><datetime>20120602T181511,64+0530</datetime></lastaccessed>
-<addedtofile><datetime>20120602T181511,64+0530</datetime></addedtofile></noteinfo>
-<updatedby><name>CN=INB81/O=Development</name><name>CN=INB82/O=Development</name><name>CN=Admin BSUITE/O=Development</name><name>CN=INB82/O=Development</name><name>CN=Admin BSUITE/O=Development</name><name>CN=INB82/O=Development</name><name>CN=Test User1/O=Development</name><name>CN=INB82/O=Development</name><name>CN=Jaya K Prakash/O=Weberon</name><name>CN=Tenzing Sangmo/O=Weberon</name></updatedby>
-<wassignedby><name>CN=Tenzing Sangmo/O=Weberon</name></wassignedby>
+<modified><datetime>20120606T133119,00+0530</datetime></modified>
+<revised><datetime>20120606T133118,99+0530</datetime></revised>
+<lastaccessed><datetime>20120606T133119,00+0530</datetime></lastaccessed>
+<addedtofile><datetime>20120604T125829,03+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
+<wassignedby><name>CN=Jaya K Prakash/O=Weberon</name></wassignedby>
 <item name="$Flags"><text>34CiQ</text></item>
 <item name="$FlagsExt" sign="true"><text>D</text></item>
 <item name="$ImagesWide" sign="true"><number>1</number></item>
 <item name="$ImagesHigh" sign="true"><number>1</number></item>
 <item name="$ImagesColorize" sign="true"><number>0</number></item>
-
-
-<item name="$MimeType" sign="true"><text>image/gif</text></item>
 <item name="$FileModDT" sign="true"><datetime>20040914T145535,33+0530</datetime></item>
 <item name="$ImageNames" sign="true"><text>Close.gif</text></item>
 <item name="$TITLE" sign="true"><textlist><text>Close.gif</text><text>close</text></textlist></item>
-<item name="$DesignerVersion" sign="true"><text>6.5</text></item></note>
+<item name="$DesignerVersion"><text>8.5.3</text></item>
+
+</note>

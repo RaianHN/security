@@ -1,18 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257A11003683CF" version="8.5" xmlns="http://www.lotus.com/dxl">
-<noteinfo noteid="6ce" sequence="1" unid="574BE1D54DF7450D65257A1100460D72">
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257A11002504D0" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="1292" sequence="6" unid="574BE1D54DF7450D65257A1100460D72">
 <created><datetime>20120602T181509,62+0530</datetime></created>
-<modified><datetime>20120602T181516,40+0530</datetime></modified>
-<revised><datetime>20120602T181516,39+0530</datetime></revised>
-<lastaccessed><datetime>20120602T181516,40+0530</datetime></lastaccessed>
-<addedtofile><datetime>20120602T181516,40+0530</datetime></addedtofile></noteinfo>
-<updatedby><name>CN=INB81/O=Development</name><name>CN=INB82/O=Development</name><name>CN=Admin BSUITE/O=Development</name><name>CN=INB82/O=Development</name><name>CN=Admin BSUITE/O=Development</name><name>CN=INB82/O=Development</name><name>CN=Test User1/O=Development</name><name>CN=INB82/O=Development</name><name>CN=Jaya K Prakash/O=Weberon</name><name>CN=Tenzing Sangmo/O=Weberon</name></updatedby>
-<wassignedby><name>CN=Tenzing Sangmo/O=Weberon</name></wassignedby>
+<modified><datetime>20120606T133118,04+0530</datetime></modified>
+<revised><datetime>20120606T133118,03+0530</datetime></revised>
+<lastaccessed><datetime>20120606T133118,04+0530</datetime></lastaccessed>
+<addedtofile><datetime>20120604T125831,08+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
+<wassignedby><name>CN=Jaya K Prakash/O=Weberon</name></wassignedby>
 <item name="$Flags"><text>34Ci</text></item>
 <item name="$ImagesWide" sign="true"><number>1</number></item>
 <item name="$ImagesHigh" sign="true"><number>1</number></item>
 <item name="$ImagesColorize" sign="true"><number>0</number></item>
-
 <item name="$ImageNames" sign="true"><text>tools.GIF</text></item>
 <item name="$PublicAccess" sign="true"><text>1</text></item>
 <item name="$TITLE" sign="true"><textlist><text>ToolsAction.gif</text><text>tools</text></textlist></item>
-<item name="$DesignerVersion" sign="true"><text>5</text></item></note>
+<item name="$DesignerVersion"><text>8.5.3</text></item>
+
+</note>

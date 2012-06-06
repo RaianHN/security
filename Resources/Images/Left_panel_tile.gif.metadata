@@ -1,21 +1,20 @@
-<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257A11003683CF" version="8.5" xmlns="http://www.lotus.com/dxl">
-<noteinfo noteid="69a" sequence="1" unid="70E465A14B007EA765257A1100460D65">
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257A11002504D0" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="1272" sequence="6" unid="70E465A14B007EA765257A1100460D65">
 <created><datetime>20120602T181509,49+0530</datetime></created>
-<modified><datetime>20120602T181514,26+0530</datetime></modified>
-<revised><datetime>20120602T181514,25+0530</datetime></revised>
-<lastaccessed><datetime>20120602T181514,26+0530</datetime></lastaccessed>
-<addedtofile><datetime>20120602T181514,26+0530</datetime></addedtofile></noteinfo>
-<updatedby><name>CN=INB82/O=Development</name><name>CN=Test User1/O=Development</name><name>CN=Admin BSUITE/O=Development</name><name>CN=INB82/O=Development</name><name>CN=Admin BSUITE/O=Development</name><name>CN=INB82/O=Development</name><name>CN=Test User1/O=Development</name><name>CN=INB82/O=Development</name><name>CN=Jaya K Prakash/O=Weberon</name><name>CN=Tenzing Sangmo/O=Weberon</name></updatedby>
-<wassignedby><name>CN=Tenzing Sangmo/O=Weberon</name></wassignedby>
+<modified><datetime>20120606T133118,52+0530</datetime></modified>
+<revised><datetime>20120606T133118,51+0530</datetime></revised>
+<lastaccessed><datetime>20120606T133118,52+0530</datetime></lastaccessed>
+<addedtofile><datetime>20120604T125829,72+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
+<wassignedby><name>CN=Jaya K Prakash/O=Weberon</name></wassignedby>
 <item name="$TITLE"><text>Left_panel_tile.gif</text></item>
 <item name="$Flags"><text>34CiQ</text></item>
 <item name="$FlagsExt" sign="true"><text>D</text></item>
 <item name="$ImagesWide" sign="true"><number>1</number></item>
 <item name="$ImagesHigh" sign="true"><number>1</number></item>
 <item name="$ImagesColorize" sign="true"><number>0</number></item>
-
-
-<item name="$MimeType" sign="true"><text>image/gif</text></item>
 <item name="$FileModDT" sign="true"><datetime>20050122T113717,71+0530</datetime></item>
 <item name="$ImageNames" sign="true"><text>Left_panel_tile.gif</text></item>
-<item name="$DesignerVersion" sign="true"><text>6.5</text></item></note>
+<item name="$DesignerVersion"><text>8.5.3</text></item>
+
+</note>

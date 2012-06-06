@@ -32,7 +32,7 @@ public class Workspace {
 		vec.add("field6");
 		vec.add("field7");
 		vec.add("field8");
-		loadFields(vec,utable,0);
+		loadReadFields(vec,utable,0);
 		return test;
 	}
 
@@ -51,17 +51,17 @@ public class Workspace {
 		if(!asstn.getParentEntity(entityName).equals("")){
 			//Create fields for associated entity and tie it to the bean
 		}
-		
+		//Load the fields here
 	}
 	public void createEditForm(String entityName){
 		
 	}
 	public void createFeatureButtons(String entityName){
-		
+		//For this entity what features are available that needs to be populated by this method
 	}
-	//For this entity what features are available that needs to be populated by this method
+	
 
-	private void loadFields(Vector fields,XspTable table,int startRow){
+	private void loadReadFields(Vector fields,XspTable table,int startRow){
 		//This function is used to populate the fields in the given table
 		//fields:list of fields
 		//table: table component where field label and field will be added
@@ -77,12 +77,12 @@ public class Workspace {
 					break;
 				case 1:
 				
-					//CompUtil.createInput(cell, fields.get(i).toString(),BEAN_NAME);
+					CompUtil.createInput(cell, fields.get(i).toString(),BEAN_NAME);
 					break;
 				}
 			}
 		}
-		test.getChildren().add(table);	
+		//test.getChildren().add(table);	
 	}
 	
 }
