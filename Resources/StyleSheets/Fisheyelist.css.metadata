@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257A11003683CF" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="1526" sequence="1" unid="3E384E2337C9914B65257A15002651B2">
+<created><datetime>20120606T122832,82+0530</datetime></created>
+<modified><datetime>20120606T122833,22+0530</datetime></modified>
+<revised><datetime>20120606T122833,21+0530</datetime></revised>
+<lastaccessed><datetime>20120606T122833,22+0530</datetime></lastaccessed>
+<addedtofile><datetime>20120606T122833,22+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Tenzing Sangmo/O=Weberon</name></updatedby>
+<wassignedby><name>CN=Tenzing Sangmo/O=Weberon</name></wassignedby>
+<item name="$TITLE"><text>Fisheyelist.css</text></item>
+<item name="$MimeType" sign="true"><text>text/css</text></item>
+<item name="$Flags"><text>34C=Q</text></item>
+<item name="$MimeCharSet" sign="true"><text>UTF-8</text></item>
+<item name="$DesignerVersion"><text>8.5.3</text></item>
+
+
+<item name="$FileNames" sign="true"><text>Fisheyelist.css</text></item></note>

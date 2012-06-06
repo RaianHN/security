@@ -1,0 +1,540 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xc="http://www.ibm.com/xsp/custom" dojoParseOnLoad="true"
+	xmlns:xe="http://www.ibm.com/xsp/coreex" dojoTheme="true">
+
+	<xp:this.resources>
+		<xp:styleSheet href="/support.css"></xp:styleSheet>
+		<xp:styleSheet href="/uicustom.css"></xp:styleSheet>
+		<xp:dojoModule name="dojo.dnd.Moveable"></xp:dojoModule>
+		<!--
+			<xp:script src="/CustomControlLib.js" clientSide="true"></xp:script>-->
+		<xp:dojoModule name="dijit.layout.ContentPane"></xp:dojoModule>
+
+		<xp:dojoModule name="dojo.fx"></xp:dojoModule>
+		<xp:script src="/onload.js" clientSide="true"></xp:script>
+		<xp:dojoModule name="dojox.fx.scroll"></xp:dojoModule>
+
+
+
+
+
+
+
+
+
+		<xp:script src="/CustomControlLib.js" clientSide="true"></xp:script>
+
+
+		<xp:script src="/resize.js" clientSide="true"></xp:script>
+		<xp:dojoModule name="dojox.layout.ResizeHandle"></xp:dojoModule>
+		<xp:styleSheet>
+			<xp:this.href><![CDATA[#{javascript:request = facesContext.getExternalContext().getRequest();
+server = request.getServerName();
+protocolFull = request.getProtocol(); //returns protocol/version (ex: HTTP/1.1)
+protocolOnly = protocolFull.split("/")[0]; //get just the protocol (lowercase it in next step...)
+port  = (request.getServerPort().equals(80)) ? "" : ":" + request.getServerPort();
+protocolOnly.toLowerCase() + "://" + server + "/domjs/dojo-1.4.3/dojox/layout/resources/ResizeHandle.css"}]]></xp:this.href>
+		</xp:styleSheet>
+
+
+		<xp:styleSheet href="/gridcontainer.css"></xp:styleSheet>
+		<xp:styleSheet href="/portletGrid.css"></xp:styleSheet>
+
+
+		<xp:script src="/partialrefresh.js" clientSide="true"></xp:script>
+	</xp:this.resources>
+	<xp:eventHandler id="eventHandler7" event="onDojo"
+		action="#{javascript:deleteSelectedFilter();}">
+
+	</xp:eventHandler>
+
+	<xp:eventHandler id="eventHandler3" event="onDojo">
+		<xp:this.action><![CDATA[#{javascript:var props = context.getSubmittedValue();
+		
+if (props != null && props != "") 
+{
+	var arr = props.split(",");
+	var con = getComponent(arr[2]);
+	if (con!=null){
+		com.weberon.DynamicCC1.setStyle(con, arr[0], arr[1], arr[3]);
+		var arr1 = arr[2].split("moveable");
+		println("arr1:"+arr1[0]);
+	    sessionScope.put(arr1[0]+"position", "position: absolute;  left:" + arr[0] + "; top:" + arr[1]+ "; z-index:"+ arr[3]+";");
+		
+	}
+
+	
+}}]]></xp:this.action>
+	</xp:eventHandler>
+	<xp:eventHandler id="eventHandler4" event="onDojo">
+		<xp:this.action><![CDATA[#{javascript:var g = context.getSubmittedValue();
+println(g);
+		viewScope.put('zIndex', g);}]]></xp:this.action>
+	</xp:eventHandler>
+
+	<xp:eventHandler id="eventHandler12" event="onDojo">
+		<xp:this.action><![CDATA[#{javascript:var props = context.getSubmittedValue();
+		
+if (props != null && props != "") 
+{
+	var arr = props.split(",");
+	var len = arr.length;
+	var con = getComponent(arr[0]);
+	println("arr[0]:"+ arr[0]);
+	var id = getComponent("idvalue").getValue();
+	println("id:"+ id);
+	var position = getComponent(id+"moveable").getStyle();
+	sessionScope.put(id+"position", position);	
+	
+	if (con != null)
+	{
+		
+		var style = con.getStyle();
+		println("style"+ style);
+		if (style != null)
+		{
+			var arr1 = style.split(";");
+			if ((arr1[0] == "display: ") || (arr1[0] == "display:none"))
+			{
+				var arr2 = arr1[0].split(":");
+				com.weberon.DynamicCC1.setPosition(con, arr2[1], arr[1], arr[2]);
+			}
+			else 
+			{
+				com.weberon.DynamicCC1.setPosition(con, null, arr[1], arr[2]);
+			}
+		}
+		else 
+		{
+			com.weberon.DynamicCC1.setPosition(con, null, arr[1], arr[2]);
+		}
+	
+		
+	}
+
+	
+}}]]></xp:this.action>
+	</xp:eventHandler>
+
+
+	<xp:this.afterPageLoad><![CDATA[#{javascript:viewScope.moveableToggle="1";
+viewScope.position="10";
+viewScope.zIndex= "1";
+var list= sessionScope.workspaceStore;
+println("workspace "+list);
+
+
+if (!(list=="" || list==null)){
+	com.weberon.DynamicCC1.restore(list);
+}
+
+
+}]]></xp:this.afterPageLoad>
+	<xp:eventHandler id="eventHandler1" event="onDojo">
+		<xp:this.action><![CDATA[#{javascript:var props = context.getSubmittedValue();
+		
+if (props != null && props != "") 
+{
+	var arr = props.split(",");
+	var con = getComponent(arr[2]);
+	if (con!=null){
+		com.weberon.DynamicCC1.setStyle(con, arr[0], arr[1], arr[3]);
+	}
+
+	
+}}]]></xp:this.action>
+	</xp:eventHandler>
+	<xp:eventHandler id="eventHandler2" event="onDojo">
+		<xp:this.action><![CDATA[#{javascript:
+		viewScope.zIndex=context.getSubmittedValue();}]]></xp:this.action>
+		<xp:this.onComplete><![CDATA[XSP.partialRefreshGet("#{id:banner1}");]]></xp:this.onComplete>
+	</xp:eventHandler>
+
+	<xc:BsuiteBanner></xc:BsuiteBanner>
+	<xc:BsuiteTitleBar></xc:BsuiteTitleBar>
+	<xp:panel id="banner1" styleClass="banner">
+
+
+
+
+
+		<xp:table style="width:100.0%" id="bannertable1">
+			<xp:tr>
+				<xp:td rowspan="2" style="width:40.0px">
+					<xp:image url="/bookmark_logo.gif" id="image1"
+						style="width:30.0px;height:28.0px">
+						<xp:eventHandler event="onclick" submit="true"
+							refreshMode="partial" id="eventHandler8" refreshId="mainpane">
+							<xp:this.action><![CDATA[#{javascript:if (getComponent("Home") == null)
+{
+var r = getComponent('container'); 
+var s = facesContext; 
+var ccheader="/ccHeader.xsp";
+com.weberon.DynamicCC1.createPortlet(s, r,ccheader,'/ccHome.xsp',"Home","Home");
+ var l = getComponent('linklist');
+ com.weberon.DynamicCC1.createLink(l, "Home", "Home"+"link");
+}else{
+ 	if(viewScope.moveableToggle=="1"){
+ 		var parent = getComponent('container');	
+	  	var child = getComponent("Home"+"moveable");
+	  	parent.getChildren().add(0, child);
+ 	}else if(viewScope.moveableToggle=="0"){
+ 		var parent = getComponent('container');
+ 		var child = getComponent("Home");
+ 		parent.getChildren().add(0, child); 
+ 		
+ 	}
+}
+}]]></xp:this.action>
+							<xp:this.onComplete><![CDATA[XSP.partialRefreshGet("#{id:banner1}"); 
+if (document.getElementById("#{id:Toggle}").getAttribute("value") == "1"){
+++zIndex;
+}]]></xp:this.onComplete>
+
+						</xp:eventHandler>
+					</xp:image>
+				</xp:td>
+
+
+				<xp:td rowspan="2" style="width:70px"
+					rendered="false">
+
+
+
+
+				</xp:td>
+
+
+
+				<xp:td style="width:108.0px" colspan="2" id="crumb1">
+					<xe:breadCrumbs id="breadCrumbs1"></xe:breadCrumbs>
+
+
+				</xp:td>
+
+				<xp:td style="width:233.0px">
+					<xc:ccLogin loginText="Log In"
+						loginURL="/names.nsf?Login" logoutText="Log Off"
+						successURL="${javascript:'/' + database.getFilePath() + '/LoginSuccess.xsp';}"
+						loginMessage="Please Enter Your Username and Password Below"
+						titleBar="Bsuite Login!">
+						<xc:this.logoutURL><![CDATA[${javascript:
+var strurl='/names.nsf?logout&RedirectTo=/' + database.getFilePath() + '/Home.xsp';
+return strurl;}]]></xc:this.logoutURL>
+					</xc:ccLogin>
+				</xp:td>
+				<xp:td style="height:20.0px;width:20.0px">
+					<xp:image id="image2" url="/Gear.png"
+						style="height:20.0px;width:20.0px">
+
+
+						<xp:eventHandler event="onmouseover"
+							submit="false" id="eventHandler11">
+							<xp:this.script><![CDATA[XSP.openMenu(thisEvent,#{javascript:getComponent('popupMenu3').getMenuCtor()})]]></xp:this.script>
+						</xp:eventHandler>
+					</xp:image>
+
+					<xe:popupMenu id="popupMenu3" rendered="false">
+						<xp:eventHandler id="eventHandler10"
+							event="onItemClick" execMode="partial" submit="false">
+							<xp:this.action><![CDATA[#{javascript:viewScope.choice=context.getSubmittedValue();
+if(viewScope.choice=="company"){
+			if (getComponent("ViewCompany") == null)
+		{
+		var r = getComponent('container'); 
+		var s = facesContext; 
+		var ccheader="/ccHeader.xsp";
+		com.weberon.DynamicCC1.createPortlet(s, r,ccheader,'/ccViewCompany.xsp',"ViewCompany","ViewCompany");
+		 var l = getComponent('linklist');
+		 com.weberon.DynamicCC1.createLink(l, "ViewCompany", "ViewCompany"+"link");
+		}else{
+		 	if(viewScope.moveableToggle=="1"){
+		 		var parent = getComponent('container');	
+			  	var child = getComponent("ViewCompany"+"moveable");
+			  	parent.getChildren().add(0, child);
+		 	}else if(viewScope.moveableToggle=="0"){
+		 		var parent = getComponent('container');
+		 		var child = getComponent("ViewCompany");
+		 		parent.getChildren().add(0, child); 
+		 		
+		 	}
+}
+}
+else if(viewScope.choice=="setup")
+{
+	
+	var contrl = new com.weberon.SetupValidator();
+contrl.getSetupDoc();
+if (getComponent("ProfileWeb") == null)
+{
+var r = getComponent('container'); 
+var s = facesContext; 
+var ccheader="/ccHeader.xsp";
+com.weberon.DynamicCC1.createPortlet(s, r,ccheader,'/ccProfileWeb.xsp',"ProfileWeb","ProfileWeb");
+ var l = getComponent('linklist');
+ com.weberon.DynamicCC1.createLink(l, "ProfileWeb", "ProfileWeb"+"link");
+}else{
+ 	if(viewScope.moveableToggle=="1"){
+ 		var parent = getComponent('container');	
+	  	var child = getComponent("ProfileWeb"+"moveable");
+	  	parent.getChildren().add(0, child);
+ 	}else if(viewScope.moveableToggle=="0"){
+ 		var parent = getComponent('container');
+ 		var child = getComponent("ProfileWeb");
+ 		parent.getChildren().add(0, child); 
+ 		
+ 	}
+}
+
+
+
+
+}}]]></xp:this.action>
+							<xp:this.onComplete><![CDATA[XSP.partialRefreshGet("#{id:banner1}"); 
+if (document.getElementById("#{id:Toggle}").getAttribute("value") == "1"){
+++zIndex;
+}]]></xp:this.onComplete>
+						</xp:eventHandler>
+						<xe:this.treeNodes>
+							<xe:basicLeafNode submitValue="company"
+								label="Company Profile">
+								<xe:this.rendered><![CDATA[#{javascript:var db=@Word(@Implode(@DbName(), ";"),";",2);
+var dbpath=@LeftBack(db,12);
+var custdb1 = dbpath+"customer.nsf";
+var serv1 = @Word(@Implode(@DbName(),";"),";",1);
+var db2:NotesDatabase = session.getDatabase(serv1,custdb1);
+var roles1=db2.queryAccessRoles(session.getEffectiveUserName());
+
+ if(roles1.contains("[Maintenance]"))
+ {
+ 	return true;
+ }}]]></xe:this.rendered>
+							</xe:basicLeafNode>
+							<xe:basicLeafNode label="Setup Profile"
+								submitValue="setup">
+								<xe:this.rendered><![CDATA[#{javascript:var db=@Word(@Implode(@DbName(), ";"),";",2);
+var dbpath=@LeftBack(db,12);
+var custdb1 = dbpath+"customer.nsf";
+var serv1 = @Word(@Implode(@DbName(),";"),";",1);
+var db2:NotesDatabase = session.getDatabase(serv1,custdb1);
+var roles1=db2.queryAccessRoles(session.getEffectiveUserName());
+
+ if(roles1.contains("[Maintenance]"))
+ {
+ 	return true;
+ }}]]></xe:this.rendered>
+							</xe:basicLeafNode>
+						</xe:this.treeNodes>
+
+					</xe:popupMenu>
+				</xp:td>
+			</xp:tr>
+
+
+		</xp:table>
+
+		<xp:panel id="errorpanel" styleClass="bannermsg"
+			style="visibility:hidden">
+			<xp:text escape="true" id="errormsg"
+				style="color:rgb(255,0,0)">
+			</xp:text>
+			<xp:inputHidden id="movToggle"
+				value="#{viewScope.moveableToggle}">
+			</xp:inputHidden>
+			<xp:image url="/Close.gif" id="image3">
+				<xp:this.rendered><![CDATA[#{javascript:var err=getComponent("errormsg").getValue();
+if(err==null || err==""){
+	return false;
+}else{
+	return true;
+}}]]></xp:this.rendered>
+				<xp:eventHandler event="onclick" submit="true"
+					refreshMode="partial" refreshId="errorpanel">
+					<xp:this.action><![CDATA[#{javascript:getComponent("errormsg").setValue("");
+com.weberon.DynamicCC1.setPanelinvisible(getComponent("errorpanel"));}]]></xp:this.action>
+				</xp:eventHandler>
+			</xp:image>
+		</xp:panel>
+	</xp:panel>
+
+
+
+
+
+
+
+
+	<xp:panel>
+		<xp:this.rendered><![CDATA[#{javascript:var userName:NotesName = session.createName(@UserName());
+if (userName.getCommon().toLower() == "anonymous") {
+	return false;
+}else{
+	return true;
+}
+}]]></xp:this.rendered>
+		<xc:cctools></xc:cctools>
+		
+	</xp:panel>
+	
+	
+	<xp:inputHidden id="screenSize"></xp:inputHidden>
+	<xp:scriptBlock id="scriptBlock1">
+		<xp:this.value><![CDATA[//var hidden = document.getElementById("#{id:screenSize}");
+//hidden.setAttribute("value" , screen.availHeight+"-"+screen.availWidth);
+//alert(hidden.getAttribute("value"));
+//alert(dojo.version.toString());
+var hidden = document.getElementById("#{id:screenSize}");
+var height = screen.availHeight;
+var width = screen.availWidth ;
+hidden.setAttribute("value" , height+"-"+width);
+
+var prefix = "#{id:mainpane}".split("mainpane")[0];
+var zIndex = 2;]]></xp:this.value>
+	</xp:scriptBlock>
+	<xp:eventHandler id="eventHandler13" event="onDojo">
+		<xp:this.action><![CDATA[#{javascript:var props = context.getSubmittedValue();
+		
+if (props != null && props != "") 
+{
+	var arr = props.split(",");
+	var con = getComponent("container");
+	//var grid = getComponent("container1");
+	com.weberon.DynamicCC1.setCompDojoType2(con, arr);
+	
+	var count = arr.length;
+	//var con = getComponent("container");
+	//var count = con.getChildCount();
+	var position = parseInt(viewScope.position);
+	//var position = 110;
+	var zindex = 1 + (count-1);
+	var indexarr = new Array;
+	for (var i=0 ; i< count; ++i)
+	{
+		//var child = con.getChildren().get(i);
+		var child = getComponent(arr[i]+"moveable");
+		var style = child.getStyle();
+			
+		if (!(style == null))
+		{	
+				
+			var sarr = style.split(";");
+			var left = sarr[1].split(":")[1];
+			var top  = sarr[2].split(":")[1];
+				
+			com.weberon.DynamicCC1.setStyle(child, left, top, zindex.toString());
+			--zindex;
+			print("id:" + child.getId());
+			
+		}
+		else if (style == null)
+		{
+				
+			
+			indexarr.push(arr[i]+"moveable:"+zindex);
+			--zindex;
+			print("id:" + child.getId());
+				
+		}
+	}
+		
+		
+	var len = indexarr.length ;
+	if (len > 0)
+	{
+		for(var i= (len-1); !(i < 0); --i)
+		{
+			var arr = indexarr[i].split(":");
+			//var child = con.getChildren().get(parseInt(arr[0]));
+			var child = getComponent(arr[0]);
+			
+			if (!(position > 110))
+			{
+				com.weberon.DynamicCC1.setStyle(child, position+"px", position+"px", arr[1]);
+				position  = position + 20 ;
+						
+			}
+			else if (position > 110)
+			{
+				position = 10;
+				com.weberon.DynamicCC1.setStyle(child, position+"px", position+"px", arr[1]);
+				position = position + 20 ;
+						
+				
+			}
+				
+		}
+			
+	}
+		
+		
+	if (position > 110)	
+	{
+		position = 10;
+	}
+	viewScope.put("position", position.toString());
+	viewScope.put("zIndex",(count+1).toString());
+	getComponent("tomoveable").setValue("nothing");
+	
+	
+	
+	var resize = sessionScope.get("resize");
+	if (resize == "yes")
+	{
+		var idarr = sessionScope.get("idarr");
+		var stylearr = sessionScope.get("stylearr");
+		
+		var length = idarr.length;
+		var con1;
+		var style1;
+		var arr0;
+		var sarr1;
+		var sarr0;
+		
+		
+		for (var i=0; i< length; ++i)
+		{
+			con1 = getComponent(idarr[i]+"pane");
+			style1 = con1.getStyle();
+			arr0 = style1.split(";")[0];
+			
+			sarr1 = stylearr[i].split(";");
+			if (arr0 == sarr1[0])
+			{
+				
+				con1.setStyle(stylearr[i]);
+				
+			}
+			else
+			{
+				
+				con1.setStyle(arr0+";"+sarr1[1]+";"+sarr1[2]);
+				
+			}
+		}
+		
+		
+		sessionScope.put("idarr", null);
+		sessionScope.put("stylearr", null);
+		sessionScope.put("resize", null);
+		
+		
+	}
+	
+	
+	
+	
+}}]]></xp:this.action>
+	</xp:eventHandler>
+	<xp:eventHandler id="eventHandler15" event="onDojo">
+		<xp:this.action><![CDATA[#{javascript:var props = context.getSubmittedValue();
+		
+if (props != null && props != "") 
+{
+	var arr = props.split(",");
+	var con = getComponent("container");
+	com.weberon.DynamicCC1.reorderInsideGrid(con, arr);
+	getComponent("tomoveable").setValue("nothing");	
+}}]]></xp:this.action>
+	</xp:eventHandler>
+</xp:view>

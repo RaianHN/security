@@ -5,7 +5,9 @@ xmlns:xe="http://www.ibm.com/xsp/coreex">
 
 
 	<xp:panel>
-		<xe:djTabContainer id="djTabContainer1"
+
+	<xp:div id="container"></xp:div>
+	<xe:djTabContainer id="djTabContainer1"
 			style="height:682px;width:100%;">
 
 			<xe:djTabPane id="djTabPane1" title="Employees">

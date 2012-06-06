@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257A11003683CF" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="15d6" sequence="1" unid="CD4F8DBD97BB27A465257A15002896E8">
+<created><datetime>20120606T125320,72+0530</datetime></created>
+<modified><datetime>20120606T125321,50+0530</datetime></modified>
+<revised><datetime>20120606T125321,49+0530</datetime></revised>
+<lastaccessed><datetime>20120606T125321,50+0530</datetime></lastaccessed>
+<addedtofile><datetime>20120606T125321,50+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Tenzing Sangmo/O=Weberon</name></updatedby>
+<wassignedby><name>CN=Tenzing Sangmo/O=Weberon</name></wassignedby>
+<item name="$TITLE"><text>arrow_jump.gif</text></item>
+<item name="$Flags"><text>34CiQP</text></item>
+<item name="$FlagsExt" sign="true"><text>D</text></item>
+<item name="$ImagesWide" sign="true"><number>1</number></item>
+<item name="$ImagesHigh" sign="true"><number>1</number></item>
+<item name="$ImagesColorize" sign="true"><number>0</number></item>
+<item name="$FileModDT" sign="true"><datetime>20120302T193324,78+0530</datetime></item>
+<item name="$ImageNames" sign="true"><text>arrow_jump.gif</text></item>
+<item name="$DesignerVersion"><text>8.5.3</text></item>
+
+</note>

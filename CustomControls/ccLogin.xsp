@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xe="http://www.ibm.com/xsp/coreex" style="text-align:right;">
+
+	
+	<xp:this.resources>
+		<xp:script src="/onload.js" clientSide="true"></xp:script>
+	</xp:this.resources>
+	<xe:dialog id="dialoglogin" title="Bsuite Login">
+
+		<xp:panel styleClass="loginMessageText">
+
+			<xp:text escape="true" id="computedField10">
+				<xp:this.value><![CDATA[#{javascript:compositeData.get("loginMessage")}]]></xp:this.value>
+			</xp:text>
+		</xp:panel>
+		<xp:panel styleClass="loginErrorText" id="loginErrorPanel">
+		</xp:panel>
+		<xp:panel styleClass="loginFieldsGroup">
+			<xp:table>
+				<xp:tr>
+					<xp:td style="border:0;width:68.0px;">
+						<xp:label value="User" id="lblUser"></xp:label>
+					</xp:td>
+					<xp:td style="width:203.0px;border:0;">
+						<xp:inputText id="inpUser" style="width:95%">
+						</xp:inputText>
+					</xp:td>
+				</xp:tr>
+				<xp:tr>
+					<xp:td style="border:0;width:68.0px;">
+						<xp:label value="Password" id="lblPassword">
+						</xp:label>
+					</xp:td>
+					<xp:td style="width:203.0px;border:0;">
+						<xp:inputText id="inpPassword" password="true"
+							style="width:95%">
+						</xp:inputText>
+					</xp:td>
+				</xp:tr>
+			</xp:table>
+		</xp:panel>
+
+		<xp:panel styleClass="loginButtonContainer">
+			<xp:text escape="false" id="computedField11"
+				style="margin:15px;width:100px;">
+				<xp:this.value><![CDATA[<script language="javascript">
+processLogin = function() {
+dojo.xhrPost({
+    url : '#{javascript:compositeData.get("loginURL");}',
+    handleAs : "text",
+    preventCache : true,
+    content: {
+    	"UserName": dojo.byId('#{javascript:getClientId("inpUser")}').value,
+    	"Password": dojo.byId('#{javascript:getClientId("inpPassword")}').value
+    },
+    load : function(response, ioArgs) {
+    					if (response.indexOf('action="/names.nsf?Login"')==-1){
+    						document.cookie = "BackupSesID=; expires=Thu, 01-Jan-70 00:00:01 GMT";
+    						window.location.href = '#{javascript:compositeData.get("successURL");}';
+    					}else{
+    						dojo.xhrGet({
+    							url : '#{javascript:compositeData.get("logoutURL");}',
+    							handleAs : "text",
+							preventCache : true,
+    							load : function(response, ioArgs) {
+    								if (document.cookie.indexOf('BackupSesId=')!=-1){
+    									document.cookie = "DomAuthSessId=" + document.cookie.split('BackupSesID=')[1].substr(0, 32);
+    								}
+    								document.cookie = "BackupSesId=; expires=Thu, 01-Jan-70 00:00:01 GMT";
+    								dojo.byId('#{javascript:getClientId("loginErrorPanel")}').innerHTML = "You have entered an invalid username or password, or do not have sufficient credentials.";
+    							},
+    							error : function(response, ioArgs) {
+    								dojo.byId('#{javascript:getClientId("loginErrorPanel")}').innerHTML = "You have entered an invalid username or password, or do not have sufficient credentials.";
+    							}    							
+    						})
+    					}    					    					
+    				},
+    				error : function(response, ioArgs) {
+    					dojo.byId('#{javascript:getClientId("loginErrorPanel")}').innerHTML = "You have entered an invalid username or password, or do not have sufficient credentials.";
+    				}
+    			});
+} //processLogin
+</script>
+<button id="loginButton" style="margin:10px;" type="submit" name="loginButton" onClick="processLogin()">Log In</button>]]></xp:this.value>
+			</xp:text>
+		</xp:panel>
+	</xe:dialog>
+
+	<xp:span style="font-size:8pt;font-weight:bold">Welcome!
+	</xp:span><xp:span style="font-size:8pt"></xp:span>&#160;&#160;
+	<xp:panel id="Welcome">
+		<xp:this.rendered><![CDATA[#{javascript:
+var userName:NotesName = session.createName(@UserName());
+if (userName.getCommon().toLower() == "anonymous") {
+	return true;
+}else{
+	return false;
+}
+}]]></xp:this.rendered>
+		Please log in to access the application.
+		<xp:br></xp:br>
+	</xp:panel>
+
+
+
+
+	<xp:link escape="true" id="link1" styleClass="bsuiteTitleText">
+		<xp:this.text><![CDATA[#{javascript:@Name("[CN]",@UserName())}]]></xp:this.text>
+
+		
+		<xp:eventHandler event="onclick" submit="false">
+			<xp:this.script><![CDATA[XSP.openMenu(thisEvent,#{javascript:getComponent('popupMenu1').getMenuCtor()})]]></xp:this.script>
+		</xp:eventHandler></xp:link>
+
+	<xp:panel id="ref"></xp:panel>
+	<xe:popupMenu id="popupMenu1">
+
+		<xp:eventHandler id="eventHandler1" event="onItemClick"
+			refreshMode="partial" submit="true" refreshId='#{javascript:if (viewScope.moveableToggle == "0")
+{
+	print("dnd");
+	return "dnd";
+}
+else 
+{	print("mainpane");
+	return "mainpane";
+
+}}'>
+			<xp:this.action><![CDATA[#{javascript:viewScope.choice=context.getSubmittedValue();
+if(viewScope.choice=="logoff"){
+	println("inside loggoff");
+	var user=@LowerCase(@Text(@Name("[CN]",@UserName())));
+if (user != "anonymous"){
+//var linklist=getComponent("linklist").getChildren();
+//var id="";
+//var list="";	
+//	for(i=1; i<=linklist.size(); i++){
+//		id=linklist.get(i-1).getId();		
+//		list=list+@LeftBack(id,4)+";";	}
+
+//database.getProfileDocument("WorkspaceStore",session.getEffectiveUserName()).replaceItemValue("LinkList",list)
+//database.getProfileDocument("WorkspaceStore",session.getEffectiveUserName()).save(true,false);
+							
+							var logoff=compositeData.get("logoutURL");
+							facesContext.externalContext.redirect( logoff); 
+							}
+}else if(viewScope.choice=="moveable"){
+	toggleMoveable();
+
+}
+else if(viewScope.choice=="reorder"){
+reorderPortlet();
+
+}
+
+
+
+}]]></xp:this.action>
+			<xp:this.onComplete><![CDATA[XSP.partialRefreshPost("#{id:banner1}"); ]]></xp:this.onComplete>
+		</xp:eventHandler>
+
+		<xe:this.treeNodes>
+
+
+			<xe:basicLeafNode submitValue="moveable">
+				<xe:this.label><![CDATA[#{javascript:var moveable=viewScope.moveableToggle;
+println("Moveable toggle "+moveable);
+if(moveable=="0"){
+	return "Moveable";
+}else if(moveable=="1"){
+	return "UnMoveable"
+}}]]></xe:this.label>
+			</xe:basicLeafNode>
+			<xe:basicLeafNode submitValue="logoff">
+				<xe:this.label><![CDATA[#{javascript:var userName = @LowerCase(@Text(@Name("[CN]",@UserName())));
+if (userName == "anonymous") {
+	return(compositeData.get("loginText"))
+} else {
+	return(compositeData.get("logoutText"))
+}}]]></xe:this.label>
+			</xe:basicLeafNode>
+			<xe:basicLeafNode submitValue="reorder" label="Reorder">
+				<xe:this.rendered><![CDATA[#{javascript:var value = viewScope.get("moveableToggle");
+if (value == "1")
+{
+	return true;
+}
+else 
+{
+	return false;
+}}]]></xe:this.rendered>
+			</xe:basicLeafNode>
+		</xe:this.treeNodes>
+		
+	</xe:popupMenu>
+
+</xp:view>
