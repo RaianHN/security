@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+
+	<xp:table>
+		<xp:tr>
+			<xp:td>
+				<xp:label value="Select Module: " id="label1"></xp:label>
+			</xp:td>
+			<xp:td>
+
+
+				<xp:comboBox id="comboBox1"></xp:comboBox>
+
+
+
+
+
+			</xp:td>
+			<xp:td rowspan="5"></xp:td>
+		</xp:tr>
+		<xp:tr>
+			<xp:td>
+				<xp:label value="Entity Name:" id="label2"></xp:label>
+			</xp:td>
+			<xp:td>
+				<xp:inputText id="inputText1"></xp:inputText>
+			</xp:td>
+			
+		</xp:tr>
+		<xp:tr>
+			<xp:td>
+				<xp:label value="List of Fields:" id="label3"></xp:label>
+			</xp:td>
+			<xp:td>
+				<xp:inputTextarea id="inputTextarea1"></xp:inputTextarea>
+			</xp:td>
+			
+		</xp:tr>
+		<xp:tr>
+			<xp:td>
+				<xp:label value="List of Features" id="label4"></xp:label>
+			</xp:td>
+			<xp:td>
+				<xp:inputTextarea id="inputTextarea2"></xp:inputTextarea>
+			</xp:td>
+			
+		</xp:tr>
+		<xp:tr>
+			<xp:td></xp:td>
+			<xp:td>
+				<xp:button id="button1" value="Create Entity" style="background-color:rgb(192,192,192)"></xp:button></xp:td>
+			
+		</xp:tr>
+	</xp:table>
+</xp:view>

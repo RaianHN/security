@@ -94,7 +94,41 @@ dojo.xhrPost({
 			<xp:this.script><![CDATA[XSP.openMenu(thisEvent,#{javascript:getComponent('popuplogin').getMenuCtor()})]]></xp:this.script>
 		</xp:eventHandler></xp:link>
 
-	<xp:panel id="ref"></xp:panel>
+	<xp:link escape="true" text="Configure" id="link2">
+		<xp:eventHandler event="onclick" submit="true"
+			refreshMode="partial" refreshId="CCLoadDiv">
+			<xp:this.action><![CDATA[#{javascript:/*
+if (getComponent("DefineEntities") == null)
+{
+var r = getComponent('container'); 
+var s = facesContext; 
+var ccheader="/ccHeader.xsp";
+com.weberon.DynamicCC1.createPortlet(s, r,ccheader,'/ccDefineEntities.xsp',"DefineEntities","DefineEntities");
+println("After createPortleeeee");
+ var l = getComponent('linklist');
+ com.weberon.DynamicCC1.createLink(l, "DefineEntities", "DefineEntities"+"link");
+}else{
+ 	if(viewScope.moveableToggle=="1"){
+ 		var parent = getComponent('container');	
+	  	var child = getComponent("DefineEntities"+"moveable");
+	  	parent.getChildren().add(0, child);
+ 	}else if(viewScope.moveableToggle=="0"){
+ 		var parent = getComponent('container');
+ 		var child = getComponent("DefineEntities");
+ 		parent.getChildren().add(0, child); 
+ 		
+ 	}
+}
+*/
+var component = getComponent('CCLoadDiv'); 
+var s = facesContext;
+var c1="/ccDefineEntities.xsp"; 
+var id="modulediv";
+com.weberon.DynamicCC.loadCC(s, component, c1, id);
+
+println("OnLCick of Configure");
+println(getComponent('container'));}]]></xp:this.action>
+		</xp:eventHandler></xp:link><xp:panel id="ref"></xp:panel>
 	<xe:popupMenu id="popuplogin">
 	<xp:eventHandler id="eventHandler11" event="onItemClick"
 		refreshMode="partial" refreshId="ref" submit="true">

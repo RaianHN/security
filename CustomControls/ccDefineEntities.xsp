@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+
+	<xp:table>
+		<xp:tr>
+			<xp:td>
+				<xp:button value="Add Modules" id="button2" style="background-color:rgb(192,192,192)">
+					<xp:eventHandler event="onclick" submit="true"
+						refreshMode="partial" refreshId="CCLoadDiv">
+						<xp:this.action><![CDATA[#{javascript:var component = getComponent('loadCC'); 
+var s = facesContext;
+var c1="/ccAddModules.xsp"; 
+var id="modulediv";
+com.weberon.DynamicCC.loadCC(s, component, c1, id);
+}]]></xp:this.action>
+					</xp:eventHandler></xp:button>
+				
+				
+			</xp:td>
+			<xp:td rowspan="2" id="loadCC"></xp:td>
+		</xp:tr>
+		<xp:tr>
+			<xp:td>
+				<xp:button value="Add Entity" id="button1" style="background-color:rgb(192,192,192)">
+					<xp:eventHandler event="onclick" submit="true"
+						refreshMode="partial" refreshId="CCLoadDiv">
+						<xp:this.action><![CDATA[#{javascript:var component = getComponent('loadCC'); 
+var s = facesContext;
+var c1="/ccAddEntity.xsp"; 
+var id="entitydiv";
+com.weberon.DynamicCC.loadCC(s, component, c1, id);
+}]]></xp:this.action>
+					</xp:eventHandler></xp:button></xp:td>
+			
+		</xp:tr>
+	</xp:table></xp:view>

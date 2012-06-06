@@ -5,9 +5,9 @@
     <default-prefix>xc</default-prefix>
   </faces-config-extension>
   <composite-component>
-    <component-type>cc_tabtable</component-type>
-    <composite-name>cc_tabtable</composite-name>
-    <composite-file>/cc_tabtable.xsp</composite-file>
+    <component-type>ccAddEntity</component-type>
+    <composite-name>ccAddEntity</composite-name>
+    <composite-file>/ccAddEntity.xsp</composite-file>
     <composite-extension>
       <designer-extension>
         <in-palette>true</in-palette>
