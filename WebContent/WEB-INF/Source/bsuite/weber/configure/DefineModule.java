@@ -34,6 +34,7 @@ public class DefineModule extends BsuiteWorkFlow{
 			doc.replaceItemValue("obid","module");
 			doc.replaceItemValue("moduleName", moduleName);
 			doc.replaceItemValue("JsonString", moduleJson);
+			doc.replaceItemValue("Form", "module");
 			doc.save();
 		} catch (NotesException e) {
 			
@@ -49,6 +50,7 @@ public class DefineModule extends BsuiteWorkFlow{
 	private String createJsonString(String moduleName) {
 		
 		Module module = new Module();
+		module.setModuleName(moduleName);
 		ObjectMapper mapper=new ObjectMapper();
 		 
 		  try{
@@ -63,12 +65,26 @@ public class DefineModule extends BsuiteWorkFlow{
 		
 	
 		try {
+			
+			
 			View modulesView =currentdb.getView("Modules");
+			
+			//System.out.println("Document name"+modulesView.getDocumentByKey(moduleName));
 			Document moduleDoc = modulesView.getDocumentByKey(moduleName);
+			
 			String jsonInput=moduleDoc.getItemValueString("JsonString");
+			
 			ObjectMapper mapper = new ObjectMapper();
+		
 			Module module = mapper.readValue(jsonInput, Module.class);
-			ArrayList<Entity> entities = module.getEntities();
+			
+		
+			ArrayList<Entity> entities = null;
+			if(module.getEntities()==null){
+				 entities = new ArrayList();
+			}else{
+				entities = module.getEntities();
+			}
 			
 			Entity entity = new Entity();
 			Field field = new Field();
@@ -87,11 +103,14 @@ public class DefineModule extends BsuiteWorkFlow{
 				feature.setFeatureName(s);
 				featureList.add(feature);
 			}
-			
+			entity.setEntityName(entityName);
 			entity.setFields(fieldsList);
 			entity.setFeatures(featureList);
 			entities.add(entity);
+			module.setEntities(entities);
 			
+			moduleDoc.replaceItemValue("JsonString", mapper.writeValueAsString(module));
+			moduleDoc.save();
 		} catch (NotesException e) {
 			e.printStackTrace();
 		} catch (JsonParseException e) {
@@ -104,6 +123,11 @@ public class DefineModule extends BsuiteWorkFlow{
 	
 		
 		
+	}
+	public Vector getModules(){
+		
+
+		return null;
 	}
 	
 }

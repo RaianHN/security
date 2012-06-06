@@ -3,6 +3,8 @@ package bsuite.weber.configure;
 import java.util.ArrayList;
 
 public class Entity {
+	private String entityName;
+	
 	private ArrayList<Field> fields;
 	private ArrayList<Feature> features;
 	
@@ -17,5 +19,11 @@ public class Entity {
 	}
 	public void setFeatures(ArrayList<Feature> features) {
 		this.features = features;
+	}
+	public String getEntityName() {
+		return entityName;
+	}
+	public void setEntityName(String entityName) {
+		this.entityName = entityName;
 	}
 }

@@ -26,4 +26,15 @@ public class DynamicCC {
 			
 	ControlBuilder.buildControl(s,con,true);
 	}
+	
+	
+	
+	public static void removePreview(UIComponent r){
+		int childcount=r.getChildCount();
+		if(childcount>1 || childcount==1){
+			for(int i=(childcount-1);i>=0;i--){
+				r.getChildren().remove(i);
+			}
+		}
+	}
 }
