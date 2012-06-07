@@ -7,16 +7,15 @@ public class Entity{
 	
 	
 	private String entityName;
-	
-
 	private String create;
 	private String read;
 	private String update;
 	private String delete;
 	private ArrayList<Field> fields;
 	private ArrayList<Feature> features;
-	
-	
+	//Added for fields and features perms
+	private ArrayList<FieldPerm> fieldPerm;
+	private ArrayList<FeaturePerm> featurePerm;
 	
 	
 	public String getCreate() {
@@ -51,9 +50,6 @@ public class Entity{
 		this.delete = delete;
 	}
 
-
-	
-
 	
 		
 	public String getEntityName() {
@@ -63,8 +59,6 @@ public class Entity{
 	public void setEntityName(String entityName) {
 		this.entityName = entityName;
 	}
-
-
 	public ArrayList<Field> getFields() {
 		return fields;
 	}
@@ -83,5 +77,25 @@ public class Entity{
 	public void setFeatures(ArrayList<Feature> features) {
 		this.features = features;
 	}
+	
+	public ArrayList<FieldPerm> getFieldPerm() {
+		return fieldPerm;
+	}
+
+	public void setFieldPerm(ArrayList<FieldPerm> fieldPerm) {
+		this.fieldPerm = fieldPerm;
+	}
+
+	public ArrayList<FeaturePerm> getFeaturePerm() {
+		return featurePerm;
+	}
+
+	public void setFeaturePerm(ArrayList<FeaturePerm> featurePerm) {
+		this.featurePerm = featurePerm;
+	}
+
+
+
+	
 
 }

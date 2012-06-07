@@ -1,5 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xe="http://www.ibm.com/xsp/coreex">
+
+	
+	
+	<xe:djTabContainer id="djTabContainer1"
+		style="width:100%;height:682px;" tabStrip="true">
+
+		<xe:djTabPane id="djTabPane1" title="Configure">
+
+			<xp:table>
+				<xp:tr>
+					<xp:td valign="top">
+						<xp:button value="Add Modules" id="button2"
+							style="background-color:rgb(192,192,192)">
+							<xp:eventHandler event="onclick"
+								submit="true" refreshMode="partial" refreshId="CCLoadDiv">
+								<xp:this.action><![CDATA[#{javascript:var component = getComponent('loadCC');
+if(component.getChildren!=null){
+com.weberon.DynamicCC.removePreview(component);
+ }
+var s = facesContext;
+var c1="/ccAddModules.xsp"; 
+var id="modulediv";
+com.weberon.DynamicCC.loadCC(s, component, c1, id);
+}]]></xp:this.action>
+							</xp:eventHandler>
+						</xp:button>
+						<xp:br></xp:br>
+						<xp:button value="Add Entity" id="button1"
+							style="background-color:rgb(192,192,192)">
+							<xp:eventHandler event="onclick"
+								submit="true" refreshMode="partial" refreshId="CCLoadDiv">
+								<xp:this.action><![CDATA[#{javascript:var component = getComponent('loadCC'); 
+if(component.getChildren!=null){
+com.weberon.DynamicCC.removePreview(component);
+}
+var s = facesContext;
+var c1="/ccAddEntity.xsp"; 
+var id="entitydiv";
+com.weberon.DynamicCC.loadCC(s, component, c1, id);
+}]]></xp:this.action>
+							</xp:eventHandler>
+						</xp:button>
+
 
 	<xp:table>
 		<xp:tr>
