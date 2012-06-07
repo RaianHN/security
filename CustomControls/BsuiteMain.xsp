@@ -15,6 +15,7 @@ xmlns:xe="http://www.ibm.com/xsp/coreex">
 			</xe:djTabPane>
 				<xe:djTabPane id="djTabPane2" title="InOut">
 					
+
 				</xe:djTabPane>
 				<xe:djTabPane id="djTabPane3" title="Documents">
 			</xe:djTabPane>

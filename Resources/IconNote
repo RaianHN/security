@@ -2,14 +2,13 @@
 <!DOCTYPE note SYSTEM 'xmlschemas/domino_8_5_3.dtd'>
 <note default='true' class='icon' xmlns='http://www.lotus.com/dxl' version='8.5'
  maintenanceversion='3.0' replicaid='65257A11003683CF'>
-<noteinfo noteid='122' unid='E595BF7010C638F065257A11002504F1' sequence='16'>
+<noteinfo noteid='122' unid='E595BF7010C638F065257A11002504F1' sequence='19'>
 <created><datetime>20120602T121420,97+0530</datetime></created>
-<modified><datetime>20120604T154123,41+0530</datetime></modified>
-<revised><datetime>20120604T154123,40+0530</datetime></revised>
-<lastaccessed><datetime>20120604T154123,41+0530</datetime></lastaccessed>
+<modified><datetime>20120606T191445,92+0530</datetime></modified>
+<revised><datetime>20120606T191445,91+0530</datetime></revised>
+<lastaccessed><datetime>20120606T191445,92+0530</datetime></lastaccessed>
 <addedtofile><datetime>20120602T154014,70+0530</datetime></addedtofile></noteinfo>
 <updatedby><name>CN=Tenzing Sangmo/O=Weberon</name></updatedby>
-<wassignedby><name>CN=Tenzing Sangmo/O=Weberon</name></wassignedby>
 <item name='IconBitmap' summary='true'>
 <rawitemdata type='6'>
 AiAgAQAA///////wD///gAH//gAAf/wAAD/4AAAf8AAAD+AAAAfgAAAHwAAAA8AAAAPAAAADgAAA

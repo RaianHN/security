@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257A11003683CF" version="8.5" xmlns="http://www.lotus.com/dxl">
-<noteinfo noteid="6be" sequence="1" unid="6B0D19A090E2F4D765257A1100460D6E">
+<noteinfo noteid="6be" sequence="4" unid="6B0D19A090E2F4D765257A1100460D6E">
 <created><datetime>20120602T181509,58+0530</datetime></created>
-<modified><datetime>20120602T181515,75+0530</datetime></modified>
-<revised><datetime>20120602T181515,74+0530</datetime></revised>
-<lastaccessed><datetime>20120602T181515,75+0530</datetime></lastaccessed>
+<modified><datetime>20120606T191343,44+0530</datetime></modified>
+<revised><datetime>20120606T191343,43+0530</datetime></revised>
+<lastaccessed><datetime>20120606T191343,44+0530</datetime></lastaccessed>
 <addedtofile><datetime>20120602T181515,75+0530</datetime></addedtofile></noteinfo>
-<updatedby><name>CN=Admin BSUITE/O=Development</name><name>CN=INB82/O=Development</name><name>CN=Test User1/O=Development</name><name>CN=INB82/O=Development</name><name>CN=Jaya K Prakash/O=Weberon</name><name>CN=Tenzing Sangmo/O=Weberon</name></updatedby>
+<updatedby><name>CN=Tenzing Sangmo/O=Weberon</name></updatedby>
 <wassignedby><name>CN=Tenzing Sangmo/O=Weberon</name></wassignedby>
 <item name="$Flags"><text>34CiQP</text></item>
 <item name="$FlagsExt" sign="true"><text>D</text></item>
 <item name="$ImagesWide" sign="true"><number>1</number></item>
 <item name="$ImagesHigh" sign="true"><number>1</number></item>
 <item name="$ImagesColorize" sign="true"><number>0</number></item>
-
-
-<item name="$MimeType" sign="true"><text>image/gif</text></item>
 <item name="$FileModDT" sign="true"><datetime>20110801T150011,75+0530</datetime></item>
 <item name="$ImageNames" sign="true"><text>options.gif</text></item>
-<item name="$DesignerVersion" sign="true"><text>8.5.2</text></item>
-<item name="$TITLE"><text>Copy Of options.gif</text></item></note>
+<item name="$TITLE"><text>Copy Of options.gif</text></item>
+<item name="$DesignerVersion"><text>8.5.3</text></item>
+
+</note>

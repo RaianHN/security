@@ -373,7 +373,7 @@ if (userName.getCommon().toLower() == "anonymous") {
 	return true;
 }
 }]]></xp:this.rendered>
-		<xc:cctools></xc:cctools>
+		
 		
 	</xp:panel>
 	

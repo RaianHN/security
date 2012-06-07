@@ -9,7 +9,11 @@
 			<xp:td>
 
 
-				<xp:comboBox id="comboBox1"></xp:comboBox>
+				<xp:comboBox id="comboBox1">
+					<xp:selectItems>
+						<xp:this.value><![CDATA[#{javascript:return @DbColumn("","Modules",1);}]]></xp:this.value>
+					</xp:selectItems>
+				</xp:comboBox>
 
 
 
@@ -32,7 +36,9 @@
 				<xp:label value="List of Fields:" id="label3"></xp:label>
 			</xp:td>
 			<xp:td>
-				<xp:inputTextarea id="inputTextarea1"></xp:inputTextarea>
+				<xp:inputTextarea id="inputTextarea1"
+					multipleSeparator=",">
+				</xp:inputTextarea>
 			</xp:td>
 			
 		</xp:tr>
@@ -41,14 +47,30 @@
 				<xp:label value="List of Features" id="label4"></xp:label>
 			</xp:td>
 			<xp:td>
-				<xp:inputTextarea id="inputTextarea2"></xp:inputTextarea>
+				<xp:inputTextarea id="inputTextarea2"
+					multipleSeparator=",">
+				</xp:inputTextarea>
 			</xp:td>
 			
 		</xp:tr>
 		<xp:tr>
 			<xp:td></xp:td>
 			<xp:td>
-				<xp:button id="button1" value="Create Entity" style="background-color:rgb(192,192,192)"></xp:button></xp:td>
+				<xp:button id="button1" value="Create Entity" style="background-color:rgb(192,192,192)">
+					<xp:eventHandler event="onclick" submit="true"
+						refreshMode="complete">
+						<xp:this.action><![CDATA[#{javascript:var defModule = new bsuite.weber.configure.DefineModule();
+
+var moduleName = getComponent("comboBox1").getValue();
+var entityName = getComponent("inputText1").getValue();
+var fields :java.util.Vector = getComponent("inputTextarea1").getValue();
+var features:java.util.Vector = getComponent("inputTextarea2").getValue();
+
+defModule.addEntity(moduleName,entityName, fields,features);
+var component = getComponent('loadCC'); 
+com.weberon.DynamicCC.removePreview(component);
+}]]></xp:this.action>
+					</xp:eventHandler></xp:button></xp:td>
 			
 		</xp:tr>
 	</xp:table>

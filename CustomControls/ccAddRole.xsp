@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+
+	<xp:table>
+		<xp:tr>
+			<xp:td>
+				<xp:label value="Parent Role" id="label1"></xp:label></xp:td>
+			<xp:td>
+				<xp:comboBox id="comboBox1"></xp:comboBox></xp:td>
+		</xp:tr>
+		<xp:tr>
+			<xp:td>
+				<xp:label value="Role Name" id="label2"></xp:label></xp:td>
+			<xp:td>
+				<xp:inputText id="inputText2"></xp:inputText></xp:td>
+		</xp:tr>
+		<xp:tr>
+			<xp:td></xp:td>
+			<xp:td>
+				<xp:button value="Create Role" id="button1" style="background-color:rgb(192,192,192)"></xp:button></xp:td>
+		</xp:tr>
+	</xp:table></xp:view>

@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257A11003683CF" version="8.5" xmlns="http://www.lotus.com/dxl">
-<noteinfo noteid="63e" sequence="1" unid="CFEBEC5FB64BEE6E65257A1100460D4E">
+<noteinfo noteid="63e" sequence="4" unid="CFEBEC5FB64BEE6E65257A1100460D4E">
 <created><datetime>20120602T181509,26+0530</datetime></created>
-<modified><datetime>20120602T181510,36+0530</datetime></modified>
-<revised><datetime>20120602T181510,35+0530</datetime></revised>
-<lastaccessed><datetime>20120602T181510,36+0530</datetime></lastaccessed>
+<modified><datetime>20120606T191342,60+0530</datetime></modified>
+<revised><datetime>20120606T191342,59+0530</datetime></revised>
+<lastaccessed><datetime>20120606T191342,60+0530</datetime></lastaccessed>
 <addedtofile><datetime>20120602T181510,36+0530</datetime></addedtofile></noteinfo>
-<updatedby><name>CN=Test User1/O=Development</name><name>CN=Admin BSUITE/O=Development</name><name>CN=INB82/O=Development</name><name>CN=Admin BSUITE/O=Development</name><name>CN=INB82/O=Development</name><name>CN=Test User1/O=Development</name><name>CN=INB82/O=Development</name><name>CN=Jaya K Prakash/O=Weberon</name><name>CN=Tenzing Sangmo/O=Weberon</name></updatedby>
+<updatedby><name>CN=Tenzing Sangmo/O=Weberon</name></updatedby>
 <wassignedby><name>CN=Tenzing Sangmo/O=Weberon</name></wassignedby>
 <item name="$TITLE"><text>arrow-right.gif</text></item>
 <item name="$FlagsExt" sign="true"><text>D</text></item>
 <item name="$ImagesWide" sign="true"><number>1</number></item>
 <item name="$ImagesHigh" sign="true"><number>1</number></item>
 <item name="$ImagesColorize" sign="true"><number>0</number></item>
-
-
-<item name="$MimeType" sign="true"><text>image/gif</text></item>
 <item name="$FileModDT" sign="true"><datetime dst="true">20110408T012644,00-07</datetime></item>
 <item name="$ImageNames" sign="true"><text>arrow-right.gif</text></item>
-<item name="$DesignerVersion" sign="true"><text>8.5.2</text></item>
 <item name="$EditFilePath" sign="true"><text>C:\DOCUME~1\tuser1\LOCALS~1\Temp\notes87944B\~arrow-right.gif</text></item>
-<item name="$Flags"><text>D34CiQP$</text></item></note>
+<item name="$Flags"><text>D34CiQP$</text></item>
+<item name="$DesignerVersion"><text>8.5.3</text></item>
+
+</note>

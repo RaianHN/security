@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257A11003683CF" version="8.5" xmlns="http://www.lotus.com/dxl">
-<noteinfo noteid="64a" sequence="1" unid="535F5F23599D123765257A1100460D51">
+<noteinfo noteid="64a" sequence="4" unid="535F5F23599D123765257A1100460D51">
 <created><datetime>20120602T181509,29+0530</datetime></created>
-<modified><datetime>20120602T181510,83+0530</datetime></modified>
-<revised><datetime>20120602T181510,82+0530</datetime></revised>
-<lastaccessed><datetime>20120602T181510,83+0530</datetime></lastaccessed>
+<modified><datetime>20120606T191342,24+0530</datetime></modified>
+<revised><datetime>20120606T191342,23+0530</datetime></revised>
+<lastaccessed><datetime>20120606T191342,24+0530</datetime></lastaccessed>
 <addedtofile><datetime>20120602T181510,83+0530</datetime></addedtofile></noteinfo>
-<updatedby><name>CN=INB81/O=Development</name><name>CN=INB82/O=Development</name><name>CN=Admin BSUITE/O=Development</name><name>CN=INB82/O=Development</name><name>CN=Admin BSUITE/O=Development</name><name>CN=INB82/O=Development</name><name>CN=Test User1/O=Development</name><name>CN=INB82/O=Development</name><name>CN=Jaya K Prakash/O=Weberon</name><name>CN=Tenzing Sangmo/O=Weberon</name></updatedby>
+<updatedby><name>CN=Tenzing Sangmo/O=Weberon</name></updatedby>
 <wassignedby><name>CN=Tenzing Sangmo/O=Weberon</name></wassignedby>
 <item name="$FlagsExt" sign="true"><text>D</text></item>
 <item name="$ImagesWide" sign="true"><number>1</number></item>
 <item name="$ImagesHigh" sign="true"><number>1</number></item>
 <item name="$ImagesColorize" sign="true"><number>0</number></item>
-
-
-<item name="$MimeType" sign="true"><text>image/gif</text></item>
 <item name="$FileModDT" sign="true"><datetime>20050421T110529,86+0530</datetime></item>
 <item name="$ImageNames" sign="true"><text>BSUITE - LOGO Only B.gif</text></item>
 <item name="$TITLE" sign="true"><text>bookmark_logo.gif</text></item>
-<item name="$DesignerVersion" sign="true"><text>6.5</text></item>
-<item name="$Flags"><text>34CiQ</text></item></note>
+<item name="$Flags"><text>34CiQ</text></item>
+<item name="$DesignerVersion"><text>8.5.3</text></item>
+
+</note>

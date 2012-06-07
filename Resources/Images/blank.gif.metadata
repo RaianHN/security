@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257A11003683CF" version="8.5" xmlns="http://www.lotus.com/dxl">
-<noteinfo noteid="646" sequence="1" unid="4A4BEF2090030D9665257A1100460D50">
+<noteinfo noteid="646" sequence="4" unid="4A4BEF2090030D9665257A1100460D50">
 <created><datetime>20120602T181509,28+0530</datetime></created>
-<modified><datetime>20120602T181510,67+0530</datetime></modified>
-<revised><datetime>20120602T181510,66+0530</datetime></revised>
-<lastaccessed><datetime>20120602T181510,67+0530</datetime></lastaccessed>
+<modified><datetime>20120606T191342,30+0530</datetime></modified>
+<revised><datetime>20120606T191342,29+0530</datetime></revised>
+<lastaccessed><datetime>20120606T191342,30+0530</datetime></lastaccessed>
 <addedtofile><datetime>20120602T181510,67+0530</datetime></addedtofile></noteinfo>
-<updatedby><name>CN=INB81/O=Development</name><name>CN=INB82/O=Development</name><name>CN=Admin BSUITE/O=Development</name><name>CN=INB82/O=Development</name><name>CN=Admin BSUITE/O=Development</name><name>CN=INB82/O=Development</name><name>CN=Test User1/O=Development</name><name>CN=INB82/O=Development</name><name>CN=Jaya K Prakash/O=Weberon</name><name>CN=Tenzing Sangmo/O=Weberon</name></updatedby>
+<updatedby><name>CN=Tenzing Sangmo/O=Weberon</name></updatedby>
 <wassignedby><name>CN=Tenzing Sangmo/O=Weberon</name></wassignedby>
 <item name="$Flags"><text>34CiQ</text></item>
 <item name="$ImagesWide" sign="true"><number>1</number></item>
 <item name="$ImagesHigh" sign="true"><number>1</number></item>
 <item name="$ImagesColorize" sign="true"><number>0</number></item>
-
 <item name="$ImageNames" sign="true"><text>treans1.gif</text></item>
 <item name="$Comment" sign="true"><text>Used for Outlines</text></item>
 <item name="$TITLE" sign="true"><textlist><text>blank.gif</text><text>blank</text></textlist></item>
-<item name="$DesignerVersion" sign="true"><text>6.5</text></item></note>
+<item name="$DesignerVersion"><text>8.5.3</text></item>
+
+</note>
