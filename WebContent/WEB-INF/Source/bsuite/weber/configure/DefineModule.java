@@ -11,6 +11,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import lotus.domino.cso.Database;
 import lotus.domino.Document;
+import lotus.domino.DocumentCollection;
 import lotus.domino.NotesException;
 import lotus.domino.View;
 
@@ -127,8 +128,29 @@ public class DefineModule extends BsuiteWorkFlow {
 	}
 
 	public Vector getModules() {
-
-		return null;
+		System.out.println("inside get modules");
+		View moduleView= null;
+		try {
+			moduleView = currentdb.getView("Modules");
+		} catch (NotesException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}		
+		Document doc;
+		Vector moduleNames = new Vector();
+		try {
+			doc = moduleView.getFirstDocument();
+			while(doc!=null){				
+				moduleNames.add(doc.getItemValueString("moduleName"));
+				doc = moduleView.getNextDocument(doc);
+			}
+						
+		} catch (NotesException e) {
+			
+			e.printStackTrace();
+		}
+		
+		return moduleNames;
 	}
 
 	public void addRole(String roleName, String roleParent) {
@@ -141,6 +163,7 @@ public class DefineModule extends BsuiteWorkFlow {
 			
 			e.printStackTrace();
 		}
+		System.out.println("add r1");
 		if(roleJson.equals("")){
 			RoleHierarchy rH = new RoleHierarchy();
 			ArrayList<Role> roleList = new ArrayList<Role>();
@@ -165,6 +188,7 @@ public class DefineModule extends BsuiteWorkFlow {
 				e.printStackTrace();
 			}
 		}else{
+			System.out.println("add r2");
 			try {
 				RoleHierarchy rH = mapper.readValue(roleJson, RoleHierarchy.class);
 				ArrayList<Role> roleList = rH.getRoleList();
@@ -189,6 +213,13 @@ public class DefineModule extends BsuiteWorkFlow {
 			}
 			
 		}
+		try {
+			roleDoc.save();
+		} catch (NotesException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("add r3");
 	
 		
 	}
@@ -205,7 +236,12 @@ public class DefineModule extends BsuiteWorkFlow {
 		}
 		
 		try {
-			rH = mapper.readValue(roleJson, RoleHierarchy.class);
+			if(!roleJson.equals("")){
+				rH = mapper.readValue(roleJson, RoleHierarchy.class);
+			}else{
+				return null;
+			}
+			
 		} catch (JsonParseException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
@@ -228,6 +264,7 @@ public class DefineModule extends BsuiteWorkFlow {
 	private Document getRoleDocument() {
 
 		try {
+			System.out.println("inside get role doc");
 			View rolesView = currentdb.getView("Roles");
 			Document roleDoc = rolesView.getDocumentByKey("roleHierarchy");
 			if(roleDoc==null){
@@ -244,9 +281,101 @@ public class DefineModule extends BsuiteWorkFlow {
 
 			e.printStackTrace();
 		}
-		return currentdoc;
+		return null;
 
 	}
 	
+	public ArrayList<Role> getRoleList(){
+		Document roleDoc = getRoleDocument();
+		String roleJson="";
+		ObjectMapper mapper = new ObjectMapper();
+		RoleHierarchy rH=null;
+		try {
+			roleJson = roleDoc.getItemValueString("JsonString");
+		} catch (NotesException e1) {
+			e1.printStackTrace();
+		}
+		
+		try {
+			if(!roleJson.equals("")){
+				rH = mapper.readValue(roleJson, RoleHierarchy.class);
+			}else{
+				return null;
+			}
+			
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		ArrayList<Role> roleList = rH.getRoleList();
+		
+		return roleList;
+			
+	}
+	/*private DocumentCollection getModuleDocs(){
+		
+		try {
+			View moduleView = currentdb.getView("Modules");
+			DocumentCollection moduleDocs  = 
+			
+			
+			return moduleDocs;
+		} catch (NotesException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return null;
+	}*/
+	private Document getModuleDoc(String moduleName){
+		try {
+			View moduleView = currentdb.getView("Modules");
+			Document moduleDoc = moduleView.getDocumentByKey(moduleName);		
+			return moduleDoc;
+		} catch (NotesException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	public String getModuleJson(String moduleName){
+		Document moduleDoc = getModuleDoc(moduleName);
+		try {
+			return moduleDoc.getItemValueString("JsonString");
+		} catch (NotesException e) {
+			e.printStackTrace();
+		}		
+		return null;
+	}
+	
+	
+	public Vector getEntityNames(String moduleName){
+		String moduleJson = getModuleJson(moduleName);
+		ObjectMapper mapper = new ObjectMapper();
+		Module module = null;
+		try {
+			module = mapper.readValue(moduleJson, Module.class);
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		ArrayList<Entity> entityList = module.getEntities();
+		
+		if(entityList!=null){
+			Vector entityNames = new Vector();
+			for(Entity e:entityList){
+				entityNames.add(e.getEntityName());
+			}
+			return entityNames;
+		}
+		
+		
+		return null;
+	}
 
 }
