@@ -24,7 +24,14 @@ public class Deploy extends BsuiteWorkFlow{
 	public void testProfileDocs(){
 		createProfileDocument(currentdb, "Admin");
 	}
-	
+	public void testView(){
+		try {
+			currentdb.createView("Test View");
+		} catch (NotesException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	public void createRoleDocuments(Database db) {
 		DefineModule define = new DefineModule();
 		ArrayList<Role> roles = define.getRoleList();
