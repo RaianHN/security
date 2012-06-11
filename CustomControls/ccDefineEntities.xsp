@@ -63,7 +63,7 @@ com.weberon.DynamicCC.loadCC(s, component, c1, id);
 						</xp:button>
 						<xp:br></xp:br>
 						<xp:button value="Add Profile" id="button4"
-							style="background-color:rgb(192,192,192)">
+							style="background-color:rgb(192,192,192)" rendered="false">
 							<xp:eventHandler event="onclick"
 								submit="true" refreshMode="partial" refreshId="CCLoadDiv">
 								<xp:this.action><![CDATA[#{javascript:var component = getComponent('loadCC'); 
@@ -78,11 +78,11 @@ com.weberon.DynamicCC.loadCC(s, component, c1, id);
 							</xp:eventHandler>
 						</xp:button>
 						<xp:br></xp:br>
-						<xp:button value="Test" id="button5">
+						<xp:button value="Deploye" id="button5">
 							<xp:eventHandler event="onclick"
 								submit="true" refreshMode="complete">
 								<xp:this.action><![CDATA[#{javascript:var deploy = new bsuite.weber.configure.Deploy();
-deploy.testView();}]]></xp:this.action>
+deploy.CreateDatabases();}]]></xp:this.action>
 							</xp:eventHandler></xp:button></xp:td>
 					<xp:td rowspan="2" id="loadCC" valign="top"></xp:td>
 				</xp:tr>

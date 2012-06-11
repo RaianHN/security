@@ -174,6 +174,12 @@ public class Deploy extends BsuiteWorkFlow{
 		
 	}
 
-
+	public void CreateDatabases(){
+		DefineModule def = new DefineModule();
+		Vector<String> moduleNames = def.getModules();
+		CreateDatabase cd = new CreateDatabase();
+		cd.createDatabases(moduleNames);
+		
+	}
 
 }

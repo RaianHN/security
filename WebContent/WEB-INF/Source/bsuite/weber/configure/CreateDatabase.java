@@ -44,7 +44,7 @@ public class CreateDatabase extends BsuiteWorkFlow {
 				db1 = dir.createDatabase(dbpath);
 				db1.setTitle(dbName);
 				View view1 = db1.createView("AllDocuments");
-				view1.setSelectionFormula("SELECT @ALL");
+				view1.setSelectionFormula("SELECT @All");
 			} else
 				System.out.println("found, not creating db");
 
