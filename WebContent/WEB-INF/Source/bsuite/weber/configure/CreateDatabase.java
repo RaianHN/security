@@ -32,7 +32,12 @@ public class CreateDatabase extends BsuiteWorkFlow {
 			Database db = dir.getFirstDatabase(DbDirectory.DATABASE);
 			while (db != null) {
 				String fn = db.getFileName();
-				if (fn.equalsIgnoreCase(dbName.replace(" ","") + ".nsf")) {
+				String currentpath = BSUtil.getBsuitePath(db);
+				String fulldb=currentpath+fn;
+				//System.out.println("Current dbpth,"+fulldb);
+				//System.out.println("dbpath,"+dbpath);
+				//fn.equalsIgnoreCase(dbName.replace(" ","") + ".nsf")
+				if (fulldb.equalsIgnoreCase(dbpath+".nsf")) {
 					found = true;
 					db1 = db;
 					break;
@@ -81,6 +86,11 @@ public class CreateDatabase extends BsuiteWorkFlow {
 			}
 			// String selFormula
 			System.out.println("View Creating");
+			if(db.getView(viewName)!=null){
+				System.out.println("View Exists, not creting");
+				return ;
+			}
+				
 		View view1=db.createView(viewName);
 		view1.setSelectionFormula(selFormula);
 

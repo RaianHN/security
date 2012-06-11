@@ -78,11 +78,11 @@ com.weberon.DynamicCC.loadCC(s, component, c1, id);
 							</xp:eventHandler>
 						</xp:button>
 						<xp:br></xp:br>
-						<xp:button value="Deploye" id="button5">
+						<xp:button value="Deploy" id="button5">
 							<xp:eventHandler event="onclick"
 								submit="true" refreshMode="complete">
 								<xp:this.action><![CDATA[#{javascript:var deploy = new bsuite.weber.configure.Deploy();
-deploy.CreateDatabases();}]]></xp:this.action>
+deploy.deploy();}]]></xp:this.action>
 							</xp:eventHandler></xp:button></xp:td>
 					<xp:td rowspan="2" id="loadCC" valign="top"></xp:td>
 				</xp:tr>

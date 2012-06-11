@@ -18,11 +18,22 @@ import lotus.domino.NotesException;
 
 public class Deploy extends BsuiteWorkFlow{
 
-	public void testRoleDocs(){
-		createRoleDocuments(currentdb);
+	public void createRoleDocs(){
+		try {
+			createRoleDocuments(session.getDatabase("", bsuitepath+"Security.nsf"));
+		} catch (NotesException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-	public void testProfileDocs(){
-		createProfileDocument(currentdb, "Admin");
+	public void createProfileDocs(){
+		try {
+			createProfileDocument(session.getDatabase("", bsuitepath+"Security.nsf"), "Admin");
+			createProfileDocument(session.getDatabase("", bsuitepath+"Security.nsf"), "Standard");
+		} catch (NotesException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	public void testView(){
 		try {
@@ -87,32 +98,35 @@ public class Deploy extends BsuiteWorkFlow{
 				e1.printStackTrace();
 			}
 			ArrayList<Entity> entities = module.getEntities();
-			System.out.println("modulenames2");
-			ArrayList<bsuite.weber.jsonparsing.Entity> entityList = new ArrayList<bsuite.weber.jsonparsing.Entity>();//Create empty EntityList for this module
-			for(Entity e:entities){//For each entity set permission
-				bsuite.weber.jsonparsing.Entity entity = defineEntityPermission(moduleName, e.getEntityName(), "1", "1", "1", "1");
-				ArrayList<Field> fields = e.getFields();
-				
-				ArrayList<bsuite.weber.jsonparsing.Field> fieldList = new ArrayList<bsuite.weber.jsonparsing.Field>();//create empty FieldList for this entity
-				for(Field f:fields){
-					bsuite.weber.jsonparsing.Field field = defineFieldPermission(f.getFieldName(), "0", "1");
-					fieldList.add(field);
-				}	
+			if(entities!=null){
 				System.out.println("modulenames2");
-				ArrayList<Feature>features = e.getFeatures();
-				ArrayList<bsuite.weber.jsonparsing.Feature> featureList = new ArrayList<bsuite.weber.jsonparsing.Feature>();//Create empty feature list for this entity 
-				for(Feature f:features){
-					bsuite.weber.jsonparsing.Feature feature = defineFeaturePermission(f.getFeatureName(), "1");
-					featureList.add(feature);
+				ArrayList<bsuite.weber.jsonparsing.Entity> entityList = new ArrayList<bsuite.weber.jsonparsing.Entity>();//Create empty EntityList for this module
+				for(Entity e:entities){//For each entity set permission
+					bsuite.weber.jsonparsing.Entity entity = defineEntityPermission(moduleName, e.getEntityName(), "1", "1", "1", "1");
+					ArrayList<Field> fields = e.getFields();
+					
+					ArrayList<bsuite.weber.jsonparsing.Field> fieldList = new ArrayList<bsuite.weber.jsonparsing.Field>();//create empty FieldList for this entity
+					for(Field f:fields){
+						bsuite.weber.jsonparsing.Field field = defineFieldPermission(f.getFieldName(), "0", "1");
+						fieldList.add(field);
+					}	
+					System.out.println("modulenames2");
+					ArrayList<Feature>features = e.getFeatures();
+					ArrayList<bsuite.weber.jsonparsing.Feature> featureList = new ArrayList<bsuite.weber.jsonparsing.Feature>();//Create empty feature list for this entity 
+					for(Feature f:features){
+						bsuite.weber.jsonparsing.Feature feature = defineFeaturePermission(f.getFeatureName(), "1");
+						featureList.add(feature);
+					}
+					entity.setFields(fieldList);
+					entity.setFeatures(featureList);	
+					entityList.add(entity);
+					System.out.println("modulenames3");
 				}
-				entity.setFields(fieldList);
-				entity.setFeatures(featureList);	
-				entityList.add(entity);
-				System.out.println("modulenames3");
+				moduleNew.setEntities(entityList);
+				modules.add(moduleNew);
+				System.out.println("modulenames4");
 			}
-			moduleNew.setEntities(entityList);
-			modules.add(moduleNew);
-			System.out.println("modulenames4");
+			
 		}
 		
 		pf.setModules(modules);
@@ -174,11 +188,17 @@ public class Deploy extends BsuiteWorkFlow{
 		
 	}
 
-	public void CreateDatabases(){
+	public void createDatabases(){
 		DefineModule def = new DefineModule();
 		Vector<String> moduleNames = def.getModules();
 		CreateDatabase cd = new CreateDatabase();
 		cd.createDatabases(moduleNames);
+		
+	}
+	public void deploy(){
+		createDatabases();//Create databases for modules
+		createRoleDocs();//Create role documents for the role hierarchy created in security.nsf
+		createProfileDocs();//Create the profile documents, standard and admin in Security.nsf
 		
 	}
 
