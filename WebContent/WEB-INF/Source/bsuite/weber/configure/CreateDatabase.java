@@ -4,6 +4,8 @@ import java.util.Vector;
 
 import lotus.domino.Database;
 import lotus.domino.DbDirectory;
+import lotus.domino.Document;
+import lotus.domino.Name;
 import lotus.domino.NotesFactory;
 import lotus.domino.Session;
 import lotus.domino.View;
@@ -111,4 +113,140 @@ public class CreateDatabase extends BsuiteWorkFlow {
 		}
 	}
 
+	
+	public void RegisterEmployee(String name){
+		try{
+		Document persondoc=getPerson(name);
+		String personDocId=persondoc.getUniversalID();
+	System.out.println("UNID "+personDocId);
+			Database empdb = session.getDatabase("", bsuitepath
+					+ "Employees.nsf");
+			
+			Document empdoc=empdb.createDocument();
+			empdoc.replaceItemValue("Form","Employee");
+			empdoc.save(true,false);	
+		
+			String relId = getRelationNameUnid("IS_A");
+			createRelationship(persondoc.getUniversalID(),"names.nsf","Person","Employee.nsf","Employee",empdoc.getUniversalID(),relId);
+			
+			
+			String src_data=name;
+			String relationid = getRelationNameUnid("HAS_A");
+			String trg_data="Admin";
+			Database securityDb  = session.getDatabase("", bsuitepath
+					+ "Security.nsf");
+			View profileview= securityDb.getView("ProfileView");
+			Document profiledoc = profileview.getDocumentByKey(trg_data);
+			String targetid=profiledoc.getUniversalID();
+			String srcunid=personDocId;
+			//creating relationship between person and admin profile
+			createRelationship(srcunid,"names.nsf",src_data,securityDb.getFileName(),trg_data,targetid,relationid);
+			
+			//Create Role Association with the Person
+			createRoleAssociation(name);
+			
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+	
+		
+	}
+	
+	public void createRoleAssociation(String username){
+		
+		String src_data=username;
+		Document persondoc=getPerson(username);
+		try{	
+		
+		String personDocId=persondoc.getUniversalID();
+		String relationid = getRelationNameUnid("HAS_ROLE");
+		String rolename="CEO";
+		Database securityDb  = session.getDatabase("", bsuitepath
+				+ "Security.nsf");
+		View roleview=  securityDb.getView("RolesView");
+		Document roledoc= roleview.getDocumentByKey(rolename);
+		String roleunid=roledoc.getUniversalID();
+		createRelationship(personDocId,"names.nsf",src_data,securityDb.getFileName(),rolename,roleunid,relationid);
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	
+	
+	private Document getPerson(String username) {
+		try {
+
+			Database namesdb = session.getDatabase("", "names.nsf");
+			View peopleview = namesdb.getView("($VIMPeople)");
+			Document userdoc = peopleview.getDocumentByKey(username);
+			return userdoc;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	
+	
+	public String  getRelationNameUnid(String relationName){
+		try{
+			 Database relationDb = session.getDatabase("", bsuitepath
+						+ "Relation.nsf");
+					View relview=relationDb.getView("CategoryRelation");
+					Document reldoc= relview.getDocumentByKey(relationName);
+					return reldoc.getUniversalID();
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
+		}
+	
+	
+	
+	public void createRelationship(String srcunid,String sourcedb,String src_data,String targetdb,String trg_data,String targetid,String relationid){
+	
+		try{
+			 Database relationDb = session.getDatabase("", bsuitepath
+						+ "Relation.nsf");
+				
+			 Document reldoc=relationDb.createDocument();
+			 reldoc.replaceItemValue("Form","association");
+			 reldoc.replaceItemValue("sourceid", srcunid);
+			reldoc.replaceItemValue("sourcedb",sourcedb);
+			reldoc.replaceItemValue("src_data", src_data);
+			reldoc.replaceItemValue("targetdb",targetdb);
+			reldoc.replaceItemValue("trg_data",trg_data);
+			reldoc.replaceItemValue("targetid",targetid);
+			
+		reldoc.replaceItemValue("relationid",relationid);
+			reldoc.save(true,false);
+			 
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+	
+	}
+	private String getFormattedName(String currentuser, String param) {
+		try {			
+
+			Name user = session.createName(currentuser);
+			if (param.equals("abr")) {
+				return user.getAbbreviated();
+			}
+
+			else if (param.equals("canonical")) {
+				return user.getCanonical();
+			} else if (param.equals("common")) {
+				return user.getCommon();
+			}
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
+	}
+
+	
+	
 }
