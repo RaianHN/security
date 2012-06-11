@@ -10,8 +10,11 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import lotus.domino.cso.Database;
 import lotus.domino.Document;
+import lotus.domino.DocumentCollection;
 import lotus.domino.NotesException;
 import lotus.domino.View;
+import lotus.domino.ViewEntry;
+import lotus.domino.ViewEntryCollection;
 
 import bsuite.weber.model.BsuiteWorkFlow;
 
@@ -125,9 +128,75 @@ public class DefineModule extends BsuiteWorkFlow{
 		
 	}
 	public Vector getModules(){
+		try{			
+		View modulesView =currentdb.getView("Modules");
+		ViewEntryCollection vc = modulesView.getAllEntries();
+		Document doc=null;
+		String mname="";
+		ViewEntry entry = vc.getFirstEntry();
+		Vector modules=new Vector();
+		while(entry!=null){
+			doc=entry.getDocument();
+			mname=doc.getItemValueString("ModuleName");
+			modules.add(mname);
+			entry=vc.getNextEntry(entry);
+		}
+		return modules;
 		
+		}catch (NotesException e) {
+			// TODO: handle exception
+		}
+		
+		return null;
+	}
+	
+	
+	public String getModuleJson(String moduleName){
+		Document moduleDoc = getModuleDoc(moduleName);
+		try {
+			return moduleDoc.getItemValueString("JsonString");
+		} catch (NotesException e) {
+			e.printStackTrace();
+		}		
+		return null;
+	}
+	
+	public Vector getEntityNames(String moduleName){
+		String moduleJson = getModuleJson(moduleName);
+		ObjectMapper mapper = new ObjectMapper();
+		Module module = null;
+		try {
+			module = mapper.readValue(moduleJson, Module.class);
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		ArrayList<Entity> entityList = module.getEntities();
+
+		if(entityList!=null){
+			Vector entityNames = new Vector();
+			for(Entity e:entityList){
+				entityNames.add(e.getEntityName());
+			}
+			return entityNames;
+		}
+
 
 		return null;
 	}
 	
+	
+	private Document getModuleDoc(String moduleName){
+		try {
+			View moduleView = currentdb.getView("Modules");
+			Document moduleDoc = moduleView.getDocumentByKey(moduleName);		
+			return moduleDoc;
+		} catch (NotesException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
