@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><note class="filter" maintenanceversion="3.0" replicaid="65257A1A004C4EAD" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="1656" sequence="1" unid="621249005AC66E7E65257A1C004F0687">
+<created><datetime>20120613T195310,15+0530</datetime></created>
+<modified><datetime>20120613T195310,16+0530</datetime></modified>
+<revised><datetime>20120613T195310,15+0530</datetime></revised>
+<lastaccessed><datetime>20120613T195310,16+0530</datetime></lastaccessed>
+<addedtofile><datetime>20120613T195310,16+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Jaya K Prakash/O=Weberon</name><name>CN=Tenzing Sangmo/O=Weberon</name><name>CN=Jaya K Prakash/O=Weberon</name><name>CN=Tenzing Sangmo/O=Weberon</name><name>CN=Jaya K Prakash/O=Weberon</name><name>CN=Tenzing Sangmo/O=Weberon</name><name>CN=Jaya K Prakash/O=Weberon</name><name>CN=Tenzing Sangmo/O=Weberon</name><name>CN=Jaya K Prakash/O=Weberon</name><name>CN=Tenzing Sangmo/O=Weberon</name><name>CN=Jaya K Prakash/O=Weberon</name><name>CN=Tenzing Sangmo/O=Weberon</name><name>CN=Jaya K Prakash/O=Weberon</name><name>CN=Tenzing Sangmo/O=Weberon</name><name>CN=Jaya K Prakash/O=Weberon</name><name>CN=Tenzing Sangmo/O=Weberon</name><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
+<wassignedby><name>CN=Jaya K Prakash/O=Weberon</name></wassignedby>
+<item name="$TITLE" sign="true"><text>CommonFunctions</text></item>
+<item name="$Flags"><text>.5834Q</text></item>
+<item name="$PublicAccess" sign="true"><text>1</text></item>
+<item name="$DesignerVersion"><text>8.5.3</text></item>
+</note>

@@ -94,8 +94,16 @@ dojo.xhrPost({
 			<xp:this.script><![CDATA[XSP.openMenu(thisEvent,#{javascript:getComponent('popuplogin').getMenuCtor()})]]></xp:this.script>
 		</xp:eventHandler></xp:link>
 
-	<xp:link escape="true" text="Configure" id="link2">
-		<xp:eventHandler event="onclick" submit="true"
+	<xp:link escape="true" id="link2" text="Configure">
+		<xp:this.rendered><![CDATA[#{javascript:var role = database.queryAccessRoles(session.getEffectiveUserName());
+var roleContains = role.contains("[Deployer]");
+println("roles"+role);
+println("rolec "+roleContains);
+if(roleContains==true){
+return true;
+}else{
+return false;
+}}]]></xp:this.rendered><xp:eventHandler event="onclick" submit="true"
 			refreshMode="partial" refreshId="CCLoadDiv">
 			<xp:this.action><![CDATA[#{javascript:/*
 if (getComponent("DefineEntities") == null)

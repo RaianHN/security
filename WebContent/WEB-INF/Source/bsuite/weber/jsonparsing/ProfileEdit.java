@@ -87,6 +87,58 @@ public ProfileJson getJsonProfileObj(String jsonString){
 	}  
 	return profile;
 }
+
+
+public void saveModulePerm(String profileName,String vals){
+	
+	String[] arr = vals.split(",");
+	Document profDoc = getProfileDoc(getSecurityDatabase(),profileName);
+	String jsonString="";
+	try {
+		jsonString = profDoc.getItemValueString("JsonString");
+	} catch (NotesException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	ProfileJson profile = getJsonProfileObj(jsonString);
+	
+	String[] moduleSecurity; 
+	
+	
+	String mSec="";
+	for(int i=1;i<arr.length;i++){
+		mSec = arr[i];
+		moduleSecurity = mSec.split(":");
+		System.out.println("ftrsecurity "+moduleSecurity);
+		for(Module mod:profile.getModules()){
+			System.out.println("comparing "+moduleSecurity[0]+ " " +mod.getModuleName());
+			if(moduleSecurity[0].equals(mod.getModuleName())){
+				System.out.println("module permission"+moduleSecurity[1]+"  ");
+				mod.setTabvis(moduleSecurity[1]);				
+			}
+		}
+	}
+	
+	ObjectMapper mapper = new ObjectMapper();  
+	String jsonString2 = "";
+	try {
+		jsonString2 = mapper.writeValueAsString(profile);
+	} catch (JsonGenerationException e) {		
+		e.printStackTrace();
+	} catch (JsonMappingException e) {
+		e.printStackTrace();
+	} catch (IOException e) {
+		e.printStackTrace();
+	}
+	
+	try {
+		profDoc.replaceItemValue("JsonString",jsonString2 );
+		profDoc.save();
+	} catch (NotesException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+}
 	/*
 	public void getEntityCrud(String profileName, String entityName){
 			Document profDoc = getProfileDoc(getSecurityDatabase(),profileName);

@@ -1,13 +1,13 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE note SYSTEM 'xmlschemas/domino_8_5_3.dtd'>
 <note default='true' class='icon' xmlns='http://www.lotus.com/dxl' version='8.5'
- maintenanceversion='3.0' replicaid='65257A1A0023F26F'>
-<noteinfo noteid='122' unid='E595BF7010C638F065257A11002504F1' sequence='17'>
+ maintenanceversion='3.0' replicaid='65257A1A004C4EAD'>
+<noteinfo noteid='11a' unid='E595BF7010C638F065257A11002504F1' sequence='27'>
 <created><datetime>20120602T121420,97+0530</datetime></created>
-<modified><datetime>20120611T161926,99+0530</datetime></modified>
-<revised><datetime>20120611T161926,98+0530</datetime></revised>
-<lastaccessed><datetime>20120611T161926,99+0530</datetime></lastaccessed>
-<addedtofile><datetime>20120611T121900,36+0530</datetime></addedtofile></noteinfo>
+<modified><datetime>20120611T192353,21+0530</datetime></modified>
+<revised><datetime>20120611T192353,20+0530</datetime></revised>
+<lastaccessed><datetime>20120611T192353,21+0530</datetime></lastaccessed>
+<addedtofile><datetime>20120611T192328,99+0530</datetime></addedtofile></noteinfo>
 <updatedby><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
 <item name='IconBitmap' summary='true'>
 <rawitemdata type='6'>
@@ -27,8 +27,8 @@ AAAAUEECICABAAD/////+A4DgA==
 <item name='$DefaultXPage'><text>SushantActivity.xsp</text></item>
 <item name='$DefaultClientXPage'><text>SushantActivity.xsp</text></item>
 <item name='$DBTheme'><text>bsuiteBlue.theme</text></item>
-<item name='$TITLE'><text>Employees MVC Phase2</text></item>
-<item name='$Daos'><text>0</text></item>
 <item name='$Flags'><text>J!ls</text></item>
-<item name='$FlagsNoRefresh'><text>t</text></item></note>
+<item name='$FlagsNoRefresh'><text>t</text></item>
+<item name='$Daos'><text>0</text></item>
+<item name='$TITLE'><text>Employees MVC Phase2</text></item></note>
 

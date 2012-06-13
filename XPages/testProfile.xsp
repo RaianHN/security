@@ -2,4 +2,10 @@
 <xp:view xmlns:xp="http://www.ibm.com/xsp/core"
 	xmlns:xc="http://www.ibm.com/xsp/custom">
 
-	<xc:modulePermission></xc:modulePermission></xp:view>
+	<xc:modulePermission></xc:modulePermission>
+	<xp:eventHandler id="eventModulePerm" event="onDojo">
+		<xp:this.action><![CDATA[#{javascript:println("calling event");
+setModulePermission(viewScope.selProfile);
+println("calling event");}]]></xp:this.action>
+	</xp:eventHandler>
+</xp:view>

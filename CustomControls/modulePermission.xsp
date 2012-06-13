@@ -1,15 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xp:view xmlns:xp="http://www.ibm.com/xsp/core">
 
-	
+
+	<xp:this.resources>
+		<xp:script src="/CommonFunctions.jss" clientSide="false"></xp:script>
+		<xp:script src="/Copy Of CustomControlLib.js"
+			clientSide="true">
+		</xp:script>
+	</xp:this.resources>
 	<xp:br></xp:br>
 	<xp:button value="Label" id="button1">
 		<xp:eventHandler event="onclick" submit="true"
 			refreshMode="complete">
 			<xp:this.action><![CDATA[#{javascript:var moduleVisib = new bsuite.weber.jsonparsing.ProfileEdit();
-moduleVisib.getModulePermission("Standard");}]]></xp:this.action>
-		</xp:eventHandler></xp:button>
-	<xp:table>
+moduleVisib.getModulePermission("Admin");
+viewScope.selProfile = "Admin";}]]></xp:this.action>
+		</xp:eventHandler>
+	</xp:button>
+	<xp:button value="Label" id="button3">
+		<xp:eventHandler event="onclick" submit="true"
+			refreshMode="complete">
+			<xp:this.action><![CDATA[#{javascript:var moduleVisib = new bsuite.weber.jsonparsing.ProfileEdit();
+moduleVisib.getModulePermission("Admin");
+viewScope.selProfile = "Admin";}]]></xp:this.action>
+		</xp:eventHandler>
+	</xp:button>
+	<xp:table id="table1">
 		<xp:tr>
 			<xp:td>
 				<xp:span style="font-weight:bold">Module Name</xp:span>
@@ -20,15 +36,17 @@ moduleVisib.getModulePermission("Standard");}]]></xp:this.action>
 			<xp:td>
 				<xp:button value="Save" id="button2"
 					style="background-color:rgb(192,192,192);width:100.0px">
-				<xp:eventHandler event="onclick" submit="false">
-					<xp:this.script><![CDATA[var table = document.getElementById('#{id:table1}');
+					<xp:eventHandler event="onclick" submit="false">
+						<xp:this.script><![CDATA[var table = document.getElementById('#{id:table1}');
 
 var i = 0;
 var result = new Array();
+alert("table rolws"+table.rows.length);
 for (i = 1; i < table.rows.length; i++) {
 
     var moduleName = table.rows[i].cells[0].firstChild.innerHTML;
     var checkvals1 = table.rows[i].cells[1].firstChild.firstChild.checked;//visibility
+    alert("temp"+moduleName);
     
     var temp;
     if (checkvals1 == true) {
@@ -40,8 +58,11 @@ for (i = 1; i < table.rows.length; i++) {
     result[i]=temp;
     alert("temp"+temp);
 }
+alert("temp");
 XSP.executeOnServer('view:_id1:eventModulePerm', "", "", result);]]></xp:this.script>
-				</xp:eventHandler></xp:button></xp:td>
+					</xp:eventHandler>
+				</xp:button>
+			</xp:td>
 		</xp:tr>
 		<xp:repeat id="repeat1" rows="30" var="rowData">
 			<xp:this.value><![CDATA[#{javascript:var moduleP:java.util.Vector = viewScope.modulePermission;
@@ -55,7 +76,7 @@ return moduleP;
 					</xp:inputText>
 				</xp:td>
 				<xp:td>
-					<xp:checkBox id="checkBox8">
+					<xp:checkBox id="checkBox8" text="Visible">
 						<xp:this.defaultChecked><![CDATA[#{javascript:var val = @Right(rowData,":");
 if(val.charAt(0)=="1"){
 return true;
@@ -69,7 +90,59 @@ return false;
 		</xp:repeat>
 
 	</xp:table>
-	<xp:eventHandler id="eventModulePerm" event="onDojo"
-		action="#{javascript:setModulePermission(viewScope.selProfile)}">
-	</xp:eventHandler>
-	</xp:view>
+	
+	<xp:br></xp:br>
+	<xp:br></xp:br>
+	<xp:br></xp:br>
+	
+	<xp:table>
+		<xp:tr>
+			<xp:td>Entity Name</xp:td>
+			<xp:td>Create</xp:td>
+			<xp:td>Read</xp:td>
+			<xp:td>Update</xp:td>
+			<xp:td>Delete</xp:td>
+			<xp:td><xp:button value="Save" id="button4" style="background-color:rgb(192,192,192);width:100.0px">
+					<xp:eventHandler event="onclick" submit="false">
+						<xp:this.script><![CDATA[var table = document.getElementById('#{id:table1}');
+
+var i = 0;
+var result = new Array();
+alert("table rolws"+table.rows.length);
+for (i = 1; i < table.rows.length; i++) {
+
+    var moduleName = table.rows[i].cells[0].firstChild.innerHTML;
+    var checkvals1 = table.rows[i].cells[1].firstChild.firstChild.checked;//visibility
+    alert("temp"+moduleName);
+    
+    var temp;
+    if (checkvals1 == true) {
+        temp = moduleName + ":"+"1";
+    } else {
+        temp = moduleName + ":"+"0";
+    }
+     
+    result[i]=temp;
+    alert("temp"+temp);
+}
+alert("temp");
+XSP.executeOnServer('view:_id1:eventModulePerm', "", "", result);]]></xp:this.script>
+					</xp:eventHandler>
+				</xp:button></xp:td>
+		</xp:tr>
+		<xp:repeat id="repeat2" rows="30">
+			<xp:this.value><![CDATA[#{javascript:var entityP:java.util.Vector = viewScope.entityPermission;
+if(entityP!=null){
+return entityP;
+}}]]></xp:this.value>
+			<xp:tr>
+				<xp:td></xp:td>
+				<xp:td></xp:td>
+				<xp:td></xp:td>
+				<xp:td></xp:td>
+				<xp:td></xp:td>
+				<xp:td></xp:td>
+			</xp:tr>
+		</xp:repeat>
+
+	</xp:table></xp:view>
