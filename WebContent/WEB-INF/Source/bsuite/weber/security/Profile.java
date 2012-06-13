@@ -32,6 +32,7 @@ public class Profile extends BsuiteWorkFlow {
 				vModules.add(module);
 			}
 		}
+		System.out.println(vModules);
 		return vModules;
 	}
 
@@ -127,6 +128,7 @@ public class Profile extends BsuiteWorkFlow {
 				vModules.add(module.getModuleName());
 			}
 		}
+		System.out.println(vModules);
 		return vModules;
 	}
 

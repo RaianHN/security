@@ -90,19 +90,21 @@ public class DefineModule extends BsuiteWorkFlow {
 			}
 
 			Entity entity = new Entity();
-			Field field = new Field();
-			Feature feature = new Feature();
+			
+		
 
 			ArrayList<Field> fieldsList = new ArrayList<Field>();
 			ArrayList<Feature> featureList = new ArrayList<Feature>();
 
 			for (String s : fields) {
 				// Add fields to the new entity
+				Field field = new Field();
 				field.setFieldName(s);
 				fieldsList.add(field);
 			}
 			for (String s : features) {
 				// Add features to the new entity
+				Feature feature = new Feature();
 				feature.setFeatureName(s);
 				featureList.add(feature);
 			}
