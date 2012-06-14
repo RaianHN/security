@@ -68,6 +68,22 @@
     <managed-bean-class>com.weberon.Jump</managed-bean-class>
     <managed-bean-scope>request</managed-bean-scope>
   </managed-bean>
+  
+   <managed-bean>
+    <managed-bean-name>employee</managed-bean-name>
+    <managed-bean-class>bsuite.weber.data.PageDataBean
+		</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+    <managed-property>
+      <property-name>dataProviderClass</property-name>
+      <value>bsuite.weber.data.NSFPageDataProvider
+			</value>
+    </managed-property>
+  </managed-bean>
+
+  
+  
+  
   <managed-bean>
     <managed-bean-name>role</managed-bean-name>
     <managed-bean-class>bsuite.weber.security.Role</managed-bean-class>

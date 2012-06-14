@@ -9,51 +9,62 @@ public class Security {
 	private Role role;
 	private ArrayList<String> modules;
 	private HashMap<String, ArrayList<String>> modulesEntities;
-	
-	public Security(){
-		profile=new Profile();
+
+	public Security() {
+		profile = new Profile();
 		System.out.println("-------1");
-		role=new Role();
+		role = new Role();
 		System.out.println("-------2");
-		modules=profile.getVisibleModulesNames();
+		modules = profile.getVisibleModulesNames();
+		modulesEntities = new HashMap<String, ArrayList<String>>();
 		System.out.println("-------3");
-		for(String x:modules){
+		for (String x : modules) {
 			System.out.println("-------4");
-		//ArrayList entities=new ArrayList();	
-		//entities	=profile.getCreatableEntitiesNames(x);			
-		//modulesEntities.put(x,entities);
-		System.out.println("-------5");
+			ArrayList<String> entities = new ArrayList<String>();
+			System.out.println("-------4x1");
+			entities = profile.getCreatableEntitiesNames(x);
+			System.out.println("-------4x2");
+			//if (entities != null) {
+				modulesEntities.put(x, entities);
+			//}
+
+			System.out.println("-------5");
 		}
 		System.out.println("-------6");
-		
+
 	}
-	
+
 	public Profile getProfile() {
 		return profile;
 	}
+
 	public void setProfile(Profile profile) {
 		this.profile = profile;
 	}
+
 	public Role getRole() {
 		return role;
 	}
+
 	public void setRole(Role role) {
 		this.role = role;
 	}
+
 	public ArrayList<String> getModules() {
 		return modules;
 	}
+
 	public void setModules(ArrayList<String> modules) {
 		this.modules = modules;
 	}
+
 	public HashMap<String, ArrayList<String>> getModulesEntities() {
 		return modulesEntities;
 	}
+
 	public void setModulesEntities(
 			HashMap<String, ArrayList<String>> modulesEntities) {
 		this.modulesEntities = modulesEntities;
 	}
-	
-	
-	
+
 }

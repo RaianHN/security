@@ -446,3 +446,11 @@ function setFieldPermission(profileName,moduleName,entityName){
 	
 	fieldCrud.saveFieldPerm(profileName,moduleName,entityName,context.getSubmittedValue());
 }
+
+function loadCreateEntity(){
+	var component = getComponent('cEntityPanel'); 
+	var s = facesContext;
+	var c1="/cc_entityForm.xsp"; 
+	var id="entityPanel";
+	com.weberon.DynamicCC.loadCC(s, component, c1, id);	
+}

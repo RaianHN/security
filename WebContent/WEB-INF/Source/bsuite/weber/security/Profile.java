@@ -41,9 +41,12 @@ public class Profile extends BsuiteWorkFlow {
 		Module mod = getModule(moduleName);
 		
 		for(Entity entity:mod.getEntities()){
-			if(entity.getCreate().equals("1")){
-				cEntities.add(entity);
+			if(entity!=null){
+				if(entity.getCreate().equals("1")){
+					cEntities.add(entity);
+				}	
 			}
+			
 		}
 		return cEntities;
 	}
@@ -113,9 +116,11 @@ public class Profile extends BsuiteWorkFlow {
 	}
 
 	private Module getModule(String moduleName){
-		
+		System.out.println("--------44");
 		for(Module module:profileJson.getModules()){
+			System.out.println("--------45");
 			if(module.getModuleName().equals(moduleName)){
+				System.out.println("--------46");
 				return module;
 			}
 		}
@@ -133,17 +138,25 @@ public class Profile extends BsuiteWorkFlow {
 	}
 
 	public ArrayList<String> getCreatableEntitiesNames(String moduleName){
+		System.out.println("modulename"+moduleName);
 		ArrayList<String> cEntities = new ArrayList<String>();
 		Module mod = getModule(moduleName);
-		
-		for(Entity entity:mod.getEntities()){
+		System.out.println("--------41");
+		ArrayList<Entity> entities = mod.getEntities();
+		if(entities==null){
+			return null;
+		}
+		for(Entity entity:entities){
+			System.out.println("--------42");
 			if(entity!=null){
 				if(entity.getCreate().equals("1")){
+					System.out.println("--------43");
 					cEntities.add(entity.getEntityName());
 				}
 			}
 			
 		}
+		System.out.println("c enti"+cEntities);
 		return cEntities;
 	}
 

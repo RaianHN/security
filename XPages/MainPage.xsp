@@ -2,4 +2,8 @@
 <xp:view xmlns:xp="http://www.ibm.com/xsp/core"
 	xmlns:xc="http://www.ibm.com/xsp/custom">
 
-	<xc:cc_tabtable></xc:cc_tabtable></xp:view>
+	<xp:this.resources>
+		<xp:script src="/CommonFunctions.jss" clientSide="false"></xp:script>
+	</xp:this.resources>
+	<xc:cc_tabtable></xc:cc_tabtable>
+</xp:view>

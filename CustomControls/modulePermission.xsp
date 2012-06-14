@@ -131,7 +131,7 @@ moduleVisib.getEntityPermission("Admin","Employees");
 }]]></xp:this.action>
 		</xp:eventHandler>
 	</xp:button>
-	<xp:table id="table2" rendered="false">
+	<xp:table id="table2">
 		<xp:tr>
 			<xp:td>Profile:&#160;
 				<xp:br></xp:br>
