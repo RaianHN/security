@@ -54,9 +54,11 @@ public class CompUtil {
 	@SuppressWarnings("unchecked")
 	public static   void createInput(UIComponent com,  String fieldname ,String arg) 
 	{
+		System.out.println("inside createINput");
 		XspInputText inp = new XspInputText();
 		inp.setId("i"+fieldname);
-		String ref = "#{"+arg+"."+fieldname+"}";		
+		String ref = "#{"+arg+"."+fieldname+"}";	
+		System.out.println("String ref "+ref);
 		
 	ValueBinding vb1  = FacesContext.getCurrentInstance().getApplication().createValueBinding(ref);
 	 inp.setValueBinding( "value", vb1);

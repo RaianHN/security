@@ -2,8 +2,17 @@ package bsuite.weber.security;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Vector;
 
-public class Security {
+import lotus.domino.Database;
+import lotus.domino.Document;
+import lotus.domino.Name;
+import lotus.domino.NotesException;
+import lotus.domino.View;
+import bsuite.weber.model.BsuiteWorkFlow;
+import bsuite.weber.tools.JSFUtil;
+
+public class Security extends BsuiteWorkFlow {
 
 	private Profile profile;
 	private Role role;
@@ -11,13 +20,20 @@ public class Security {
 	private HashMap<String, ArrayList<String>> modulesEntities;
 	
 	public Security(){
-		profile=new Profile();
-		role=new Role();
-		modules=profile.getVisibleModulesNames();
+		try {
+		//	profile=(Profile)getAssociatedProfile(session.getEffectiveUserName());
+			//role = new Role();//getAssociatedRoleName(session.getEffectiveUserName());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		//modules=profile.getVisibleModulesNames();
+		modules.add("EMployees");
+		modules.add("Documents");
 		
 		for(String x:modules){
 		ArrayList entities=new ArrayList();	
-		entities	=profile.getCreatableEntitiesNames(x);			
+		entities = profile.getCreatableEntitiesNames(x);			
 		modulesEntities.put(x,entities);					
 		}
 		

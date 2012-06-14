@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xc="http://www.ibm.com/xsp/custom">
+	<xp:table>
+		<xp:tr>
+			<xp:td>
+
+			<xp:button value="New Employee" id="button1"
+				style="background-color:rgb(192,192,192)">
+			<xp:eventHandler event="onclick" submit="true"
+				refreshMode="complete">
+				<xp:this.action><![CDATA[#{javascript:sessionScope.put('documentId',"");
+sessionScope.put("Beanid","employee");
+//var c= getComponent('FormDiv');
+//wrkspc.resetUI(c, facesContext,"/cc_TestPageForm.xsp");
+wrkspc.resetBean();}]]></xp:this.action>
+			</xp:eventHandler></xp:button>
+			<xp:viewPanel rows="30" id="viewPanel1"
+					var="viewEntry">
+
+
+
+					<xp:this.data>
+						<xp:dominoView var="view1"
+							databaseName="INB80/Development!!mvc2/employees.nsf"
+							viewName="Employee">
+						</xp:dominoView>
+					</xp:this.data>
+
+					<xp:viewColumn columnName="Name" id="viewColumn1"
+						displayAs="link" showCheckbox="true">
+						<xp:viewColumnHeader value="Name"
+							id="viewColumnHeader1">
+						</xp:viewColumnHeader>
+						<xp:eventHandler event="onclick" submit="true"
+							refreshMode="complete" id="eventHandler1">
+							<xp:this.action><![CDATA[#{javascript:var doc:NotesDocument=viewEntry.getDocument();
+var unid=doc.getUniversalID();
+println("UNID ",unid);
+sessionScope.put("documentId",unid);
+var c= getComponent('FormDiv');
+wrkspc.resetUI(c, facesContext,"/cc_TestPageForm.xsp");}]]></xp:this.action>
+						</xp:eventHandler>
+					</xp:viewColumn>
+					<xp:viewColumn columnName="Salary"
+						id="viewColumn2">
+						<xp:viewColumnHeader value="Salary"
+							id="viewColumnHeader2">
+						</xp:viewColumnHeader>
+					</xp:viewColumn>
+					<xp:viewColumn columnName="Emergency"
+						id="viewColumn3">
+						<xp:viewColumnHeader value="Emergency"
+							id="viewColumnHeader3">
+						</xp:viewColumnHeader>
+					</xp:viewColumn>
+				</xp:viewPanel>
+			</xp:td>
+			
+		</xp:tr>
+	</xp:table>
+
+
+
+
+
+	<xp:br></xp:br>
+
+
+</xp:view>

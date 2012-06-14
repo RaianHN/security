@@ -39,11 +39,22 @@ public class NSFPageDataProvider implements DataObjectExt {
 	private String bsuitepath;
 	//to get the viewScope variable
 	Map viewScope=(Map) JSFUtil.getVariableValue("viewScope");
+	//Map sessionScope=(Map) JSFUtil.getVariableValue("sessionScope");
 	
 	public NSFPageDataProvider() {
+		System.out.println("Constructor of NSFDataProvider");
 		m_cachedValues=new HashMap<String,String>();
 		m_changedValues=new HashMap<String,String>();
 		
+	}
+	
+	public void reset(){
+		System.out.println(" reset called");
+		m_cachedValues.clear();
+		m_changedValues.clear();
+		Map viewScope=(Map) JSFUtil.getVariableValue("viewScope");
+		viewScope.put(VIEWSCOPE_DATADOCUMENT, null);
+		m_documentId=null;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -104,7 +115,7 @@ public class NSFPageDataProvider implements DataObjectExt {
 			//Session session=NotesContext.getCurrent().getCurrentSession();
 			System.out.println("getDocument reference is null");
 			bsuitepath=BSUtil.getBsuitePath(ExtLibUtil.getCurrentDatabase());
-			Database entitydb=ExtLibUtil.getCurrentSession().getDatabase("", bsuitepath+"Employees.nsf");
+			Database entitydb=ExtLibUtil.getCurrentSession().getDatabase("", bsuitepath+"employees.nsf");
 			doc=entitydb.getDocumentByUNID(documentId);
 			//cache it in the viewscope until it gets invalid
 			viewScope.put(VIEWSCOPE_DATADOCUMENT, new DocumentRef(doc));
@@ -125,6 +136,7 @@ public class NSFPageDataProvider implements DataObjectExt {
 	}
 
 	public Object getValue(Object id) {
+		System.out.println("inside getValue() method");
 		String sId=id.toString();
 		if (m_changedValues.containsKey(sId)) {
 			return m_changedValues.get(sId);
@@ -154,6 +166,7 @@ public class NSFPageDataProvider implements DataObjectExt {
 	}
 
 	public void setValue(Object id, Object newValue) {
+		System.out.println("inside setValue() method");
 		Object oldValue=getValue(id);
 		
 		boolean changed=(newValue==null & oldValue!=null) || (newValue!=null && !newValue.equals(oldValue));
@@ -175,11 +188,17 @@ public class NSFPageDataProvider implements DataObjectExt {
 					//we need to create a new document in the database
 					//Session session=NotesContext.getCurrent().getCurrentSession();
 					bsuitepath=BSUtil.getBsuitePath(ExtLibUtil.getCurrentDatabase());
-					Database userdb=ExtLibUtil.getCurrentSession().getDatabase("", bsuitepath+"Employees.nsf");
+					Database userdb=ExtLibUtil.getCurrentSession().getDatabase("", bsuitepath+"employees.nsf");
 					doc=userdb.createDocument();
+					System.out.println("inside the store method in NSFDataPageProvider");
+					Map sessionscope=(Map) JSFUtil.getVariableValue("sessionScope");
+					Map viewScope=(Map) JSFUtil.getVariableValue("viewScope");
 					
-				//	doc.replaceItemValue("Form", viewScope.get("entityName"));
-					doc.replaceItemValue("obid", viewScope.get("entityName"));
+					//String ename=(String)sessionscope.get("entityName");
+					String ename=(String)viewScope.get("entityName");
+					System.out.println("inside the store method in NSFDataPageProvider viewScope var "+ename);
+					doc.replaceItemValue("Form", ename);
+					doc.replaceItemValue("obid", ename);
 				}
 				
 				//write all changed values into the document
@@ -233,10 +252,13 @@ public class NSFPageDataProvider implements DataObjectExt {
 	
 	public void delete(){
 		try{
-			
+		m_documentId=null;
+			System.out.println("Inside deleteDocument method");
 			Document doc=getDocument();
+			System.out.println("After getDocuemnt()");
+			System.out.println("Document Unid----- "+doc.getUniversalID());
 			doc.remove(true);
-			
+			System.out.println("The document is deleted");
 		}catch (Exception e) {
 			// TODO: handle exception
 		}

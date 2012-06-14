@@ -7,6 +7,7 @@ import javax.faces.FacesException;
 import bsuite.weber.tools.JSFUtil;
 
 import com.ibm.domino.xsp.module.nsf.NotesContext;
+import com.ibm.xsp.component.UIPanelEx;
 import com.ibm.xsp.model.DataObject;
 
 
@@ -33,6 +34,7 @@ public class PageDataBean implements DataObject {
 	 */
 	@SuppressWarnings("unchecked")
 	public DataObjectExt getDataProvider() {
+		System.out.println("getDataProvider method");
 		Map viewScope=(Map) JSFUtil.getVariableValue("viewScope");
 
 		DataObjectExt provider=(DataObjectExt) viewScope.get(VIEWSCOPE_DATAPROVIDERCLASS);
@@ -64,6 +66,7 @@ public class PageDataBean implements DataObject {
 	}
 
 	public Object getValue(Object id) {
+		System.out.println("Inside getValue of PageDataBea");
 		return getDataProvider().getValue(id);
 	}
 
@@ -73,5 +76,10 @@ public class PageDataBean implements DataObject {
 
 	public void setValue(Object id, Object value) {
 		getDataProvider().setValue(id, value);
+	}
+	
+	public void reset(){
+		System.out.println("resetbean");
+		getDataProvider().reset();
 	}
 }

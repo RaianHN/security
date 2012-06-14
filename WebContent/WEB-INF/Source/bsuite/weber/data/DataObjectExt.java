@@ -16,4 +16,8 @@ public interface DataObjectExt extends DataObject, Serializable {
 	 */
 	public void store();
 	
+	public void reset();
+
+	public void delete();
+	
 }

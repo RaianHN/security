@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xe="http://www.ibm.com/xsp/coreex">
+	<xp:panel>
+		<xe:djTabContainer id="djTabContainer1"
+			style="height:682px;width:100%;">
+			<xe:djTabPane id="djTabPane1" title="HOME"></xe:djTabPane>
+		</xe:djTabContainer></xp:panel>
+
+</xp:view>

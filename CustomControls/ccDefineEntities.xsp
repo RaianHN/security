@@ -15,7 +15,7 @@
 						<xp:button value="Add Modules" id="button2"
 							style="background-color:rgb(192,192,192)">
 							<xp:eventHandler event="onclick"
-								submit="true" refreshMode="partial" refreshId="CCLoadDiv">
+								submit="true" refreshMode="partial" refreshId="CCLoadDiv" id="eventHandler1">
 								<xp:this.action><![CDATA[#{javascript:var component = getComponent('loadCC');
 if(component.getChildren!=null){
 com.weberon.DynamicCC.removePreview(component);
@@ -27,11 +27,11 @@ com.weberon.DynamicCC.loadCC(s, component, c1, id);
 }]]></xp:this.action>
 							</xp:eventHandler>
 						</xp:button>
-						<xp:br></xp:br>
+						<xp:br id="br1"></xp:br>
 						<xp:button value="Add Entity" id="button1"
 							style="background-color:rgb(192,192,192)">
 							<xp:eventHandler event="onclick"
-								submit="true" refreshMode="partial" refreshId="CCLoadDiv">
+								submit="true" refreshMode="partial" refreshId="CCLoadDiv" id="eventHandler2">
 								<xp:this.action><![CDATA[#{javascript:var component = getComponent('loadCC'); 
 if(component.getChildren!=null){
 com.weberon.DynamicCC.removePreview(component);
@@ -45,11 +45,11 @@ com.weberon.DynamicCC.loadCC(s, component, c1, id);
 						</xp:button>
 
 
-						<xp:br></xp:br>
+						<xp:br id="br2"></xp:br>
 						<xp:button id="button3" value="Add Roles"
 							style="background-color:rgb(192,192,192)">
 							<xp:eventHandler event="onclick"
-								submit="true" refreshMode="partial" refreshId="CCLoadDiv">
+								submit="true" refreshMode="partial" refreshId="CCLoadDiv" id="eventHandler3">
 								<xp:this.action><![CDATA[#{javascript:var component = getComponent('loadCC'); 
 if(component.getChildren!=null){
 com.weberon.DynamicCC.removePreview(component);
@@ -61,11 +61,11 @@ com.weberon.DynamicCC.loadCC(s, component, c1, id);
 }]]></xp:this.action>
 							</xp:eventHandler>
 						</xp:button>
-						<xp:br></xp:br>
+						<xp:br id="br3"></xp:br>
 						<xp:button value="Add Profile" id="button4"
 							style="background-color:rgb(192,192,192)">
 							<xp:eventHandler event="onclick"
-								submit="true" refreshMode="partial" refreshId="CCLoadDiv">
+								submit="true" refreshMode="partial" refreshId="CCLoadDiv" id="eventHandler4">
 								<xp:this.action><![CDATA[#{javascript:var component = getComponent('loadCC'); 
 if(component.getChildren!=null){
 com.weberon.DynamicCC.removePreview(component);
@@ -82,13 +82,39 @@ com.weberon.DynamicCC.loadCC(s, component, c1, id);
 				</xp:tr>
 				<xp:tr>
 					<xp:td>
-						
+
+						<xp:button value="Deploy" id="button5"
+							style="background-color:rgb(192,192,192)">
+							<xp:eventHandler event="onclick"
+								submit="true" refreshMode="complete" id="eventHandler5">
+								<xp:this.action><![CDATA[#{javascript:var var1 = new bsuite.weber.configure.CreateDatabase();
+var1.deploy();}]]></xp:this.action>
+							</xp:eventHandler>
+						</xp:button>
 					</xp:td>
 
+				</xp:tr>
+				<xp:tr>
+					<xp:td>
+						<xp:button value="Open TestPage" id="button6" style="background-color:rgb(192,192,192)">
+							<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+								<xp:this.action>
+
+									<xp:actionGroup>
+										<xp:executeScript>
+											<xp:this.script><![CDATA[#{javascript:sessionScope.put('documentId',"");
+sessionScope.put("Beanid","employee");}]]></xp:this.script>
+										</xp:executeScript>
+										<xp:openPage
+											name="/TestPage.xsp">
+										</xp:openPage>
+									</xp:actionGroup>
+								</xp:this.action></xp:eventHandler></xp:button></xp:td>
+					<xp:td></xp:td>
 				</xp:tr>
 			</xp:table>
 
 
 		</xe:djTabPane>
 	</xe:djTabContainer>
-</xp:view>
+	</xp:view>

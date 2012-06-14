@@ -1,7 +1,7 @@
 package bsuite.weber.action;
 
-import bsuite.weber.backend.DataObjectExt;
-import bsuite.weber.backend.PageDataBean;
+import bsuite.weber.data.DataObjectExt;
+import bsuite.weber.data.PageDataBean;
 import bsuite.weber.tools.JSFUtil;
 
 public class SaveDataAction {

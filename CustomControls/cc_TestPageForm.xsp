@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+
+	<xp:panel>	
+			<xp:button value="Save" id="button9" style="background-color:rgb(192,192,192)">
+		<xp:eventHandler event="onclick" submit="true"
+			refreshMode="complete">
+			<xp:this.action><![CDATA[#{javascript:viewScope.put("entityName","Employee");
+//sessionScope.put("entityName","Activity");
+pageaction['save'].execute("employee");
+wrkspc.resetBean();}]]></xp:this.action>
+		</xp:eventHandler></xp:button>
+			<xp:button value="Delete" id="button1" style="background-color:rgb(192,192,192)">
+				<xp:eventHandler event="onclick" submit="true"
+					refreshMode="complete">
+					<xp:this.action><![CDATA[#{javascript:println("Onclick of Delete");
+var serv=@Subset(@DbName(),1);
+var dbpath=@LeftBack(@Subset(@DbName(),-1),"/")
+var custdb=dbpath+"\\"+"employees.nsf";
+var dbname = new Array(serv,custdb);
+var db: NotesDatabase = session.getDatabase(serv, custdb);
+var docids=getComponent("viewPanel1").getSelectedIds();
+for(id in docids)
+{
+var doc:NotesDocument=db.getDocumentByID(id);
+var unid=doc.getUniversalID();
+println("Selected Unids",unid);
+sessionScope.put("documentId",unid);
+pageaction['delete'].execute("employee");
+}
+
+
+
+
+}]]></xp:this.action>
+				</xp:eventHandler></xp:button>
+			<xp:div id="div1" binding="#{wrkspc.test1}"></xp:div>
+			</xp:panel></xp:view>

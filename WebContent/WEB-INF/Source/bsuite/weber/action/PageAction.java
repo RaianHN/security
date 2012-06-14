@@ -12,6 +12,10 @@ public class PageAction implements DataObject{
 		if ("save".equals(id)) {
 			return new SaveDataAction();
 		}
+		
+		if("delete".equals(id)){
+			return new DeleteDataAction();
+		}
 		return null;
 	}
 
