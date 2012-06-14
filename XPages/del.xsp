@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+
+	<xp:listBox id="listBox1">
+		<xp:selectItems>
+			<xp:this.value><![CDATA[#{security.modules}]]></xp:this.value>
+		</xp:selectItems>
+	</xp:listBox></xp:view>

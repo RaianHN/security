@@ -379,5 +379,33 @@ public class DefineModule extends BsuiteWorkFlow {
 		
 		return null;
 	}
+	public ArrayList getEntities(String moduleName){
+		String moduleJson = getModuleJson(moduleName);
+		ObjectMapper mapper = new ObjectMapper();
+		Module module = null;
+		try {
+			module = mapper.readValue(moduleJson, Module.class);
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		ArrayList<Entity> entityList = module.getEntities();
+
+		if(entityList!=null){
+			/*Vector entityNames = new Vector();
+			for(Entity e:entityList){
+			
+				entityNames.add(e.getEntityName());
+			}
+			return entityNames;*/
+			return entityList;
+		}
+
+
+		return null;
+	}
 
 }

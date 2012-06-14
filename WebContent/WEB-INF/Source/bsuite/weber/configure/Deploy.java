@@ -117,15 +117,17 @@ public class Deploy extends BsuiteWorkFlow{
 						bsuite.weber.jsonparsing.Feature feature = defineFeaturePermission(f.getFeatureName(), "1");
 						featureList.add(feature);
 					}
+					entity.setEntityName(e.getEntityName());
 					entity.setFields(fieldList);
 					entity.setFeatures(featureList);	
 					entityList.add(entity);
 					System.out.println("modulenames3");
 				}
 				moduleNew.setEntities(entityList);
-				modules.add(moduleNew);
-				System.out.println("modulenames4");
+				
 			}
+			modules.add(moduleNew);
+			System.out.println("modulenames4");
 			
 		}
 		

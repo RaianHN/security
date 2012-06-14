@@ -1,11 +1,13 @@
 package bsuite.weber.configure;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 import lotus.domino.Database;
 import lotus.domino.DbDirectory;
 import lotus.domino.Document;
 import lotus.domino.Name;
+import lotus.domino.NotesException;
 import lotus.domino.NotesFactory;
 import lotus.domino.Session;
 import lotus.domino.View;
@@ -80,7 +82,7 @@ public class CreateDatabase extends BsuiteWorkFlow {
 	 * }
 	 */
 
-	public void createView(Database db, String viewName, String selFormula) {
+	public View createView(Database db, String viewName, String selFormula) {
 		
 		try {
 			if(!db.isOpen()){
@@ -90,36 +92,76 @@ public class CreateDatabase extends BsuiteWorkFlow {
 			System.out.println("View Creating");
 			if(db.getView(viewName)!=null){
 				System.out.println("View Exists, not creting");
-				return ;
+				return db.getView(viewName);
 			}
 				
 		View view1=db.createView(viewName);
 		view1.setSelectionFormula(selFormula);
 
 			System.out.println("View Created");
+			return view1;
 
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 
+		return null;
+	}
+	
+	public void createViewColumn(View view,int pos,String title,String formula){
+		try{
+			System.out.println("inside createViewColumn");
+			System.out.println("View Name "+view.getName());
+			System.out.println("View Column Pos "+pos);
+			System.out.println("View Column title "+title);
+			System.out.println("View Column Formula  "+formula);
+			view.createColumn(pos,title,formula);
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		
 	}
 
-	public void createDatabases(Vector<String> modules) {
+public void createDatabases(Vector<String> modules) {
 		DefineModule dmodule = new DefineModule();
-		for (String x : modules) {
-			Database db = createDB(x);
-			
-			Vector<String> entities = dmodule.getEntityNames(x);
-			if (entities != null) {
-				for (String entity : entities) {
+		View view1=null;
+		for (String x : modules) 
+		{
+			Database db = createDB(x);			
+			/*Vector<String> entities = dmodule.getEntityNames(x);
+			if (entities != null) 
+			{
+				for (String entity : entities) 
+				{
 					System.out.println("ENtity: " + entity);
-					 String selFormula="SELECT Form="+entity+"\"";
-					
-					createView(db, entity, selFormula);
+					 String selFormula="SELECT Form=\""+entity+"\"";		
+					 System.out.println("View Selection Formula " + selFormula);
+					 view1= createView(db, entity, selFormula);					
 				}
-			} else {
+			} else
+				{
 				System.out.println("No eneties");
-			}
+				}*/
+			System.out.println("2nd part");
+			ArrayList<Entity> entityList=dmodule.getEntities(x);
+			System.out.println("2nd part  1111");
+			
+			if (entityList != null) 
+			{
+				for(Entity e : entityList)
+				{
+					ArrayList<Field> fields=e.getFields();
+					String selFormula="SELECT Form=\""+e.getEntityName()+"\"";
+					view1=createView(db,e.getEntityName(), selFormula);
+					for(int i=1;i<=fields.size();i++)
+					{
+						createViewColumn(view1,i,(String)fields.get(i-1).getFieldName(),(String)fields.get(i-1).getFieldName());
+					}
+				}
+			}else
+				{
+					System.out.println("Entities1 is null");
+				}
 		}
 	}
 	public void RegisterEmployee(String name){
@@ -135,7 +177,7 @@ public class CreateDatabase extends BsuiteWorkFlow {
 			empdoc.save(true,false);	
 		
 			String relId = getRelationNameUnid("IS_A");
-			createRelationship(persondoc.getUniversalID(),"names.nsf","Person","employee.nsf","Employee",empdoc.getUniversalID(),relId);
+			createRelationship(persondoc.getUniversalID(),"names.nsf","Person","Employee.nsf","Employee",empdoc.getUniversalID(),relId);
 			
 			
 			String src_data=name;
@@ -255,4 +297,18 @@ public class CreateDatabase extends BsuiteWorkFlow {
 		return null;
 	}
 
+	public void createDatabases(){
+		DefineModule def = new DefineModule();
+		Vector<String> moduleNames = def.getModules();
+		//CreateDatabase cd = new CreateDatabase();
+		//cd.createDatabases(moduleNames);
+		createDatabases(moduleNames);
+		
+	}
+	public void deploy(){
+		createDatabases();//Create databases for modules
+		
+		
+	}
+	
 }

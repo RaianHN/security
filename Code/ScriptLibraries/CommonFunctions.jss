@@ -432,3 +432,17 @@ function setModulePermission(profileName){
 	entityCrud.saveModulePerm(profileName,context.getSubmittedValue());
 }
 
+function setEntityPermission(profileName,moduleName){
+	var arr = context.getSubmittedValue().split(",");
+	var entityCrud = new bsuite.weber.jsonparsing.ProfileEdit;
+	println("setting field permission"+typeof(arr)+"submitted type"+typeof(context.getSubmittedValue()));
+	
+	entityCrud.saveEntityPerm(profileName,moduleName,context.getSubmittedValue());
+}
+function setFieldPermission(profileName,moduleName,entityName){
+	var arr = context.getSubmittedValue().split(",");
+	var fieldCrud = new bsuite.weber.jsonparsing.ProfileEdit;
+	println("setting field permission"+typeof(arr)+"submitted type"+typeof(context.getSubmittedValue()));
+	
+	fieldCrud.saveFieldPerm(profileName,moduleName,entityName,context.getSubmittedValue());
+}

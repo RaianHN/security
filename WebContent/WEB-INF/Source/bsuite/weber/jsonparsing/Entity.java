@@ -14,8 +14,8 @@ public class Entity{
 	private ArrayList<Field> fields;
 	private ArrayList<Feature> features;
 	//Added for fields and features perms
-	private ArrayList<FieldPerm> fieldPerm;
-	private ArrayList<FeaturePerm> featurePerm;
+	//private ArrayList<FieldPerm> fieldPerm;
+	//private ArrayList<FeaturePerm> featurePerm;
 	
 	
 	public String getCreate() {
@@ -78,7 +78,7 @@ public class Entity{
 		this.features = features;
 	}
 	
-	public ArrayList<FieldPerm> getFieldPerm() {
+/*	public ArrayList<FieldPerm> getFieldPerm() {
 		return fieldPerm;
 	}
 
@@ -92,7 +92,7 @@ public class Entity{
 
 	public void setFeaturePerm(ArrayList<FeaturePerm> featurePerm) {
 		this.featurePerm = featurePerm;
-	}
+	}*/
 
 
 

@@ -12,15 +12,19 @@ public class Security {
 	
 	public Security(){
 		profile=new Profile();
+		System.out.println("-------1");
 		role=new Role();
+		System.out.println("-------2");
 		modules=profile.getVisibleModulesNames();
-		
+		System.out.println("-------3");
 		for(String x:modules){
-		ArrayList entities=new ArrayList();	
-		entities	=profile.getCreatableEntitiesNames(x);			
-		modulesEntities.put(x,entities);					
+			System.out.println("-------4");
+		//ArrayList entities=new ArrayList();	
+		//entities	=profile.getCreatableEntitiesNames(x);			
+		//modulesEntities.put(x,entities);
+		System.out.println("-------5");
 		}
-		
+		System.out.println("-------6");
 		
 	}
 	

@@ -137,9 +137,12 @@ public class Profile extends BsuiteWorkFlow {
 		Module mod = getModule(moduleName);
 		
 		for(Entity entity:mod.getEntities()){
-			if(entity.getCreate().equals("1")){
-				cEntities.add(entity.getEntityName());
+			if(entity!=null){
+				if(entity.getCreate().equals("1")){
+					cEntities.add(entity.getEntityName());
+				}
 			}
+			
 		}
 		return cEntities;
 	}

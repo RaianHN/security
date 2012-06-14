@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257A1A004C4EAD" version="8.5" xmlns="http://www.lotus.com/dxl">
-<noteinfo noteid="1546" sequence="46" unid="9B855DA95750958565257A1C00370AB5">
+<noteinfo noteid="1546" sequence="157" unid="9B855DA95750958565257A1C00370AB5">
 <created><datetime>20120613T153112,21+0530</datetime></created>
-<modified><datetime>20120613T191942,68+0530</datetime></modified>
-<revised><datetime>20120613T191942,67+0530</datetime></revised>
-<lastaccessed><datetime>20120613T191942,68+0530</datetime></lastaccessed>
+<modified><datetime>20120614T125755,10+0530</datetime></modified>
+<revised><datetime>20120614T125755,09+0530</datetime></revised>
+<lastaccessed><datetime>20120614T125755,10+0530</datetime></lastaccessed>
 <addedtofile><datetime>20120613T153112,22+0530</datetime></addedtofile></noteinfo>
 <updatedby><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
 <wassignedby><name>CN=Jaya K Prakash/O=Weberon</name></wassignedby>
@@ -12,11 +12,12 @@
 
 
 
+<item name="$DesignerVersion"><text>8.5.2</text></item>
 
 
-<item name="$DesignerVersion"><text>8.5.1</text></item>
 
 
-<item name="$FileNames" sign="true"><text>modulePermission.xsp</text></item>
 
-</note>
+
+
+<item name="$FileNames" sign="true"><text>modulePermission.xsp</text></item></note>
