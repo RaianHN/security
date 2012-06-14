@@ -81,7 +81,12 @@
     </managed-property>
   </managed-bean>
 
-  
+    <managed-bean>
+    <managed-bean-name>pageaction</managed-bean-name>
+    <managed-bean-class>bsuite.weber.action.PageAction
+		</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+  </managed-bean>
   
   
   <managed-bean>

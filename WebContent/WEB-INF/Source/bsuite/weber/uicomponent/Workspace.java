@@ -166,7 +166,7 @@ public class Workspace extends BsuiteWorkFlow implements Serializable{
 		
 		//Create Button
 		
-	String expression3="#{javascript:loadCreateEntity();viewScope.moduleName=\""+moduleName+"\"}";
+	String expression3="#{javascript:sessionScope.documentId=\"\";viewScope.moduleName=\""+moduleName+"\";loadCreateEntity();}";
 		
 		XspCommandButton button3 =  CompUtil.createButton("Create","button3" );
 		XspEventHandler ev3= CompUtil.createEventHandler("onclick", "complete", expression3, true,null);
