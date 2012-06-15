@@ -452,5 +452,7 @@ function loadCreateEntity(){
 	var s = facesContext;
 	var c1="/cc_entityForm.xsp"; 
 	var id="entityPanel";
+	sessionScope.employeeRegister = viewScope.entityName;
+	println("viewsco"+viewScope.entityName);
 	com.weberon.DynamicCC.loadCC(s, component, c1, id);	
 }

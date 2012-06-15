@@ -63,6 +63,10 @@ public class Workspace extends BsuiteWorkFlow implements Serializable{
 		tabs = new UIPanelEx();
 		UIDojoTabContainer tabcont=(UIDojoTabContainer)CreateTabTable.createTT(tabs);
 		ArrayList <String>mnames=(ArrayList<String>) JSFUtil.getBindingValue("#{security.modules}");
+		if(mnames==null){
+			System.out.println("if mnmes is null");
+			return tabs;
+		}
 		HashMap<String, ArrayList<String>> entity=(HashMap<String, ArrayList<String>>) JSFUtil.getBindingValue("#{security.modulesEntities}");
 		//System.out.println("Module Names "+mnames);
 		//System.out.println("creatable entities"+entity.get("Employees").get(0));
@@ -207,8 +211,8 @@ public class Workspace extends BsuiteWorkFlow implements Serializable{
 		 Profile profile = (Profile) JSFUtil.getBindingValue("#{security.profile}");
 	     ArrayList<String> valueExpr = profile.getCreatableEntitiesNames(moduleName);
 	     Map viewscope = (Map) JSFUtil.getVariableValue("viewScope");
-	     viewscope.put("valueExpr", valueExpr);
-	     String expressionE="#{javascript:viewScope.valueExpr}";
+	     viewscope.put("valueExpr"+moduleName, valueExpr);
+	     String expressionE="#{javascript:viewScope.valueExpr"+moduleName+"}";
 	    // ValueBinding value = evaluator.createValueBinding(result, valueExpr, sourceId,Object.class);
 	     //result.setValueBinding("value", value);
 	 	ValueBinding vb2  = FacesContext.getCurrentInstance().getApplication().createValueBinding(expressionE);

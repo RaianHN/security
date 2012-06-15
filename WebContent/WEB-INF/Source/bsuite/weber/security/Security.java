@@ -15,23 +15,30 @@ public class Security {
 		System.out.println("-------1");
 		role = new Role();
 		System.out.println("-------2");
+		
+		if(profile!=null){
+			
+		
 		modules = profile.getVisibleModulesNames();
 		modulesEntities = new HashMap<String, ArrayList<String>>();
 		System.out.println("-------3");
-		for (String x : modules) {
-			System.out.println("-------4");
-			ArrayList<String> entities = new ArrayList<String>();
-			System.out.println("-------4x1");
-			entities = profile.getCreatableEntitiesNames(x);
-			System.out.println("-------4x2");
-			//if (entities != null) {
-				modulesEntities.put(x, entities);
-			//}
+		if(modules!=null){
+			for (String x : modules) {
+				System.out.println("-------4");
+				ArrayList<String> entities = new ArrayList<String>();
+				System.out.println("-------4x1");
+				entities = profile.getCreatableEntitiesNames(x);
+				System.out.println("-------4x2");
+				//if (entities != null) {
+					modulesEntities.put(x, entities);
+				//}
 
-			System.out.println("-------5");
+				System.out.println("-------5");
+			}
+			System.out.println("-------6");
+			}	
 		}
-		System.out.println("-------6");
-
+		
 	}
 
 	public Profile getProfile() {

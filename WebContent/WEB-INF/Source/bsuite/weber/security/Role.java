@@ -25,9 +25,13 @@ public class Role extends BsuiteWorkFlow {
 	
 	public Role(){
 		//initialize associated role for the current user
-		roleName=as.getAssociatedRoleName(this.currentuser.getBsuiteuser());
-		searchString=createSearchString();
-		System.out.println("Search String"+searchString);
+		
+			roleName=as.getAssociatedRoleName(this.currentuser.getBsuiteuser());
+		if(roleName!=null){
+			searchString=createSearchString();
+			System.out.println("Search String"+searchString);
+		}
+		
 		
 	}
 

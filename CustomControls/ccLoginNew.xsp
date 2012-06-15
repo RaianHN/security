@@ -103,8 +103,9 @@ if(roleContains==true){
 return true;
 }else{
 return false;
-}}]]></xp:this.rendered><xp:eventHandler event="onclick" submit="true"
-			refreshMode="partial" refreshId="CCLoadDiv">
+}}]]></xp:this.rendered>
+		<xp:eventHandler event="onclick" submit="true"
+			refreshMode="partial" refreshId="ConfigureDiv">
 			<xp:this.action><![CDATA[#{javascript:/*
 if (getComponent("DefineEntities") == null)
 {
@@ -128,7 +129,7 @@ println("After createPortleeeee");
  	}
 }
 */
-var component = getComponent('CCLoadDiv'); 
+var component = getComponent('ConfigureDiv'); 
 var s = facesContext;
 var c1="/ccDefineEntities.xsp"; 
 var id="modulediv";
@@ -136,7 +137,9 @@ com.weberon.DynamicCC.loadCC(s, component, c1, id);
 
 println("OnLCick of Configure");
 println(getComponent('container'));}]]></xp:this.action>
-		</xp:eventHandler></xp:link><xp:panel id="ref"></xp:panel>
+		</xp:eventHandler>
+	</xp:link>
+	<xp:panel id="ref"></xp:panel>
 	<xe:popupMenu id="popuplogin">
 	<xp:eventHandler id="eventHandler11" event="onItemClick"
 		refreshMode="partial" refreshId="ref" submit="true">

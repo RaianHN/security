@@ -13,7 +13,7 @@ public class Association extends BsuiteWorkFlow {
 	
 	public  Document getAssociatedProfile(String currentuser) {
 		try {
-
+			System.out.println("in get assoprofile");
 			Database reldb = session.getDatabase("", bsuitepath
 					+ "relation.nsf");
 			String relname = "HAS_A";
@@ -25,18 +25,26 @@ public class Association extends BsuiteWorkFlow {
 			// Changing the canonical form to abr form so that it will lookup in
 			// the $VIMPeople view
 			String abbrname = getFormattedName(currentuser, "abr");
+			System.out.println("in get assoprofile1");
 			Document persondoc = getPerson(abbrname);
+			System.out.println("in get assoprofile2");
 			String persondocunid = persondoc.getUniversalID();
-
+			System.out.println("in get assoprofile3");
 			String lookupkey = JSFUtil.getlookupkey(reldocunid, persondocunid);
+			System.out.println("in get assoprofile4");
 			Vector tmp = new Vector();
 			tmp.add(lookupkey);
 			String targetunid = JSFUtil.DBLookupString("relation",
 					"SourceRelation", tmp, 4);
+			System.out.println("in get assoprofile5");
 			Database securitydb = session.getDatabase("", bsuitepath
 					+ "Security.nsf");
+			System.out.println("in get assoprofile6");
+			if(targetunid==null){
+				return null;
+			}
 			Document profiledoc = securitydb.getDocumentByUNID(targetunid);
-
+			System.out.println("in get assoprofile2");
 			return profiledoc;
 
 		} catch (Exception e) {
@@ -48,7 +56,7 @@ public class Association extends BsuiteWorkFlow {
 
 	public  String getAssociatedRoleName(String currentuser){
 		try {
-
+			System.out.println("get ass rolename1 ");
 			Database reldb = session.getDatabase("", bsuitepath
 					+ "relation.nsf");
 			String relname = "HAS_ROLE";
@@ -62,7 +70,7 @@ public class Association extends BsuiteWorkFlow {
 			String abbrname = getFormattedName(currentuser, "abr");
 			Document persondoc = getPerson(abbrname);
 			String persondocunid = persondoc.getUniversalID();
-
+			System.out.println("get ass rolename2 ");
 			String lookupkey = JSFUtil.getlookupkey(reldocunid, persondocunid);
 			Vector tmp = new Vector();
 			tmp.add(lookupkey);
@@ -70,8 +78,11 @@ public class Association extends BsuiteWorkFlow {
 					"SourceRelation", tmp, 4);
 			Database securitydb = session.getDatabase("", bsuitepath
 					+ "Security.nsf");
+			if(targetunid==null){
+				return null;
+			}
 			Document roledoc = securitydb.getDocumentByUNID(targetunid);
-
+			System.out.println("get ass rolename3 ");
 			return roledoc.getItemValueString("role_name");
 
 		} catch (Exception e) {

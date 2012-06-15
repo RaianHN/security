@@ -68,8 +68,7 @@
     <managed-bean-class>com.weberon.Jump</managed-bean-class>
     <managed-bean-scope>request</managed-bean-scope>
   </managed-bean>
-  
-   <managed-bean>
+  <managed-bean>
     <managed-bean-name>employee</managed-bean-name>
     <managed-bean-class>bsuite.weber.data.PageDataBean
 		</managed-bean-class>
@@ -80,15 +79,12 @@
 			</value>
     </managed-property>
   </managed-bean>
-
-    <managed-bean>
+  <managed-bean>
     <managed-bean-name>pageaction</managed-bean-name>
     <managed-bean-class>bsuite.weber.action.PageAction
 		</managed-bean-class>
     <managed-bean-scope>request</managed-bean-scope>
   </managed-bean>
-  
-  
   <managed-bean>
     <managed-bean-name>role</managed-bean-name>
     <managed-bean-class>bsuite.weber.security.Role</managed-bean-class>

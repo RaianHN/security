@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xp:view xmlns:xp="http://www.ibm.com/xsp/core">
 
-	<xp:comboBox id="comboBox1"></xp:comboBox></xp:view>
+	<xp:text escape="false" id="computedField1"><xp:this.value><![CDATA[#{javascript:"<a href='#'>abc</a>"}]]></xp:this.value></xp:text></xp:view>

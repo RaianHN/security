@@ -27,6 +27,9 @@ public class Profile extends BsuiteWorkFlow {
 
 	public ArrayList<Module> getVisibleModules(){
 		ArrayList<Module> vModules = new ArrayList<Module>();
+		if(profileJson==null){
+			return null;
+		}
 		for(Module module:profileJson.getModules()){
 			if(module.getTabvis().equals("1")){
 				vModules.add(module);
@@ -117,6 +120,9 @@ public class Profile extends BsuiteWorkFlow {
 
 	private Module getModule(String moduleName){
 		System.out.println("--------44");
+		if(profileJson==null){
+			return null;
+		}
 		for(Module module:profileJson.getModules()){
 			System.out.println("--------45");
 			if(module.getModuleName().equals(moduleName)){
@@ -128,6 +134,9 @@ public class Profile extends BsuiteWorkFlow {
 	}
 	public ArrayList<String> getVisibleModulesNames(){
 		ArrayList<String> vModules = new ArrayList<String>();
+		if(profileJson==null){
+			return null;
+		}
 		for(Module module:profileJson.getModules()){
 			if(module.getTabvis().equals("1")){
 				vModules.add(module.getModuleName());
@@ -237,6 +246,9 @@ public class Profile extends BsuiteWorkFlow {
 	private ProfileJson getProfileJsonObject(){
 		Association as = new Association();
 		Document profDoc = as.getAssociatedProfile(currentuser.getBsuiteuser());
+		if(profDoc==null){
+			return null;
+		}
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonString="";
 		try {
