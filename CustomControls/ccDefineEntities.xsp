@@ -110,7 +110,34 @@ sessionScope.put("Beanid","employee");}]]></xp:this.script>
 										</xp:openPage>
 									</xp:actionGroup>
 								</xp:this.action></xp:eventHandler></xp:button></xp:td>
-					<xp:td></xp:td>
+					<xp:td>
+						<xp:button value="Open TestDocColl" id="button7" style="background-color:rgb(192,192,192)"><xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+	<xp:this.action>
+
+		<xp:actionGroup>
+
+
+
+
+
+
+
+
+
+			<xp:executeScript>
+				<xp:this.script><![CDATA[#{javascript:sessionScope.put('documentId',"");
+sessionScope.put("Beanid","employee");
+viewScope.moduleName="Employees";
+viewScope.entityName="Employee";
+var fields="Name;Salary";
+viewScope.put("Fields",fields);
+println("OnLCik of OPen test");
+println("Viewscope fields ",viewScope.get("Fields"));
+}]]></xp:this.script>
+			</xp:executeScript>
+			<xp:openPage name="/TestDocColl.xsp"></xp:openPage>
+		</xp:actionGroup>
+	</xp:this.action></xp:eventHandler></xp:button></xp:td>
 				</xp:tr>
 			</xp:table>
 

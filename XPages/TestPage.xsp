@@ -140,6 +140,7 @@ c.closeTab()}]]></xp:this.script>
 			<xe:djTabPane id="djTabPane1" title="Home Tab">
 				This is the home tab - it is pre-created and cannot be
 				closed!
+				<xe:this.onClick><![CDATA[#{javascript:println("Onclick of homr Tab");}]]></xe:this.onClick>
 			</xe:djTabPane>
 		</xe:djTabContainer>
 	</xp:panel>
@@ -226,4 +227,11 @@ bsuite.weber.uicomponent.CreateTabTable.createTT(com);}]]></xp:this.action>
 
 
 	<xp:div binding="#{wrkspc.test}"></xp:div>
-</xp:view>
+	
+	
+	
+	
+
+
+
+	</xp:view>

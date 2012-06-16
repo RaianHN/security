@@ -21,14 +21,14 @@ public class Security extends BsuiteWorkFlow {
 	
 	public Security(){
 		try {
-		//	profile=(Profile)getAssociatedProfile(session.getEffectiveUserName());
-			//role = new Role();//getAssociatedRoleName(session.getEffectiveUserName());
+			profile=new Profile();//(Profile)getAssociatedProfile(session.getEffectiveUserName());
+			role = new Role();//getAssociatedRoleName(session.getEffectiveUserName());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		//modules=profile.getVisibleModulesNames();
-		modules.add("EMployees");
+		modules.add("Employees");
 		modules.add("Documents");
 		
 		for(String x:modules){

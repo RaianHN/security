@@ -170,12 +170,13 @@ public class CompUtil {
      
      public static DominoViewData createDominoViewData(String db,String view, String var){
     	 DominoViewData data = new DominoViewData();
+    	 
     	 data.setDatabaseName(db);
     	 data.setViewName(view);         
          data.setVar(var);
-         String searchExpr = "#{javascript:requestScope.get(\"findme\");}";
-     	 ValueBinding search  = FacesContext.getCurrentInstance().getApplication().createValueBinding(searchExpr);
-         data.setValueBinding("search", search); 
+        // String searchExpr = "#{javascript:requestScope.get(\"findme\");}";
+     	 //ValueBinding search  = FacesContext.getCurrentInstance().getApplication().createValueBinding(searchExpr);
+         //data.setValueBinding("search", search); 
     	 return data;
      } 
      

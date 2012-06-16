@@ -25,7 +25,9 @@ public class Role extends BsuiteWorkFlow {
 	
 	public Role(){
 		//initialize associated role for the current user
+		
 		roleName=as.getAssociatedRoleName(this.currentuser.getBsuiteuser());
+		System.out.println("User associated role "+roleName);
 		searchString=createSearchString();
 		System.out.println("Search String"+searchString);
 		

@@ -334,6 +334,9 @@ import com.ibm.xsp.extlib.util.ExtLibUtil;
 				Document profile=null;
 				try {
 					View view=tadb.getView("setupprofile");
+					if(view==null){
+						return null;
+					}
 					profile=view.getFirstDocument();
 					if(!(profile.equals(null))){
 						return profile;
