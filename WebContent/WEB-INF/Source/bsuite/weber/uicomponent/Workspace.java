@@ -178,24 +178,7 @@ public class Workspace extends BsuiteWorkFlow implements Serializable{
 		actionpanel.getChildren().add(button3);
 		
 		
-		//Create Save Button
-		String expression1="#{javascript:viewScope.put('entityName',\"Employee\");pageaction['save'].execute(\"employee\");wrkspc.resetBean();}";
-		
-		XspCommandButton button1 =  CompUtil.createButton("Save","button1" );
-		XspEventHandler ev1= CompUtil.createEventHandler("onclick", "complete", expression1, true,null);
-		button1.getChildren().add(ev1);
-		actionpanel.getChildren().add(button1);
-		
-		
-		
-		//Create Delete button
-		String expression2="#{javascript:var serv=@Subset(@DbName(),1);var dbpath=@LeftBack(@Subset(@DbName(),-1),\"/\");var custdb=dbpath+\"\\\\\"+\"employees.nsf\";var dbname = new Array(serv,custdb);var db: NotesDatabase = session.getDatabase(serv, custdb);var docids=getComponent(\"viewPanel1\").getSelectedIds();for(id in docids){var doc:NotesDocument=db.getDocumentByID(id);var unid=doc.getUniversalID();sessionScope.put('documentId',unid);pageaction['delete'].execute(\"employee\")};}";
-		XspCommandButton button2 =  CompUtil.createButton("Delete","button2" );
-		XspEventHandler ev2= CompUtil.createEventHandler("onclick", "complete", expression2, true,null);
-		button2.getChildren().add(ev2);
-		actionpanel.getChildren().add(button2);
-		
-		
+		//Creatable entities combobox
 		 XspSelectOneMenu comboBox = new XspSelectOneMenu();
 		 comboBox.setId("comboBox1");	
 		 
@@ -219,6 +202,68 @@ public class Workspace extends BsuiteWorkFlow implements Serializable{
 		result.setValueBinding( "value", vb2);
 		comboBox.getChildren().add(result);
 		actionpanel.getChildren().add(comboBox);
+		
+		
+		//View Button
+		String expression4="#{javascript:viewScope.moduleName=\""+moduleName+"\";loadViewEntity();}";
+		
+		XspCommandButton button4 =  CompUtil.createButton("Read","button4" );
+		XspEventHandler ev4= CompUtil.createEventHandler("onclick", "complete", expression4, true,null);
+		button4.getChildren().add(ev4);
+		actionpanel.getChildren().add(button4);
+		
+		
+		
+		//Readable entities combobox
+		 XspSelectOneMenu comboBox2 = new XspSelectOneMenu();
+		 comboBox2.setId("comboBox2");	
+		 
+		 String ref2 = "#{viewScope.entityRName}";
+		System.out.println("String ref "+ref2);		
+		ValueBinding vb3  = FacesContext.getCurrentInstance().getApplication().createValueBinding(ref2);
+		comboBox2.setValueBinding( "value", vb3);
+		 
+		  
+			
+		 UISelectItemsEx result1 = new UISelectItemsEx();
+	    
+		
+	     ArrayList<String> valueExpr1 = profile.getReadableEntitiesNames(moduleName);
+	     viewscope.put("rEntity"+moduleName, valueExpr1);
+	     String expressionRE="#{javascript:viewScope.rEntity"+moduleName+"}";
+	
+	 	ValueBinding vb4 = FacesContext.getCurrentInstance().getApplication().createValueBinding(expressionRE);
+		result1.setValueBinding( "value", vb4);
+		comboBox2.getChildren().add(result1);
+		actionpanel.getChildren().add(comboBox2);
+		
+		/*
+		//Create Save Button
+		String expression1="#{javascript:viewScope.put('entityName',\"Employee\");pageaction['save'].execute(\"employee\");wrkspc.resetBean();}";
+		
+		XspCommandButton button1 =  CompUtil.createButton("Save","button1" );
+		XspEventHandler ev1= CompUtil.createEventHandler("onclick", "complete", expression1, true,null);
+		button1.getChildren().add(ev1);
+		actionpanel.getChildren().add(button1);
+		
+		
+		
+		//Create Delete button
+		String expression2="#{javascript:var serv=@Subset(@DbName(),1);var dbpath=@LeftBack(@Subset(@DbName(),-1),\"/\");var custdb=dbpath+\"\\\\\"+\"employees.nsf\";var dbname = new Array(serv,custdb);var db: NotesDatabase = session.getDatabase(serv, custdb);var docids=getComponent(\"viewPanel1\").getSelectedIds();for(id in docids){var doc:NotesDocument=db.getDocumentByID(id);var unid=doc.getUniversalID();sessionScope.put('documentId',unid);pageaction['delete'].execute(\"employee\")};}";
+		XspCommandButton button2 =  CompUtil.createButton("Delete","button2" );
+		XspEventHandler ev2= CompUtil.createEventHandler("onclick", "complete", expression2, true,null);
+		button2.getChildren().add(ev2);
+		actionpanel.getChildren().add(button2);
+		
+		*/
+		
+		
+		
+		
+		//Add combobox to read entities
+		
+		
+		
 		com.getChildren().add( actionpanel );
 		com.getChildren().add( actionpanel2 );
 		

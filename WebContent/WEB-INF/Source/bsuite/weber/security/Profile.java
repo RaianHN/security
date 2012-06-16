@@ -271,4 +271,27 @@ public class Profile extends BsuiteWorkFlow {
 				
 	}
 	
+	public ArrayList<String> getReadableEntitiesNames(String moduleName){
+		System.out.println("modulename"+moduleName);
+		ArrayList<String> rEntities = new ArrayList<String>();
+		Module mod = getModule(moduleName);
+		System.out.println("--------41");
+		ArrayList<Entity> entities = mod.getEntities();
+		if(entities==null){
+			return null;
+		}
+		for(Entity entity:entities){
+			System.out.println("--------42");
+			if(entity!=null){
+				if(entity.getRead().equals("1")){
+					System.out.println("--------43");
+					rEntities.add(entity.getEntityName());
+				}
+			}
+			
+		}
+		System.out.println("r enti"+rEntities);
+		return rEntities;
+	}
+	
 }
