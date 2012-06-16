@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+
+	<xp:this.beforePageLoad><![CDATA[#{javascript:viewScope.moduleName = "Employees";
+viewScope.entityName = "Employee";
+sessionScope.put("documentId","");}]]></xp:this.beforePageLoad>
+	<xp:listBox id="listBox1">
+		<xp:selectItems>
+			<xp:this.value><![CDATA[#{security.modules}]]></xp:this.value>
+		</xp:selectItems>
+	</xp:listBox>
+	<xp:br></xp:br>
+	<xp:panel binding="#{wrkspc.centity}"></xp:panel></xp:view>

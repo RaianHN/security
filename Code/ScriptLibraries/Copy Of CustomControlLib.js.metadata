@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><note class="filter" maintenanceversion="3.0" replicaid="65257A11003683CF" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="297e" sequence="3" unid="8A1CD45815DCD45C65257A1C0052E7A1">
+<created><datetime>20120613T203532,49+0530</datetime></created>
+<modified><datetime>20120616T133944,73+0530</datetime></modified>
+<revised><datetime>20120616T133944,72+0530</datetime></revised>
+<lastaccessed><datetime>20120616T133944,73+0530</datetime></lastaccessed>
+<addedtofile><datetime>20120616T133944,54+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Tenzing Sangmo/O=Weberon</name></updatedby>
+<wassignedby><name>CN=Tenzing Sangmo/O=Weberon</name></wassignedby>
+<item name="$TITLE" sign="true"><text>Copy Of CustomControlLib</text></item>
+<item name="$Flags"><text>h534Q</text></item>
+<item name="$PublicAccess" sign="true"><text>1</text></item>
+<item name="$DesignerVersion"><text>8.5.3</text></item>
+</note>
