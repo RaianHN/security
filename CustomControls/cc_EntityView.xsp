@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+
+	<xp:panel>
+	
+	
+	<xp:table style="font-weight:bold">
+								<xp:tr>
+									<xp:td style="font-weight:bold">CreatedBy</xp:td>
+									<xp:td style="font-weight:bold">
+										
+									</xp:td>
+									<xp:td></xp:td>
+								</xp:tr>
+								<xp:repeat id="repeat2" rows="30"
+									var="rowData1" value="#{wrkspc.getmydocs}">
+
+									<xp:tr>
+										<xp:td id="td1">
+											<xp:link escape="true"
+												id="link2">
+												<xp:this.text><![CDATA[#{javascript:rowData1.getDocument().getItemValueString("CreatedBy");}]]></xp:this.text>
+												<xp:eventHandler
+													event="onclick" submit="true" refreshMode="complete">
+													<xp:this.action><![CDATA[#{javascript:var doc:NotesDocument=rowData1.getDocument();
+var unid=doc.getUniversalID();
+println("UNID ",unid);
+sessionScope.put("documentId",unid);
+var c= getComponent('FormDiv');
+wrkspc.resetUI(c, facesContext,"/cc_EntityForm.xsp");
+
+
+}]]></xp:this.action>
+												</xp:eventHandler>
+											</xp:link>
+											<xp:eventHandler
+												event="onclick" submit="true" refreshMode="complete">
+												<xp:this.action><![CDATA[#{javascript:println("ONclick inside repeatcontrol");}]]></xp:this.action>
+											</xp:eventHandler></xp:td>
+										<xp:td>
+
+
+											
+										</xp:td>
+										<xp:td>
+
+										</xp:td>
+									</xp:tr>
+								</xp:repeat>
+
+	</xp:table>
+	
+	
+	</xp:panel></xp:view>

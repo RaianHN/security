@@ -54,9 +54,11 @@ public class CompUtil {
 	@SuppressWarnings("unchecked")
 	public static   void createInput(UIComponent com,  String fieldname ,String arg) 
 	{
+		System.out.println("inside createINput");
 		XspInputText inp = new XspInputText();
 		inp.setId("i"+fieldname);
-		String ref = "#{"+arg+"."+fieldname+"}";		
+		String ref = "#{"+arg+"."+fieldname+"}";	
+		System.out.println("String ref "+ref);
 		
 	ValueBinding vb1  = FacesContext.getCurrentInstance().getApplication().createValueBinding(ref);
 	 inp.setValueBinding( "value", vb1);
@@ -168,12 +170,13 @@ public class CompUtil {
      
      public static DominoViewData createDominoViewData(String db,String view, String var){
     	 DominoViewData data = new DominoViewData();
+    	 
     	 data.setDatabaseName(db);
     	 data.setViewName(view);         
          data.setVar(var);
-         String searchExpr = "#{javascript:requestScope.get(\"findme\");}";
-     	 ValueBinding search  = FacesContext.getCurrentInstance().getApplication().createValueBinding(searchExpr);
-         data.setValueBinding("search", search); 
+        // String searchExpr = "#{javascript:requestScope.get(\"findme\");}";
+     	 //ValueBinding search  = FacesContext.getCurrentInstance().getApplication().createValueBinding(searchExpr);
+         //data.setValueBinding("search", search); 
     	 return data;
      } 
      

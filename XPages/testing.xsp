@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+
+	<xp:comboBox id="comboBox1" value="#{viewScope.entityName}">
+		<xp:selectItems>
+			<xp:this.value><![CDATA[#{javascript:var a:java.util.ArrayList=new java.util.ArrayList();
+a.add("1");
+a.add("2");
+return a;}]]></xp:this.value>
+		</xp:selectItems>
+	</xp:comboBox></xp:view>
