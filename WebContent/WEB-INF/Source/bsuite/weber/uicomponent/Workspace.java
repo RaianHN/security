@@ -12,7 +12,10 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 
+import lotus.domino.Database;
 import lotus.domino.NotesException;
+import lotus.domino.View;
+import lotus.domino.ViewEntryCollection;
 
 import com.ibm.xsp.component.UIPanelEx;
 import com.ibm.xsp.component.UISelectItemsEx;
@@ -37,11 +40,13 @@ public class Workspace extends BsuiteWorkFlow implements Serializable{
 	private  String BEAN_NAME="employee";
 	private UIComponent tabs;
 	private UIComponent centity;
-	
+	private UIComponent rentity;
+	private ViewEntryCollection getmydocs;
 	
 
 	
 	
+
 	public UIComponent getCentity() {
 		centity = new UIPanelEx();
 		Map viewscope = (Map) JSFUtil.getVariableValue("viewScope");
@@ -128,6 +133,20 @@ public class Workspace extends BsuiteWorkFlow implements Serializable{
 		Profile profile = (Profile) JSFUtil.getBindingValue("#{security.profile}");
 		loadReadFields(profile.getVisibleFieldsNames(moduleName, entityName),utable,0);
 		centity.getChildren().add(utable);
+		
+		
+		if(profile.isEntityUpdate(moduleName, entityName)){
+			viewScope.put("editEntity",true);
+		}else{
+			viewScope.put("editEntity",false);
+		}
+		
+		if(profile.isEntityDelete(moduleName, entityName)){
+			viewScope.put("deleteEntity",true);
+		}else{
+			viewScope.put("deleteEntity",false);
+		}
+		
 	}
 	public void createFeatureButtons(String entityName){
 		//For this entity what features are available that needs to be populated by this method
@@ -164,13 +183,13 @@ public class Workspace extends BsuiteWorkFlow implements Serializable{
 		System.out.println("create ActionBar");
 		UIPanelEx actionpanel = new UIPanelEx();
 		//XspTable utable = new XspTable();
-		actionpanel.setId( "actionTable" );
+		actionpanel.setId( "actionTable"+moduleName );
 		UIPanelEx actionpanel2 = new UIPanelEx();		
-		actionpanel2.setId( "cEntityPanel" );
+		actionpanel2.setId( "cEntityPanel"+moduleName );
 		
 		//Create Button
 		
-	String expression3="#{javascript:sessionScope.documentId=\"\";viewScope.moduleName=\""+moduleName+"\";loadCreateEntity();}";
+	String expression3="#{javascript:sessionScope.documentId=\"\";viewScope.moduleName=\""+moduleName+"\";loadCreateEntity(\""+moduleName+"\");}";
 		
 		XspCommandButton button3 =  CompUtil.createButton("Create","button3" );
 		XspEventHandler ev3= CompUtil.createEventHandler("onclick", "complete", expression3, true,null);
@@ -205,7 +224,7 @@ public class Workspace extends BsuiteWorkFlow implements Serializable{
 		
 		
 		//View Button
-		String expression4="#{javascript:viewScope.moduleName=\""+moduleName+"\";loadViewEntity();}";
+		String expression4="#{javascript:viewScope.moduleName=\""+moduleName+"\";loadViewEntity(\""+moduleName+"\");}";
 		
 		XspCommandButton button4 =  CompUtil.createButton("Read","button4" );
 		XspEventHandler ev4= CompUtil.createEventHandler("onclick", "complete", expression4, true,null);
@@ -305,5 +324,110 @@ public class Workspace extends BsuiteWorkFlow implements Serializable{
 		}
 		
 	}
+	
+
+	public UIComponent getRentity() {
+		rentity = new UIPanelEx();
+		Map viewscope = (Map) JSFUtil.getVariableValue("viewScope");
+		String pid = (String) viewscope.get("personunid");		
+		String moduleName = (String)viewscope.get("moduleName");
+		String entityName = (String)viewscope.get("entityName");
+		if(moduleName!=null & entityName!=null){
+			createReadForm(moduleName,entityName);
+		}
+		return rentity;
+	}
+
+	public void setRentity(UIComponent rentity) {
+		this.rentity = rentity;
+	}
+	
+	public void createReadForm(String moduleName,String entityName){
+		XspTable utable = new XspTable();
+		utable.setId("tableRead");
+		Profile profile = (Profile) JSFUtil.getBindingValue("#{security.profile}");
+		loadViewFields(profile.getVisibleFieldsNames(moduleName, entityName),utable,0);
+		rentity.getChildren().add(utable);
+		
+		if(profile.isEntityUpdate(moduleName, entityName)){
+			viewScope.put("editEntity",true);
+		}else{
+			viewScope.put("editEntity",false);
+		}
+		
+		if(profile.isEntityDelete(moduleName, entityName)){
+			viewScope.put("deleteEntity",true);
+		}else{
+			viewScope.put("deleteEntity",false);
+		}
+		
+	}
+	
+	private void loadViewFields(ArrayList<String> fields,XspTable table,int startRow){
+		//This function is used to populate the fields in the given table
+		//fields:list of fields
+		//table: table component where field label and field will be added
+		//startRow: the starting row number of the table where the fields needs to be added
+		for (int i = 0; i < fields.size(); i++) {
+			XspTableRow row1 = CompUtil.createRow(table, "row" + i);
+			for (int j = 0; j < 2; j++) {
+				XspTableCell cell = CompUtil.createCell(row1, "cell" + i + j);
+				
+				switch (j) {
+				case 0:
+					CompUtil.createLabel(cell,fields.get(i).toString(),true);
+					break;
+				case 1:
+				
+					CompUtil.createInput(cell, fields.get(i).toString(),BEAN_NAME,1);
+					break;
+				}
+			}
+		}
+		//test.getChildren().add(table);	
+	}
+	
+	
+
+
+	public ViewEntryCollection getGetmydocs() {
+		System.out.println("Inside getMyDocs");
+		Map viewscope = (Map) JSFUtil.getVariableValue("ViewScope");
+		System.out.println("Inside getMyDocs 1");
+		//String moduleName=(String)viewscope.get("moduleName");
+		//String entityName=(String)viewscope.get("entityName");	
+		//viewscope.put("Fields", "Form,CreatedBy");
+
+		//System.out.println("Viewscope value fields "+viewscope.get("Fields"));
+		String moduleName="Employees";
+		String entityName="Employee";
+		System.out.println("Inside getMyDocs 23"); 
+		System.out.println("Inside getMyDocs ModuleName "+moduleName);
+		//get the module name and treat it as database name
+		String dbname=moduleName.toLowerCase().replace(" ", "");
+		dbname=dbname+".nsf";	
+		//ViewName can get from entityName
+		String viewName=entityName;	
+		System.out.println("Inside getMyDocs 256"); 
+		try {
+			Database db = session.getDatabase("", bsuitepath+dbname);
+			View allView = db.getView(viewName);								
+			System.out.println("Inside getMyDocs 2357"); 
+			//to get the query string from the security.searchString		
+			//String querystr= (String)JSFUtil.getBindingValue("#{security.searchString}");			
+			//String querystr="FIELD Salary=89";
+			//allView.FTSearch(querystr);
+			System.out.println("Doc Count "+allView.getAllEntries().getCount());
+			return allView.getAllEntries();		
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
+	}
+
+	public void setGetmydocs(ViewEntryCollection getmydocs) {
+		this.getmydocs = getmydocs;
+	}
+	
 	
 }

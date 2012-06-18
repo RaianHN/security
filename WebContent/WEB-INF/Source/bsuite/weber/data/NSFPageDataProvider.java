@@ -15,6 +15,7 @@ import lotus.domino.NotesException;
 import lotus.domino.Session;
 
 
+import bsuite.weber.model.BsuiteWorkFlow;
 import bsuite.weber.tools.BSUtil;
 import bsuite.weber.tools.JSFUtil;
 
@@ -22,7 +23,7 @@ import com.ibm.domino.xsp.module.nsf.NotesContext;
 import com.ibm.xsp.extlib.util.ExtLibUtil;
 
 
-public class NSFPageDataProvider implements DataObjectExt {
+public class NSFPageDataProvider extends BsuiteWorkFlow implements DataObjectExt {
 
 	/**
 	 * 
@@ -200,6 +201,7 @@ public class NSFPageDataProvider implements DataObjectExt {
 					System.out.println("inside the store method in NSFDataPageProvider viewScope var "+ename);
 					doc.replaceItemValue("Form", ename);
 					doc.replaceItemValue("obid", ename);
+					doc.replaceItemValue("CreatedBy",this.currentuser.getBsuiteuser());//All the documents will be having this field
 					sessionscope.put("entityDocid", doc.getUniversalID());
 				}
 				

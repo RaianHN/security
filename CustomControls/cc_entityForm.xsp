@@ -70,7 +70,7 @@ if (viewScope.entityName == "Employee") {
 
 wrkspc.resetBean();}]]></xp:this.action>
 		</xp:eventHandler></xp:button>
-			<xp:button value="Delete" id="button1" style="background-color:rgb(192,192,192)">
+			<xp:button value="Delete" id="button1" style="background-color:rgb(192,192,192)" rendered="#{javascript:viewScope.deleteEntity}">
 				<xp:eventHandler event="onclick" submit="true"
 					refreshMode="complete">
 					<xp:this.action><![CDATA[#{javascript:println("Onclick of Delete");

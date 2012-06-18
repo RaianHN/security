@@ -447,22 +447,29 @@ function setFieldPermission(profileName,moduleName,entityName){
 	fieldCrud.saveFieldPerm(profileName,moduleName,entityName,context.getSubmittedValue());
 }
 
-function loadCreateEntity(){
-	var component = getComponent('cEntityPanel'); 
+function loadCreateEntity(moduleName){
+	var component = getComponent('cEntityPanel'+moduleName); 
 	var s = facesContext;
 	var c1="/cc_entityForm.xsp"; 
 	var id="entityPanel";
 	sessionScope.employeeRegister = viewScope.entityName;
 	println("viewsco"+viewScope.entityName);
+	println("modulename"+moduleName);
 	com.weberon.DynamicCC.loadCC(s, component, c1, id);	
 }
 
-function loadViewEntity(){
-	//var component = getComponent('cEntityPanel'); 
-	//var s = facesContext;
-	//var c1="/cc_entityForm.xsp"; 
-	//var id="entityPanel";
-	//sessionScope.employeeRegister = viewScope.entityName;
-	println("viewsco"+viewScope.entityRName);
-	//com.weberon.DynamicCC.loadCC(s, component, c1, id);	
+function loadViewEntity(moduleName){
+	var component = getComponent('cEntityPanel'+moduleName); 
+	var s = facesContext;
+	var c1="/cc_EntityView.xsp"; 
+	var id="entityViewPanel";
+	com.weberon.DynamicCC.loadCC(s, component, c1, id);	
+}
+
+function loadReadEntity(){
+	var component = getComponent('readPanel'); 
+	var s = facesContext;
+	var c1="/ccReadEntity.xsp"; 
+	var id="readEntityPanel";
+	com.weberon.DynamicCC.loadCC(s, component, c1, id);	
 }
