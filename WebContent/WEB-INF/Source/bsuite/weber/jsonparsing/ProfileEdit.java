@@ -3,6 +3,8 @@ package bsuite.weber.jsonparsing;
 import java.io.IOException;
 import java.util.Vector;
 
+
+
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -16,7 +18,7 @@ import lotus.domino.View;
 
 public class ProfileEdit extends BsuiteWorkFlow  {
 	
-	public void getModulePermission(String profileName){
+	public void getModulePermission(String profileName) throws NotesException{
 		Document profDoc = getProfileDoc(getSecurityDatabase(),profileName);
 		String jsonString="";
 		try {
@@ -26,7 +28,7 @@ public class ProfileEdit extends BsuiteWorkFlow  {
 			e.printStackTrace();
 		}
 		setModuleViewScope(getJsonProfileObj(jsonString));
-		
+		profDoc.recycle();
 	}
 	
 	
@@ -54,6 +56,20 @@ public class ProfileEdit extends BsuiteWorkFlow  {
 			e.printStackTrace();
 		}
 		setFieldViewScopeCrud(getJsonProfileObj(jsonString), moduleName,entityName);
+		
+	}
+	
+	
+	public void getFeaturePermission(String profileName, String moduleName, String entityName){
+		Document profDoc = getProfileDoc(getSecurityDatabase(),profileName);
+		String jsonString="";
+		try {
+			jsonString = profDoc.getItemValueString("JsonString");
+		} catch (NotesException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		setFeatureViewScopeCrud(getJsonProfileObj(jsonString), moduleName,entityName);
 		
 	}
 
@@ -93,7 +109,7 @@ private void setModuleViewScope(ProfileJson profile) {
 		moduleSecurity.add(mod.getModuleName()+":"+mod.getTabvis());
 	}
 	viewScope.put("modulePermission", moduleSecurity);
-	
+	System.out.println("profile "+moduleSecurity);
 }
 
 
@@ -216,6 +232,34 @@ public void setFieldViewScopeCrud(ProfileJson profile,String moduleName,String e
 	
 }
 
+public void setFeatureViewScopeCrud(ProfileJson profile,String moduleName,String entityName){
+	Vector<String> featureSecurity = new Vector<String>();
+	Module module = null;
+	//System.out.println("inside entity perm "+profile.getProfName()+" "+moduleName);
+	for(Module mod:profile.getModules()){
+		if(mod.getModuleName().equals(moduleName)){
+			module = mod;
+			break;
+		}
+		
+	}
+	Entity entity = null;
+	for(Entity e:module.getEntities()){			
+		if(e.getEntityName().equals(entityName)){
+			entity = e;
+			break;
+		}
+	}
+	
+	for(Feature f:entity.getFeatures()){			
+		featureSecurity.add(f.getFeatureName()+":"+f.getVisible());
+	}
+	System.out.println("vect entity perm"+featureSecurity);
+	viewScope.put("featurePerm", featureSecurity);
+	
+	
+}
+
 public void saveEntityPerm(String profileName, String moduleName, String vals){
 	System.out.println("inside save"+vals);
 	System.out.println("entity name"+moduleName);
@@ -290,6 +334,9 @@ public void saveEntityPerm(String profileName, String moduleName, String vals){
 	
 	
 }
+
+
+
 
 
 public void saveFieldPerm(String profileName, String moduleName,String entityName, String vals){
@@ -373,6 +420,90 @@ public void saveFieldPerm(String profileName, String moduleName,String entityNam
 	
 	
 }
+
+
+public void saveFeaturePerm(String profileName, String moduleName,String entityName, String vals){
+	System.out.println("inside save"+vals);
+	System.out.println("entity name"+moduleName);
+	String[] arr = vals.split(",");
+	System.out.println("inside save 1--"+arr[1]);
+	Document profDoc = getProfileDoc(getSecurityDatabase(),profileName);
+	String jsonString="";
+	System.out.println("inside save 2");
+	try {
+		jsonString = profDoc.getItemValueString("JsonString");
+	} catch (NotesException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	System.out.println("inside save 3");
+	ProfileJson profile = getJsonProfileObj(jsonString);
+	Module module = null;
+	System.out.println("inside save 4");
+	for(Module mod:profile.getModules()){
+		if(mod.getModuleName().equals(moduleName)){
+			module = mod;
+			break;
+		}
+		
+	}
+	Entity entity = null;
+	for(Entity e:module.getEntities()){
+		if(e.getEntityName().equals(entityName)){
+			entity = e;
+			break;
+		}
+		
+	}
+	
+	System.out.println("inside save 5");
+	String[] featureSecurity;
+	String fSec="";
+	for(int i=1;i<arr.length;i++){
+		fSec = arr[i];
+		System.out.println("inside save 51");
+		System.out.println(fSec);
+		featureSecurity = fSec.split(":");
+		System.out.println("after split"+featureSecurity[0]);
+		System.out.println("inside save 52");
+		for(Feature feature:entity.getFeatures()){
+			System.out.println("inside save 53");
+			System.out.println("field name"+featureSecurity[0]+" getfname"+feature.getFeatureName());
+			
+			if(featureSecurity[0].equals(feature.getFeatureName())){
+				System.out.println("inside save 54"+featureSecurity[1]);
+				feature.setVisible(Character.toString(featureSecurity[1].charAt(0)));
+				
+			}
+		}
+	}
+	System.out.println("inside save 6");
+	
+	ObjectMapper mapper = new ObjectMapper();  
+	String jsonString2 = "";
+	try {
+		jsonString2 = mapper.writeValueAsString(profile);
+	} catch (JsonGenerationException e) {		
+		e.printStackTrace();
+	} catch (JsonMappingException e) {
+		e.printStackTrace();
+	} catch (IOException e) {
+		e.printStackTrace();
+	}
+	System.out.println("inside save 7");
+	
+	try {
+		profDoc.replaceItemValue("JsonString",jsonString2 );
+		profDoc.save();
+	} catch (NotesException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	System.out.println("inside save 8");
+	
+	
+}
+
 private ProfileJson getProfileObj(String profileName){
 	Document profDoc = getProfileDoc(getSecurityDatabase(),profileName);
 	String jsonString="";

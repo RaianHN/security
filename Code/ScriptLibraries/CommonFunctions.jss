@@ -447,6 +447,15 @@ function setFieldPermission(profileName,moduleName,entityName){
 	fieldCrud.saveFieldPerm(profileName,moduleName,entityName,context.getSubmittedValue());
 }
 
+function setFeaturePermission(profileName,moduleName,entityName){
+	var arr = context.getSubmittedValue().split(",");
+	var featureCrud = new bsuite.weber.jsonparsing.ProfileEdit;
+	println("setting feature permission"+typeof(arr)+"submitted type"+typeof(context.getSubmittedValue()));
+	
+	featureCrud.saveFeaturePerm(profileName,moduleName,entityName,context.getSubmittedValue());
+}
+
+
 function loadCreateEntity(moduleName){
 	var component = getComponent('cEntityPanel'+moduleName); 
 	var s = facesContext;

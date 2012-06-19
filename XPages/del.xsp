@@ -4,10 +4,13 @@
 	<xp:this.beforePageLoad><![CDATA[#{javascript:viewScope.moduleName = "Employees";
 viewScope.entityName = "Employee";
 sessionScope.put("documentId","");}]]></xp:this.beforePageLoad>
-	<xp:listBox id="listBox1">
-		<xp:selectItems>
-			<xp:this.value><![CDATA[#{security.modules}]]></xp:this.value>
-		</xp:selectItems>
-	</xp:listBox>
+	
 	<xp:br></xp:br>
-	<xp:panel binding="#{wrkspc.centity}"></xp:panel></xp:view>
+	
+	<xp:br></xp:br>
+	<xp:br></xp:br>
+	<xp:radioGroup id="radioGroup1" layout="pageDirection" defaultValue="#{javascript:return 2;}">
+		<xp:selectItem itemLabel="One" itemValue="1"></xp:selectItem>
+		<xp:selectItem itemLabel="Two" itemValue="2"></xp:selectItem>
+		<xp:selectItem itemLabel="Three" itemValue="3"></xp:selectItem>
+	</xp:radioGroup></xp:view>
