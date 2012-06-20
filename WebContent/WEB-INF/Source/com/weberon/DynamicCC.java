@@ -15,16 +15,18 @@ import com.ibm.xsp.extlib.builder.ControlBuilder.ControlImpl;
 
 public class DynamicCC {
 	public static void loadCC(FacesContext s, UIComponent component, String c1, String id)
-	{	UIIncludeComposite result = new UIIncludeComposite();        
+	{	System.out.println("view--12");
+		UIIncludeComposite result = new UIIncludeComposite();        
 	        result.setPageName(c1);        
 	        result.setId(id);
-	        
+	        System.out.println("view--13");
 	        ControlImpl con = new ControlImpl(component);
 			ControlImpl con1 = new ControlImpl(result);
-			
+			System.out.println("view--14");
 	con.addChild(con1);
-			
+	System.out.println("view--15");
 	ControlBuilder.buildControl(s,con,true);
+	System.out.println("view--15");
 	}
 	
 	

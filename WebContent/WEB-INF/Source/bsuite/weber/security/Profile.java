@@ -275,16 +275,16 @@ public class Profile extends BsuiteWorkFlow {
 		System.out.println("modulename"+moduleName);
 		ArrayList<String> rEntities = new ArrayList<String>();
 		Module mod = getModule(moduleName);
-		System.out.println("--------41");
+		System.out.println("--------411");
 		ArrayList<Entity> entities = mod.getEntities();
 		if(entities==null){
 			return null;
 		}
 		for(Entity entity:entities){
-			System.out.println("--------42");
+			System.out.println("--------421"+entity.getEntityName());
 			if(entity!=null){
 				if(entity.getRead().equals("1")){
-					System.out.println("--------43");
+					System.out.println("--------431");
 					rEntities.add(entity.getEntityName());
 				}
 			}
@@ -292,6 +292,43 @@ public class Profile extends BsuiteWorkFlow {
 		}
 		System.out.println("r enti"+rEntities);
 		return rEntities;
+	}
+	
+	public ArrayList<String> getDeletableEntitiesNames(String moduleName){
+		System.out.println("modulename"+moduleName);
+		ArrayList<String> dEntities = new ArrayList<String>();
+		Module mod = getModule(moduleName);
+		System.out.println("--------411");
+		ArrayList<Entity> entities = mod.getEntities();
+		if(entities==null){
+			return null;
+		}
+		for(Entity entity:entities){
+			System.out.println("--------421"+entity.getEntityName());
+			if(entity!=null){
+				if(entity.getDelete().equals("1")){
+					System.out.println("--------431");
+					dEntities.add(entity.getEntityName());
+				}
+			}
+			
+		}
+		System.out.println("r enti"+dEntities);
+		return dEntities;
+	}
+	
+	public ArrayList<String> getAllEntitiesNames(String moduleName){
+		System.out.println("modulename"+moduleName);
+		ArrayList<String> aEntities = new ArrayList<String>();
+		Module mod = getModule(moduleName);
+		System.out.println("--------411");
+		ArrayList<Entity> entities = mod.getEntities();
+		if(entities==null){
+			return null;
+		}
+	
+		System.out.println("r enti"+aEntities);
+		return aEntities;
 	}
 	
 }

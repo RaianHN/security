@@ -2,7 +2,13 @@
 <xp:view xmlns:xp="http://www.ibm.com/xsp/core">
 
 	
+	
 	<xp:table>
+	<xp:tr>
+	<xp:td>
+		<xp:panel id="actions" binding="#{wrkspc.features}"></xp:panel></xp:td>
+	
+	</xp:tr>
 		<xp:tr>
 			<xp:td valign="top"><xp:panel>
 	

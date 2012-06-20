@@ -481,4 +481,5 @@ function loadReadEntity(){
 	var c1="/ccReadEntity.xsp"; 
 	var id="readEntityPanel";
 	com.weberon.DynamicCC.loadCC(s, component, c1, id);	
+	
 }

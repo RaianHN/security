@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xc="http://www.ibm.com/xsp/custom">
 
-	<xp:this.beforePageLoad><![CDATA[#{javascript:viewScope.moduleName = "Employees";
-viewScope.entityName = "Employee";
-sessionScope.put("documentId","");}]]></xp:this.beforePageLoad>
 	
-	<xp:br></xp:br>
-	
-	<xp:br></xp:br>
-	<xp:br></xp:br>
-	<xp:radioGroup id="radioGroup1" layout="pageDirection" defaultValue="#{javascript:return 2;}">
-		<xp:selectItem itemLabel="One" itemValue="1"></xp:selectItem>
-		<xp:selectItem itemLabel="Two" itemValue="2"></xp:selectItem>
-		<xp:selectItem itemLabel="Three" itemValue="3"></xp:selectItem>
-	</xp:radioGroup></xp:view>
+	<xp:button value="Label" id="button1">
+		<xp:eventHandler event="onclick" submit="true"
+			refreshMode="complete">
+			<xp:this.action><![CDATA[#{javascript:var component = getComponent('div1'); 
+var s = facesContext;
+var c1="/testcontrol.xsp"; 
+var id="modulediv";
+com.weberon.DynamicCC.loadCC(s, component, c1, id);
+
+}]]></xp:this.action>
+		</xp:eventHandler></xp:button></xp:view>
