@@ -185,7 +185,7 @@ moduleVisib.getEntityPermission(viewScope.selProfile,viewScope.selModule);
 
 var i = 0;
 var result = new Array();
-alert("table rolws"+table.rows.length);
+//alert("table rolws"+table.rows.length);
 for (i = 2; i < table.rows.length; i++) {
 
     var entityName = table.rows[i].cells[0].firstChild.innerHTML;
@@ -194,7 +194,7 @@ for (i = 2; i < table.rows.length; i++) {
     var checkvals3 = table.rows[i].cells[3].firstChild.firstChild.checked;
     var checkvals4 = table.rows[i].cells[4].firstChild.firstChild.checked;
       
-    alert("temp"+entityName);
+    //alert("temp"+entityName);
     
     var temp;
     if (checkvals1 == true) {
@@ -224,9 +224,9 @@ for (i = 2; i < table.rows.length; i++) {
     
      
     result[i]=temp;
-    alert("temp"+temp);
+    //alert("temp"+temp);
 }
-alert("temp");
+//alert("temp");
 XSP.executeOnServer('view:_id1:eventEntityPerm', "", "", result);]]></xp:this.script>
 					</xp:eventHandler>
 				</xp:button>
@@ -383,7 +383,7 @@ moduleVisib.getFieldPermission(viewScope.selProfile,viewScope.selModule,viewScop
 
 var i = 0;
 var result = new Array();
-alert("table rolws"+table.rows.length);
+//alert("table rolws"+table.rows.length);
 for (i = 2; i < table.rows.length; i++) {
 
     var fieldName = table.rows[i].cells[0].firstChild.innerHTML;
@@ -391,7 +391,7 @@ for (i = 2; i < table.rows.length; i++) {
     var checkvals2 = table.rows[i].cells[2].firstChild.firstChild.checked;//ronly
  
       
-    alert("temp"+fieldName);
+    //alert("temp"+fieldName);
     
     var temp;
     if (checkvals1 == true) {
@@ -411,9 +411,9 @@ for (i = 2; i < table.rows.length; i++) {
     
      
     result[i]=temp;
-    alert("temp"+temp);
+    //alert("temp"+temp);
 }
-alert("temp");
+//alert("temp");
 XSP.executeOnServer('view:_id1:eventFieldPerm', "", "", result);]]></xp:this.script>
 					</xp:eventHandler>
 				</xp:button>

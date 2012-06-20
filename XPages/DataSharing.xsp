@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xc="http://www.ibm.com/xsp/custom">
+	
+	
+
+	
+	
+	
+	
+	
+	<xp:br></xp:br>
+	<xp:br></xp:br>
+	<xc:cc_ShowDataSharing></xc:cc_ShowDataSharing></xp:view>

@@ -67,6 +67,25 @@ public class CompUtil {
 		com.getChildren().add(inp);
 	}
 	
+	@SuppressWarnings("unchecked")
+	public static   void createInput(UIComponent com,  String fieldname ,String arg, int rEdit) 
+	{
+		System.out.println("inside createINput");
+		XspInputText inp = new XspInputText();
+		inp.setId("i"+fieldname);
+		String ref = "#{"+arg+"."+fieldname+"}";	
+		System.out.println("String ref "+ref);
+		
+	ValueBinding vb1  = FacesContext.getCurrentInstance().getApplication().createValueBinding(ref);
+	 inp.setValueBinding( "value", vb1);
+	 //1ReadOnly
+	 //2Editable
+	 if(rEdit==1){
+		 inp.setReadonly(true);
+	 }
+	
+		com.getChildren().add(inp);
+	}
 	
 	@SuppressWarnings("unchecked")
 	public static  XspTableRow createRow(UIComponent com, String id)

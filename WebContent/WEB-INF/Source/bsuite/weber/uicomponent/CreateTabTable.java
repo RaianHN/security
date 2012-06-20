@@ -17,12 +17,12 @@ public class CreateTabTable {
 		UIPanelEx panel=new UIPanelEx();
 		
 		  UIDojoTabContainer tabcon = new UIDojoTabContainer();
-		  tabcon.setStyle("height:300px;width:300px;");
-		  tabcon.setId("uiDojoTabContainer1");		  	    
+		  tabcon.setStyle("height:682px;width:100%;");
+		  tabcon.setId("MainTabContainer");		  	    
 		  
 		  UIDojoTabPane pane1 = new UIDojoTabPane();
          pane1.setTitle("HOME");
-          pane1.setId("djTabPane1");
+          pane1.setId("Home");
           
           
        /*   

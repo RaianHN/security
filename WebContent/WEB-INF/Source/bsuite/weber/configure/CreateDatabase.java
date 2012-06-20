@@ -53,7 +53,7 @@ public class CreateDatabase extends BsuiteWorkFlow {
 				db1 = dir.createDatabase(dbpath);
 				db1.setTitle(dbName);
 				View view1 = db1.createView("AllDocuments");
-				view1.setSelectionFormula("SELECT @ALL");
+				view1.setSelectionFormula("SELECT @All");
 			} else
 				System.out.println("found, not creating db");
 
@@ -94,10 +94,9 @@ public class CreateDatabase extends BsuiteWorkFlow {
 				System.out.println("View Exists, not creting");
 				return db.getView(viewName);
 			}
-		View view1=db.createView(viewName);	
-		
-		view1.setSelectionFormula(selFormula);
 				
+		View view1=db.createView(viewName);
+		view1.setSelectionFormula(selFormula);
 
 			System.out.println("View Created");
 			return view1;
@@ -116,14 +115,20 @@ public class CreateDatabase extends BsuiteWorkFlow {
 			System.out.println("View Column Pos "+pos);
 			System.out.println("View Column title "+title);
 			System.out.println("View Column Formula  "+formula);
-			view.createColumn(pos,title,formula);
+			Vector columns=view.getColumns();
+			if(!columns.contains(title)){
+				
+				view.createColumn(pos,title,formula);
+			}
+				
+		
 		}catch (Exception e) {
 			// TODO: handle exception
 		}
 		
 	}
 
-	public void createDatabases(Vector<String> modules) {
+public void createDatabases(Vector<String> modules) {
 		DefineModule dmodule = new DefineModule();
 		View view1=null;
 		for (String x : modules) 
@@ -165,8 +170,6 @@ public class CreateDatabase extends BsuiteWorkFlow {
 				}
 		}
 	}
-
-	
 	public void RegisterEmployee(String name){
 		try{
 		Document persondoc=getPerson(name);
@@ -196,7 +199,7 @@ public class CreateDatabase extends BsuiteWorkFlow {
 			createRelationship(srcunid,"names.nsf",src_data,securityDb.getFileName(),trg_data,targetid,relationid);
 			
 			//Create Role Association with the Person
-			createRoleAssociation(name);
+			createRoleAssociation(name,"CEO" );
 			
 		}catch (Exception e) {
 			// TODO: handle exception
@@ -205,7 +208,7 @@ public class CreateDatabase extends BsuiteWorkFlow {
 		
 	}
 	
-	public void createRoleAssociation(String username){
+	public void createRoleAssociation(String username, String roleName){
 		
 		String src_data=username;
 		Document persondoc=getPerson(username);
@@ -213,7 +216,7 @@ public class CreateDatabase extends BsuiteWorkFlow {
 		
 		String personDocId=persondoc.getUniversalID();
 		String relationid = getRelationNameUnid("HAS_ROLE");
-		String rolename="CEO";
+		String rolename=roleName;
 		Database securityDb  = session.getDatabase("", bsuitepath
 				+ "Security.nsf");
 		View roleview=  securityDb.getView("RolesView");
@@ -313,5 +316,41 @@ public class CreateDatabase extends BsuiteWorkFlow {
 		
 		
 	}
+	public void createEmployee(String personName,String edocid,String profileName, String role){
+		try{
+		Document persondoc=getPerson(personName);
+		String personDocId=persondoc.getUniversalID();
+	System.out.println("UNID "+personDocId);
+			Database empdb = session.getDatabase("", bsuitepath
+				+ "employees.nsf");
+			
+			//Document empdoc=empdb.createDocument();
+			//empdoc.replaceItemValue("Form","Employee");
+			//empdoc.save(true,false);	
+			Document empdoc = empdb.getDocumentByUNID(edocid);
+			String relId = getRelationNameUnid("IS_A");
+			createRelationship(persondoc.getUniversalID(),"names.nsf","Person","Employee.nsf","Employee",empdoc.getUniversalID(),relId);
+			
+			
+			String src_data=personName;
+			String relationid = getRelationNameUnid("HAS_A");
+			String trg_data=profileName;
+			Database securityDb  = session.getDatabase("", bsuitepath
+					+ "Security.nsf");
+			View profileview= securityDb.getView("ProfileView");
+			Document profiledoc = profileview.getDocumentByKey(trg_data);
+			String targetid=profiledoc.getUniversalID();
+			String srcunid=personDocId;
+			//creating relationship between person and admin profile
+			createRelationship(srcunid,"names.nsf",src_data,securityDb.getFileName(),trg_data,targetid,relationid);
+			
+			//Create Role Association with the Person
+			createRoleAssociation(personName, role);
+			
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
 	
+		
+	}
 }

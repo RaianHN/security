@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+	<xp:panel><xp:button value="Edit" id="button9" style="background-color:rgb(192,192,192)" rendered="#{javascript:viewScope.editEntity}">
+		<xp:eventHandler event="onclick" submit="true"
+			refreshMode="complete">
+			<xp:this.action><![CDATA[#{javascript:loadCreateEntity("Employees");}]]></xp:this.action>
+		</xp:eventHandler></xp:button>Hello</xp:panel>
+	<xp:div id="div1" binding="#{wrkspc.rentity}">
+				
+				</xp:div>
+</xp:view>

@@ -102,7 +102,7 @@ public class Deploy extends BsuiteWorkFlow{
 				System.out.println("modulenames2");
 				ArrayList<bsuite.weber.jsonparsing.Entity> entityList = new ArrayList<bsuite.weber.jsonparsing.Entity>();//Create empty EntityList for this module
 				for(Entity e:entities){//For each entity set permission
-					bsuite.weber.jsonparsing.Entity entity = defineEntityPermission(moduleName, e.getEntityName(), "1", "1", "1", "1");
+					bsuite.weber.jsonparsing.Entity entity = defineEntityPermission(moduleName, e.getEntityName(), "1", "1", "1", "1","1");
 					ArrayList<Field> fields = e.getFields();
 					
 					ArrayList<bsuite.weber.jsonparsing.Field> fieldList = new ArrayList<bsuite.weber.jsonparsing.Field>();//create empty FieldList for this entity
@@ -165,13 +165,13 @@ public class Deploy extends BsuiteWorkFlow{
 		return module;
 		
 	}
-	private bsuite.weber.jsonparsing.Entity defineEntityPermission(String moduleName, String entityName, String c, String r, String u, String d ){
+	private bsuite.weber.jsonparsing.Entity defineEntityPermission(String moduleName, String entityName, String c, String r, String u, String d,String access ){
 		bsuite.weber.jsonparsing.Entity entity = new bsuite.weber.jsonparsing.Entity();
 		entity.setCreate(c);
 		entity.setRead(r);
 		entity.setUpdate(u);
 		entity.setDelete(d);
-		
+		entity.setAccessType(access);
 		return entity;
 	}
 	private bsuite.weber.jsonparsing.Feature defineFeaturePermission(String featureName,String visible){

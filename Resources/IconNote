@@ -1,13 +1,13 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE note SYSTEM 'xmlschemas/domino_8_5_3.dtd'>
 <note default='true' class='icon' xmlns='http://www.lotus.com/dxl' version='8.5'
- maintenanceversion='3.0' replicaid='65257A11003683CF'>
-<noteinfo noteid='122' unid='E595BF7010C638F065257A11002504F1' sequence='19'>
-<created><datetime>20120602T121420,97+0530</datetime></created>
-<modified><datetime>20120606T191445,92+0530</datetime></modified>
-<revised><datetime>20120606T191445,91+0530</datetime></revised>
-<lastaccessed><datetime>20120606T191445,92+0530</datetime></lastaccessed>
-<addedtofile><datetime>20120602T154014,70+0530</datetime></addedtofile></noteinfo>
+ maintenanceversion='3.0' replicaid='65257A1F00467DE4'>
+<noteinfo noteid='122' unid='A2462AAF26241DD265257A1F00467DE7' sequence='0'>
+<created><datetime>20120616T181957,51+0530</datetime></created>
+<modified><datetime>20120618T125413,03+0530</datetime></modified>
+<revised><datetime>20120618T123555,45+0530</datetime></revised>
+<lastaccessed><datetime>20120618T125413,03+0530</datetime></lastaccessed>
+<addedtofile><datetime>20120618T100546,60+0530</datetime></addedtofile></noteinfo>
 <updatedby><name>CN=Tenzing Sangmo/O=Weberon</name></updatedby>
 <item name='IconBitmap' summary='true'>
 <rawitemdata type='6'>
@@ -25,10 +25,10 @@ L2ZvgAAACMZmZmZmZmZmZmZmbIAAAACMZmZmZmZmZmZmZsgAAAAACMZmZmZmZmZmZmyAAAAAAACM
 AAAAUEECICABAAD/////+A4DgA==
 </rawitemdata></item>
 <item name='$DefaultXPage'><text>SushantActivity.xsp</text></item>
-<item name='$Flags'><text>J!?</text></item>
-<item name='$FlagsNoRefresh'><text/></item>
 <item name='$DefaultClientXPage'><text>SushantActivity.xsp</text></item>
-<item name='$TITLE'><text>Employees MVC Phase2</text></item>
 <item name='$DBTheme'><text>bsuiteBlue.theme</text></item>
+<item name='$TITLE'><text>Employees MVC Phase2</text></item>
+<item name='$Flags'><text>J!lsf</text></item>
+<item name='$FlagsNoRefresh'><text/></item>
 <item name='$Daos'><text>0</text></item></note>
 

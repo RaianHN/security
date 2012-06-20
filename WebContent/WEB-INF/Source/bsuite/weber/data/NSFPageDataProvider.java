@@ -15,6 +15,8 @@ import lotus.domino.NotesException;
 import lotus.domino.Session;
 
 
+import bsuite.weber.model.BsuiteWorkFlow;
+import bsuite.weber.relationship.Association;
 import bsuite.weber.tools.BSUtil;
 import bsuite.weber.tools.JSFUtil;
 
@@ -22,7 +24,7 @@ import com.ibm.domino.xsp.module.nsf.NotesContext;
 import com.ibm.xsp.extlib.util.ExtLibUtil;
 
 
-public class NSFPageDataProvider implements DataObjectExt {
+public class NSFPageDataProvider extends BsuiteWorkFlow implements DataObjectExt {
 
 	/**
 	 * 
@@ -39,6 +41,7 @@ public class NSFPageDataProvider implements DataObjectExt {
 	private String bsuitepath;
 	//to get the viewScope variable
 	Map viewScope=(Map) JSFUtil.getVariableValue("viewScope");
+	//Map sessionScope = (Map) JSFUtil.getVariableValue("sessionScope");
 	//Map sessionScope=(Map) JSFUtil.getVariableValue("sessionScope");
 	
 	public NSFPageDataProvider() {
@@ -179,7 +182,8 @@ public class NSFPageDataProvider implements DataObjectExt {
 	
 	
 	public void store() {
-		
+		Map sessionscope=(Map) JSFUtil.getVariableValue("sessionScope");
+		Map viewScope=(Map) JSFUtil.getVariableValue("viewScope");
 		if (!m_changedValues.isEmpty()) {
 			try {
 				Document doc=getDocument();
@@ -188,17 +192,24 @@ public class NSFPageDataProvider implements DataObjectExt {
 					//we need to create a new document in the database
 					//Session session=NotesContext.getCurrent().getCurrentSession();
 					bsuitepath=BSUtil.getBsuitePath(ExtLibUtil.getCurrentDatabase());
-					Database userdb=ExtLibUtil.getCurrentSession().getDatabase("", bsuitepath+"employees.nsf");
+					String dbname=(String)viewScope.get("moduleName");
+					dbname=dbname.toLowerCase().replace(" ", "")+".nsf";
+					System.out.println("Db Name  "+dbname);
+					Association as=new Association();
+					String currentuser=this.currentuser.getBsuiteuser();
+					String commonname=as.getFormattedName(currentuser, "common");
+					Database userdb=ExtLibUtil.getCurrentSession().getDatabase("", bsuitepath+dbname);
 					doc=userdb.createDocument();
 					System.out.println("inside the store method in NSFDataPageProvider");
-					Map sessionscope=(Map) JSFUtil.getVariableValue("sessionScope");
-					Map viewScope=(Map) JSFUtil.getVariableValue("viewScope");
+					System.out.println("To be save in Created by field "+commonname);
 					
 					//String ename=(String)sessionscope.get("entityName");
 					String ename=(String)viewScope.get("entityName");
 					System.out.println("inside the store method in NSFDataPageProvider viewScope var "+ename);
 					doc.replaceItemValue("Form", ename);
 					doc.replaceItemValue("obid", ename);
+					doc.replaceItemValue("CreatedBy",commonname);//All the documents will be having this field
+					sessionscope.put("entityDocid", doc.getUniversalID());
 				}
 				
 				//write all changed values into the document
@@ -213,6 +224,8 @@ public class NSFPageDataProvider implements DataObjectExt {
 				}
 				doc.save(true, false);
 				m_documentId=doc.getUniversalID();
+				viewScope.put("entityDocid", m_documentId);
+				
 			} catch (NotesException e) {
 				throw new FacesException("Could not store data to Notes document", e);
 			}

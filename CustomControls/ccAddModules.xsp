@@ -31,4 +31,5 @@ com.weberon.DynamicCC.removePreview(component);
 					</xp:eventHandler></xp:button></xp:td>
 			
 		</xp:tr>
-	</xp:table></xp:view>
+	</xp:table>
+	</xp:view>

@@ -2,20 +2,16 @@
 <xp:view xmlns:xp="http://www.ibm.com/xsp/core"
 	xmlns:xe="http://www.ibm.com/xsp/coreex">
 
-	
-	
-	<xe:djTabContainer id="djTabContainer1"
-		style="width:100%;height:682px;" tabStrip="true">
 
-		<xe:djTabPane id="djTabPane1" title="Configure">
 
-			<xp:table>
+<xp:table>
 				<xp:tr>
 					<xp:td valign="top">
-						<xp:button value="Add Modules" id="button2"
-							style="background-color:rgb(192,192,192)">
-							<xp:eventHandler event="onclick"
-								submit="true" refreshMode="partial" refreshId="CCLoadDiv" id="eventHandler1">
+						<xp:table>
+							<xp:tr>
+								<xp:td>1</xp:td>
+								<xp:td><xp:button value="Add Modules" id="button4" style="background-color:rgb(192,192,192);width:100.0px">
+							<xp:eventHandler event="onclick" submit="true" refreshMode="partial" refreshId="ConfigureDiv">
 								<xp:this.action><![CDATA[#{javascript:var component = getComponent('loadCC');
 if(component.getChildren!=null){
 com.weberon.DynamicCC.removePreview(component);
@@ -26,12 +22,12 @@ var id="modulediv";
 com.weberon.DynamicCC.loadCC(s, component, c1, id);
 }]]></xp:this.action>
 							</xp:eventHandler>
-						</xp:button>
-						<xp:br id="br1"></xp:br>
-						<xp:button value="Add Entity" id="button1"
-							style="background-color:rgb(192,192,192)">
-							<xp:eventHandler event="onclick"
-								submit="true" refreshMode="partial" refreshId="CCLoadDiv" id="eventHandler2">
+						</xp:button></xp:td>
+							</xp:tr>
+							<xp:tr>
+								<xp:td>2</xp:td>
+								<xp:td><xp:button value="Add Entity" id="button6" style="background-color:rgb(192,192,192);width:100.0px">
+							<xp:eventHandler event="onclick" submit="true" refreshMode="partial" refreshId="ConfigureDiv">
 								<xp:this.action><![CDATA[#{javascript:var component = getComponent('loadCC'); 
 if(component.getChildren!=null){
 com.weberon.DynamicCC.removePreview(component);
@@ -42,14 +38,12 @@ var id="entitydiv";
 com.weberon.DynamicCC.loadCC(s, component, c1, id);
 }]]></xp:this.action>
 							</xp:eventHandler>
-						</xp:button>
-
-
-						<xp:br id="br2"></xp:br>
-						<xp:button id="button3" value="Add Roles"
-							style="background-color:rgb(192,192,192)">
-							<xp:eventHandler event="onclick"
-								submit="true" refreshMode="partial" refreshId="CCLoadDiv" id="eventHandler3">
+						</xp:button></xp:td>
+							</xp:tr>
+							<xp:tr>
+								<xp:td>3</xp:td>
+								<xp:td><xp:button id="button7" value="Add Roles" style="background-color:rgb(192,192,192);width:100.0px">
+							<xp:eventHandler event="onclick" submit="true" refreshMode="partial" refreshId="ConfigureDiv">
 								<xp:this.action><![CDATA[#{javascript:var component = getComponent('loadCC'); 
 if(component.getChildren!=null){
 com.weberon.DynamicCC.removePreview(component);
@@ -60,88 +54,168 @@ var id="Rolediv";
 com.weberon.DynamicCC.loadCC(s, component, c1, id);
 }]]></xp:this.action>
 							</xp:eventHandler>
-						</xp:button>
-						<xp:br id="br3"></xp:br>
-						<xp:button value="Add Profile" id="button4"
-							style="background-color:rgb(192,192,192)">
+						</xp:button></xp:td>
+							</xp:tr>
+							
+						</xp:table>
+						<xp:br></xp:br>
+						
+						<xp:br></xp:br>
+						
+
+
+						<xp:br></xp:br>
+						
+						<xp:br></xp:br>
+						
+						<xp:br></xp:br>
+						</xp:td>
+					<xp:td rowspan="2" id="td1" valign="top"></xp:td>
+				</xp:tr>
+				<xp:tr>
+					<xp:td>
+						<xp:comboBox id="comboBox2">
+		<xp:selectItems>
+			<xp:this.value><![CDATA[#{javascript://var path =database.getFilePath();
+//var dbpath =  @LeftBack(path ,"/");
+//var db= dbpath+"/Security.nsf";
+var db="names.nsf";
+var serv = @Word(@Implode(@DbName(),", "),", ", 1);
+var com = new Array(serv,db);
+var x= @DbColumn(com,  "($VIMPeople)", 1);
+@Explode(x,",;",true);}]]></xp:this.value>
+		</xp:selectItems>
+	</xp:comboBox>
+						<xp:br></xp:br>
+						<xp:button value="Deploy" id="button8"
+							style="background-color:rgb(192,192,192);width:100.0px">
 							<xp:eventHandler event="onclick"
-								submit="true" refreshMode="partial" refreshId="CCLoadDiv" id="eventHandler4">
+								submit="true" refreshMode="complete">
+								<xp:this.action><![CDATA[#{javascript:var deploy = new bsuite.weber.configure.Deploy();
+deploy.deploy();
+var user = getComponent("comboBox1").getValue();
+
+var cd = new bsuite.weber.configure.CreateDatabase();
+cd.RegisterEmployee(user)
+
+}]]></xp:this.action>
+							</xp:eventHandler>
+						</xp:button></xp:td>
+
+				</xp:tr>
+			</xp:table>
+
+
+
+	
+	
+	<xe:djTabContainer id="djTabContainer1"
+		style="width:100%;height:682px;" tabStrip="true" rendered="false">
+
+		<xe:djTabPane id="djTabPane1" title="Configure">
+
+			<xp:table>
+				<xp:tr>
+					<xp:td valign="top">
+						<xp:table>
+							<xp:tr>
+								<xp:td>1</xp:td>
+								<xp:td><xp:button value="Add Modules" id="button2" style="background-color:rgb(192,192,192);width:100.0px">
+							<xp:eventHandler event="onclick" submit="true" refreshMode="partial" refreshId="ConfigureDiv">
+								<xp:this.action><![CDATA[#{javascript:var component = getComponent('loadCC');
+if(component.getChildren!=null){
+com.weberon.DynamicCC.removePreview(component);
+ }
+var s = facesContext;
+var c1="/ccAddModules.xsp"; 
+var id="modulediv";
+com.weberon.DynamicCC.loadCC(s, component, c1, id);
+}]]></xp:this.action>
+							</xp:eventHandler>
+						</xp:button></xp:td>
+							</xp:tr>
+							<xp:tr>
+								<xp:td>2</xp:td>
+								<xp:td><xp:button value="Add Entity" id="button1" style="background-color:rgb(192,192,192);width:100.0px">
+							<xp:eventHandler event="onclick" submit="true" refreshMode="partial" refreshId="ConfigureDiv">
 								<xp:this.action><![CDATA[#{javascript:var component = getComponent('loadCC'); 
 if(component.getChildren!=null){
 com.weberon.DynamicCC.removePreview(component);
 }
 var s = facesContext;
-var c1="/ccAddProfile.xsp"; 
-var id="profilediv";
+var c1="/ccAddEntity.xsp"; 
+var id="entitydiv";
 com.weberon.DynamicCC.loadCC(s, component, c1, id);
 }]]></xp:this.action>
 							</xp:eventHandler>
-						</xp:button>
-					</xp:td>
+						</xp:button></xp:td>
+							</xp:tr>
+							<xp:tr>
+								<xp:td>3</xp:td>
+								<xp:td><xp:button id="button3" value="Add Roles" style="background-color:rgb(192,192,192);width:100.0px">
+							<xp:eventHandler event="onclick" submit="true" refreshMode="partial" refreshId="ConfigureDiv">
+								<xp:this.action><![CDATA[#{javascript:var component = getComponent('loadCC'); 
+if(component.getChildren!=null){
+com.weberon.DynamicCC.removePreview(component);
+}
+var s = facesContext;
+var c1="/ccAddRole.xsp"; 
+var id="Rolediv";
+com.weberon.DynamicCC.loadCC(s, component, c1, id);
+}]]></xp:this.action>
+							</xp:eventHandler>
+						</xp:button></xp:td>
+							</xp:tr>
+							
+						</xp:table>
+						<xp:br></xp:br>
+						
+						<xp:br></xp:br>
+						
+
+
+						<xp:br></xp:br>
+						
+						<xp:br></xp:br>
+						
+						<xp:br></xp:br>
+						</xp:td>
 					<xp:td rowspan="2" id="loadCC" valign="top"></xp:td>
 				</xp:tr>
 				<xp:tr>
 					<xp:td>
-
+						<xp:comboBox id="comboBox1">
+		<xp:selectItems>
+			<xp:this.value><![CDATA[#{javascript://var path =database.getFilePath();
+//var dbpath =  @LeftBack(path ,"/");
+//var db= dbpath+"/Security.nsf";
+var db="names.nsf";
+var serv = @Word(@Implode(@DbName(),", "),", ", 1);
+var com = new Array(serv,db);
+var x= @DbColumn(com,  "($VIMPeople)", 1);
+@Explode(x,",;",true);}]]></xp:this.value>
+		</xp:selectItems>
+	</xp:comboBox>
+						<xp:br></xp:br>
 						<xp:button value="Deploy" id="button5"
-							style="background-color:rgb(192,192,192)">
+							style="background-color:rgb(192,192,192);width:100.0px">
 							<xp:eventHandler event="onclick"
-								submit="true" refreshMode="complete" id="eventHandler5">
-								<xp:this.action><![CDATA[#{javascript:var var1 = new bsuite.weber.configure.CreateDatabase();
-var1.deploy();}]]></xp:this.action>
+								submit="true" refreshMode="complete">
+								<xp:this.action><![CDATA[#{javascript:var deploy = new bsuite.weber.configure.Deploy();
+deploy.deploy();
+var user = getComponent("comboBox1").getValue();
+
+var cd = new bsuite.weber.configure.CreateDatabase();
+cd.RegisterEmployee(user)
+
+}]]></xp:this.action>
 							</xp:eventHandler>
-						</xp:button>
-					</xp:td>
+						</xp:button></xp:td>
 
-				</xp:tr>
-				<xp:tr>
-					<xp:td>
-						<xp:button value="Open TestPage" id="button6" style="background-color:rgb(192,192,192)">
-							<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
-								<xp:this.action>
-
-									<xp:actionGroup>
-										<xp:executeScript>
-											<xp:this.script><![CDATA[#{javascript:sessionScope.put('documentId',"");
-sessionScope.put("Beanid","employee");}]]></xp:this.script>
-										</xp:executeScript>
-										<xp:openPage
-											name="/TestPage.xsp">
-										</xp:openPage>
-									</xp:actionGroup>
-								</xp:this.action></xp:eventHandler></xp:button></xp:td>
-					<xp:td>
-						<xp:button value="Open TestDocColl" id="button7" style="background-color:rgb(192,192,192)"><xp:eventHandler event="onclick" submit="true" refreshMode="complete">
-	<xp:this.action>
-
-		<xp:actionGroup>
-
-
-
-
-
-
-
-
-
-			<xp:executeScript>
-				<xp:this.script><![CDATA[#{javascript:sessionScope.put('documentId',"");
-sessionScope.put("Beanid","employee");
-viewScope.moduleName="Employees";
-viewScope.entityName="Employee";
-var fields="Name;Salary";
-viewScope.put("Fields",fields);
-println("OnLCik of OPen test");
-println("Viewscope fields ",viewScope.get("Fields"));
-}]]></xp:this.script>
-			</xp:executeScript>
-			<xp:openPage name="/TestDocColl.xsp"></xp:openPage>
-		</xp:actionGroup>
-	</xp:this.action></xp:eventHandler></xp:button></xp:td>
 				</xp:tr>
 			</xp:table>
 
 
 		</xe:djTabPane>
 	</xe:djTabContainer>
-	</xp:view>
+</xp:view>

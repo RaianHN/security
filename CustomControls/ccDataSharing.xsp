@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+
+	<xp:this.resources>
+		<xp:script src="/CommonFunctions.jss" clientSide="false"></xp:script>
+	</xp:this.resources>
+	<xp:div>
+		<xp:table>
+			<xp:tr>
+				<xp:td>
+					<xp:label value="Module Name" id="label4"></xp:label>
+				</xp:td>
+				<xp:td>
+					<xp:comboBox id="ModuleName">
+						<xp:selectItems>
+							<xp:this.value><![CDATA[#{javascript://db = new Array(@DbName()[0], 'Demo/Security.nsf');
+
+//@DbColumn(database,"All Documents",1);
+//getEntities();
+var profName="Admin";
+var profile = new bsuite.weber.jsonparsing.ProfileEdit();
+if(profName!=null){
+return profile.getModuleNames(profName);
+}}]]></xp:this.value>
+						</xp:selectItems>
+						<xp:eventHandler event="onchange" submit="true"
+							refreshMode="complete">
+						</xp:eventHandler>
+					</xp:comboBox>
+				</xp:td>
+				<xp:td>
+					<xp:comboBox id="EntityName" rendered="true"
+						loaded="true">
+						<xp:selectItems>
+							<xp:this.value><![CDATA[#{javascript:var profName="Admin";
+var moduleName=getComponent("ModuleName").getValue();
+var profile = new bsuite.weber.jsonparsing.ProfileEdit();
+if(profName!=null && moduleName!=null){
+profile.getEntityNames(profName,moduleName);
+}
+}]]></xp:this.value>
+						</xp:selectItems>
+					</xp:comboBox>
+				</xp:td>
+			</xp:tr>
+			<xp:tr>
+				<xp:td>
+					<xp:label value="Records Shared From: "
+						id="label1">
+					</xp:label>
+				</xp:td>
+				<xp:td>
+					<xp:comboBox id="comboBox1">
+						<xp:selectItem itemLabel="Roles"
+							itemValue="roles" id="selectItem1">
+						</xp:selectItem>
+					</xp:comboBox>
+				</xp:td>
+				<xp:td>
+					<xp:comboBox id="SourceRole">
+						<xp:selectItems id="selectItems1">
+							<xp:this.value><![CDATA[#{javascript:db = new Array(@DbName()[0], 'mvc2/Security.nsf');
+
+@DbColumn(db,"RolesView",1);}]]></xp:this.value>
+						</xp:selectItems>
+					</xp:comboBox>
+				</xp:td>
+			</xp:tr>
+			<xp:tr>
+				<xp:td>
+					<xp:label value="Records Shared To:" id="label2"></xp:label>
+				</xp:td>
+				<xp:td>
+					<xp:comboBox id="comboBox3">
+						<xp:selectItem itemLabel="Roles"
+							itemValue="roles" id="selectItem2">
+						</xp:selectItem>
+					</xp:comboBox>
+				</xp:td>
+				<xp:td>
+					<xp:comboBox id="TargetRole">
+						<xp:selectItems id="selectItems2">
+							<xp:this.value><![CDATA[#{javascript:db = new Array(@DbName()[0], 'mvc2/Security.nsf');
+
+@DbColumn(db,"RolesView",1);}]]></xp:this.value>
+						</xp:selectItems>
+					</xp:comboBox>
+				</xp:td>
+			</xp:tr>
+			<xp:tr>
+				<xp:td>
+					<xp:label value="Access Type" id="label3"></xp:label>
+				</xp:td>
+				<xp:td>
+					<xp:comboBox id="AccessType">
+						<xp:selectItem itemLabel="Read/Write/Delete"
+							itemValue="readwrite" id="selectItem3">
+						</xp:selectItem>
+						<xp:selectItem itemLabel="Read" itemValue="read"
+							id="selectItem4">
+						</xp:selectItem>
+					</xp:comboBox>
+				</xp:td>
+				<xp:td></xp:td>
+			</xp:tr>
+			<xp:tr>
+				<xp:td>
+					<xp:checkBox text="Superior Allowed"
+						id="SuperiorAllowed">
+					</xp:checkBox>
+				</xp:td>
+				<xp:td></xp:td>
+				<xp:td></xp:td>
+			</xp:tr>
+			<xp:tr>
+				<xp:td></xp:td>
+				<xp:td>
+					<xp:button value="Create Sharing Rule" id="button1"
+						style="background-color:rgb(192,192,192)">
+						<xp:eventHandler event="onclick" submit="true"
+							refreshMode="complete" id="eventHandler1">
+							<xp:this.action><![CDATA[#{javascript:var securityDb:NotesDatabase = getDatabase("Security.nsf");
+println("security database"+securityDb.getFileName());
+println("inside dbprofile");
+var modulename=getComponent("ModuleName").getValue();
+var entityName=getComponent("EntityName").getValue();
+var accesstype=getComponent("AccessType").getValue();
+var superior=getComponent("SuperiorAllowed").getValue();
+var sourcerole=getComponent("SourceRole").getValue();
+var targetrole=getComponent("TargetRole").getValue();
+var doc :NotesDocument = securityDb.createDocument();
+doc.replaceItemValue("Form","datasharing")
+doc.replaceItemValue("ModuleName",modulename);
+doc.replaceItemValue("EntityName",entityName);
+doc.replaceItemValue("TargetRole",targetrole);
+doc.replaceItemValue("SourceRole",sourcerole);
+doc.replaceItemValue("AccessType",accesstype);
+doc.save(true,false);
+doc.recycle();
+	}]]></xp:this.action>
+						</xp:eventHandler>
+					</xp:button>
+				</xp:td>
+				<xp:td>
+					<xp:button value="Cancel" id="button2"
+						style="background-color:rgb(192,192,192)">
+					</xp:button>
+				</xp:td>
+			</xp:tr>
+		</xp:table>
+	</xp:div>
+
+</xp:view>
