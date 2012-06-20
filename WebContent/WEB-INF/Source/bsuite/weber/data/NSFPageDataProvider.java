@@ -16,6 +16,7 @@ import lotus.domino.Session;
 
 
 import bsuite.weber.model.BsuiteWorkFlow;
+import bsuite.weber.relationship.Association;
 import bsuite.weber.tools.BSUtil;
 import bsuite.weber.tools.JSFUtil;
 
@@ -181,7 +182,8 @@ public class NSFPageDataProvider extends BsuiteWorkFlow implements DataObjectExt
 	
 	
 	public void store() {
-		
+		Map sessionscope=(Map) JSFUtil.getVariableValue("sessionScope");
+		Map viewScope=(Map) JSFUtil.getVariableValue("viewScope");
 		if (!m_changedValues.isEmpty()) {
 			try {
 				Document doc=getDocument();
@@ -190,18 +192,23 @@ public class NSFPageDataProvider extends BsuiteWorkFlow implements DataObjectExt
 					//we need to create a new document in the database
 					//Session session=NotesContext.getCurrent().getCurrentSession();
 					bsuitepath=BSUtil.getBsuitePath(ExtLibUtil.getCurrentDatabase());
-					Database userdb=ExtLibUtil.getCurrentSession().getDatabase("", bsuitepath+"employees.nsf");
+					String dbname=(String)viewScope.get("moduleName");
+					dbname=dbname.toLowerCase().replace(" ", "")+".nsf";
+					System.out.println("Db Name  "+dbname);
+					Association as=new Association();
+					String currentuser=this.currentuser.getBsuiteuser();
+					String commonname=as.getFormattedName(currentuser, "common");
+					Database userdb=ExtLibUtil.getCurrentSession().getDatabase("", bsuitepath+dbname);
 					doc=userdb.createDocument();
 					System.out.println("inside the store method in NSFDataPageProvider");
-					Map sessionscope=(Map) JSFUtil.getVariableValue("sessionScope");
-					Map viewScope=(Map) JSFUtil.getVariableValue("viewScope");
+					System.out.println("To be save in Created by field "+commonname);
 					
 					//String ename=(String)sessionscope.get("entityName");
 					String ename=(String)viewScope.get("entityName");
 					System.out.println("inside the store method in NSFDataPageProvider viewScope var "+ename);
 					doc.replaceItemValue("Form", ename);
 					doc.replaceItemValue("obid", ename);
-					doc.replaceItemValue("CreatedBy",this.currentuser.getBsuiteuser());//All the documents will be having this field
+					doc.replaceItemValue("CreatedBy",commonname);//All the documents will be having this field
 					sessionscope.put("entityDocid", doc.getUniversalID());
 				}
 				

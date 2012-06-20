@@ -94,16 +94,8 @@ dojo.xhrPost({
 			<xp:this.script><![CDATA[XSP.openMenu(thisEvent,#{javascript:getComponent('popuplogin').getMenuCtor()})]]></xp:this.script>
 		</xp:eventHandler></xp:link>
 
-	<xp:link escape="true" id="link2" text="Configure">
-		<xp:this.rendered><![CDATA[#{javascript:var role = database.queryAccessRoles(session.getEffectiveUserName());
-var roleContains = role.contains("[Deployer]");
-println("roles"+role);
-println("rolec "+roleContains);
-if(roleContains==true){
-return true;
-}else{
-return false;
-}}]]></xp:this.rendered>
+	<xp:link escape="true" id="link2" text="Configure" rendered="false">
+
 		<xp:eventHandler event="onclick" submit="true"
 			refreshMode="partial" refreshId="ConfigureDiv">
 			<xp:this.action><![CDATA[#{javascript:/*
@@ -129,16 +121,22 @@ println("After createPortleeeee");
  	}
 }
 */
-var component = getComponent('ConfigureDiv'); 
+//var component = getComponent('ConfigureDiv'); 
+var component = getComponent('MainTabContainer'); 
 var s = facesContext;
 var c1="/ccDefineEntities.xsp"; 
 var id="modulediv";
-com.weberon.DynamicCC.loadCC(s, component, c1, id);
-
+//com.weberon.DynamicCC.loadCC(s, component, c1, id);
+com.weberon.DynamicCC.loadCCinTab(s,component,c1,id,"Configure");
 println("OnLCick of Configure");
-println(getComponent('container'));}]]></xp:this.action>
+}]]></xp:this.action>
 		</xp:eventHandler>
 	</xp:link>
+	
+	<xp:link escape="true" text="SetUp" id="link3">
+		<xp:eventHandler event="onmouseover" submit="false">
+			<xp:this.script><![CDATA[XSP.openMenu(thisEvent,#{javascript:getComponent('popupsetup').getMenuCtor()})]]></xp:this.script>
+		</xp:eventHandler></xp:link>
 	<xp:panel id="ref"></xp:panel>
 	<xe:popupMenu id="popuplogin">
 	<xp:eventHandler id="eventHandler11" event="onItemClick"
@@ -184,5 +182,64 @@ if (userName == "anonymous") {
 	
 
 	
-</xp:view>
+	<xe:popupMenu id="popupsetup">
+		<xe:this.treeNodes>
+			<xe:basicLeafNode submitValue="configure"
+				label="Configure">
+			</xe:basicLeafNode>
+			<xe:basicLeafNode submitValue="profile"
+				label="Create Profile">
+			</xe:basicLeafNode>
+			<xe:basicLeafNode submitValue="datasharing"
+				label="Create DataSharing Rules">
+			</xe:basicLeafNode>
+		</xe:this.treeNodes>
+		
+		
+		<xp:eventHandler event="onItemClick" submit="true" refreshMode="partial">
+				<xp:this.action>
+					<xp:executeScript>
+						<xp:this.script><![CDATA[#{javascript:
+
+var choice=context.getSubmittedValue()
+if(choice=="configure"){
+println("OnClick if Configure");
+
+var component = getComponent('MainTabContainer'); 
+var s = facesContext;
+var c1="/ccDefineEntities.xsp"; 
+var id="modulediv";
+//com.weberon.DynamicCC.loadCC(s, component, c1, id);
+com.weberon.DynamicCC.loadCCinTab(s,component,c1,id,"Configure");
+println("OnLCick of Configure");
+
+}else if(choice=="profile"){
+println("OnClick if Create Profile");
+
+var component = getComponent('MainTabContainer'); 
+var s = facesContext;
+var c1="/modulePermission.xsp"; 
+var id="modulePermdiv";
+//com.weberon.DynamicCC.loadCC(s, component, c1, id);
+com.weberon.DynamicCC.loadCCinTab(s,component,c1,id,"Profile");
+
+}else if(choice=="datasharing"){
+println("OnClick if DataSharing");
+
+var component = getComponent('MainTabContainer'); 
+var s = facesContext;
+var c1="/ccDataSharing.xsp"; 
+var id="DataSharingdiv";
+//com.weberon.DynamicCC.loadCC(s, component, c1, id);
+com.weberon.DynamicCC.loadCCinTab(s,component,c1,id,"Data_Sharing");
+
+}
+
+}]]></xp:this.script>
+					</xp:executeScript>
+				</xp:this.action></xp:eventHandler>
+		
+		
+		
+	</xe:popupMenu></xp:view>
 

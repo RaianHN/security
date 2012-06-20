@@ -13,11 +13,20 @@ public class Entity{
 	private String delete;
 	private ArrayList<Field> fields;
 	private ArrayList<Feature> features;
+	private String accessType;
 	//Added for fields and features perms
 	//private ArrayList<FieldPerm> fieldPerm;
 	//private ArrayList<FeaturePerm> featurePerm;
 	
 	
+	public String getAccessType() {
+		return accessType;
+	}
+
+	public void setAccessType(String accessType) {
+		this.accessType = accessType;
+	}
+
 	public String getCreate() {
 		return create;
 	}

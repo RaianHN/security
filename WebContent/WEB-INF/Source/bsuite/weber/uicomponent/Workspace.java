@@ -389,13 +389,13 @@ public class Workspace extends BsuiteWorkFlow implements Serializable{
 		System.out.println("create ActionBar");
 		UIPanelEx actionpanel = new UIPanelEx();
 		//XspTable utable = new XspTable();
-		actionpanel.setId( "actionTable"+entityName );
+		actionpanel.setId( "actionTable"+moduleName+entityName );
 		UIPanelEx actionpanel2 = new UIPanelEx();		
 		actionpanel2.setId( "cEntityPanel"+entityName );
 		
 		//Create Button
 		if(c==1){
-		String expression3="#{javascript:sessionScope.documentId=\"\";viewScope.moduleName=\""+moduleName+"\";loadCreateEntity(\""+moduleName+","+entityName+"\");}";	
+		String expression3="#{javascript:sessionScope.documentId=\"\";viewScope.moduleName=\""+moduleName+"\";viewScope.entityName=\""+entityName+"\";loadCreateEntity(\""+moduleName+"\",\""+entityName+"\");}";	
 		XspCommandButton button3 =  CompUtil.createButton("Create","button3" );
 		XspEventHandler ev3= CompUtil.createEventHandler("onclick", "complete", expression3, true,null);
 		button3.getChildren().add(ev3);
@@ -411,7 +411,7 @@ public class Workspace extends BsuiteWorkFlow implements Serializable{
 		}
 		
 		System.out.println("view--1");
-		com.weberon.DynamicCC.loadCC(context, actionpanel, "/testcontrol.xsp", "ccReadEntities"+entityName);
+		//com.weberon.DynamicCC.loadCC(context, actionpanel, "/testcontrol.xsp", "ccReadEntities"+entityName);
 		System.out.println("view--2");
 		
 	
@@ -523,15 +523,15 @@ public class Workspace extends BsuiteWorkFlow implements Serializable{
 
 	public ViewEntryCollection getGetmydocs() {
 		System.out.println("Inside getMyDocs");
-		Map viewscope = (Map) JSFUtil.getVariableValue("ViewScope");
+		Map viewscope = (Map) JSFUtil.getVariableValue("viewScope");
 		System.out.println("Inside getMyDocs 1");
-		//String moduleName=(String)viewscope.get("moduleName");
-		//String entityName=(String)viewscope.get("entityName");	
+		String moduleName=(String)viewscope.get("moduleName");
+		String entityName=(String)viewscope.get("entityName");	
 		//viewscope.put("Fields", "Form,CreatedBy");
 
 		//System.out.println("Viewscope value fields "+viewscope.get("Fields"));
-		String moduleName="Employees";
-		String entityName="Employee";
+		//String moduleName="Employees";
+		//String entityName="Employee";
 		System.out.println("Inside getMyDocs 23"); 
 		System.out.println("Inside getMyDocs ModuleName "+moduleName);
 		//get the module name and treat it as database name
@@ -542,12 +542,21 @@ public class Workspace extends BsuiteWorkFlow implements Serializable{
 		System.out.println("Inside getMyDocs 256"); 
 		try {
 			Database db = session.getDatabase("", bsuitepath+dbname);
-			View allView = db.getView(viewName);								
-			System.out.println("Inside getMyDocs 2357"); 
-			//to get the query string from the security.searchString		
-			//String querystr= (String)JSFUtil.getBindingValue("#{security.searchString}");			
-			//String querystr="FIELD Salary=89";
-			//allView.FTSearch(querystr);
+			System.out.println("db Name "+db.getFileName());
+			View allView = db.getView(viewName);			
+			System.out.println("View Name "+allView.getName());
+			
+			//check the AccessType for the given EntityName
+			Profile profile = (Profile) JSFUtil.getBindingValue("#{security.profile}");
+			String eaccess=profile.getEntityAccessType(moduleName, entityName);
+			System.out.println("Entity AccessType "+eaccess);
+			if(eaccess.equals("1")){//private
+				//to get the query string from the security.searchString		
+				String querystr= (String)JSFUtil.getBindingValue("#{role.searchString}");			
+				System.out.println("Query String "+querystr);
+				allView.FTSearch(querystr);
+			}	
+						
 			System.out.println("Doc Count "+allView.getAllEntries().getCount());
 			return allView.getAllEntries();		
 		} catch (Exception e) {

@@ -18,11 +18,11 @@ public class CreateTabTable {
 		
 		  UIDojoTabContainer tabcon = new UIDojoTabContainer();
 		  tabcon.setStyle("height:682px;width:100%;");
-		  tabcon.setId("uiDojoTabContainer1");		  	    
+		  tabcon.setId("MainTabContainer");		  	    
 		  
 		  UIDojoTabPane pane1 = new UIDojoTabPane();
          pane1.setTitle("HOME");
-          pane1.setId("djTabPane1");
+           pane1.setId("Home");
            
           if(homePanel){
         	  tabcon.getChildren().add(pane1);    //Add home panel if required 

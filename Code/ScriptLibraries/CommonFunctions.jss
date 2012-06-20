@@ -483,3 +483,15 @@ function loadReadEntity(){
 	com.weberon.DynamicCC.loadCC(s, component, c1, id);	
 	
 }
+function loadCreateEntity(moduleName,entityName){
+	var component = getComponent('actionTable'+moduleName+entityName); 
+	var s = facesContext;
+	var c1="/cc_entityForm.xsp"; 
+	var id="entityPanel";
+	sessionScope.employeeRegister = viewScope.entityName;
+	viewScope.moduleName = moduleName;
+	viewScope.entityName = entityName;
+	println("viewsco"+viewScope.entityName);
+	println("modulename"+moduleName);
+	com.weberon.DynamicCC.loadCC(s, component, c1, id);	
+}

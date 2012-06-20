@@ -117,6 +117,13 @@ public class Profile extends BsuiteWorkFlow {
 			return false;
 		}
 	}
+	
+	
+	public String getEntityAccessType(String moduleName, String entityName) {
+		String accessType=getEntity(moduleName,entityName).getAccessType();
+		return accessType;
+		
+	}
 
 	private Module getModule(String moduleName){
 		System.out.println("--------44");

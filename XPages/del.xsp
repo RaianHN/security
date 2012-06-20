@@ -13,4 +13,5 @@ var id="modulediv";
 com.weberon.DynamicCC.loadCC(s, component, c1, id);
 
 }]]></xp:this.action>
-		</xp:eventHandler></xp:button></xp:view>
+		</xp:eventHandler></xp:button>
+	<xp:panel id="div1"></xp:panel></xp:view>

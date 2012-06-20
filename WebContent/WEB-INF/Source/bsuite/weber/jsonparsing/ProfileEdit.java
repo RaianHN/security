@@ -195,7 +195,7 @@ public void setEntityViewScopeCrud(ProfileJson profile,String moduleName){
 		
 	}
 	for(Entity e:module.getEntities()){			
-		entitySecurity.add(e.getEntityName()+":"+e.getCreate()+e.getRead()+e.getUpdate()+e.getDelete());
+		entitySecurity.add(e.getEntityName()+":"+e.getCreate()+e.getRead()+e.getUpdate()+e.getDelete()+e.getAccessType());
 	}
 	System.out.println("vect entity perm"+entitySecurity);
 	viewScope.put("entityPerm", entitySecurity);

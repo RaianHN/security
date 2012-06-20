@@ -3,9 +3,40 @@
 
 	
 	
+	<xp:this.beforePageLoad><![CDATA[#{javascript:println("Bfore pageload creating new doclis array");
+var doclist=new java.util.ArrayList();
+sessionScope.put("doclist",doclist);}]]></xp:this.beforePageLoad>
 	<xp:table>
 	<xp:tr>
-	<xp:td>
+	<xp:td><xp:button value="Delete" id="button2" style="background-color:rgb(192,192,192)">
+				<xp:eventHandler event="onclick" submit="true" refreshMode="partial" refreshId="EntityRepeat">
+					<xp:this.action><![CDATA[#{javascript:/*println("Onclick of Delete");
+var serv=@Subset(@DbName(),1);
+var dbpath=@LeftBack(@Subset(@DbName(),-1),"/")
+var custdb=dbpath+"\\"+"employees.nsf";
+var dbname = new Array(serv,custdb);
+var db: NotesDatabase = session.getDatabase(serv, custdb);
+var docids=getComponent("viewPanel1").getSelectedIds();*/
+println("Onclick of Delete");
+var list=sessionScope.doclist;
+println("Documents to be deleted ",list);
+for(unid in list)
+{
+//var doc:NotesDocument=db.getDocumentByID(id);
+//var unid=doc.getUniversalID();
+println("Selected Unids",unid);
+sessionScope.put("documentId",unid);
+pageaction['delete'].execute("employee");
+}
+//sessionScope.put("doclist","");
+
+wrkspc.resetBean();
+
+
+
+
+}]]></xp:this.action>
+				</xp:eventHandler></xp:button>
 		<xp:panel id="actions" binding="#{wrkspc.features}"></xp:panel></xp:td>
 	
 	</xp:tr>
@@ -61,7 +92,37 @@ entryValue=entry.getItemValue(colName);
 	entryValue[0].toString();
 //}
 //}}]]></xp:this.value>
-						</xp:text>
+						</xp:text><xp:checkBox id="checkBox1"><xp:this.rendered><![CDATA[#{javascript:if ("0"==colIndex){
+return true;
+}else{
+return false;
+}}]]></xp:this.rendered>
+							
+							<xp:eventHandler event="onclick" submit="true" refreshMode="norefresh">
+								<xp:this.action><![CDATA[#{javascript:
+var val=getComponent("checkBox1").getValue();
+println("Checkbox value ",val);
+var docid=view1col.getDocument().getUniversalID();
+var myArray:java.util.ArrayList=sessionScope.get("doclist");
+
+if(val=="true")
+{
+	if(!myArray.contains(docid))
+	{
+	println("adding to the list");
+	myArray.add(docid);
+	}
+}
+else if(val=="false")
+{
+	//var docid=view1col.getDocument().getUniversalID();
+	//var myArray=sessionScope.get("doclist");
+	println("Removing from the list");
+	myArray.remove(docid);
+	
+}
+}]]></xp:this.action>
+							</xp:eventHandler></xp:checkBox>
 						<xp:link escape="true" id="link1">
 							<xp:this.text><![CDATA[#{javascript:entry=view1col.getDocument();
 //readEditMode=compositeData.defaultMode;
