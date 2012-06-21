@@ -421,7 +421,7 @@ public class Workspace extends BsuiteWorkFlow implements Serializable{
 		}
 		System.out.println("view--2");
 		
-	
+		createFeatureButtons(actionpanel,moduleName,entityName);
 		comp.getChildren().add( actionpanel );
 	
 	}
