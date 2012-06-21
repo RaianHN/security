@@ -19,12 +19,12 @@
 							<xp:eventHandler event="onclick" submit="true" refreshMode="partial" refreshId="ConfigureDiv">
 								<xp:this.action><![CDATA[#{javascript:var component = getComponent('loadCC');
 if(component.getChildren!=null){
-com.weberon.DynamicCC.removePreview(component);
+bsuite.weber.loadcc.DynamicCC.removePreview(component);
  }
 var s = facesContext;
 var c1="/ccAddModules.xsp"; 
 var id="modulediv";
-com.weberon.DynamicCC.loadCC(s, component, c1, id);
+bsuite.weber.loadcc.DynamicCC.loadCC(s, component, c1, id);
 }]]></xp:this.action>
 							</xp:eventHandler>
 						</xp:button></xp:td>
@@ -35,12 +35,12 @@ com.weberon.DynamicCC.loadCC(s, component, c1, id);
 							<xp:eventHandler event="onclick" submit="true" refreshMode="partial" refreshId="ConfigureDiv">
 								<xp:this.action><![CDATA[#{javascript:var component = getComponent('loadCC'); 
 if(component.getChildren!=null){
-com.weberon.DynamicCC.removePreview(component);
+bsuite.weber.loadcc.DynamicCC.removePreview(component);
 }
 var s = facesContext;
 var c1="/ccAddEntity.xsp"; 
 var id="entitydiv";
-com.weberon.DynamicCC.loadCC(s, component, c1, id);
+bsuite.weber.loadcc.DynamicCC.loadCC(s, component, c1, id);
 }]]></xp:this.action>
 							</xp:eventHandler>
 						</xp:button></xp:td>
@@ -51,12 +51,12 @@ com.weberon.DynamicCC.loadCC(s, component, c1, id);
 							<xp:eventHandler event="onclick" submit="true" refreshMode="partial" refreshId="ConfigureDiv">
 								<xp:this.action><![CDATA[#{javascript:var component = getComponent('loadCC'); 
 if(component.getChildren!=null){
-com.weberon.DynamicCC.removePreview(component);
+bsuite.weber.loadcc.DynamicCC.removePreview(component);
 }
 var s = facesContext;
 var c1="/ccAddRole.xsp"; 
 var id="Rolediv";
-com.weberon.DynamicCC.loadCC(s, component, c1, id);
+bsuite.weber.loadcc.DynamicCC.loadCC(s, component, c1, id);
 }]]></xp:this.action>
 							</xp:eventHandler>
 						</xp:button></xp:td>

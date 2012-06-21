@@ -16,35 +16,25 @@ viewScope.profileNames = profileNames;}]]></xp:this.beforePageLoad>
 			<xp:td><xp:table id="table1">
 		<xp:tr>
 			<xp:td><xp:span style="font-weight:bold">Profile:&#160;</xp:span><xp:br></xp:br>
-				<xp:comboBox id="comboBox1">
-				<xp:selectItem itemLabel="--Select Profile--"></xp:selectItem>
+				<xp:comboBox id="moduleCombo"
+					binding="#{javascript:viewScope.selProfile1}">
+					<xp:selectItem itemLabel="--Select Profile--"></xp:selectItem>
 					<xp:selectItems>
 						<xp:this.value><![CDATA[#{javascript:viewScope.profileNames}]]></xp:this.value>
 					</xp:selectItems>
 					<xp:eventHandler event="onchange" submit="true"
 						refreshMode="complete">
 						<xp:this.action><![CDATA[#{javascript:viewScope.modulePermission = null;
-var profName = getComponent("comboBox1").getValue();
+var profName = getComponent("moduleCombo").getValue();
 var moduleVisib = new bsuite.weber.jsonparsing.ProfileEdit();
 
 moduleVisib.getModulePermission(profName);
 }]]></xp:this.action>
-					</xp:eventHandler></xp:comboBox></xp:td>
+					</xp:eventHandler>
+				</xp:comboBox></xp:td>
 			<xp:td>
 				<xp:br></xp:br>
-				<xp:comboBox id="comboBox7">
-				<xp:selectItem itemLabel="--Select Profile--"></xp:selectItem>
-					<xp:selectItems>
-						<xp:this.value><![CDATA[#{javascript:viewScope.profileNames}]]></xp:this.value>
-					</xp:selectItems>
-					<xp:eventHandler event="onchange" submit="true"
-						refreshMode="complete">
-						<xp:this.action><![CDATA[#{javascript:var profName = getComponent("comboBox7").getValue();
-var moduleVisib = new bsuite.weber.jsonparsing.ProfileEdit();
-
-moduleVisib.getModulePermission(profName);
-}]]></xp:this.action>
-					</xp:eventHandler></xp:comboBox></xp:td>
+				</xp:td>
 			<xp:td>
 				</xp:td>
 		</xp:tr>
@@ -133,14 +123,16 @@ XSP.executeOnServer('view:_id1:eventModulePerm', "", "", result);]]></xp:this.sc
 		<xp:tr>
 			<xp:td><xp:span style="font-weight:bold">Profile:&#160;</xp:span>
 				<xp:br></xp:br>
-				<xp:comboBox id="comboBox2" binding="#{javascript:viewScope.profNam2}">
+				<xp:comboBox id="entityCombo1"
+					binding="#{javascript:viewScope.profNam2}">
 					<xp:selectItem itemLabel="--Select Profile--"></xp:selectItem>
 					<xp:selectItems>
 						<xp:this.value><![CDATA[#{javascript:viewScope.profileNames}]]></xp:this.value>
 					</xp:selectItems>
 				</xp:comboBox></xp:td>
 			<xp:td><xp:span style="font-weight:bold">Module:</xp:span><xp:br></xp:br>
-				<xp:comboBox id="comboBox3" binding="#{javascript:viewScope.moduleNam2}">
+				<xp:comboBox id="entityCombo2"
+					binding="#{javascript:viewScope.moduleNam2}">
 					<xp:selectItem itemLabel="--Select Module--"></xp:selectItem>
 					<xp:selectItems>
 						<xp:this.value><![CDATA[#{javascript:var profName = "Admin";
@@ -150,12 +142,14 @@ return profile.getModuleNames(profName);
 }
 }]]></xp:this.value>
 					</xp:selectItems>
-					<xp:eventHandler event="onchange" submit="true" refreshMode="partial" refreshId="table2">
-						<xp:this.action><![CDATA[#{javascript:viewScope.selProfile = getComponent("comboBox2").getValue();
-viewScope.selModule = getComponent("comboBox3").getValue();
+					<xp:eventHandler event="onchange" submit="true"
+						refreshMode="partial" refreshId="table2">
+						<xp:this.action><![CDATA[#{javascript:viewScope.selProfile = getComponent("entityCombo1").getValue();
+viewScope.selModule = getComponent("entityCombo2").getValue();
 var moduleVisib = new bsuite.weber.jsonparsing.ProfileEdit();
 moduleVisib.getEntityPermission(viewScope.selProfile,viewScope.selModule);}]]></xp:this.action>
-					</xp:eventHandler></xp:comboBox></xp:td>
+					</xp:eventHandler>
+				</xp:comboBox></xp:td>
 			<xp:td>
 				<xp:br></xp:br>
 				</xp:td>
@@ -305,19 +299,22 @@ XSP.executeOnServer('view:_id1:eventEntityPerm', "", "", result);]]></xp:this.sc
 			<xp:td>
 				<xp:span style="font-weight:bold">Profile:&#160;</xp:span>
 				<xp:br></xp:br>
-				<xp:comboBox id="comboBox4" binding="#{javascript:viewScope.profNam3}">
+				<xp:comboBox id="fieldCombo1"
+					binding="#{javascript:viewScope.profNam3}">
 					<xp:selectItem itemLabel="--Select Profile--"></xp:selectItem>
 					<xp:selectItems>
 						<xp:this.value><![CDATA[#{javascript:viewScope.profileNames}]]></xp:this.value>
 					</xp:selectItems>
-					<xp:eventHandler event="onchange" submit="true" refreshMode="partial" refreshId="comboBox5">
+					<xp:eventHandler event="onchange" submit="true"
+						refreshMode="partial" refreshId="fieldCombo2">
 					</xp:eventHandler>
 				</xp:comboBox>
 			</xp:td>
 			<xp:td>
 				<xp:span style="font-weight:bold">Module:</xp:span>
 				<xp:br></xp:br>
-				<xp:comboBox id="comboBox5" binding="#{javascript:viewScope.modulNam3}">
+				<xp:comboBox id="fieldCombo2"
+					binding="#{javascript:viewScope.modulNam3}">
 					<xp:selectItem itemLabel="--Select Module--"></xp:selectItem>
 					<xp:selectItems>
 						<xp:this.value><![CDATA[#{javascript:var profName = "Admin";
@@ -326,21 +323,23 @@ if(profName!=null){
 return profile.getModuleNames(profName);
 }}]]></xp:this.value>
 					</xp:selectItems>
-					<xp:eventHandler event="onchange" submit="true" refreshMode="partial" refreshId="table3">
-						<xp:this.action><![CDATA[#{javascript:var profName = getComponent("comboBox4").getValue();
-var moduleName = getComponent("comboBox5").getValue();
+					<xp:eventHandler event="onchange" submit="true"
+						refreshMode="partial" refreshId="table3">
+						<xp:this.action><![CDATA[#{javascript:var profName = getComponent("fieldCombo1").getValue();
+var moduleName = getComponent("fieldCombo2").getValue();
 var profile = new bsuite.weber.jsonparsing.ProfileEdit();
 if(profName!=null&&moduleName!=null){
 viewScope.entityNamesL = profile.getEntityNames(profName,moduleName);
 }}]]></xp:this.action>
 					</xp:eventHandler>
-					
+
 				</xp:comboBox>
 			</xp:td>
 			<xp:td>
 				<xp:span style="font-weight:bold">Entity:</xp:span>
 				<xp:br></xp:br>
-				<xp:comboBox id="comboBox6" binding="#{javascript:viewScope.entityNam3}">
+				<xp:comboBox id="fieldCombo3"
+					binding="#{javascript:viewScope.entityNam3}">
 					<xp:selectItem itemLabel="--Select Entity--"></xp:selectItem>
 					<xp:selectItems>
 						<xp:this.value><![CDATA[#{javascript:var values:java.util.Vector = viewScope.entityNamesL;
@@ -349,14 +348,16 @@ if(values!=null){
 return values;
 }}]]></xp:this.value>
 					</xp:selectItems>
-					<xp:eventHandler event="onchange" submit="true" refreshMode="partial" refreshId="table3">
-						<xp:this.action><![CDATA[#{javascript:viewScope.selProfile = getComponent("comboBox4").getValue();
-viewScope.selModule = getComponent("comboBox5").getValue();
-viewScope.selEntity = getComponent("comboBox6").getValue();
+					<xp:eventHandler event="onchange" submit="true"
+						refreshMode="partial" refreshId="table3">
+						<xp:this.action><![CDATA[#{javascript:viewScope.selProfile = getComponent("fieldCombo1").getValue();
+viewScope.selModule = getComponent("fieldCombo2").getValue();
+viewScope.selEntity = getComponent("fieldCombo3").getValue();
 var moduleVisib = new bsuite.weber.jsonparsing.ProfileEdit();
 moduleVisib.getFieldPermission(viewScope.selProfile,viewScope.selModule,viewScope.selEntity);
 }]]></xp:this.action>
-					</xp:eventHandler></xp:comboBox>
+					</xp:eventHandler>
+				</xp:comboBox>
 			</xp:td>
 			<xp:td>
 				
@@ -471,19 +472,22 @@ XSP.executeOnServer('view:_id1:eventFieldPerm', "", "", result);]]></xp:this.scr
 			<xp:td>
 				<xp:span style="font-weight:bold">Profile:&#160;</xp:span>
 				<xp:br></xp:br>
-				<xp:comboBox id="comboBox8" binding="#{javascript:viewScope.profNam3}">
+				<xp:comboBox id="featureCombo1"
+					binding="#{javascript:viewScope.profNam4}">
 					<xp:selectItem itemLabel="--Select Profile--"></xp:selectItem>
 					<xp:selectItems>
 						<xp:this.value><![CDATA[#{javascript:viewScope.profileNames}]]></xp:this.value>
 					</xp:selectItems>
-					<xp:eventHandler event="onchange" submit="true" refreshMode="partial" refreshId="comboBox5">
+					<xp:eventHandler event="onchange" submit="true"
+						refreshMode="partial" refreshId="featureCombo2">
 					</xp:eventHandler>
 				</xp:comboBox>
 			</xp:td>
 			<xp:td>
 				<xp:span style="font-weight:bold">Module:</xp:span>
 				<xp:br></xp:br>
-				<xp:comboBox id="comboBox9" binding="#{javascript:viewScope.modulNam3}">
+				<xp:comboBox id="featureCombo2"
+					binding="#{javascript:viewScope.modulNam4}">
 					<xp:selectItem itemLabel="--Select Module--"></xp:selectItem>
 					<xp:selectItems>
 						<xp:this.value><![CDATA[#{javascript:var profName = "Admin";
@@ -494,8 +498,8 @@ return profile.getModuleNames(profName);
 					</xp:selectItems>
 					<xp:eventHandler event="onchange" submit="true"
 						refreshMode="partial" refreshId="table4">
-						<xp:this.action><![CDATA[#{javascript:var profName = getComponent("comboBox8").getValue();
-var moduleName = getComponent("comboBox9").getValue();
+						<xp:this.action><![CDATA[#{javascript:var profName = getComponent("featureCombo1").getValue();
+var moduleName = getComponent("featureCombo2").getValue();
 var profile = new bsuite.weber.jsonparsing.ProfileEdit();
 if(profName!=null&&moduleName!=null){
 viewScope.entityNamesL2 = profile.getEntityNames(profName,moduleName);
@@ -506,7 +510,8 @@ viewScope.entityNamesL2 = profile.getEntityNames(profName,moduleName);
 			</xp:td>
 			<xp:td><xp:span style="font-weight:bold">Entity:</xp:span>
 				<xp:br></xp:br>
-				<xp:comboBox id="comboBox10" binding="#{javascript:viewScope.entityNam3}">
+				<xp:comboBox id="featureCombo3"
+					binding="#{javascript:viewScope.entityNam4}">
 					<xp:selectItem itemLabel="--Select Entity--"></xp:selectItem>
 					<xp:selectItems>
 						<xp:this.value><![CDATA[#{javascript:var values:java.util.Vector = viewScope.entityNamesL2;
@@ -517,9 +522,9 @@ return values;
 					</xp:selectItems>
 					<xp:eventHandler event="onchange" submit="true"
 						refreshMode="partial" refreshId="table4">
-						<xp:this.action><![CDATA[#{javascript:var profileName = getComponent("comboBox8").getValue();
-var moduleName = getComponent("comboBox9").getValue();
-var entityName = getComponent("comboBox10").getValue();
+						<xp:this.action><![CDATA[#{javascript:var profileName = getComponent("featureCombo1").getValue();
+var moduleName = getComponent("featureCombo2").getValue();
+var entityName = getComponent("featureCombo3").getValue();
 var moduleVisib = new bsuite.weber.jsonparsing.ProfileEdit();
 
 viewScope.selfProfile = profileName;
@@ -530,7 +535,8 @@ moduleVisib.getFeaturePermission(profileName,moduleName,entityName);
 
 
 }]]></xp:this.action>
-					</xp:eventHandler></xp:comboBox>
+					</xp:eventHandler>
+				</xp:comboBox>
 			</xp:td>
 			<xp:td>
 				

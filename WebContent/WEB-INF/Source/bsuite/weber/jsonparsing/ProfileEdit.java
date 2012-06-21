@@ -133,9 +133,13 @@ public ProfileJson getJsonProfileObj(String jsonString){
 
 
 public void saveModulePerm(String profileName,String vals){
-	
+	System.out.println("moduleperm1");
+	System.out.println("moduleperm11"+vals);
 	String[] arr = vals.split(",");
+	System.out.println("moduleperm20");
 	Document profDoc = getProfileDoc(getSecurityDatabase(),profileName);
+	System.out.println("moduleperm2");
+	
 	String jsonString="";
 	try {
 		jsonString = profDoc.getItemValueString("JsonString");
@@ -143,13 +147,18 @@ public void saveModulePerm(String profileName,String vals){
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
+	System.out.println("moduleperm3");
+
 	ProfileJson profile = getJsonProfileObj(jsonString);
-	
+	System.out.println("moduleperm4");
+
 	String[] moduleSecurity; 
 	
 	
 	String mSec="";
 	for(int i=1;i<arr.length;i++){
+		System.out.println("moduleperm5");
+
 		mSec = arr[i];
 		moduleSecurity = mSec.split(":");
 		System.out.println("ftrsecurity "+moduleSecurity);
@@ -161,7 +170,8 @@ public void saveModulePerm(String profileName,String vals){
 			}
 		}
 	}
-	
+	System.out.println("moduleperm6");
+
 	ObjectMapper mapper = new ObjectMapper();  
 	String jsonString2 = "";
 	try {
@@ -173,7 +183,8 @@ public void saveModulePerm(String profileName,String vals){
 	} catch (IOException e) {
 		e.printStackTrace();
 	}
-	
+	System.out.println("moduleperm7");
+
 	try {
 		profDoc.replaceItemValue("JsonString",jsonString2 );
 		profDoc.save();

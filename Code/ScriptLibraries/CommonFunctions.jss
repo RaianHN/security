@@ -425,6 +425,8 @@ function createProfileResponse(entityName){
 	}
 }
 function setModulePermission(profileName){
+	var profileName = getComponent("moduleCombo").getValue();
+	println("profileName"+profileName);
 	var arr = context.getSubmittedValue().split(",");
 	var entityCrud = new bsuite.weber.jsonparsing.ProfileEdit;
 	println("setting field permission"+typeof(arr)+"submitted type"+typeof(context.getSubmittedValue()));
@@ -433,6 +435,10 @@ function setModulePermission(profileName){
 }
 
 function setEntityPermission(profileName,moduleName){
+	var profileName = getComponent("entityCombo1").getValue();
+	var moduleName = getComponent("entityCombo2").getValue();
+	println("profileName"+profileName);
+	println("moduleName"+moduleName);
 	var arr = context.getSubmittedValue().split(",");
 	var entityCrud = new bsuite.weber.jsonparsing.ProfileEdit;
 	println("setting field permission"+typeof(arr)+"submitted type"+typeof(context.getSubmittedValue()));
@@ -440,6 +446,12 @@ function setEntityPermission(profileName,moduleName){
 	entityCrud.saveEntityPerm(profileName,moduleName,context.getSubmittedValue());
 }
 function setFieldPermission(profileName,moduleName,entityName){
+	var profileName = getComponent("fieldCombo1").getValue();
+	var moduleName = getComponent("fieldCombo2").getValue();
+	var entityName = getComponent("fieldCombo3").getValue();
+	println("profileName"+profileName);
+	println("moduleName"+moduleName);
+	println("entityName"+entityName);
 	var arr = context.getSubmittedValue().split(",");
 	var fieldCrud = new bsuite.weber.jsonparsing.ProfileEdit;
 	println("setting field permission"+typeof(arr)+"submitted type"+typeof(context.getSubmittedValue()));
@@ -448,6 +460,13 @@ function setFieldPermission(profileName,moduleName,entityName){
 }
 
 function setFeaturePermission(profileName,moduleName,entityName){
+	var profileName = getComponent("featureCombo1").getValue();
+	var moduleName = getComponent("featureCombo2").getValue();
+	var entityName = getComponent("featureCombo3").getValue();
+	
+	println("profileName"+profileName);
+	println("moduleName"+moduleName);
+	println("entityName"+entityName);
 	var arr = context.getSubmittedValue().split(",");
 	var featureCrud = new bsuite.weber.jsonparsing.ProfileEdit;
 	println("setting feature permission"+typeof(arr)+"submitted type"+typeof(context.getSubmittedValue()));

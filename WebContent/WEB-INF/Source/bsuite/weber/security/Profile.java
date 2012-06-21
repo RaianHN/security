@@ -333,6 +333,16 @@ public class Profile extends BsuiteWorkFlow {
 		if(entities==null){
 			return null;
 		}
+		for(Entity entity:entities){
+			System.out.println("--------421"+entity.getEntityName());
+			if(entity!=null){
+				
+					aEntities.add(entity.getEntityName());
+			
+			}
+			
+		}
+		
 	
 		System.out.println("r enti"+aEntities);
 		return aEntities;

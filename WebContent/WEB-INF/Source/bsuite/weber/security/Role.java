@@ -1,6 +1,7 @@
 package bsuite.weber.security;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Vector;
 
 import lotus.domino.Database;
@@ -36,9 +37,12 @@ public class Role extends BsuiteWorkFlow {
 	}
 
 	public String createSearchString(){		
-		viewScope.put("entityName", "Activity");
+		//viewScope.put("entityName", "Activity");
+		Map viewScope=(Map) JSFUtil.getVariableValue("viewScope");	
+		String moduleName=(String)viewScope.get("moduleName");
+		String entityName=(String)viewScope.get("entityName");
 		this.hierarchyRoleList= getFinalRoleList(roleName);//to get the child roles of the given role
-		this.dataSharedRoles=getRolesFromDataSharingRules((String)viewScope.get("entityName"),roleName);//pass current entity the uesr is accessing and roleName
+		this.dataSharedRoles=getRolesFromDataSharingRules(moduleName,entityName,roleName);//pass current entity the uesr is accessing and roleName
 		this.effectiveUsersList=getFinalUserList(roleName);
 		System.out.println("Hierarchical Roles String"+hierarchyRoleList);
 		System.out.println("Data Shared String"+dataSharedRoles);
@@ -101,7 +105,7 @@ public class Role extends BsuiteWorkFlow {
 		return hierarchyRoleList;
 	}
 		
-	public Vector getRolesFromDataSharingRules(String entityName,String roleName){
+	public Vector getRolesFromDataSharingRules(String moduleName,String entityName,String roleName){
 		System.out.println("inside DataSharing function");
 		System.out.println("RoleName "+roleName);
 		Vector roles = new Vector();
@@ -109,7 +113,7 @@ public class Role extends BsuiteWorkFlow {
 		try{
 			Database security = session.getDatabase("", bsuitepath+"Security.nsf");
 			View datasharingView = security.getView("DataSharingView");
-			String key=entityName+"+"+roleName;
+			String key=moduleName+"+"+entityName+"+"+roleName;
 			System.out.println("key "+key);
 			DocumentCollection dc=datasharingView.getAllDocumentsByKey(key);
 			//Vector<String> res=JSFUtil.DBLookupVector("Security","DataSharingView",rolename,1);

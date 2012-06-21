@@ -68,7 +68,7 @@ var features:java.util.Vector = getComponent("inputTextarea2").getValue();
 
 defModule.addEntity(moduleName,entityName, fields,features);
 var component = getComponent('loadCC'); 
-com.weberon.DynamicCC.removePreview(component);
+bsuite.weber.loadcc.DynamicCC.removePreview(component);
 }]]></xp:this.action>
 					</xp:eventHandler></xp:button></xp:td>
 			

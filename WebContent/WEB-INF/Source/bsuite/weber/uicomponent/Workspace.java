@@ -103,8 +103,9 @@ public class Workspace extends BsuiteWorkFlow implements Serializable{
 			int c=0;//if the entity is creatable, editable, deletable, used when creating action bar
 			int r=0;
 			int d=0;
+			System.out.println("all entity names"+allEntities);
 			if(allEntities!=null){
-				for(String entityName:readableEntities){
+				for(String entityName:allEntities){
 					System.out.println("tab----3");
 					UIDojoTabPane paneE=(UIDojoTabPane)CreateTabTable.createTabPane(entityTabs,entityName);
 					System.out.println("tab----4");
@@ -133,6 +134,7 @@ public class Workspace extends BsuiteWorkFlow implements Serializable{
 							d=0;
 						}	
 					}
+					System.out.println("tab----6crd "+c+r+d);
 					createEntityActionBar(paneE,x,entityName,c, r,d);
 					
 					
