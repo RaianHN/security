@@ -2,16 +2,34 @@
 <xp:view xmlns:xp="http://www.ibm.com/xsp/core"
 	xmlns:xc="http://www.ibm.com/xsp/custom">
 
-	
+
+	<xp:this.resources>
+		<xp:script src="/CommonFunctions.jss" clientSide="false"></xp:script>
+	</xp:this.resources>
 	<xp:button value="Label" id="button1">
 		<xp:eventHandler event="onclick" submit="true"
 			refreshMode="complete">
-			<xp:this.action><![CDATA[#{javascript:var component = getComponent('div1'); 
+			<xp:this.action><![CDATA[#{javascript:var component = getComponent('div2'); 
 var s = facesContext;
-var c1="/testcontrol.xsp"; 
+var c1="/testcontrol.xsp";
 var id="modulediv";
 com.weberon.DynamicCC.loadCC(s, component, c1, id);
 
 }]]></xp:this.action>
-		</xp:eventHandler></xp:button>
-	<xp:panel id="div1"></xp:panel></xp:view>
+		</xp:eventHandler>
+	</xp:button>
+
+
+	<xp:button value="Label" id="button2">
+		<xp:eventHandler event="onclick" submit="true"
+			refreshMode="partial" refreshId="div2">
+		</xp:eventHandler>
+	</xp:button>
+	<xp:panel id="div2">
+		<xp:eventHandler event="onClientLoad" submit="true"
+			refreshMode="norefresh">
+
+			<xp:this.action><![CDATA[#{javascript:loadTestControl("div2","/testcontrol.xsp","modulediv")}]]></xp:this.action>
+		</xp:eventHandler>
+	</xp:panel>
+</xp:view>

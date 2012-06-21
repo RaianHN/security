@@ -1,13 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?><note class="filter" maintenanceversion="3.0" replicaid="65257A11003683CF" version="8.5" xmlns="http://www.lotus.com/dxl">
-<noteinfo noteid="1d42" sequence="1" unid="865E43F95248DACC65257A1700263BDA">
+<?xml version="1.0" encoding="UTF-8"?><note class="filter" maintenanceversion="3.0" replicaid="65257A1A004C4EAD" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="2c32" sequence="3" unid="865E43F95248DACC65257A1700263BDA">
 <created><datetime>20120608T122736,90+0530</datetime></created>
-<modified><datetime>20120608T122736,91+0530</datetime></modified>
-<revised><datetime>20120608T122736,90+0530</datetime></revised>
-<lastaccessed><datetime>20120608T122736,91+0530</datetime></lastaccessed>
-<addedtofile><datetime>20120608T122736,91+0530</datetime></addedtofile></noteinfo>
-<updatedby><name>CN=Tommy Valand/O=Compendia</name><name>CN=Tenzing Sangmo/O=Weberon</name></updatedby>
-<wassignedby><name>CN=Tenzing Sangmo/O=Weberon</name></wassignedby>
+<modified><datetime>20120616T132223,48+0530</datetime></modified>
+<revised><datetime>20120616T132223,47+0530</datetime></revised>
+<lastaccessed><datetime>20120616T132223,48+0530</datetime></lastaccessed>
+<addedtofile><datetime>20120616T132223,23+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
+<wassignedby><name>CN=Jaya K Prakash/O=Weberon</name></wassignedby>
 <item name="$TITLE" sign="true"><text>SortableSearchResults</text></item>
 <item name="$Flags"><text>.5834QP</text></item>
 <item name="$PublicAccess" sign="true"><text>1</text></item>
+<item name="$DesignerVersion"><text>8.5.3</text></item>
 </note>

@@ -403,7 +403,7 @@ public class Workspace extends BsuiteWorkFlow implements Serializable{
 		}
 		if(d==1){
 		//Delete Button
-		String expression4="#{javascript:deleteEntity()}";	
+		String expression4="#{javascript:}";	
 		XspCommandButton button4 =  CompUtil.createButton("Delete","button4" );
 		XspEventHandler ev4= CompUtil.createEventHandler("onclick", "complete", expression4, true,null);
 		button4.getChildren().add(ev4);
@@ -411,7 +411,12 @@ public class Workspace extends BsuiteWorkFlow implements Serializable{
 		}
 		
 		System.out.println("view--1");
-		//com.weberon.DynamicCC.loadCC(context, actionpanel, "/testcontrol.xsp", "ccReadEntities"+entityName);
+	if(entityName.equals("Employee")){
+			//"+actionpanel.getId()+"  com.weberon.DynamicCC.loadCC(context, actionpanel, "/testcontrol.xsp", "cctestControl"+entityName);
+			String expression = "#{javascript:loadTestControl(\""+actionpanel.getId()+"\",\"/cc_EntityView.xsp\",\"moduledivx"+moduleName+entityName+"\",\""+moduleName+"\",\""+entityName+"\")}";
+			XspEventHandler ev4= CompUtil.createEventHandler("onClientLoad", "norefresh", expression, true,null);
+			actionpanel.getChildren().add(ev4);
+		}
 		System.out.println("view--2");
 		
 	
@@ -547,15 +552,15 @@ public class Workspace extends BsuiteWorkFlow implements Serializable{
 			System.out.println("View Name "+allView.getName());
 			
 			//check the AccessType for the given EntityName
-			Profile profile = (Profile) JSFUtil.getBindingValue("#{security.profile}");
-			String eaccess=profile.getEntityAccessType(moduleName, entityName);
-			System.out.println("Entity AccessType "+eaccess);
-			if(eaccess.equals("1")){//private
+			//Profile profile = (Profile) JSFUtil.getBindingValue("#{security.profile}");
+			//String eaccess=profile.getEntityAccessType(moduleName, entityName);
+		//	System.out.println("Entity AccessType "+eaccess);
+			//if(eaccess.equals("1")){//private
 				//to get the query string from the security.searchString		
 				String querystr= (String)JSFUtil.getBindingValue("#{role.searchString}");			
 				System.out.println("Query String "+querystr);
 				allView.FTSearch(querystr);
-			}	
+		//	}	
 						
 			System.out.println("Doc Count "+allView.getAllEntries().getCount());
 			return allView.getAllEntries();		

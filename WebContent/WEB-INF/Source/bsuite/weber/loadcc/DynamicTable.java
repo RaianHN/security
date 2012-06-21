@@ -1,4 +1,4 @@
-package com.weberon;
+package bsuite.weber.loadcc;
 
 import java.util.StringTokenizer;
 import java.util.Vector;

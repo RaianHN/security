@@ -87,17 +87,18 @@ return true;
 		</xp:tr>
 		<xp:tr>
 			<xp:td><xp:button value="Save" id="button2" style="background-color:rgb(192,192,192);width:100.0px">
-					<xp:eventHandler event="onclick" submit="false" id="eventHandler1">
+					<xp:eventHandler event="onclick" submit="false"
+						id="eventHandler1">
 						<xp:this.script><![CDATA[var table = document.getElementById('#{id:table1}');
 
 var i = 0;
 var result = new Array();
-//alert("table rolws"+table.rows.length);
+alert("table rolws"+table.rows.length);
 for (i = 2; i < table.rows.length; i++) {
 
     var moduleName = table.rows[i].cells[0].firstChild.innerHTML;
     var checkvals1 = table.rows[i].cells[1].firstChild.firstChild.checked;//visibility
-    //alert("temp"+moduleName);
+   alert("temp"+moduleName);
     
     var temp;
     if (checkvals1 == true) {
@@ -107,12 +108,12 @@ for (i = 2; i < table.rows.length; i++) {
     }
      
     result[i]=temp;
-    //alert("temp"+temp);
+    alert("temp"+temp);
 }
-//alert("temp");
+alert("temp");
 XSP.executeOnServer('view:_id1:eventModulePerm', "", "", result);]]></xp:this.script>
 					</xp:eventHandler>
-				</xp:button></xp:td>
+</xp:button></xp:td>
 		</xp:tr>
 	</xp:table>
 	

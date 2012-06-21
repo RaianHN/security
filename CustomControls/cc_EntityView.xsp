@@ -9,7 +9,7 @@ sessionScope.put("doclist",doclist);}]]></xp:this.beforePageLoad>
 	<xp:table>
 	<xp:tr>
 	<xp:td><xp:button value="Delete" id="button2" style="background-color:rgb(192,192,192)">
-				<xp:eventHandler event="onclick" submit="true" refreshMode="partial" refreshId="EntityRepeat">
+				<xp:eventHandler event="onclick" submit="true" refreshMode="partial">
 					<xp:this.action><![CDATA[#{javascript:/*println("Onclick of Delete");
 var serv=@Subset(@DbName(),1);
 var dbpath=@LeftBack(@Subset(@DbName(),-1),"/")
@@ -143,6 +143,9 @@ return entryValue;
 								submit="true" refreshMode="complete">
 								<xp:this.action><![CDATA[#{javascript:var doc:NotesDocument=view1col.getDocument();
 var unid=doc.getUniversalID();
+if(sessionScope.documentId!=""){
+	sessionScope.remove("documentId");	
+}
 sessionScope.put("documentId",unid);
 var c= getComponent('readPanel');
 var Db:NotesDatabase = doc.getParentDatabase();
@@ -166,6 +169,7 @@ wrkspc.resetUI(c, facesContext,"/ccReadEntity.xsp");
 	</xp:panel></xp:td>
 			<xp:td valign="top">
 				<xp:panel id="readPanel"></xp:panel>
+				<xp:panel id = "editPanel"></xp:panel>
 			</xp:td>
 		</xp:tr>
 	</xp:table></xp:view>

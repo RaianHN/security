@@ -484,7 +484,10 @@ function loadReadEntity(){
 	
 }
 function loadCreateEntity(moduleName,entityName){
-	var component = getComponent('actionTable'+moduleName+entityName); 
+	println("viewsco create entity"+viewScope.entityName);
+	println("modulename"+moduleName);
+	//var component = getComponent('actionTable'+moduleName+entityName);
+	var component = getComponent("readPanel");
 	var s = facesContext;
 	var c1="/cc_entityForm.xsp"; 
 	var id="entityPanel";
@@ -493,5 +496,21 @@ function loadCreateEntity(moduleName,entityName){
 	viewScope.entityName = entityName;
 	println("viewsco"+viewScope.entityName);
 	println("modulename"+moduleName);
+	com.weberon.DynamicCC.removePreview(component);
 	com.weberon.DynamicCC.loadCC(s, component, c1, id);	
+	
+}
+function loadTestControl(componentid,cc,ccid,moduleName,entityName){
+	var component = getComponent(componentid); 
+	var s = facesContext;
+	var c1=cc; 
+	var id=ccid;
+	println("inside oncomplete");
+	println("component "+component);
+	component2 = getComponent(ccid);
+	if(component2==null){
+		viewScope.moduleName = moduleName;
+		viewScope.entityName = entityName;
+		com.weberon.DynamicCC.loadCC(s, component, c1, ccid);
+	}
 }
