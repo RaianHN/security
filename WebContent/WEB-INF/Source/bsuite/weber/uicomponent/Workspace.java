@@ -413,7 +413,7 @@ public class Workspace extends BsuiteWorkFlow implements Serializable{
 		}
 		
 		System.out.println("view--1");
-	if(entityName.equals("Employee")){
+		if(entityName.equals("Employee")){//If entity readable
 			//"+actionpanel.getId()+"  com.weberon.DynamicCC.loadCC(context, actionpanel, "/testcontrol.xsp", "cctestControl"+entityName);
 			String expression = "#{javascript:loadTestControl(\""+actionpanel.getId()+"\",\"/cc_EntityView.xsp\",\"moduledivx"+moduleName+entityName+"\",\""+moduleName+"\",\""+entityName+"\")}";
 			XspEventHandler ev4= CompUtil.createEventHandler("onClientLoad", "norefresh", expression, true,null);

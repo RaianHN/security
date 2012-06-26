@@ -11,7 +11,7 @@
 	<xp:this.beforePageLoad><![CDATA[#{javascript:var profileNames = getProfiles();
 
 viewScope.profileNames = profileNames;}]]></xp:this.beforePageLoad>
-	<xp:table>
+Module Permissions<xp:table>
 		<xp:tr>
 			<xp:td><xp:table id="table1">
 		<xp:tr>
@@ -83,12 +83,12 @@ return true;
 
 var i = 0;
 var result = new Array();
-alert("table rolws"+table.rows.length);
+//alert("table rolws"+table.rows.length);
 for (i = 2; i < table.rows.length; i++) {
 
     var moduleName = table.rows[i].cells[0].firstChild.innerHTML;
     var checkvals1 = table.rows[i].cells[1].firstChild.firstChild.checked;//visibility
-   alert("temp"+moduleName);
+   //alert("temp"+moduleName);
     
     var temp;
     if (checkvals1 == true) {
@@ -98,9 +98,9 @@ for (i = 2; i < table.rows.length; i++) {
     }
      
     result[i]=temp;
-    alert("temp"+temp);
+    //alert("temp"+temp);
 }
-alert("temp");
+
 XSP.executeOnServer('view:_id1:eventModulePerm', "", "", result);]]></xp:this.script>
 					</xp:eventHandler>
 </xp:button></xp:td>
@@ -117,7 +117,7 @@ XSP.executeOnServer('view:_id1:eventModulePerm', "", "", result);]]></xp:this.sc
 	<xp:br></xp:br>
 	
 	
-	<xp:table>
+	Entity Permissions<xp:table>
 		<xp:tr>
 			<xp:td><xp:table id="table2">
 		<xp:tr>
@@ -242,7 +242,7 @@ return false;
 
 var i = 0;
 var result = new Array();
-alert("table rolws"+table.rows.length);
+//alert("table rolws"+table.rows.length);
 for (i = 2; i < table.rows.length; i++) {
 
     var entityName = table.rows[i].cells[0].firstChild.innerHTML;
@@ -251,7 +251,7 @@ for (i = 2; i < table.rows.length; i++) {
     var checkvals3 = table.rows[i].cells[3].firstChild.firstChild.checked;
     var checkvals4 = table.rows[i].cells[4].firstChild.firstChild.checked;
       
-    alert("temp"+entityName);
+    //alert("temp"+entityName);
     
     var temp;
     if (checkvals1 == true) {
@@ -281,9 +281,9 @@ for (i = 2; i < table.rows.length; i++) {
     
      
     result[i]=temp;
-   alert("temp"+temp);
+   //alert("temp"+temp);
 }
-alert("temp");
+//alert("temp");
 XSP.executeOnServer('view:_id1:eventEntityPerm', "", "", result);]]></xp:this.script>
 					</xp:eventHandler>
 				</xp:button></xp:td>
@@ -292,7 +292,7 @@ XSP.executeOnServer('view:_id1:eventEntityPerm', "", "", result);]]></xp:this.sc
 	
 	<xp:br></xp:br>
 	<xp:br></xp:br>
-	<xp:table>
+	Field Permissions<xp:table>
 		<xp:tr>
 			<xp:td><xp:table id="table3" rendered="true">
 		<xp:tr>
@@ -427,7 +427,7 @@ return false;
 
 var i = 0;
 var result = new Array();
-//alert("table rolws"+table.rows.length);
+////alert("table rolws"+table.rows.length);
 for (i = 2; i < table.rows.length; i++) {
 
     var fieldName = table.rows[i].cells[0].firstChild.innerHTML;
@@ -465,7 +465,7 @@ XSP.executeOnServer('view:_id1:eventFieldPerm', "", "", result);]]></xp:this.scr
 	</xp:table>
 	
 	<xp:br></xp:br>
-	<xp:table>
+	Feature Permissions<xp:table>
 		<xp:tr>
 			<xp:td><xp:table id="table4" rendered="true">
 		<xp:tr>
@@ -613,7 +613,7 @@ for (i = 2; i < table.rows.length; i++) {
     
     
     result[i]=temp;
-    alert("temp"+temp);
+    //alert("temp"+temp);
 }
 //alert("temp");
 XSP.executeOnServer('view:_id1:eventFeaturePerm', "", "", result);]]></xp:this.script>

@@ -533,3 +533,88 @@ function loadTestControl(componentid,cc,ccid,moduleName,entityName){
 		com.weberon.DynamicCC.loadCC(s, component, c1, ccid);
 	}
 }
+function getModuleNames(){
+	var arr:java.util.Vector = new java.util.Vector();
+arr.add("Module1");
+arr.add("Module2");
+arr.add("Module3");
+arr.add("Module4");
+arr.add("Module5");
+viewScope.moduleNames = arr;
+return arr;
+}
+
+function getFeaturePerm(moduleName){
+	var featurePerm:java.util.HashMap = new  java.util.HashMap();
+	var arr:java.util.Vector = new java.util.Vector();
+	arr.add("feature1:1");
+	arr.add("feature2:1");
+	arr.add("feature3:0");
+	arr.add("feature4:1");
+	arr.add("feature5:1");
+	featurePerm.put("Module1",arr);
+	featurePerm.put("Module2",arr);
+	featurePerm.put("Module3",arr);
+	featurePerm.put("Module4",arr);
+	featurePerm.put("Module5",arr);
+	
+	
+	return featurePerm.get(moduleName);	
+	
+}
+function ifChecked(permission){
+	if(permission!=null){
+		var chk = @Right(permission,":")
+		if(chk){
+			if(chk=="1"){
+				return true;
+			}else{
+				return false;
+			}
+		}
+	}
+	
+}
+function getChkBoxid(moduleName,featurePerm){
+	var moduleName = moduleName;
+	var featureName = @Left(featurePerm,":");
+	if((moduleName!=null)&&(featureName!=null)){
+	return "chkbx"+moduleName+featureName;
+	}
+}
+
+function crateFeaturePermArr() {
+    var featurePerm: java.util.Vector = new java.util.Vector();
+    var arr: java.util.Vector = new java.util.Vector();
+    arr.add("feature1:1");
+    arr.add("feature2:1");
+    arr.add("feature3:0");
+    arr.add("feature4:1");
+    arr.add("feature5:1");
+    featurePerm.add(arr);
+    featurePerm.add(arr);
+    featurePerm.add(arr);
+    featurePerm.add(arr);
+    featurePerm.add(arr);
+    var moduleRepeatId = "moduleRepeat";
+    var featureRepeatId = "featureRepeat";
+    var chkBxId = "chk";
+    var result: java.util.Vector = new java.util.Vector();
+	var strChkBxId = "moduleRepeat:0:featureRepeat:0:chk";
+	var chkBox = null;
+    for (var x = 0; x < featurePerm.size(); x++) {
+        var arr: java.util.Vector = featurePerm.elementAt(x);
+        for (var s = 0; s < arr.size(); s++) {
+        	strChkBxId = "moduleRepeat:"+x+":featureRepeat:"+s+":chk";
+        	chkBox = strChkBxId+getComponent(strChkBxId);
+        	if(chkBox!=null){
+        		result.add(chkBox.isChecked());
+        	}
+			
+        }
+    }
+    viewScope.result = result;
+}
+
+
+

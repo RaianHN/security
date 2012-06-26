@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257A1A004C4EAD" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="3cc6" sequence="1" unid="E9EA96B235585D6B65257A28002A5E79">
+<created><datetime>20120625T131246,97+0530</datetime></created>
+<modified><datetime>20120625T131246,98+0530</datetime></modified>
+<revised><datetime>20120625T131246,97+0530</datetime></revised>
+<lastaccessed><datetime>20120625T131246,98+0530</datetime></lastaccessed>
+<addedtofile><datetime>20120625T131246,98+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Tommy Valand/O=PPN</name><name>CN=CN=Tommy Valand/O=PPN/O=CN=Tommy Valand/O=PPN</name><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
+<item name="$TITLE"><text>APIInspector.css</text></item>
+<item name="$MimeType"><text>text/css</text></item>
+<item name="$Flags"><text>34C=Q</text></item>
+<item name="$MimeCharSet"><text>UTF-8</text></item>
+<item name="$DesignerVersion"><text>8.5.3</text></item>
+
+
+<item name="$FileNames" sign="true"><text>APIInspector.css</text></item></note>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+
+	1&#160;<xp:button value="Label" id="button1">
+	<xp:eventHandler event="onclick" submit="true"
+		refreshMode="complete">
+		<xp:this.action><![CDATA[#{javascript:var arr:java.util.ArrayList = new java.util.ArrayList();
+arr.add("one");
+arr.add("two");
+sessionScope.valxx = arr;}]]></xp:this.action>
+	</xp:eventHandler></xp:button>
+	2
+	<xp:button value="Label" id="button2">
+		<xp:eventHandler event="onclick" submit="false">
+			<xp:this.script><![CDATA[var ar = "#{javascript:sessionScope.valxx}";
+console.log("%o",ar);]]></xp:this.script>
+		</xp:eventHandler></xp:button>
+</xp:view>
