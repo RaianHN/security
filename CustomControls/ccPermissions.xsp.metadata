@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257A1A004C4EAD" version="8.5" xmlns="http://www.lotus.com/dxl">
-<noteinfo noteid="4166" sequence="38" unid="9499A2948DFD856F65257A2A0028F9AD">
+<noteinfo noteid="4166" sequence="46" unid="9499A2948DFD856F65257A2A0028F9AD">
 <created><datetime>20120627T125733,57+0530</datetime></created>
-<modified><datetime>20120627T165509,84+0530</datetime></modified>
-<revised><datetime>20120627T165509,83+0530</datetime></revised>
-<lastaccessed><datetime>20120627T165509,84+0530</datetime></lastaccessed>
+<modified><datetime>20120627T172645,00+0530</datetime></modified>
+<revised><datetime>20120627T172644,99+0530</datetime></revised>
+<lastaccessed><datetime>20120627T172645,00+0530</datetime></lastaccessed>
 <addedtofile><datetime>20120627T125733,58+0530</datetime></addedtofile></noteinfo>
 <updatedby><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
 <wassignedby><name>CN=Jaya K Prakash/O=Weberon</name></wassignedby>
@@ -13,9 +13,9 @@
 
 
 
-<item name="$FileNames" sign="true"><text>ccPermissions.xsp</text></item>
-<item name="$DesignerVersion"><text>8.5</text></item>
 
+<item name="$FileNames" sign="true"><text>ccPermissions.xsp</text></item>
+<item name="$DesignerVersion"><text>8.5.2</text></item>
 
 
 

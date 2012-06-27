@@ -196,7 +196,7 @@ if (userName == "anonymous") {
 		</xe:this.treeNodes>
 		
 		
-		<xp:eventHandler event="onItemClick" submit="true" refreshMode="partial">
+		<xp:eventHandler event="onItemClick" submit="true" refreshMode="partial" onStart="showWait()" onComplete="hideWait()">
 				<xp:this.action>
 					<xp:executeScript>
 						<xp:this.script><![CDATA[#{javascript:

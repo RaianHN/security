@@ -11,8 +11,9 @@
 			<xp:this.value><![CDATA[#{javascript:""}]]></xp:this.value>
 			<xp:tr>
 				<xp:td>
-					<xp:section id="section1"
-						header="Module Permission">
+					<xp:section id="section1" header="Module Permission"
+						initClosed="true"
+						style="padding-left:20px;line-height:1.4em;">
 						<xp:table>
 							<xp:tr>
 								<xp:td>
@@ -21,14 +22,18 @@
 									</xp:label>
 								</xp:td>
 								<xp:td>
-									<xp:checkBox id="tabVChk"></xp:checkBox>
+									<xp:checkBox id="tabVChk"><xp:this.defaultChecked><![CDATA[#{javascript:var val = @Right(rowData,":");
+if(val.charAt(0)=="1"){
+return true;
+}}]]></xp:this.defaultChecked></xp:checkBox>
 								</xp:td>
 							</xp:tr>
 						</xp:table>
 						<xp:br></xp:br>
 					</xp:section>
 					<xp:section id="section2"
-						header="Feature Permissions">
+						header="Feature Permissions" initClosed="true"
+						style="padding-left:20px;line-height:1.4em;">
 						<xp:table>
 							<xp:tr>
 								<xp:td>
@@ -60,10 +65,12 @@
 					<xp:br></xp:br>
 
 					<xp:section id="section3"
-						header="Entity Permissions">
+						header="Entity Permissions" initClosed="true"
+						style="Lets go have something n come back, juice or sandwich ">
 						<xp:repeat id="repeatEntity" rows="30">
 							<xp:this.value><![CDATA[#{javascript:""}]]></xp:this.value>
-							<xp:section id="section4">
+							<xp:section id="section4" initClosed="true"
+								style="padding-left:20px;line-height:1.4em;">
 								<xp:table>
 									<xp:tr>
 										<xp:td>
@@ -120,44 +127,53 @@
 										</xp:td>
 									</xp:tr>
 								</xp:table>
-							
-						<xp:section id="section5" header="Field Permissions">
-								<xp:table>
-									<xp:tr>
-										<xp:td>
-											<xp:label value="Field Name" id="label7">
-											</xp:label>
-										</xp:td>
-										<xp:td>
-											<xp:label value="Visible" id="label8">
-											</xp:label>
-										</xp:td>
-										<xp:td>
-											<xp:label value="Update" id="label9">
-											</xp:label>
-										</xp:td>
-									</xp:tr>
-									<xp:tr>
-										<xp:td>
-											<xp:text escape="true" id="computedField1">
-											</xp:text>
-										</xp:td>
-										<xp:td>
-											<xp:checkBox id="fieldVChk">
-											</xp:checkBox>
-										</xp:td>
-										<xp:td>
-											<xp:checkBox id="fieldUChk">
-											</xp:checkBox>
-										</xp:td>
-									</xp:tr>
-								</xp:table>
-							</xp:section></xp:section>
 
-							
+								<xp:section id="section5"
+									header="Field Permissions" initClosed="true"
+									style="padding-left:20px;line-height:1.4em;">
+									<xp:table>
+										<xp:tr>
+											<xp:td>
+												<xp:label
+													value="Field Name" id="label7">
+												</xp:label>
+											</xp:td>
+											<xp:td>
+												<xp:label
+													value="Visible" id="label8">
+												</xp:label>
+											</xp:td>
+											<xp:td>
+												<xp:label value="Update"
+													id="label9">
+												</xp:label>
+											</xp:td>
+										</xp:tr>
+										<xp:tr>
+											<xp:td>
+												<xp:text escape="true"
+													id="computedField1">
+												</xp:text>
+											</xp:td>
+											<xp:td>
+												<xp:checkBox
+													id="fieldVChk">
+												</xp:checkBox>
+											</xp:td>
+											<xp:td>
+												<xp:checkBox
+													id="fieldUChk">
+												</xp:checkBox>
+											</xp:td>
+										</xp:tr>
+									</xp:table>
+								</xp:section>
+							</xp:section>
+
+
 						</xp:repeat>
 					</xp:section>
-					
+
 
 				</xp:td>
 				<xp:td></xp:td>

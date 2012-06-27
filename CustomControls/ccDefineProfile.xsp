@@ -33,8 +33,8 @@ viewScope.profileNames = profileNames;}]]></xp:this.beforePageLoad>
 								</xp:label>
 
 								<xp:eventHandler event="onmousedown"
-									submit="true" refreshMode="partial"
-									refreshId="panelPermission" onStart="showWait()" onComplete="hideWait()">
+									submit="true" refreshMode="partial" refreshId="panelPermission"
+									onStart="showWait()" onComplete="hideWait()">
 
 									<xp:this.action><![CDATA[#{javascript:viewScope.modulePermission = null;
 var profName = getComponent("moduleCombo").getValue();
@@ -43,7 +43,7 @@ moduleVisib.getModulePermission(profName);
 
 var component = getComponent('panelPermission'); 
 var s = facesContext;
-var c1="/ccModulePermission.xsp"; 
+var c1="/ccPermissions.xsp"; 
 var id="modulediv";
 bsuite.weber.loadcc.DynamicCC.removePreview(component);
 bsuite.weber.loadcc.DynamicCC.loadCC(s, component, c1, id);}]]></xp:this.action>
