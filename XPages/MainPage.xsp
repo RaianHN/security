@@ -31,5 +31,5 @@ println("calling event");}]]></xp:this.action>
 setFeaturePermission(viewScope.profNam3,viewScope.moduleNam3,viewScope.entityNam3);
 println("calling event");}]]></xp:this.action>
 	</xp:eventHandler>
-		<xc:ccDebug></xc:ccDebug>
+		
 </xp:view>

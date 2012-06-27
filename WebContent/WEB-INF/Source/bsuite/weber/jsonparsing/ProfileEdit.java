@@ -109,6 +109,7 @@ private void setModuleViewScope(ProfileJson profile) {
 		moduleSecurity.add(mod.getModuleName()+":"+mod.getTabvis());
 	}
 	viewScope.put("modulePermission", moduleSecurity);
+	viewScope.put("numberOfModules", moduleSecurity.size());
 	System.out.println("profile "+moduleSecurity);
 }
 

@@ -10,6 +10,7 @@
 
 	<xp:this.resources>
 		<xp:script src="/CommonFunctions.jss" clientSide="false"></xp:script>
+		<xp:script src="/commonCScript.js" clientSide="true"></xp:script>
 	</xp:this.resources>
 
 
@@ -33,83 +34,9 @@ viewScope.arrCount = arr;
 	
 	2:<xp:button value="Label" id="button1">
 	<xp:eventHandler event="onclick" submit="false">
-		<xp:this.script><![CDATA[var clId = "#{javascript:viewScope.clId}";
-//alert("id --" + clId);
-//view:_id1:_id2:moduleRepeat:0:featureRepeat:0:chk
-var ele = document.getElementById(clId + ":moduleRepeat:0:featureRepeat:0:chk");
-//alert("inside");
-//alert(ele.checked);
-var size = "#{javascript:viewScope.moduleCount}";
-var arrCnt = "#{javascript:viewScope.arrCount}"
-//alert("--"+arrCnt.charAt(0));
-if(arrCnt.charAt(0)=="["){
-arrCnt = arrCnt.replace("[","");
-}
-if(arrCnt.charAt(arrCnt.length-1)=="]"){
-arrCnt = arrCnt.replace("]","");
-}
-console.log("%o",arrCnt);
-//alert(typeof (arrCnt));
-//alert("contn" + arrCnt);
-var arr = new Array();
-arr = arrCnt.split(",");
-//alert(arr)
-//alert(typeof (arr));
-//alert(arr.length);
-var size = arr.length;
-
-if (size == 0) {
-    alert("No modules to define features");
-}
-console.log("%o",arr);
-var i = 0;
-var moduleComp = null;
-var moduleName = "";
-var featureName = "";
-var j = 0;
-var k=0;
-var chkbx = null;
-var editArray = new Array();
-for (i = 0; i < size; i++) {
-    moduleComp = document.getElementById(clId + ":moduleRepeat:" + i + ":moduleName");
-    //alert("id"+clId + ":moduleRepeat:" + i + ":moduleName"); 
-    if (moduleComp != null) {
-        moduleName = moduleComp.innerHTML;
-        //alert("moduleName "+moduleName);
-        //alert("arr[i]"+arr[i]);
-        //alert("i "+i);
-        var te=0;
-        
-        
-        for (j = 0; j < arr[i]; j++) {
-            if (moduleName != "") {
-                //view:_id1:_id2:moduleRepeat:0:featureRepeat:0:computedField2
-                 //alert("ftid "+clId + ":moduleRepeat:" + i + ":featureRepeat:" + j + ":computedField2");
-                featureName = document.getElementById(clId + ":moduleRepeat:" + i + ":featureRepeat:" + j + ":computedField2").innerHTML;
-                //alert("featureName "+featureName);
-               
-                if (featureName != null) {
-                    chkbx = document.getElementById(clId + ":moduleRepeat:" + i + ":featureRepeat:" + j + ":chk");
-                    console.log("%o",chkbx);
-                    //alert("chbid "+clId + ":moduleRepeat:" + i + ":featureRepeat:" + j + ":chk");
-                    if (chkbx != null) {
-                        if (chkbx.checked) {
-                            editArray[k++] = moduleName + ":" + featureName + ":1";
-                            //console.log("%o",editArray);
-                        } else {
-                            editArray[k++] = moduleName + ":" + featureName + ":0";
-                           // console.log("%o",editArray);
-                        }
-                    }
-                }
-
-            }
-        }
-
-    }
-}
-console.log("%o",editArray);
-//alert(editArray);]]></xp:this.script>
+		<xp:this.script><![CDATA[var clId = "#{javascript:viewScope.clId}"
+var arrNumberOfFeatures = "#{javascript:viewScope.arrCount}"
+getFeaturePermission(clId,arrNumberOfFeatures);]]></xp:this.script>
 	</xp:eventHandler></xp:button>
 	<xp:table>
 		<xp:tr>

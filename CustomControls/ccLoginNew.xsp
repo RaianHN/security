@@ -218,7 +218,7 @@ println("OnClick if Create Profile");
 
 var component = getComponent('MainTabContainer'); 
 var s = facesContext;
-var c1="/modulePermission.xsp"; 
+var c1="/ccDefineProfile.xsp"; 
 var id="modulePermdiv";
 //com.weberon.DynamicCC.loadCC(s, component, c1, id);
 com.weberon.DynamicCC.loadCCinTab(s,component,c1,id,"Profile");
