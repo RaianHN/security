@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xp:view xmlns:xp="http://www.ibm.com/xsp/core">
-
 	<xp:table>
 		<xp:tr>
 			<xp:td>
@@ -20,43 +19,33 @@
 
 
 			</xp:td>
-			<xp:td rowspan="4"></xp:td>
-		</xp:tr>
-		<xp:tr>
-			<xp:td>
-				<xp:label value="Entity Name:" id="label2"></xp:label>
-			</xp:td>
-			<xp:td>
-				<xp:inputText id="entityName"></xp:inputText>
-			</xp:td>
 			
 		</xp:tr>
+		
+		
 		<xp:tr>
 			<xp:td>
-				<xp:label value="List of Fields:" id="label3"></xp:label>
+				<xp:label value="List of Features" id="label4"></xp:label>
 			</xp:td>
 			<xp:td>
-				<xp:inputTextarea id="fields"
+				<xp:inputTextarea id="features"
 					multipleSeparator=",">
 				</xp:inputTextarea>
 			</xp:td>
 			
 		</xp:tr>
-		
 		<xp:tr>
 			<xp:td></xp:td>
 			<xp:td>
-				<xp:button id="button1" value="Create Entity" style="background-color:rgb(192,192,192)">
+				<xp:button id="button1" value="Create Features" style="background-color:rgb(192,192,192)">
 					<xp:eventHandler event="onclick" submit="true"
 						refreshMode="complete">
 						<xp:this.action><![CDATA[#{javascript:var defModule = new bsuite.weber.configure.DefineModule();
 
 var moduleName = getComponent("moduleName").getValue();
-var entityName = getComponent("entityName").getValue();
-var fields :java.util.Vector = getComponent("fields").getValue();
+var features:java.util.Vector = getComponent("features").getValue();
 
-
-defModule.addEntity(moduleName,entityName, fields);
+defModule.addFeatures(moduleName,features);
 var component = getComponent('loadCC'); 
 bsuite.weber.loadcc.DynamicCC.removePreview(component);
 }]]></xp:this.action>

@@ -12,7 +12,7 @@ public class Entity{
 	private String update;
 	private String delete;
 	private ArrayList<Field> fields;
-	private ArrayList<Feature> features;
+	
 	private String accessType;
 	//Added for fields and features perms
 	//private ArrayList<FieldPerm> fieldPerm;
@@ -78,15 +78,7 @@ public class Entity{
 	}
 
 
-	public ArrayList<Feature> getFeatures() {
-		return features;
-	}
 
-
-	public void setFeatures(ArrayList<Feature> features) {
-		this.features = features;
-	}
-	
 /*	public ArrayList<FieldPerm> getFieldPerm() {
 		return fieldPerm;
 	}

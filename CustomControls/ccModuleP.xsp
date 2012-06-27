@@ -14,7 +14,8 @@
 					<xp:section id="section1" header="Module Permission"
 						initClosed="true"
 						style="padding-left:20px;line-height:1.4em;">
-						<xp:table>
+						<xp:table
+							style="padding-left:20px;line-height:1.4em;">
 							<xp:tr>
 								<xp:td>
 									<xp:label value="Tab Visibility"
@@ -22,10 +23,12 @@
 									</xp:label>
 								</xp:td>
 								<xp:td>
-									<xp:checkBox id="tabVChk"><xp:this.defaultChecked><![CDATA[#{javascript:var val = @Right(rowData,":");
+									<xp:checkBox id="tabVChk">
+										<xp:this.defaultChecked><![CDATA[#{javascript:var val = @Right(rowData,":");
 if(val.charAt(0)=="1"){
 return true;
-}}]]></xp:this.defaultChecked></xp:checkBox>
+}}]]></xp:this.defaultChecked>
+									</xp:checkBox>
 								</xp:td>
 							</xp:tr>
 						</xp:table>
@@ -34,7 +37,8 @@ return true;
 					<xp:section id="section2"
 						header="Feature Permissions" initClosed="true"
 						style="padding-left:20px;line-height:1.4em;">
-						<xp:table>
+						<xp:table
+							style="padding-left:20px;line-height:1.4em;">
 							<xp:tr>
 								<xp:td>
 									<xp:label value="Feature"
@@ -48,7 +52,14 @@ return true;
 								</xp:td>
 							</xp:tr>
 							<xp:repeat id="repeatFeature" rows="30">
-								<xp:this.value><![CDATA[#{javascript:""}]]></xp:this.value>
+								<xp:this.value><![CDATA[#{javascript:var profileName = getComponent("moduleCombo").getValue();;
+var moduleName = @Left(rowData,":");
+
+var moduleVisib = new bsuite.weber.jsonparsing.ProfileEdit();
+var result = moduleVisib.getFeaturePermission(profileName,moduleName);
+if(result!=null){
+return result;
+}}]]></xp:this.value>
 								<xp:tr>
 									<xp:td>
 										<xp:text escape="true"

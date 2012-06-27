@@ -80,10 +80,25 @@ public class Profile extends BsuiteWorkFlow {
 		
 	}
 
-	public ArrayList<Feature> getVisibleFeatures(String moduleName, String entityName){
+	/*public ArrayList<Feature> getVisibleFeatures(String moduleName, String entityName){
 		Entity entity = getEntity(moduleName,entityName);
 		ArrayList<Feature> vFeatures = new ArrayList<Feature>();
 		for(Feature f:entity.getFeatures()){
+			if(f.getVisible().equals("1")){
+				vFeatures.add(f);
+			}
+		}
+		
+		return vFeatures;
+	}*/
+
+	
+	public ArrayList<Feature> getVisibleFeatures(String moduleName){
+		//Entity entity = getEntity(moduleName);
+		ArrayList<Feature> vFeatures = new ArrayList<Feature>();
+		Module mod = getModule(moduleName);
+		
+		for(Feature f:mod.getFeatures()){		
 			if(f.getVisible().equals("1")){
 				vFeatures.add(f);
 			}
@@ -202,7 +217,7 @@ public class Profile extends BsuiteWorkFlow {
 		
 	}
 
-	public ArrayList<String> getVisibleFeaturesNames(String moduleName, String entityName){
+	/*public ArrayList<String> getVisibleFeaturesNames(String moduleName, String entityName){
 		Entity entity = getEntity(moduleName,entityName);
 		ArrayList<String> vFeatures = new ArrayList<String>();
 		for(Feature f:entity.getFeatures()){
@@ -212,7 +227,24 @@ public class Profile extends BsuiteWorkFlow {
 		}
 		
 		return vFeatures;
-	}
+	}*/
+	
+	
+	public ArrayList<String> getVisibleFeaturesNames(String moduleName){		
+		ArrayList<String> vFeatures = new ArrayList<String>();
+		Module mod = getModule(moduleName);
+		
+		for(Feature f:mod.getFeatures()){		
+			if(f.getVisible().equals("1")){
+				vFeatures.add(f.getFeatureName());
+			}
+		}
+		
+		return vFeatures;
+
+	
+}
+	
 	
 	
 	

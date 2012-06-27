@@ -86,7 +86,11 @@ public class Deploy extends BsuiteWorkFlow{
 			System.out.println("modulenames"+moduleName);
 			System.out.println("modulenames1");
 			bsuite.weber.jsonparsing.Module moduleNew = defineModulePermission(moduleName, "1");
+			System.out.println("modulenames211");
+
 			String JsonModule = def.getModuleJson(moduleName);
+			System.out.println("modulenames212 jsonModule "+JsonModule);
+
 			Module module=null;
 			try {
 				module = mapper.readValue(JsonModule, Module.class);
@@ -97,6 +101,25 @@ public class Deploy extends BsuiteWorkFlow{
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
+			//Added for the module features
+			System.out.println("modulenames21234");
+
+			ArrayList<Feature>features = module.getFeatures();
+			System.out.println("modulenames212www ");
+
+			if(features!=null){				
+			ArrayList<bsuite.weber.jsonparsing.Feature> featureList = new ArrayList<bsuite.weber.jsonparsing.Feature>();//Create empty feature list for this module
+			for(Feature f:features){
+				bsuite.weber.jsonparsing.Feature feature = defineFeaturePermission(f.getFeatureName(), "1");
+				featureList.add(feature);
+			}			
+			moduleNew.setFeatures(featureList);
+			}
+			
+			System.out.println("modulenames212jjj");
+
+			
+			
 			ArrayList<Entity> entities = module.getEntities();
 			if(entities!=null){
 				System.out.println("modulenames2");
@@ -111,15 +134,9 @@ public class Deploy extends BsuiteWorkFlow{
 						fieldList.add(field);
 					}	
 					System.out.println("modulenames2");
-					ArrayList<Feature>features = e.getFeatures();
-					ArrayList<bsuite.weber.jsonparsing.Feature> featureList = new ArrayList<bsuite.weber.jsonparsing.Feature>();//Create empty feature list for this entity 
-					for(Feature f:features){
-						bsuite.weber.jsonparsing.Feature feature = defineFeaturePermission(f.getFeatureName(), "1");
-						featureList.add(feature);
-					}
+					
 					entity.setEntityName(e.getEntityName());
-					entity.setFields(fieldList);
-					entity.setFeatures(featureList);	
+					entity.setFields(fieldList);					
 					entityList.add(entity);
 					System.out.println("modulenames3");
 				}
@@ -159,9 +176,10 @@ public class Deploy extends BsuiteWorkFlow{
 	}
 
 	private bsuite.weber.jsonparsing.Module defineModulePermission(String moduleName, String visibility) {
+		System.out.println("definemodulepermission");
 		bsuite.weber.jsonparsing.Module module = new bsuite.weber.jsonparsing.Module();
 		module.setModuleName(moduleName);
-		module.setTabvis(visibility);
+		module.setTabvis(visibility);		
 		return module;
 		
 	}
@@ -177,7 +195,7 @@ public class Deploy extends BsuiteWorkFlow{
 	private bsuite.weber.jsonparsing.Feature defineFeaturePermission(String featureName,String visible){
 		bsuite.weber.jsonparsing.Feature feature = new bsuite.weber.jsonparsing.Feature();
 		feature.setFeatureName(featureName);
-		feature.setVisible(visible);
+		feature.setVisible(visible);		
 		return feature;
 	}
 	

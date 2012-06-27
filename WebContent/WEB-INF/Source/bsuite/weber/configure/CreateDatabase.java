@@ -115,7 +115,11 @@ public class CreateDatabase extends BsuiteWorkFlow {
 			System.out.println("View Column Pos "+pos);
 			System.out.println("View Column title "+title);
 			System.out.println("View Column Formula  "+formula);
-			view.createColumn(pos,title,formula);
+			Vector columns=view.getColumns();
+			if(!(columns.contains(title))){
+				view.createColumn(pos,title,formula);
+			}
+			
 		}catch (Exception e) {
 			// TODO: handle exception
 		}

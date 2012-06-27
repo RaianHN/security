@@ -2,9 +2,13 @@ package bsuite.weber.configure;
 
 import java.util.ArrayList;
 
+
 public class Module {
 	
 	private String moduleName;
+	private ArrayList<Entity> entities;
+	private ArrayList<Feature> features;
+	
 	public String getModuleName() {
 		return moduleName;
 	}
@@ -12,8 +16,8 @@ public class Module {
 	public void setModuleName(String moduleName) {
 		this.moduleName = moduleName;
 	}
+	
 
-	private ArrayList<Entity> entities;
 
 	public ArrayList<Entity> getEntities() {
 		return entities;
@@ -23,5 +27,12 @@ public class Module {
 		this.entities = entities;
 	}
 	
-	
+	public ArrayList<Feature> getFeatures() {
+		return features;
+	}
+
+	public void setFeatures(ArrayList<Feature> features) {
+		this.features = features;
+	}
+
 }

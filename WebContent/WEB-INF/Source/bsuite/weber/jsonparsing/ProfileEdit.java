@@ -72,6 +72,19 @@ public class ProfileEdit extends BsuiteWorkFlow  {
 		setFeatureViewScopeCrud(getJsonProfileObj(jsonString), moduleName,entityName);
 		
 	}
+	
+	public void getFeaturePermission(String profileName, String moduleName){
+		Document profDoc = getProfileDoc(getSecurityDatabase(),profileName);
+		String jsonString="";
+		try {
+			jsonString = profDoc.getItemValueString("JsonString");
+		} catch (NotesException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		setFeatureViewScopeCrud(getJsonProfileObj(jsonString), moduleName,entityName);
+		
+	}
 
 
 public Document getProfileDoc(Database db, String profileName){

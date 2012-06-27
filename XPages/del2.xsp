@@ -20,5 +20,6 @@ console.log("%o",ar);]]></xp:this.script>
 		</xp:eventHandler>
 	</xp:button>
 	<xp:br></xp:br>
+	
 	<xc:ccPermissions></xc:ccPermissions>
 </xp:view>
