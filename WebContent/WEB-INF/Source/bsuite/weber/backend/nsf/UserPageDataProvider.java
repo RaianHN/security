@@ -7,16 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-import javax.annotation.PreDestroy;
 import javax.faces.FacesException;
-import javax.faces.context.FacesContext;
-
 import lotus.domino.Database;
 import lotus.domino.Document;
 import lotus.domino.NotesException;
-import lotus.domino.Session;
-
-import com.ibm.domino.xsp.module.nsf.NotesContext;
 import com.ibm.xsp.extlib.util.ExtLibUtil;
 
 
@@ -24,8 +18,6 @@ import com.ibm.xsp.extlib.util.ExtLibUtil;
 
 import bsuite.weber.tools.BSUtil;
 import bsuite.weber.tools.JSFUtil;
-import bsuite.weber.tools.StringUtil;
-
 import bsuite.weber.backend.DataObjectExt;
 
 public class UserPageDataProvider implements DataObjectExt{
@@ -41,8 +33,6 @@ private static final String VIEWSCOPE_DATADOCUMENT="bsuite.weber.backend.nsf.Use
 	private Map<String, String> m_changedValues;
 	//private List<DataChangeLogEntry> m_pendingLogEntries;
 	private String m_documentId;	
-
-	private Session session;
 
 	private String bsuitepath;
 

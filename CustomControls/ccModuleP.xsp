@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core" id="ccModuleP">
 
 
 	<xp:table>
 		<xp:tr>
-			<xp:td></xp:td>
+			<xp:td>
+				
+			</xp:td>
 			<xp:td></xp:td>
 		</xp:tr>
 		<xp:repeat id="repeatModules" rows="30">
@@ -12,14 +14,15 @@
 			<xp:tr>
 				<xp:td>
 					<xp:section id="section1" header="Module Permission"
-						initClosed="true"
-						style="padding-left:20px;line-height:1.4em;">
-						<xp:table
-							style="padding-left:20px;line-height:1.4em;">
+						initClosed="true" style="padding-left:20px;line-height:1.4em;">
+						<xp:table border="1">
 							<xp:tr>
-								<xp:td>
+
+
+								<xp:td
+									style="background-color:rgb(192,192,192);border-color:rgb(128,128,128)">
 									<xp:label value="Tab Visibility"
-										id="label1">
+										id="label1" style="font-weight:bold">
 									</xp:label>
 								</xp:td>
 								<xp:td>
@@ -31,27 +34,30 @@ return true;
 									</xp:checkBox>
 								</xp:td>
 							</xp:tr>
+
 						</xp:table>
 						<xp:br></xp:br>
 					</xp:section>
 					<xp:section id="section2"
 						header="Feature Permissions" initClosed="true"
 						style="padding-left:20px;line-height:1.4em;">
-						<xp:table
-							style="padding-left:20px;line-height:1.4em;">
+						<xp:table border="1">
 							<xp:tr>
-								<xp:td>
+								<xp:td
+									style="background-color:rgb(192,192,192);border-color:rgb(128,128,128)">
 									<xp:label value="Feature"
-										id="label10">
+										id="label10" style="font-weight:bold">
 									</xp:label>
 								</xp:td>
-								<xp:td>
-									<xp:label value="Label"
-										id="Visibility">
+								<xp:td
+									style="background-color:rgb(192,192,192);border-color:rgb(128,128,128)">
+									<xp:label value="Visibility"
+										id="Visibility" style="font-weight:bold">
 									</xp:label>
 								</xp:td>
 							</xp:tr>
-							<xp:repeat id="repeatFeature" rows="30">
+							<xp:repeat id="repeatFeature" rows="30"
+								var="rowFeature">
 								<xp:this.value><![CDATA[#{javascript:var profileName = getComponent("moduleCombo").getValue();;
 var moduleName = @Left(rowData,":");
 
@@ -64,49 +70,69 @@ return result;
 									<xp:td>
 										<xp:text escape="true"
 											id="featureName">
+											<xp:this.value><![CDATA[#{javascript:@Left(rowFeature,":");}]]></xp:this.value>
 										</xp:text>
 									</xp:td>
-									<xp:td>
-										<xp:checkBox id="featureChk"></xp:checkBox>
+									<xp:td align="center">
+										<xp:checkBox id="featureChk">
+											<xp:this.defaultChecked><![CDATA[#{javascript:var val = @Right(rowFeature,":");
+if(val.charAt(0)=="1"){
+return true;
+}}]]></xp:this.defaultChecked>
+										</xp:checkBox>
 									</xp:td>
 								</xp:tr>
 							</xp:repeat>
 						</xp:table>
+						<xp:br></xp:br>
 					</xp:section>
-					<xp:br></xp:br>
-
 					<xp:section id="section3"
 						header="Entity Permissions" initClosed="true"
-						style="Lets go have something n come back, juice or sandwich ">
-						<xp:repeat id="repeatEntity" rows="30">
-							<xp:this.value><![CDATA[#{javascript:""}]]></xp:this.value>
-							<xp:section id="section4" initClosed="true"
-								style="padding-left:20px;line-height:1.4em;">
-								<xp:table>
+						style="padding-left:20px;line-height:1.4em;">
+						<xp:repeat id="repeatEntity" rows="30"
+							var="rowEntity">
+							<xp:this.value><![CDATA[#{javascript:var profileName = getComponent("moduleCombo").getValue();;
+var moduleName = @Left(rowData,":");
+println("module and profile"+moduleName+" "+profileName);
+var moduleVisib = new bsuite.weber.jsonparsing.ProfileEdit();
+var entityPermission = moduleVisib.getEntityPermission(profileName,moduleName);
+if(entityPermission!=null){
+return entityPermission;
+}}]]></xp:this.value>
+							<xp:section id="section4"
+								style="padding-left:20px;line-height:1.4em;"
+								initClosed="true">
+								<xp:this.header><![CDATA[#{javascript:@Left(rowEntity,":")}]]></xp:this.header>
+								<xp:table border="1">
 									<xp:tr>
-										<xp:td>
+										<xp:td
+											style="background-color:rgb(192,192,192);border-color:rgb(128,128,128)">
 											<xp:label
-												value="Entity Name" id="label2">
+												value="Entity Name" id="label2" style="font-weight:bold">
 											</xp:label>
 										</xp:td>
-										<xp:td>
+										<xp:td
+											style="background-color:rgb(192,192,192);border-color:rgb(128,128,128)">
 											<xp:label value="Create"
-												id="label3">
+												id="label3" style="font-weight:bold">
 											</xp:label>
 										</xp:td>
-										<xp:td>
+										<xp:td
+											style="background-color:rgb(192,192,192);border-color:rgb(128,128,128)">
 											<xp:label value="Read"
-												id="label4">
+												id="label4" style="font-weight:bold">
 											</xp:label>
 										</xp:td>
-										<xp:td>
+										<xp:td
+											style="background-color:rgb(192,192,192);border-color:rgb(128,128,128)">
 											<xp:label value="Update"
-												id="label5">
+												id="label5" style="font-weight:bold">
 											</xp:label>
 										</xp:td>
-										<xp:td>
+										<xp:td
+											style="background-color:rgb(192,192,192);border-color:rgb(128,128,128)">
 											<xp:label value="Delete"
-												id="label6">
+												id="label6" style="font-weight:bold">
 											</xp:label>
 										</xp:td>
 									</xp:tr>
@@ -114,73 +140,132 @@ return result;
 										<xp:td>
 											<xp:text escape="true"
 												id="entityName">
+												<xp:this.value><![CDATA[#{javascript:@Left(rowEntity,":")}]]></xp:this.value>
 											</xp:text>
 										</xp:td>
-										<xp:td>
-											<xp:checkBox text="Label"
+										<xp:td align="center">
+											<xp:checkBox
 												id="createChk">
+												<xp:this.defaultChecked><![CDATA[#{javascript:var val = @Right(rowEntity,":");
+if(val.charAt(0)=="1"){
+return true;
+}
+else{
+return false;
+}}]]></xp:this.defaultChecked>
 											</xp:checkBox>
 										</xp:td>
-										<xp:td>
-											<xp:checkBox text="Label"
-												id="readChk">
+										<xp:td align="center">
+											<xp:checkBox id="readChk">
+												<xp:this.defaultChecked><![CDATA[#{javascript:var val = @Right(rowEntity,":");
+if(val.charAt(1)=="1"){
+return true;
+}
+else{
+return false;
+}}]]></xp:this.defaultChecked>
 											</xp:checkBox>
 										</xp:td>
-										<xp:td>
-											<xp:checkBox text="Label"
+										<xp:td align="center">
+											<xp:checkBox
 												id="updateChk">
+												<xp:this.defaultChecked><![CDATA[#{javascript:var val = @Right(rowEntity,":");
+if(val.charAt(2)=="1"){
+return true;
+}
+else{
+return false;
+}}]]></xp:this.defaultChecked>
 											</xp:checkBox>
 										</xp:td>
-										<xp:td>
-											<xp:checkBox text="Label"
+										<xp:td align="center">
+											<xp:checkBox
 												id="deleteChk">
+												<xp:this.defaultChecked><![CDATA[#{javascript:var val = @Right(rowEntity,":");
+if(val.charAt(3)=="1"){
+return true;
+}
+else{
+return false;
+}}]]></xp:this.defaultChecked>
 											</xp:checkBox>
 										</xp:td>
 									</xp:tr>
 								</xp:table>
+								<xp:br></xp:br>
 
 								<xp:section id="section5"
-									header="Field Permissions" initClosed="true"
-									style="padding-left:20px;line-height:1.4em;">
-									<xp:table>
+									header="Field Permissions">
+
+									<xp:table border="1">
 										<xp:tr>
-											<xp:td>
+											<xp:td
+												style="background-color:rgb(192,192,192);border-color:rgb(128,128,128)">
 												<xp:label
-													value="Field Name" id="label7">
+													value="Field Name" id="label7" style="font-weight:bold">
 												</xp:label>
 											</xp:td>
-											<xp:td>
+											<xp:td
+												style="background-color:rgb(192,192,192);border-color:rgb(128,128,128)">
 												<xp:label
-													value="Visible" id="label8">
+													value="Visible" id="label8" style="font-weight:bold">
 												</xp:label>
 											</xp:td>
-											<xp:td>
+											<xp:td
+												style="background-color:rgb(192,192,192);border-color:rgb(128,128,128)">
 												<xp:label value="Update"
-													id="label9">
+													id="label9" style="font-weight:bold">
 												</xp:label>
 											</xp:td>
 										</xp:tr>
-										<xp:tr>
-											<xp:td>
-												<xp:text escape="true"
-													id="computedField1">
-												</xp:text>
-											</xp:td>
-											<xp:td>
-												<xp:checkBox
-													id="fieldVChk">
-												</xp:checkBox>
-											</xp:td>
-											<xp:td>
-												<xp:checkBox
-													id="fieldUChk">
-												</xp:checkBox>
-											</xp:td>
-										</xp:tr>
+										<xp:repeat id="repeatFields"
+											rows="30" var="rowField">
+											<xp:this.value><![CDATA[#{javascript:var profileName = getComponent("moduleCombo").getValue();;
+var moduleName = @Left(rowData,":");
+var entityName = @Left(rowEntity,":")
+var moduleVisib = new bsuite.weber.jsonparsing.ProfileEdit();
+var fieldPermission = moduleVisib.getFieldPermission(profileName,moduleName,entityName);
+if(fieldPermission!=null){
+return fieldPermission;
+}
+}]]></xp:this.value>
+											<xp:tr>
+												<xp:td>
+													<xp:text
+														escape="true" id="computedField1">
+														<xp:this.value><![CDATA[#{javascript:@Left(rowField,":")}]]></xp:this.value>
+													</xp:text>
+												</xp:td>
+												<xp:td align="center">
+													<xp:checkBox
+														id="fieldVChk">
+														<xp:this.defaultChecked><![CDATA[#{javascript:var val = @Right(rowField,":");
+if(val.charAt(0)=="1"){
+return true;
+}
+else{
+return false;
+}}]]></xp:this.defaultChecked>
+													</xp:checkBox>
+												</xp:td>
+												<xp:td align="center">
+													<xp:checkBox
+														id="fieldUChk">
+														<xp:this.defaultChecked><![CDATA[#{javascript:var val = @Right(rowField,":");
+if(val.charAt(1)=="0"){
+return true;
+}
+else{
+return false;
+}}]]></xp:this.defaultChecked>
+													</xp:checkBox>
+												</xp:td>
+											</xp:tr>
+										</xp:repeat>
 									</xp:table>
+									<xp:br></xp:br>
 								</xp:section>
 							</xp:section>
-
 
 						</xp:repeat>
 					</xp:section>

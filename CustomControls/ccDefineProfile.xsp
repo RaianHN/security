@@ -20,23 +20,9 @@ viewScope.profileNames = profileNames;}]]></xp:this.beforePageLoad>
 						<xp:this.value><![CDATA[#{javascript:viewScope.profileNames}]]></xp:this.value>
 					</xp:selectItems>
 
-				</xp:comboBox>
-			</xp:td>
-			<xp:td colspan="3">
-				<xp:panel>
-					<xp:table>
-						<xp:tr>
-							<xp:td styleClass="debugButton" id="td11">
-
-								<xp:label value="Module Permissions"
-									id="label26">
-								</xp:label>
-
-								<xp:eventHandler event="onmousedown"
-									submit="true" refreshMode="partial" refreshId="panelPermission"
-									onStart="showWait()" onComplete="hideWait()">
-
-									<xp:this.action><![CDATA[#{javascript:viewScope.modulePermission = null;
+					<xp:eventHandler event="onchange" submit="true"
+						refreshMode="partial" refreshId="panelPermission" onStart="showWait()" onComplete="hideWait()">
+						<xp:this.action><![CDATA[#{javascript:viewScope.modulePermission = null;
 var profName = getComponent("moduleCombo").getValue();
 var moduleVisib = new bsuite.weber.jsonparsing.ProfileEdit();
 moduleVisib.getModulePermission(profName);
@@ -47,73 +33,23 @@ var c1="/ccPermissions.xsp";
 var id="modulediv";
 bsuite.weber.loadcc.DynamicCC.removePreview(component);
 bsuite.weber.loadcc.DynamicCC.loadCC(s, component, c1, id);}]]></xp:this.action>
-								</xp:eventHandler>
-							</xp:td>
-							<xp:td styleClass="debugButton" id="td2">
-
-								<xp:label value="Feature Permissions"
-									id="label2">
-								</xp:label>
-
-								<xp:eventHandler event="onmousedown"
-									submit="true" refreshMode="partial"
-									refreshId="panelPermission" onStart="showWait()" onComplete="hideWait()">
-
-									<xp:this.action><![CDATA[#{javascript:viewScope.modulePermission = null;
-var profName = getComponent("moduleCombo").getValue();
-var moduleVisib = new bsuite.weber.jsonparsing.ProfileEdit();
-moduleVisib.getModulePermission(profName);
-
-var component = getComponent('panelPermission'); 
-var s = facesContext;
-var c1="/ccFeaturePermissions.xsp"; 
-var id="modulediv";
-bsuite.weber.loadcc.DynamicCC.removePreview(component);
-bsuite.weber.loadcc.DynamicCC.loadCC(s, component, c1, id);}]]></xp:this.action>
-								</xp:eventHandler>
-							</xp:td>
-							<xp:td styleClass="debugButton" id="td3">
-
-								<xp:label value="Field Permissions"
-									id="label3">
-								</xp:label>
-
-								<xp:eventHandler event="onmousedown"
-									submit="true" refreshMode="partial"
-									refreshId="panelPermission" onStart="showWait()" onComplete="hideWait()">
-
-									<xp:this.action><![CDATA[#{javascript:viewScope.modulePermission = null;
-var profName = getComponent("moduleCombo").getValue();
-var moduleVisib = new bsuite.weber.jsonparsing.ProfileEdit();
-moduleVisib.getModulePermission(profName);
-
-var component = getComponent('panelPermission'); 
-var s = facesContext;
-var c1="/ccFieldPermissions.xsp"; 
-var id="modulediv";
-bsuite.weber.loadcc.DynamicCC.removePreview(component);
-bsuite.weber.loadcc.DynamicCC.loadCC(s, component, c1, id);}]]></xp:this.action>
-								</xp:eventHandler>
-							</xp:td>
-						</xp:tr>
-					</xp:table>
-				</xp:panel>
+					</xp:eventHandler></xp:comboBox>
+			</xp:td>
+			
+				
 
 
 				
 
+			
+						<xp:td styleClass="debugButton">
+							<xp:label value="Save" id="label26"></xp:label>
 				
 			</xp:td>
 			
 			
 		</xp:tr>
-		<xp:tr>
-			<xp:td></xp:td>
-			<xp:td></xp:td>
-			<xp:td></xp:td>
-			<xp:td></xp:td>
-			<xp:td></xp:td>
-		</xp:tr>
+		
 		<xp:tr>
 			<xp:td colspan="5">
 				<xp:panel id="panelPermission"></xp:panel>

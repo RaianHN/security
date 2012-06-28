@@ -32,7 +32,8 @@ public class ProfileEdit extends BsuiteWorkFlow  {
 	}
 	
 	
-	public void getEntityPermission(String profileName, String moduleName){
+	public Vector<String> getEntityPermission(String profileName, String moduleName){
+		System.out.println("getting feature perm for"+profileName+" "+moduleName);
 		Document profDoc = getProfileDoc(getSecurityDatabase(),profileName);
 		String jsonString="";
 		try {
@@ -41,12 +42,12 @@ public class ProfileEdit extends BsuiteWorkFlow  {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		setEntityViewScopeCrud(getJsonProfileObj(jsonString), moduleName);
+		return setEntityViewScopeCrud(getJsonProfileObj(jsonString), moduleName);
 		
 	}
 	
 	
-	public void getFieldPermission(String profileName, String moduleName, String entityName){
+	public Vector<String> getFieldPermission(String profileName, String moduleName, String entityName){
 		Document profDoc = getProfileDoc(getSecurityDatabase(),profileName);
 		String jsonString="";
 		try {
@@ -55,7 +56,7 @@ public class ProfileEdit extends BsuiteWorkFlow  {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		setFieldViewScopeCrud(getJsonProfileObj(jsonString), moduleName,entityName);
+		return setFieldViewScopeCrud(getJsonProfileObj(jsonString), moduleName,entityName);
 		
 	}
 	
@@ -74,6 +75,7 @@ public class ProfileEdit extends BsuiteWorkFlow  {
 	}
 	
 	public Vector<String> getFeaturePermission(String profileName, String moduleName){
+		System.out.println("getting feature perm for"+profileName+" "+moduleName);
 		Document profDoc = getProfileDoc(getSecurityDatabase(),profileName);
 		String jsonString="";
 		try {
@@ -82,6 +84,7 @@ public class ProfileEdit extends BsuiteWorkFlow  {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		return setFeatureViewScopeCrud(getJsonProfileObj(jsonString), moduleName);
 		
 	}
@@ -208,7 +211,7 @@ public void saveModulePerm(String profileName,String vals){
 	}
 }
 
-public void setEntityViewScopeCrud(ProfileJson profile,String moduleName){
+public Vector<String> setEntityViewScopeCrud(ProfileJson profile,String moduleName){
 	Vector<String> entitySecurity = new Vector<String>();
 	Module module = null;
 	System.out.println("inside entity perm "+profile.getProfName()+" "+moduleName);
@@ -219,17 +222,23 @@ public void setEntityViewScopeCrud(ProfileJson profile,String moduleName){
 		}
 		
 	}
+	System.out.println("inside entity perm1");
+	if(module.getEntities()==null){
+		return null;
+	}
+	System.out.println("inside entity perm2");
 	for(Entity e:module.getEntities()){			
 		entitySecurity.add(e.getEntityName()+":"+e.getCreate()+e.getRead()+e.getUpdate()+e.getDelete()+e.getAccessType());
 	}
+	System.out.println("inside entity perm3");
 	System.out.println("vect entity perm"+entitySecurity);
 	viewScope.put("entityPerm", entitySecurity);
-	
+	return entitySecurity;
 	
 }
 
 
-public void setFieldViewScopeCrud(ProfileJson profile,String moduleName,String entityName){
+public Vector<String> setFieldViewScopeCrud(ProfileJson profile,String moduleName,String entityName){
 	Vector<String> fieldSecurity = new Vector<String>();
 	Module module = null;
 	System.out.println("inside entity perm "+profile.getProfName()+" "+moduleName);
@@ -253,7 +262,7 @@ public void setFieldViewScopeCrud(ProfileJson profile,String moduleName,String e
 	}
 	System.out.println("vect entity perm"+fieldSecurity);
 	viewScope.put("fieldPerm", fieldSecurity);
-	
+	return fieldSecurity;
 	
 }
 
@@ -274,6 +283,7 @@ public Vector<String> setFeatureViewScopeCrud(ProfileJson profile,String moduleN
 	}
 	System.out.println("vect entity perm"+featureSecurity);
 	viewScope.put("featurePerm", featureSecurity);
+	System.out.println("features"+featureSecurity);
 	return featureSecurity;
 	
 	

@@ -1,37 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xp:view xmlns:xp="http://www.ibm.com/xsp/core" xmlns:xc="http://www.ibm.com/xsp/custom">
-	<xp:table id="table1">
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xc="http://www.ibm.com/xsp/custom" id="ccPermissions">
+	<xp:table id="table1" border="1" style="width:100%">
 
 		<xp:tr>
-			<xp:td align="left">
-				<xp:button value="Save" id="button1">
-					<xp:eventHandler event="onclick" submit="false">
-						<xp:this.script><![CDATA[//var clId = "#{javascript:viewScope.clIdM}";
-var clId = "view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:modulediv";
-var numberOfModules = "#{javascript:viewScope.numberOfModules}";
+			<xp:td align="left" colspan="2"
+				style="background-color:rgb(192,192,192);border-color:rgb(128,128,128)">
 
-if(clId==null || clId==""){
-alert("Client id is null");
-return;
-}
 
-if(numberOfModules==null || numberOfModules==""){
-alert("No modules to process");
-return;
-}
-getModulePermission(clId,numberOfModules)]]></xp:this.script>
+
+				<!--<xp:eventHandler event="onmousedown" submit="true"
+					refreshMode="partial" refreshId="panelPermission"
+					onStart="showWait()" onComplete="hideWait()">
+					
+					<xp:this.action><![CDATA[#{javascript://var clId = "#{javascript:viewScope.clIdM}";
+					var clId = "view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:modulediv";
+					var numberOfModules = "#{javascript:viewScope.numberOfModules}";
+					
+					if(clId==null || clId==""){
+					alert("Client id is null");
+					return;
+					}
+					
+					if(numberOfModules==null || numberOfModules==""){
+					alert("No modules to process");
+					return;
+					}
+					getModulePermission(clId,numberOfModules)}]]></xp:this.action>
 					</xp:eventHandler>
-				</xp:button>
+				-->
+
+
+				<xp:label value="Modules" id="label1"
+					style="font-weight:bold">
+				</xp:label>
+				<xp:text escape="true" id="computedField2"
+					value="#{javascript:this.getClientId(facesContext);}">
+				</xp:text>
+				<xp:table rendered="false">
+					<xp:tr>
+						<xp:td styleClass="debugButton">
+							<xp:label value="Save" id="label26"></xp:label>
+						</xp:td>
+					</xp:tr>
+				</xp:table>
 			</xp:td>
-			<xp:td>
-				<xp:inputHidden id="inputHidden1" binding="#{javascript:viewScope.clIdM;}">
-					<xp:this.value><![CDATA[#{javascript:
-var id  = this.getClientId(facesContext);
-return @LeftBack(id,":");}]]></xp:this.value>
-				</xp:inputHidden>
-			</xp:td>
+
 		</xp:tr>
-		
+
 		<xp:repeat id="moduleRepeatM" rows="30" var="rowData">
 			<xp:this.value><![CDATA[#{javascript:var moduleP:java.util.Vector = viewScope.modulePermission;
 if(moduleP!=null){
@@ -47,7 +63,7 @@ return moduleP;
 					</xp:section>
 				</xp:td>
 
-			
+
 			</xp:tr>
 
 		</xp:repeat>

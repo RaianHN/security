@@ -11,7 +11,7 @@
 		<xc:BsuiteTitleBar></xc:BsuiteTitleBar>		
 		<xc:BsuiteMain rendered="false"></xc:BsuiteMain>
 		<xp:div id="ConfigureDiv">
-			<xp:div id="CCLoadDiv" style="height:682px;width:100%;"
+			<xp:div id="CCLoadDiv" style="height:auto;width:100%"
 				binding="#{wrkspc.tabs}">
 			</xp:div>
 		</xp:div>
