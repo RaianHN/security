@@ -7,14 +7,10 @@ import lotus.domino.Database;
 import lotus.domino.DbDirectory;
 import lotus.domino.Document;
 import lotus.domino.Name;
-import lotus.domino.NotesException;
-import lotus.domino.NotesFactory;
-import lotus.domino.Session;
 import lotus.domino.View;
 import bsuite.weber.model.BsuiteWorkFlow;
 import bsuite.weber.tools.BSUtil;
 
-import com.ibm.security.pkcs7.Data;
 import com.ibm.xsp.extlib.util.ExtLibUtil;
 
 public class CreateDatabase extends BsuiteWorkFlow {
@@ -26,6 +22,7 @@ public class CreateDatabase extends BsuiteWorkFlow {
 			// //NotesFactory.createSession();
 
 			Database db1 = null;
+			@SuppressWarnings("unused")
 			Database currentdb = ExtLibUtil.getCurrentDatabase();
 			String path = BSUtil.getBsuitePath(ExtLibUtil.getCurrentDatabase());
 			boolean found = false;
@@ -108,6 +105,7 @@ public class CreateDatabase extends BsuiteWorkFlow {
 		return null;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void createViewColumn(View view,int pos,String title,String formula){
 		try{
 			System.out.println("inside createViewColumn");
@@ -126,6 +124,7 @@ public class CreateDatabase extends BsuiteWorkFlow {
 		
 	}
 
+@SuppressWarnings("unchecked")
 public void createDatabases(Vector<String> modules) {
 		DefineModule dmodule = new DefineModule();
 		View view1=null;
@@ -281,6 +280,7 @@ public void createDatabases(Vector<String> modules) {
 		
 	
 	}
+	@SuppressWarnings("unused")
 	private String getFormattedName(String currentuser, String param) {
 		try {			
 
@@ -301,6 +301,7 @@ public void createDatabases(Vector<String> modules) {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	public void createDatabases(){
 		DefineModule def = new DefineModule();
 		Vector<String> moduleNames = def.getModules();

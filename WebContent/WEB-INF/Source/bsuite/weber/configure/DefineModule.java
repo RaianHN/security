@@ -20,6 +20,7 @@ import lotus.domino.ViewEntryCollection;
 
 import bsuite.weber.model.BsuiteWorkFlow;
 
+@SuppressWarnings("unused")
 public class DefineModule extends BsuiteWorkFlow {
 	public void addModules(Vector<String> modules) {
 		for (String moduleName : modules) {
@@ -72,6 +73,7 @@ public class DefineModule extends BsuiteWorkFlow {
 	}
 	
 	
+	@SuppressWarnings("unchecked")
 	public void addFeatures(String moduleName,Vector<String> featurenames){
 		try{
 			
@@ -121,6 +123,7 @@ public class DefineModule extends BsuiteWorkFlow {
 		
 	}
 
+	@SuppressWarnings("unchecked")
 	public void addEntity(String moduleName, String entityName,
 			Vector<String> fields) {
 
@@ -178,6 +181,7 @@ public class DefineModule extends BsuiteWorkFlow {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public Vector getModules() {
 		System.out.println("inside get modules");
 		View moduleView= null;
@@ -275,6 +279,7 @@ public class DefineModule extends BsuiteWorkFlow {
 		
 	}
 
+	@SuppressWarnings("unchecked")
 	public Vector getRoles(){
 		Document roleDoc = getRoleDocument();
 		String roleJson="";
@@ -402,6 +407,7 @@ public class DefineModule extends BsuiteWorkFlow {
 	}
 	
 	
+	@SuppressWarnings("unchecked")
 	public Vector getEntityNames(String moduleName){
 		String moduleJson = getModuleJson(moduleName);
 		ObjectMapper mapper = new ObjectMapper();
@@ -428,6 +434,7 @@ public class DefineModule extends BsuiteWorkFlow {
 		
 		return null;
 	}
+	@SuppressWarnings("unchecked")
 	public ArrayList getEntities(String moduleName){
 		String moduleJson = getModuleJson(moduleName);
 		ObjectMapper mapper = new ObjectMapper();

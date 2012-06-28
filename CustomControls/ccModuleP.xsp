@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xp:view xmlns:xp="http://www.ibm.com/xsp/core" id="ccModuleP">
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
 
 
-	<xp:table>
+	<xp:table style="width:100.0%">
 		<xp:tr>
 			<xp:td>
-				
+
 			</xp:td>
 			<xp:td></xp:td>
 		</xp:tr>
@@ -21,9 +21,25 @@
 
 								<xp:td
 									style="background-color:rgb(192,192,192);border-color:rgb(128,128,128)">
-									<xp:label value="Tab Visibility"
-										id="label1" style="font-weight:bold">
+									<xp:label value="Module" id="label1"
+										style="font-weight:bold">
 									</xp:label>
+								</xp:td>
+								<xp:td
+									style="background-color:rgb(192,192,192);border-color:rgb(128,128,128)">
+
+									<xp:label value="Tab Visibility"
+										id="label11" style="font-weight:bold">
+									</xp:label>
+								</xp:td>
+							</xp:tr>
+
+							<xp:tr>
+								<xp:td>
+									<xp:text escape="true"
+										id="moduleM">
+										<xp:this.value><![CDATA[#{javascript:@Left(rowData,":");}]]></xp:this.value>
+									</xp:text>
 								</xp:td>
 								<xp:td>
 									<xp:checkBox id="tabVChk">
@@ -34,7 +50,6 @@ return true;
 									</xp:checkBox>
 								</xp:td>
 							</xp:tr>
-
 						</xp:table>
 						<xp:br></xp:br>
 					</xp:section>

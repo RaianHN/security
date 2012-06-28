@@ -9,7 +9,6 @@ import com.ibm.xsp.extlib.util.ExtLibUtil;
 
 import lotus.domino.Database;
 import lotus.domino.Document;
-import lotus.domino.DocumentCollection;
 import lotus.domino.NotesException;
 import lotus.domino.Session;
 import lotus.domino.View;
@@ -20,7 +19,7 @@ public class ActivityList {
 	private List<Activity> activities ;
 	private Session session;
 	private FacesContext context;
-	@SuppressWarnings("unused")
+	@SuppressWarnings({ "unused", "unchecked" })
 	private Map viewScope;
 	private Database currentdb;
 	private Object bsuitepath;

@@ -1,10 +1,7 @@
 package bsuite.weber.data;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.faces.FacesException;
@@ -12,15 +9,11 @@ import javax.faces.FacesException;
 import lotus.domino.Database;
 import lotus.domino.Document;
 import lotus.domino.NotesException;
-import lotus.domino.Session;
-
-
 import bsuite.weber.model.BsuiteWorkFlow;
 import bsuite.weber.relationship.Association;
 import bsuite.weber.tools.BSUtil;
 import bsuite.weber.tools.JSFUtil;
 
-import com.ibm.domino.xsp.module.nsf.NotesContext;
 import com.ibm.xsp.extlib.util.ExtLibUtil;
 
 
@@ -40,6 +33,7 @@ public class NSFPageDataProvider extends BsuiteWorkFlow implements DataObjectExt
 	private String m_documentId;
 	private String bsuitepath;
 	//to get the viewScope variable
+	@SuppressWarnings("unchecked")
 	Map viewScope=(Map) JSFUtil.getVariableValue("viewScope");
 	//Map sessionScope = (Map) JSFUtil.getVariableValue("sessionScope");
 	//Map sessionScope=(Map) JSFUtil.getVariableValue("sessionScope");
@@ -51,6 +45,7 @@ public class NSFPageDataProvider extends BsuiteWorkFlow implements DataObjectExt
 		
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void reset(){
 		System.out.println(" reset called");
 		m_cachedValues.clear();
@@ -104,6 +99,7 @@ public class NSFPageDataProvider extends BsuiteWorkFlow implements DataObjectExt
 	 * @return document or <code>null</code> if the document has not been saved before
 	 * @throws NotesException
 	 */
+	@SuppressWarnings("unchecked")
 	private Document getDocument() throws NotesException {
 		String documentId=getDocumentId();
 		if ("".equals(documentId))
@@ -181,6 +177,7 @@ public class NSFPageDataProvider extends BsuiteWorkFlow implements DataObjectExt
 
 	
 	
+	@SuppressWarnings("unchecked")
 	public void store() {
 		Map sessionscope=(Map) JSFUtil.getVariableValue("sessionScope");
 		Map viewScope=(Map) JSFUtil.getVariableValue("viewScope");

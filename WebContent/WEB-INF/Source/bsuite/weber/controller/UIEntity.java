@@ -14,13 +14,13 @@ import javax.faces.el.ValueBinding;
 import bsuite.weber.tools.JSFUtil;
 
 import com.ibm.xsp.component.UIPanelEx;
-import com.ibm.xsp.component.xp.XspInputText;
 import com.ibm.xsp.component.xp.XspInputTextarea;
 import com.ibm.xsp.dojo.DojoAttribute;
 
 public class UIEntity {
 	@SuppressWarnings("unchecked")
 	private static Map viewscope;
+	@SuppressWarnings("unchecked")
 	private static Map requestscope;
 	private static int count1;
 	
@@ -46,7 +46,8 @@ public class UIEntity {
 			return entity;
 			
 		}
-	  public static void createEntity(UIComponent com)
+	  @SuppressWarnings("unchecked")
+	public static void createEntity(UIComponent com)
 	 	{	try {
 			entity = null;			
 				System.out.println("new field");

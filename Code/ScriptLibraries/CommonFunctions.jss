@@ -616,5 +616,8 @@ function crateFeaturePermArr() {
     viewScope.result = result;
 }
 
+function createModulePermArr(){
+	
+}
 
 

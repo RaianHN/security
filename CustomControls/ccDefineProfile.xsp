@@ -5,7 +5,7 @@
 	<xc:ccApiInspector></xc:ccApiInspector>
 	<xp:this.beforePageLoad><![CDATA[#{javascript:var profileNames = getProfiles();
 viewScope.profileNames = profileNames;}]]></xp:this.beforePageLoad>
-	<xp:table>
+	<xp:table style="width:100%">
 		<xp:tr>
 			<xp:td>
 				<xp:span style="font-weight:bold">Profile</xp:span>
@@ -52,7 +52,7 @@ bsuite.weber.loadcc.DynamicCC.loadCC(s, component, c1, id);}]]></xp:this.action>
 		
 		<xp:tr>
 			<xp:td colspan="5">
-				<xp:panel id="panelPermission"></xp:panel>
+				<xp:panel id="panelPermission" style="width:auto"></xp:panel>
 			</xp:td>
 		</xp:tr>
 	</xp:table>

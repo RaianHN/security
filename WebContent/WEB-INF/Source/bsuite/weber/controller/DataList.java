@@ -22,7 +22,7 @@ public class DataList {
 	private List<DataBmod> datalist ;
 	private Session session;
 	private FacesContext context;
-	@SuppressWarnings("unused")
+	@SuppressWarnings("unchecked")
 	private Map viewscope;
 	private Database currentdb;
 	private Object bsuitepath;
@@ -30,9 +30,11 @@ public class DataList {
 	private Database actdb;
 	private Database userdb;
 	public Document doc;
+	@SuppressWarnings({ "unchecked", "unused" })
 	private Vector key;
 	private View actview;
 	private View userview;
+	@SuppressWarnings("unchecked")
 	private Map requestscope;
 	
 	
@@ -84,8 +86,7 @@ public class DataList {
 	 
 }
  
- @SuppressWarnings("unchecked")
-public void findbykey() {
+ public void findbykey() {
 	 
 	// System.out.println("find by key");
 	 datalist=null;
@@ -133,7 +134,8 @@ public void findbykey() {
 		
 		  
  }
- public void initworkflow() {
+ @SuppressWarnings("unchecked")
+public void initworkflow() {
 	
 	  session = ExtLibUtil.getCurrentSession();
 		 context = FacesContext.getCurrentInstance();
@@ -156,7 +158,8 @@ public void findbykey() {
 			e.printStackTrace();
 		}
 	}
- public void checklength(String s){
+ @SuppressWarnings("unchecked")
+public void checklength(String s){
 	 int t=3;
 	 System.out.println("checklength");
 	StringBuffer bf = new StringBuffer();

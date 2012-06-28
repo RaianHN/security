@@ -17,8 +17,10 @@ public class Associate {
 
 	private Session session;
 	private FacesContext context;
+	@SuppressWarnings("unchecked")
 	private Map viewscope;
 	private Database currentdb;
+	@SuppressWarnings({ "unused", "unchecked" })
 	private Map requestscope;
 	private String sourcedb;
 	private String source_id;
@@ -28,6 +30,7 @@ public class Associate {
 	private String trg_disp;
 	private String bsuitepath;
 	private Database reldb;
+	@SuppressWarnings("unused")
 	private String relationid;
 
 

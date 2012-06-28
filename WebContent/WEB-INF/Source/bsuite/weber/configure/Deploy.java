@@ -61,6 +61,7 @@ public class Deploy extends BsuiteWorkFlow{
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public void createProfileDocument(Database db, String profileName) {
 		// Creates the profile document in security.nsf
 

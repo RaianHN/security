@@ -7,6 +7,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 public class EntitySchema {
 	
+	@SuppressWarnings("unchecked")
 	public static void createEntity(String eName,Vector fieldNames,Vector featureNames){
 		
 	Entity entity=new Entity();	

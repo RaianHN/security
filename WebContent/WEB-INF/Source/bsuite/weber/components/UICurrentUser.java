@@ -1,24 +1,16 @@
 package bsuite.weber.components;
 
 import java.io.Serializable;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.StringTokenizer;
 import java.util.Vector;
 
-import javax.annotation.PreDestroy;
 import javax.faces.application.Application;
 import javax.faces.component.UIComponent;
-import javax.faces.component.UIComponentBase;
-import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 
 import bsuite.weber.backend.PageDataBean;
-import bsuite.weber.model.User;
 import bsuite.weber.tools.BSUtil;
 import bsuite.weber.tools.CompUtil;
 import bsuite.weber.tools.JSFUtil;
@@ -26,8 +18,6 @@ import bsuite.weber.tools.StringUtil;
 
 import com.ibm.xsp.component.xp.XspCommandButton;
 import com.ibm.xsp.component.xp.XspEventHandler;
-import com.ibm.xsp.component.xp.XspInputText;
-import com.ibm.xsp.component.xp.XspOutputLabel;
 import com.ibm.xsp.component.xp.XspTable;
 import com.ibm.xsp.component.xp.XspTableCell;
 import com.ibm.xsp.component.xp.XspTableRow;
@@ -35,23 +25,11 @@ import com.ibm.xsp.component.xp.XspViewColumn;
 import com.ibm.xsp.component.xp.XspViewColumnHeader;
 import com.ibm.xsp.component.xp.XspViewPanel;
 import com.ibm.xsp.component.UIPanelEx;
-import com.ibm.xsp.component.UIViewRootEx;
-import com.ibm.xsp.context.FacesContextFactoryImpl;
 import com.ibm.xsp.extlib.component.dojo.layout.UIDojoBorderContainer;
 import com.ibm.xsp.extlib.component.dojo.layout.UIDojoBorderPane;
 import com.ibm.xsp.extlib.util.ExtLibUtil;
 import com.ibm.xsp.model.domino.DominoViewData;
-import com.ibm.xsp.page.FacesPage;
-import com.ibm.xsp.page.compiled.AbstractCompiledPage;
-import com.ibm.xsp.page.compiled.NoSuchComponentException;
-import com.ibm.xsp.page.compiled.PageExpressionEvaluator;
 import com.ibm.xsp.util.ManagedBeanUtil;
-import com.ibm.xsp.complex.ValueBindingObjectImpl;
-
-
-import javax.faces.el.MethodBinding;
-import javax.faces.el.ValueBinding;
-
 import lotus.domino.Database;
 import lotus.domino.Document;
 import lotus.domino.NotesException;
@@ -65,20 +43,19 @@ public  class UICurrentUser implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 9210156024665912046L;
-	private static Object dataItem;
-	private static Object user;
 	private static String m_documentId;
 	private UIPanelEx userpanel;
 	private UIPanelEx pagePanel;
 	public static FacesContext context;
-	private Application app;
 	private final String BEAN_NAME= "user";
 	private String[] fields;
 	private String newfield;
+	@SuppressWarnings("unchecked")
 	private Map requestscope;
 	private Vector<ViewColumn> viewlist;
 	private Database userdb;
 	private String bsuitepath;
+	@SuppressWarnings("unchecked")
 	private static Map sessionscope;
 	
 	
@@ -100,6 +77,7 @@ public  class UICurrentUser implements Serializable {
 		
 		return userpanel;// return dynamicDataTableGroup;
 	}
+	@SuppressWarnings("unchecked")
 	public void resetUIform(UIComponent com,String id){
 		m_documentId=null;
 		UIComponent parentpanel= com.getParent();
@@ -148,13 +126,14 @@ public  class UICurrentUser implements Serializable {
 		userpanel = null;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public UIPanelEx getPage() {
 		pagePanel = null;
 		m_documentId=null;
 		context=FacesContext.getCurrentInstance();
 		requestscope = (Map) JSFUtil.getVariableValue("requestScope");	
 		sessionscope = (Map) JSFUtil.getVariableValue("sessionScope");
-		app = FacesContext.getCurrentInstance().getApplication();
+		FacesContext.getCurrentInstance().getApplication();
 	
 		//System.out.println("Starting Page construct");
 		if (pagePanel == null) {
@@ -190,7 +169,8 @@ public  class UICurrentUser implements Serializable {
 		
 		//	System.out.println("Loading view to panel1"); //Loading view to panel1
 		 
-		 XspViewPanel viewpanel= createViewTable(panel1);
+		 @SuppressWarnings("unused")
+		XspViewPanel viewpanel= createViewTable(panel1);
          
 		// System.out.println("adding form container to panel2"); //adding form container to panel2
 		 UIDojoBorderPane panel2 = CompUtil.createDjborderpanel(pgcontainer, "panel2", "center", true);
@@ -214,6 +194,7 @@ public  class UICurrentUser implements Serializable {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	private XspViewPanel createViewTable(UIDojoBorderPane panel1)  {
 		XspViewPanel viewpanel=CompUtil.createViewpanel( panel1, "viewPanel1", "viewentry1");
 		 DominoViewData data = CompUtil.createDominoViewData("Demo2\\user.nsf","userprofile","view1");
@@ -235,9 +216,6 @@ public  class UICurrentUser implements Serializable {
         	try {
 				if(!((vc.getTitle().equals("REF"))||(vc.getTitle().equals("VerRef")))){
 					System.out.println(vc.getTitle()+" : "+vc.getItemName());
-					String link= "";
-					Boolean chkbox=false;
-					XspEventHandler ev10=null;
 					XspViewColumn vcol;
 					XspViewColumnHeader vhead;
 				/*	if(i==1){
@@ -298,10 +276,7 @@ public  class UICurrentUser implements Serializable {
 		requestscope = (Map) JSFUtil.getVariableValue("requestScope");
 		System.out.println("requestscopevalue: "+requestscope.toString());
 		sessionscope = (Map) JSFUtil.getVariableValue("sessionScope");
-		//UIViewRootEx uivw= (UIViewRootEx) context.getViewRoot();
-		//Class<?> c=context.getApplication().getPropertyResolver().getType(user, "contact");
-		// if(!(c.equals(null))){System.out.println(c.toString());}     
-		app = FacesContext.getCurrentInstance().getApplication();
+		FacesContext.getCurrentInstance().getApplication();
 		userpanel= new UIPanelEx();	
 			
 	
@@ -358,6 +333,7 @@ public  class UICurrentUser implements Serializable {
 	
 	//For now creating form table is specific to need -- needs to be generalised
 	
+	@SuppressWarnings("unchecked")
 	public void createFormTable(UIComponent parent,String[] flist,String id){
 		XspTable utable = new XspTable();
 
@@ -473,7 +449,6 @@ public  class UICurrentUser implements Serializable {
 		System.out.println("end Action bar creation");
 	}
 	
-		@SuppressWarnings("unchecked")
 		public void getAddNewRow(UIComponent com, String nf){	
 		newfield=nf;
 			
@@ -654,7 +629,6 @@ public  class UICurrentUser implements Serializable {
 	}
 
 	
-	@SuppressWarnings("unchecked")
 	private static String getDocumentId() {
 		
 			

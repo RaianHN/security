@@ -64,7 +64,8 @@ function getModulePermission(clId,numberOfModules){
 		
 	//clId: The base client id of the page ex:view:_id1:_id2
 
-	
+	//clId   view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:modulediv
+	//Module computed field id   view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:modulediv:moduleRepeatM:0:ccModuleP:repeatModules:0:moduleM
 
 
 
@@ -82,14 +83,14 @@ function getModulePermission(clId,numberOfModules){
 	var editArray = new Array();
 	
 	for (i = 0; i < size; i++) {
-	    moduleComp = document.getElementById(clId + ":moduleRepeatM:" + i + ":moduleNameM");
+	    moduleComp = document.getElementById(clId + ":moduleRepeatM:" + i + ":ccModuleP:repeatModules:0:moduleM");
 	    if (moduleComp != null) {
 	        moduleName = moduleComp.innerHTML;	        
 	      
 	            if (moduleName != "") {
 	                             
 	               
-	                    chkbx = document.getElementById(clId + ":moduleRepeatM:" + i + ":chk");
+	                    chkbx = document.getElementById(clId + ":moduleRepeatM:" + i + ":ccModuleP:repeatModules:0:tabVChk");
 	                    if (chkbx != null) {
 	                        if (chkbx.checked) {
 	                            editArray[k++] = moduleName + ":" + "1";
@@ -108,8 +109,15 @@ function getModulePermission(clId,numberOfModules){
 
 }
 
-var tabs = dijit.byId("view:_id1:_id2:MainTabContainer");
-dojo.connect(tabs,"_transition", function(newPage, oldPage){
-    console.log("I was showing: ", oldPage || "nothing");
-    console.log("I am now showing: ", newPage);
-});
+function savePermission(){
+	
+	alert("insied save permission");
+	var profName = "#{javascript:getComponent(\"moduleCombo\").getValue();}"
+		alert("insied save permission1");
+
+	var nModules = "#{javascript:new bsuite.weber.jsonparsing.ProfileEdit().getNumberOfMOdules(\""+profName+"\");}"
+	alert("insied save permission2");
+
+	console.log("%o",profName);
+	console.log("%0",nModules);
+}
