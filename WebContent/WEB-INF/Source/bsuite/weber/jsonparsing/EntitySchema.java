@@ -28,7 +28,7 @@ public class EntitySchema {
 	//to set the entityname
 	  entity.setEntityName(eName);
 	  entity.setFields(flds);
-	  entity.setFeatures(ftrs);
+	 // entity.setFeatures(ftrs);
 	  
 	  ObjectMapper mapper=new ObjectMapper();
 	  String val="";

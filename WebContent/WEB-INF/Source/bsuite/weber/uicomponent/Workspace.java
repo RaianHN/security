@@ -204,7 +204,8 @@ public class Workspace extends BsuiteWorkFlow implements Serializable{
 	public void createFeatureButtons(UIComponent actionpanel,String moduleName,String entityName){
 		//For this entity what features are available that needs to be populated by this method
 		Profile profile = (Profile) JSFUtil.getBindingValue("#{security.profile}");
-		ArrayList<String> features = profile.getVisibleFeaturesNames(moduleName, entityName);
+		//ArrayList<String> features = profile.getVisibleFeaturesNames(moduleName, entityName);
+		ArrayList<String> features = profile.getVisibleFeaturesNames(moduleName);
 	
 		for(String x:features){
 			String expression2="alert(\"Hello: \""+x+")";

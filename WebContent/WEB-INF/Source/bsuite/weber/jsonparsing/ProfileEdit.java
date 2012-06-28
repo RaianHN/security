@@ -69,11 +69,11 @@ public class ProfileEdit extends BsuiteWorkFlow  {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		setFeatureViewScopeCrud(getJsonProfileObj(jsonString), moduleName,entityName);
+		//setFeatureViewScopeCrud(getJsonProfileObj(jsonString), moduleName,entityName);
 		
 	}
 	
-	public void getFeaturePermission(String profileName, String moduleName){
+	public Vector<String> getFeaturePermission(String profileName, String moduleName){
 		Document profDoc = getProfileDoc(getSecurityDatabase(),profileName);
 		String jsonString="";
 		try {
@@ -82,7 +82,7 @@ public class ProfileEdit extends BsuiteWorkFlow  {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		setFeatureViewScopeCrud(getJsonProfileObj(jsonString), moduleName,entityName);
+		return setFeatureViewScopeCrud(getJsonProfileObj(jsonString), moduleName);
 		
 	}
 
@@ -257,7 +257,7 @@ public void setFieldViewScopeCrud(ProfileJson profile,String moduleName,String e
 	
 }
 
-public void setFeatureViewScopeCrud(ProfileJson profile,String moduleName,String entityName){
+public Vector<String> setFeatureViewScopeCrud(ProfileJson profile,String moduleName){
 	Vector<String> featureSecurity = new Vector<String>();
 	Module module = null;
 	//System.out.println("inside entity perm "+profile.getProfName()+" "+moduleName);
@@ -268,19 +268,13 @@ public void setFeatureViewScopeCrud(ProfileJson profile,String moduleName,String
 		}
 		
 	}
-	Entity entity = null;
-	for(Entity e:module.getEntities()){			
-		if(e.getEntityName().equals(entityName)){
-			entity = e;
-			break;
-		}
-	}
-	
-	for(Feature f:entity.getFeatures()){			
+
+	for(Feature f:module.getFeatures()){			
 		featureSecurity.add(f.getFeatureName()+":"+f.getVisible());
 	}
 	System.out.println("vect entity perm"+featureSecurity);
 	viewScope.put("featurePerm", featureSecurity);
+	return featureSecurity;
 	
 	
 }
@@ -446,7 +440,7 @@ public void saveFieldPerm(String profileName, String moduleName,String entityNam
 	
 }
 
-
+/*
 public void saveFeaturePerm(String profileName, String moduleName,String entityName, String vals){
 	System.out.println("inside save"+vals);
 	System.out.println("entity name"+moduleName);
@@ -575,12 +569,12 @@ public Vector<String> getFieldNames(String profileName,String moduleName,String 
 		return fields;
 	}
 
-public Vector<String> getFeatureNames(String profileName,String moduleName,String entityName){
+public Vector<String> getFeatureNames(String profileName,String moduleName){
 	ProfileJson profile = getProfileObj(profileName);
 	Module module = getModule(profile,moduleName);
-	Entity entity = getEntity(profile,module,entityName);
+	
 	Vector<String> features = new Vector<String>();
-	for(Feature feature:entity.getFeatures()){
+	for(Feature feature:module.getFeatures()){
 		features.add(feature.getFeatureName());
 		}
 		return features;
