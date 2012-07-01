@@ -146,6 +146,7 @@ dojo.require('dijit.Dialog');
 
 
 XSP.executeOnServer = function () {
+	//alert("inside execute on server function")
 	// must supply event handler id or we're outta here....
 	if (!arguments[0])
 		return false;

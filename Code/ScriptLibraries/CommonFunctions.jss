@@ -434,44 +434,39 @@ function setModulePermission(profileName){
 	entityCrud.saveModulePerm(profileName,context.getSubmittedValue());
 }
 
-function setEntityPermission(profileName,moduleName){
-	var profileName = getComponent("entityCombo1").getValue();
-	var moduleName = getComponent("entityCombo2").getValue();
+function setEntityPermission(){
+	var profileName = getComponent("moduleCombo").getValue();
+
 	println("profileName"+profileName);
-	println("moduleName"+moduleName);
 	var arr = context.getSubmittedValue().split(",");
 	var entityCrud = new bsuite.weber.jsonparsing.ProfileEdit;
 	println("setting field permission"+typeof(arr)+"submitted type"+typeof(context.getSubmittedValue()));
 	
-	entityCrud.saveEntityPerm(profileName,moduleName,context.getSubmittedValue());
+	entityCrud.saveEntityPerm(profileName,context.getSubmittedValue());
 }
 function setFieldPermission(profileName,moduleName,entityName){
-	var profileName = getComponent("fieldCombo1").getValue();
-	var moduleName = getComponent("fieldCombo2").getValue();
-	var entityName = getComponent("fieldCombo3").getValue();
-	println("profileName"+profileName);
-	println("moduleName"+moduleName);
-	println("entityName"+entityName);
+	var profileName = getComponent("moduleCombo").getValue();
+
+
 	var arr = context.getSubmittedValue().split(",");
 	var fieldCrud = new bsuite.weber.jsonparsing.ProfileEdit;
 	println("setting field permission"+typeof(arr)+"submitted type"+typeof(context.getSubmittedValue()));
 	
-	fieldCrud.saveFieldPerm(profileName,moduleName,entityName,context.getSubmittedValue());
+	fieldCrud.saveFieldPerm(profileName,context.getSubmittedValue());
 }
 
-function setFeaturePermission(profileName,moduleName,entityName){
-	var profileName = getComponent("featureCombo1").getValue();
-	var moduleName = getComponent("featureCombo2").getValue();
-	var entityName = getComponent("featureCombo3").getValue();
+function setFeaturePermission(){
+	var profileName = getComponent("moduleCombo").getValue();
+	
 	
 	println("profileName"+profileName);
-	println("moduleName"+moduleName);
-	println("entityName"+entityName);
+
 	var arr = context.getSubmittedValue().split(",");
 	var featureCrud = new bsuite.weber.jsonparsing.ProfileEdit;
 	println("setting feature permission"+typeof(arr)+"submitted type"+typeof(context.getSubmittedValue()));
 	
-	featureCrud.saveFeaturePerm(profileName,moduleName,entityName,context.getSubmittedValue());
+	//featureCrud.saveFeaturePerm(profileName,moduleName,entityName,context.getSubmittedValue());
+	featureCrud.saveFeaturePerm(profileName,context.getSubmittedValue());
 }
 
 
@@ -620,4 +615,66 @@ function createModulePermArr(){
 	
 }
 
+function getNumberOfModules(profileName){
+	println("in getn");
+	profileName = context.getSubmittedValue();
+	println("in getn"+profileName);
+	var moduleN = new bsuite.weber.jsonparsing.ProfileEdit().getNumberOfMOdules(profileName);
+	getComponent("inputNModules").setValue(moduleN);
+}
+function getNumberOfFeatures(){
+	println("in getn features");
+	params = context.getSubmittedValue().split(":");//will hold profileName,moduleName
+	profileName = params[0];
+	moduleName = params[1];
+	println("in getn "+profileName+" "+moduleName);
+	var featuresN = new bsuite.weber.jsonparsing.ProfileEdit().getNumberOfFeatures(profileName,moduleName);
+	getComponent("inputNFeatures").setValue(featuresN);
+	println("in get features "+profileName+" "+moduleName+" "+featuresN);
+	
+}
+function getNumberOfEntities(profileName, moduleName){
+	println("in getn entities");
+	params = context.getSubmittedValue().split(":");//will hold profileName,moduleName
+	profileName = params[0];
+	moduleName = params[1];
+	println("in getn "+profileName+" "+moduleName);
+	var entitiesN = new bsuite.weber.jsonparsing.ProfileEdit().getNumberOfEntities(profileName, moduleName);
+	getComponent("inputNEntities").setValue(entitiesN);
+	println("in get entities "+profileName+" "+moduleName+" "+entitiesN);
+}
+function getNumberOfFields(profileName, moduleName, entityName){
+	println("in getn");
+	params = context.getSubmittedValue().split(":");//will hold profileName,moduleName, entityName
+	profileName = params[0];
+	moduleName = params[1];
+	entityName = params[2];
+	println("in getn "+profileName+" "+moduleName);
+	var fieldsN = new bsuite.weber.jsonparsing.ProfileEdit().getNumberOfFields(profileName, moduleName, entityName);
+	getComponent("inputNFields").setValue(fieldsN);
+	
+}
+
+function setProfileNumbers(){
+	var profileName = getComponent("moduleCombo").getValue();
+	//--Select Profile--
+	if(profileName=="--Select Profile--"){
+		return ;
+	}
+	
+	var profileEdit = new bsuite.weber.jsonparsing.ProfileEdit();
+	var strModuleN = profileEdit.getModuleN(profileName);
+	var strFeatureN = profileEdit.getFeatureN(profileName);
+	var strEntityN = profileEdit.getEntityN(profileName);
+	var strFieldN  = profileEdit.getFieldN(profileName);
+	
+	
+	getComponent("inputNModules").setValue(strModuleN);
+	getComponent("inputNFeatures").setValue(strFeatureN);
+	getComponent("inputNEntities").setValue(strEntityN);
+	getComponent("inputNFields").setValue(strFieldN);
+	
+	
+	
+}
 

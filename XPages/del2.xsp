@@ -3,6 +3,12 @@
 	xmlns:xc="http://www.ibm.com/xsp/custom">
 
 	1&#160;
+	<xp:this.resources>
+		<xp:script src="/Copy Of CustomControlLib.js"
+			clientSide="true">
+		</xp:script>
+		<xp:script src="/CommonFunctions.jss" clientSide="false"></xp:script>
+	</xp:this.resources>
 	<xp:button value="Label" id="button1">
 		<xp:eventHandler event="onclick" submit="true"
 			refreshMode="complete">
@@ -20,6 +26,11 @@ console.log("%o",ar);]]></xp:this.script>
 		</xp:eventHandler>
 	</xp:button>
 	<xp:br></xp:br>
-	
+
 	<xc:ccPermissions></xc:ccPermissions>
+	<xp:eventHandler id="eventNModules" event="onDojo">
+		<xp:this.action><![CDATA[#{javascript:println("calling event");
+		getNumberOfModules("Admin");
+		println("calling event");}]]></xp:this.action>
+	</xp:eventHandler>
 </xp:view>

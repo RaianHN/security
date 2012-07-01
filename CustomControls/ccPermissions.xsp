@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xp:view xmlns:xp="http://www.ibm.com/xsp/core"
 	xmlns:xc="http://www.ibm.com/xsp/custom" id="ccPermissions">
-	<xp:this.resources>
-		<xp:script src="/commonCScript.js" clientSide="true"></xp:script>
-	</xp:this.resources>
+
+
+
+	
+	<xp:this.afterPageLoad><![CDATA[#{javascript:getComponent("inputNModules").setValue("Modules:3");
+getComponent("inputNFeatures").setValue("Documents:2,In out:2,Employees:2");
+getComponent("inputNEntities").setValue("Documents:1,In out:0,Employees:2");
+getComponent("inputNFields").setValue("Documents+Document:2,In Out+0:0,Employees+Employee:3,Employees+Activity:2");
+//setProfileNumbers();}]]></xp:this.afterPageLoad>
 	<xp:table id="table1" border="1" style="width:100%">
 
 		<xp:tr>
@@ -41,9 +47,30 @@
 					value="#{javascript:this.getClientId(facesContext);}">
 				</xp:text>
 				<xp:button value="Label" id="button1">
-					<xp:eventHandler event="onclick" submit="false">
-						<xp:this.script><![CDATA[savePermission()]]></xp:this.script>
+
+
+				<xp:eventHandler event="onclick" submit="false">
+					<xp:this.script><![CDATA[//alert("ex");
+XSP.executeOnServer('view:_id1:eventNModules', "", "", "Admin");
+var nModules = '#{javascript:viewScope.nModules}';
+console.log("%o",nModules);
+//alert(nModules);]]></xp:this.script>
+				</xp:eventHandler></xp:button>
+				
+				<xp:inputHidden id="inputNModules"></xp:inputHidden>
+				<xp:inputHidden id="inputNFeatures"></xp:inputHidden>
+				<xp:inputHidden id="inputNEntities"></xp:inputHidden>
+				<xp:inputHidden id="inputNFields"></xp:inputHidden>
+				<xp:button value="Label" id="button2">
+					<xp:eventHandler event="onclick" submit="true"
+						refreshMode="complete">
+						<xp:this.action><![CDATA[#{javascript:setProfileNumbers();}]]></xp:this.action>
 					</xp:eventHandler></xp:button>
+				<xp:br></xp:br>
+				<xp:inputText id="inputNModules1"></xp:inputText>
+				<xp:inputText id="inputNFeatures1"></xp:inputText>
+				<xp:inputText id="inputNEntities1"></xp:inputText>
+				<xp:inputText id="inputNFields1"></xp:inputText>
 				<xp:table rendered="false">
 					<xp:tr>
 						<xp:td styleClass="debugButton" id="td1">

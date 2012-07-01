@@ -4,6 +4,10 @@
 
 	<xp:this.resources>
 		<xp:script src="/CommonFunctions.jss" clientSide="false"></xp:script>
+		<xp:script src="/commonCScript.js" clientSide="true"></xp:script>
+		<xp:script src="/Copy Of CustomControlLib.js"
+			clientSide="true">
+		</xp:script>
 	</xp:this.resources>
 	<xc:cc_tabtable></xc:cc_tabtable>
 	
@@ -16,20 +20,44 @@ println("calling event");}]]></xp:this.action>
 	
 	<xp:eventHandler id="eventEntityPerm" event="onDojo">
 		<xp:this.action><![CDATA[#{javascript:println("calling event");
-setEntityPermission(viewScope.profNam2,viewScope.moduleNam2);
+setEntityPermission();
 println("calling event");}]]></xp:this.action>
 	</xp:eventHandler>
 	
 	<xp:eventHandler id="eventFieldPerm" event="onDojo">
 		<xp:this.action><![CDATA[#{javascript:println("calling event");
-setFieldPermission(viewScope.profNam3,viewScope.moduleNam3,viewScope.entityNam3);
+setFieldPermission();
 println("calling event");}]]></xp:this.action>
 	</xp:eventHandler>
 
 		<xp:eventHandler id="eventFeaturePerm" event="onDojo">
 		<xp:this.action><![CDATA[#{javascript:println("calling event");
-setFeaturePermission(viewScope.profNam3,viewScope.moduleNam3,viewScope.entityNam3);
+setFeaturePermission();
 println("calling event");}]]></xp:this.action>
 	</xp:eventHandler>
+	
+	<xp:eventHandler id="eventNModules" event="onDojo">
+		<xp:this.action><![CDATA[#{javascript:println("calling event");
+		return getNumberOfModules();
+		}]]></xp:this.action>
+	</xp:eventHandler>
+		
+	<xp:eventHandler id="eventNFeatures" event="onDojo">
+		<xp:this.action><![CDATA[#{javascript:println("calling event");
+		getNumberOfFeatures();
+		println("calling event");}]]></xp:this.action>
+	</xp:eventHandler>
+	
+	<xp:eventHandler id="eventNEntities" event="onDojo">
+		<xp:this.action><![CDATA[#{javascript:println("calling event");
+		getNumberOfEntities();
+		println("calling event");}]]></xp:this.action>
+	</xp:eventHandler>
+	
+	<xp:eventHandler id="eventNFields" event="onDojo">
+		<xp:this.action><![CDATA[#{javascript:println("calling event");
+		getNumberOfFields();
+		}]]></xp:this.action>
+	</xp:eventHandler>	
 		
 </xp:view>

@@ -21,7 +21,8 @@ viewScope.profileNames = profileNames;}]]></xp:this.beforePageLoad>
 					</xp:selectItems>
 
 					<xp:eventHandler event="onchange" submit="true"
-						refreshMode="partial" refreshId="panelPermission" onStart="showWait()" onComplete="hideWait()">
+						refreshMode="partial" refreshId="panelPermission"
+						onStart="showWait()" onComplete="hideWait()">
 						<xp:this.action><![CDATA[#{javascript:viewScope.modulePermission = null;
 var profName = getComponent("moduleCombo").getValue();
 var moduleVisib = new bsuite.weber.jsonparsing.ProfileEdit();
@@ -29,12 +30,16 @@ moduleVisib.getModulePermission(profName);
 
 var component = getComponent('panelPermission'); 
 var s = facesContext;
-var c1="/ccPermissions.xsp"; 
+var c1="/ccPermissions.xsp";
+// var c1="/cc_TestPage.xsp";
 var id="modulediv";
 bsuite.weber.loadcc.DynamicCC.removePreview(component);
 bsuite.weber.loadcc.DynamicCC.loadCC(s, component, c1, id);}]]></xp:this.action>
 					</xp:eventHandler></xp:comboBox>
-			</xp:td>
+				<xp:button value="Label" id="button1">
+					<xp:eventHandler event="onclick" submit="false" onStart="showWait()" onComplete="hideWait()">
+						<xp:this.script><![CDATA[savePermissions();]]></xp:this.script>
+					</xp:eventHandler></xp:button></xp:td>
 			
 				
 
