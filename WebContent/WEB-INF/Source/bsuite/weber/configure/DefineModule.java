@@ -9,13 +9,14 @@ import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
-import lotus.domino.cso.Database;
+
 import lotus.domino.Document;
 import lotus.domino.DocumentCollection;
 import lotus.domino.NotesException;
 import lotus.domino.View;
 import lotus.domino.ViewEntry;
 import lotus.domino.ViewEntryCollection;
+
 
 import bsuite.weber.model.BsuiteWorkFlow;
 
@@ -54,9 +55,11 @@ public class DefineModule extends BsuiteWorkFlow {
 	 * @return JsonString This method generates the json string for this module
 	 */
 	private String createJsonString(String moduleName) {
+	
 
 		Module module = new Module();
 		module.setModuleName(moduleName);
+		
 		ObjectMapper mapper = new ObjectMapper();
 
 		try {
@@ -67,9 +70,59 @@ public class DefineModule extends BsuiteWorkFlow {
 
 		return null;
 	}
+	
+	
+	public void addFeatures(String moduleName,Vector<String> featurenames){
+		try{
+			
+			View modulesView = currentdb.getView("Modules");
+
+			Document moduleDoc = modulesView.getDocumentByKey(moduleName);
+
+			String jsonInput = moduleDoc.getItemValueString("JsonString");
+
+			ObjectMapper mapper = new ObjectMapper();
+			Module module = mapper.readValue(jsonInput, Module.class);
+			
+			ArrayList<Feature> features = null;
+			if (module.getFeatures() == null) {
+				features = new ArrayList();
+			} else {
+				features = module.getFeatures();
+			}
+			
+			
+			//ArrayList<Feature> featureList = new ArrayList<Feature>();		
+			
+			for (String s : featurenames) {
+				// Add features to the new entity
+			Feature feature=new Feature();
+				feature.setFeatureName(s);		
+				
+				features.add(feature);
+			}
+			module.setFeatures(features);
+		
+			moduleDoc.replaceItemValue("JsonString", mapper
+					.writeValueAsString(module));
+			moduleDoc.save();
+			
+		} catch (NotesException e) {
+			e.printStackTrace();
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		
+		
+	}
 
 	public void addEntity(String moduleName, String entityName,
-			Vector<String> fields, Vector<String> features) {
+			Vector<String> fields) {
 
 		try {
 
@@ -96,7 +149,7 @@ public class DefineModule extends BsuiteWorkFlow {
 		
 
 			ArrayList<Field> fieldsList = new ArrayList<Field>();
-			ArrayList<Feature> featureList = new ArrayList<Feature>();
+		
 
 			for (String s : fields) {
 				// Add fields to the new entity
@@ -104,15 +157,9 @@ public class DefineModule extends BsuiteWorkFlow {
 				field.setFieldName(s);
 				fieldsList.add(field);
 			}
-			for (String s : features) {
-				// Add features to the new entity
-				Feature feature = new Feature();
-				feature.setFeatureName(s);
-				featureList.add(feature);
-			}
+		
 			entity.setEntityName(entityName);
 			entity.setFields(fieldsList);
-			entity.setFeatures(featureList);
 			entities.add(entity);
 			module.setEntities(entities);
 
@@ -386,6 +433,7 @@ public class DefineModule extends BsuiteWorkFlow {
 		ObjectMapper mapper = new ObjectMapper();
 		Module module = null;
 		try {
+			System.out.println("json "+moduleJson);
 			module = mapper.readValue(moduleJson, Module.class);
 		} catch (JsonParseException e) {
 			e.printStackTrace();

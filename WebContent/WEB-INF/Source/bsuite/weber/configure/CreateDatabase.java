@@ -116,12 +116,10 @@ public class CreateDatabase extends BsuiteWorkFlow {
 			System.out.println("View Column title "+title);
 			System.out.println("View Column Formula  "+formula);
 			Vector columns=view.getColumns();
-			if(!columns.contains(title)){
-				
+			if(!(columns.contains(title))){
 				view.createColumn(pos,title,formula);
 			}
-				
-		
+			
 		}catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -180,6 +178,8 @@ public void createDatabases(Vector<String> modules) {
 			
 			Document empdoc=empdb.createDocument();
 			empdoc.replaceItemValue("Form","Employee");
+			//added on 18th July to store the username in the Employee document
+			empdoc.replaceItemValue("FullName", name);
 			empdoc.save(true,false);	
 		
 			String relId = getRelationNameUnid("IS_A");
@@ -328,9 +328,14 @@ public void createDatabases(Vector<String> modules) {
 			//empdoc.replaceItemValue("Form","Employee");
 			//empdoc.save(true,false);	
 			Document empdoc = empdb.getDocumentByUNID(edocid);
+			
+			
+			
 			String relId = getRelationNameUnid("IS_A");
 			createRelationship(persondoc.getUniversalID(),"names.nsf","Person","Employee.nsf","Employee",empdoc.getUniversalID(),relId);
-			
+			//Store the Person Name in the employee document so that user names should be shown while manually sharing the records
+			empdoc.replaceItemValue("FullName", personName);
+			empdoc.save(true,false);
 			
 			String src_data=personName;
 			String relationid = getRelationNameUnid("HAS_A");

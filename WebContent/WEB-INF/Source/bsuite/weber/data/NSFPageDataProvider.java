@@ -105,12 +105,13 @@ public class NSFPageDataProvider extends BsuiteWorkFlow implements DataObjectExt
 	 * @throws NotesException
 	 */
 	private Document getDocument() throws NotesException {
+		Map viewscope=(Map) JSFUtil.getVariableValue("viewScope");
 		String documentId=getDocumentId();
 		if ("".equals(documentId))
 			return null;
 		
 		//System.out.println("getDocument reference");
-		DocumentRef docRef=(DocumentRef) viewScope.get(VIEWSCOPE_DATADOCUMENT);
+		DocumentRef docRef=(DocumentRef) viewscope.get(VIEWSCOPE_DATADOCUMENT);
 		Document doc=docRef==null ? null : docRef.getDocument();
 		
 		if (doc==null || isRecycled(doc)) {
@@ -118,7 +119,15 @@ public class NSFPageDataProvider extends BsuiteWorkFlow implements DataObjectExt
 			//Session session=NotesContext.getCurrent().getCurrentSession();
 			System.out.println("getDocument reference is null");
 			bsuitepath=BSUtil.getBsuitePath(ExtLibUtil.getCurrentDatabase());
-			Database entitydb=ExtLibUtil.getCurrentSession().getDatabase("", bsuitepath+"employees.nsf");
+			String dbname=(String)viewscope.get("moduleName");
+			
+			if(dbname.contains("_")){
+				dbname=dbname.replace("_"," ");
+			}
+			
+			dbname=dbname.toLowerCase().replace(" ", "")+".nsf";
+			Database entitydb=ExtLibUtil.getCurrentSession().getDatabase("", bsuitepath+dbname);
+			System.out.println("Database where the current selected document is from "+dbname);
 			doc=entitydb.getDocumentByUNID(documentId);
 			//cache it in the viewscope until it gets invalid
 			viewScope.put(VIEWSCOPE_DATADOCUMENT, new DocumentRef(doc));
@@ -193,6 +202,9 @@ public class NSFPageDataProvider extends BsuiteWorkFlow implements DataObjectExt
 					//Session session=NotesContext.getCurrent().getCurrentSession();
 					bsuitepath=BSUtil.getBsuitePath(ExtLibUtil.getCurrentDatabase());
 					String dbname=(String)viewScope.get("moduleName");
+					if(dbname.contains("_")){
+						dbname=dbname.replace("_"," ");
+					}
 					dbname=dbname.toLowerCase().replace(" ", "")+".nsf";
 					System.out.println("Db Name  "+dbname);
 					Association as=new Association();

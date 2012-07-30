@@ -193,13 +193,20 @@ if (userName == "anonymous") {
 			<xe:basicLeafNode submitValue="datasharing"
 				label="Create DataSharing Rules">
 			</xe:basicLeafNode>
+			<xe:basicLeafNode label="Edit Role"
+				submitValue="editrole">
+			</xe:basicLeafNode>
+			<xe:basicLeafNode label="Edit Default Organization Setting"
+				submitValue="editdata">
+			</xe:basicLeafNode>
 		</xe:this.treeNodes>
-		
-		
-		<xp:eventHandler event="onItemClick" submit="true" refreshMode="partial">
-				<xp:this.action>
-					<xp:executeScript>
-						<xp:this.script><![CDATA[#{javascript:
+
+
+		<xp:eventHandler event="onItemClick" submit="true"
+			refreshMode="partial">
+			<xp:this.action>
+				<xp:executeScript>
+					<xp:this.script><![CDATA[#{javascript:
 
 var choice=context.getSubmittedValue()
 if(choice=="configure"){
@@ -234,12 +241,34 @@ var id="DataSharingdiv";
 com.weberon.DynamicCC.loadCCinTab(s,component,c1,id,"Data_Sharing");
 
 }
+else if(choice=="editrole"){
+println("OnLCick of EditRole");
+var component = getComponent('MainTabContainer'); 
+var s = facesContext;
+var c1="/ccEditRole.xsp"; 
+var id="EditRolediv";
+//com.weberon.DynamicCC.loadCC(s, component, c1, id);
+com.weberon.DynamicCC.loadCCinTab(s,component,c1,id,"Edit_Role");
+
+}else if(choice=="editdata"){
+
+println("OnClick of Edit DataSharing");
+
+var component = getComponent('MainTabContainer'); 
+var s = facesContext;
+var c1="/cc_ShowDataSharing.xsp"; 
+var id="editDataSharingdiv";
+//com.weberon.DynamicCC.loadCC(s, component, c1, id);
+com.weberon.DynamicCC.loadCCinTab(s,component,c1,id,"EditDefualtSetting");
+
+}
 
 }]]></xp:this.script>
-					</xp:executeScript>
-				</xp:this.action></xp:eventHandler>
-		
-		
-		
+				</xp:executeScript>
+			</xp:this.action>
+		</xp:eventHandler>
+
+
+
 	</xe:popupMenu></xp:view>
 

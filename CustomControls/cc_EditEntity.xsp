@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+	<xp:panel id="EditPanel">
+		<xp:panel>
+			Select &#160;User
+			<xp:this.rendered><![CDATA[#{javascript:if(sessionScope.employeeRegister=="Employee"){
+return true;
+}else{
+return false;
+}}]]></xp:this.rendered>
+			<xp:comboBox id="comboBox3">
+				<xp:this.defaultValue><![CDATA[#{javascript:/*
+var as= new bsuite.weber.relationship.Association();
+as.getDefaultPersonName(sessionScope.documentId);*/}]]></xp:this.defaultValue><xp:selectItems>
+					<xp:this.value><![CDATA[#{javascript://var path =database.getFilePath();
+//var dbpath =  @LeftBack(path ,"/");
+//var db= dbpath+"/Security.nsf";
+var db="names.nsf";
+var serv = @Word(@Implode(@DbName(),", "),", ", 1);
+var com = new Array(serv,db);
+var x= @DbColumn(com,  "($VIMPeople)", 1);
+@Explode(x,",;",true);}]]></xp:this.value>
+				</xp:selectItems>
+			</xp:comboBox>
+			&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Profile:
+			<xp:comboBox id="comboBox1" required="true">
+
+				<xp:this.defaultValue><![CDATA[#{javascript:/*
+var as= new bsuite.weber.relationship.Association();
+var pname=as.getDefaultProfileName(sessionScope.documentId);
+viewScope.oldprofile=pname;
+pname;*/}]]></xp:this.defaultValue><xp:selectItems>
+					<xp:this.value><![CDATA[#{javascript:var path =database.getFilePath();
+var dbpath =  @LeftBack(path ,"/");
+var db= dbpath+"/Security.nsf";
+var serv = @Word(@Implode(@DbName(),", "),", ", 1);
+var com = new Array(serv,db);
+var x= @DbColumn(com,  "ProfileView", 1);
+@Explode(x,",;",true);}]]></xp:this.value>
+				</xp:selectItems>
+
+			</xp:comboBox>
+			&#160;&#160;&#160;&#160;&#160;&#160;Role:
+			<xp:comboBox id="comboBox2">
+				<xp:this.defaultValue><![CDATA[#{javascript:/*
+var as= new bsuite.weber.relationship.Association();
+var rname=as.getDefaultRoleName(sessionScope.documentId);
+viewScope.oldrole=rname;
+rname;*/}]]></xp:this.defaultValue><xp:selectItems>
+					<xp:this.value><![CDATA[#{javascript:var path =database.getFilePath();
+var dbpath =  @LeftBack(path ,"/");
+var db= dbpath+"/Security.nsf";
+var serv = @Word(@Implode(@DbName(),", "),", ", 1);
+var com = new Array(serv,db);
+var x= @DbColumn(com,  "RolesView", 1);
+@Explode(x,",;",true);}]]></xp:this.value>
+				</xp:selectItems>
+			</xp:comboBox>
+			<xp:br></xp:br>
+		</xp:panel>
+		<xp:panel>
+			<xp:button value="Save" id="button9"
+				style="background-color:rgb(192,192,192)">
+				<xp:eventHandler event="onclick" submit="true"
+					refreshMode="partial"
+					refreshId='#{javascript:var id="readPanel"+viewScope.moduleName;
+id;}'>
+					<xp:this.action><![CDATA[#{javascript:
+println("vsr "+sessionScope.get("registerEmployee"));
+println("vsr2"+viewScope.entityName);
+pageaction['save'].execute("employee");
+
+
+if (viewScope.entityName == "Employee") {
+println("Editing employee");
+var empunid=sessionScope.documentId;
+//editEmployee(unid);
+   
+    var personName = getComponent("comboBox3").getValue();
+    var newprofile = getComponent("comboBox1").getValue();
+    var newrole = getComponent("comboBox2").getValue();
+   var as= new bsuite.weber.relationship.Association();
+as.editEmployee(empunid,viewScope.oldprofile,newprofile,viewScope.oldrole,newrole);
+    
+   
+   /*println(personName+profileName+role);
+   	println("docid "+docid);
+   	println("docid s"+sessionScope.entityDocid);
+    if (docid != null) {
+    println(personName+profileName+role);
+        var cd = new bsuite.weber.configure.CreateDatabase();
+        cd.createEmployee(personName, docid, profileName, role)
+    }
+*/
+}
+
+wrkspc.resetBean();}]]></xp:this.action>
+				</xp:eventHandler>
+			</xp:button>
+
+			<xp:button value="Delete" id="button1"
+				style="background-color:rgb(192,192,192)" rendered="false">
+				<xp:eventHandler event="onclick" submit="true"
+					refreshMode="complete">
+					<xp:this.action><![CDATA[#{javascript:
+println("Session Scope doc unid ",sessionScope.documentId);
+pageaction['delete'].execute("employee");
+
+}]]></xp:this.action>
+				</xp:eventHandler>
+			</xp:button>
+			<xp:button value="Close" id="button2"
+				style="background-color:rgb(192,192,192)">
+				<xp:eventHandler event="onclick" submit="true"
+					refreshMode="partial" refreshId='#{javascript:var id="readPanel"+viewScope.moduleName;
+id;}'>
+					<xp:this.action><![CDATA[#{javascript://var component = getComponent('EntityPanel'+viewScope.moduleName);
+var component=getComponent("readPanel"+viewScope.moduleName);
+com.weberon.DynamicCC.removePreview(component);}]]></xp:this.action>
+				</xp:eventHandler>
+			</xp:button>
+			<xp:div id="div1" binding="#{wrkspc.centity}">
+
+			</xp:div>
+		</xp:panel>
+
+
+	</xp:panel>
+</xp:view>

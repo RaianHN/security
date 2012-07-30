@@ -28,25 +28,21 @@ public class Role extends BsuiteWorkFlow {
 		//initialize associated role for the current user
 		
 			roleName=as.getAssociatedRoleName(this.currentuser.getBsuiteuser());
-		if(roleName!=null){
-			searchString=createSearchString();
-			System.out.println("Search String"+searchString);
-		}
+		//if(roleName!=null){
+	//		searchString=createSearchString();
+		//	System.out.println("Search String"+searchString);
+	//	}
 		
 		
 	}
 
 	public String createSearchString(){		
-		
-		Map viewscope = (Map) JSFUtil.getVariableValue("viewScope");
-		//viewscope.put("moduleName", "Employees");
-		//viewscope.put("entityName", "Activity");
-		String ename=(String)viewscope.get("entityRName");
-		String mname=(String)viewscope.get("moduleName");
-		System.out.println("Inside Search String");
-		System.out.println("ViewScope Entity Name "+ename);
+		//viewScope.put("entityName", "Activity");
+		Map viewScope=(Map) JSFUtil.getVariableValue("viewScope");	
+		String moduleName=(String)viewScope.get("moduleName");
+		String entityName=(String)viewScope.get("entityName");
 		this.hierarchyRoleList= getFinalRoleList(roleName);//to get the child roles of the given role
-		this.dataSharedRoles=getRolesFromDataSharingRules(mname,ename,roleName);//pass current entity the uesr is accessing and roleName
+		this.dataSharedRoles=getRolesFromDataSharingRules(moduleName,entityName,roleName);//pass current entity the uesr is accessing and roleName
 		this.effectiveUsersList=getFinalUserList(roleName);
 		System.out.println("Hierarchical Roles String"+hierarchyRoleList);
 		System.out.println("Data Shared String"+dataSharedRoles);
@@ -72,7 +68,7 @@ public class Role extends BsuiteWorkFlow {
 			}							
 		}							
 		querystr=querystr+")";
-		
+		querystr=querystr+ " OR FIELD shareWithUser contains "+"\""+as.getFormattedName(this.currentuser.getBsuiteuser(), "abr")+"\""+" OR FIELD shareWithRoles contains "+"\""+ this.roleName+"\"";
 		return querystr;
 	}
 
@@ -93,10 +89,24 @@ public class Role extends BsuiteWorkFlow {
 			
 		}
 		System.out.println("DataSharing Rules UserList "+dsusers);
+		
+		//Check whether the shareDataWithPeers is set or not in the Role Document
+		Boolean sharedata=isShareDataWithPeers(RoleName);
+		Vector peersname=new Vector();
+		System.out.println("data Share With Peers Value "+sharedata);
+	
+		
 		//To remove all the duplicated values
 		HashSet userset=new HashSet();
 		userset.addAll(userslist);
 		userset.addAll(dsusers);
+		//if sharedata is true, then add usersname to the final users list
+		if(sharedata){
+			System.out.println("DataSheersWithPeers is set and it is adding the users name to final list");
+			peersname.addAll(getAssociatedUsers(RoleName));
+			userset.addAll(peersname);
+		}
+		
 		finallist.addAll(userset);
 		
 		 return finallist;
@@ -111,24 +121,22 @@ public class Role extends BsuiteWorkFlow {
 		
 	public Vector getRolesFromDataSharingRules(String moduleName,String entityName,String roleName){
 		System.out.println("inside DataSharing function");
-		System.out.println("RoleName "+roleName);
-		System.out.println("Module Name "+moduleName);
-		System.out.println("ENtity Name "+entityName);
+		//System.out.println("RoleName "+roleName);
 		Vector roles = new Vector();
 		
 		try{
 			Database security = session.getDatabase("", bsuitepath+"Security.nsf");
 			View datasharingView = security.getView("DataSharingView");
 			String key=moduleName+"+"+entityName+"+"+roleName;
-			System.out.println("key "+key);
+			//System.out.println("key "+key);
 			DocumentCollection dc=datasharingView.getAllDocumentsByKey(key);
 			//Vector<String> res=JSFUtil.DBLookupVector("Security","DataSharingView",rolename,1);
-			System.out.println("Data Sharing roles size "+dc.getCount());
+		//	System.out.println("Data Sharing roles size "+dc.getCount());
 			Document doc = dc.getFirstDocument();
 			String sourceRole="";
 			for(int i=0;i<dc.getCount();i++){
 				sourceRole = doc.getItemValueString("SourceRole");
-				System.out.println("Source role name"+sourceRole);
+				//System.out.println("Source role name"+sourceRole);
 				roles.add(sourceRole);				
 				doc = dc.getNextDocument(doc);
 			}
@@ -142,9 +150,9 @@ public class Role extends BsuiteWorkFlow {
 	
 public void getRoleList(String roleName){
 	
-	System.out.println("in getRoleList"+roleName);	
+	//System.out.println("in getRoleList"+roleName);	
 	hierarchyRoleList.add(roleName);
-	System.out.println("in getRoleList 2"+hierarchyRoleList.get(0));
+	//System.out.println("in getRoleList 2"+hierarchyRoleList.get(0));
 	Vector children = getChildRoles(roleName);
 	for(int i=0;i<children.size();i++){
 		getRoleList(children.get(i).toString());
@@ -162,7 +170,7 @@ public Vector getChildRoles(String roleName){
 		String rolename="";
 		for(int i=0;i<coll.getCount();i++){
 			rolename = doc.getItemValueString("role_name");
-			System.out.println("role name"+rolename);
+		//	System.out.println("role name"+rolename);
 			roles.add(rolename);
 			
 			doc = coll.getNextDocument(doc);
@@ -217,6 +225,27 @@ public Vector getAssociatedUsers(String RoleName){
 	return null;
 }
 
+
+public boolean isShareDataWithPeers(String RoleName){
+	try{
+		System.out.println("inside isShareDataWithPeers");
+		Database security = session.getDatabase("", bsuitepath+"Security.nsf");
+		View roleView=security.getView("RolesView");
+		System.out.println("RoleName "+RoleName);
+		
+		Document roledoc=roleView.getDocumentByKey(RoleName);
+		String share=roledoc.getItemValueString("sharewithpeers");
+		System.out.println("Share Value "+share);
+		if(share.equals("1")){
+			return true;
+		}
+	}catch (Exception e) {
+		// TODO: handle exception
+	}
+return false;
+}
+
+
 public String getRoleName() {
 	return roleName;
 }
@@ -228,6 +257,9 @@ public void setRoleName(String roleName) {
 
 
 public String getSearchString() {
+	
+	
+	searchString=createSearchString();
 	return searchString;
 }
 

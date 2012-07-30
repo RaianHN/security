@@ -9,7 +9,7 @@
 			<xp:td>
 
 
-				<xp:comboBox id="comboBox1">
+				<xp:comboBox id="moduleName">
 					<xp:selectItems>
 						<xp:this.value><![CDATA[#{javascript:return @DbColumn("","Modules",1);}]]></xp:this.value>
 					</xp:selectItems>
@@ -20,14 +20,14 @@
 
 
 			</xp:td>
-			<xp:td rowspan="5"></xp:td>
+			<xp:td rowspan="4"></xp:td>
 		</xp:tr>
 		<xp:tr>
 			<xp:td>
 				<xp:label value="Entity Name:" id="label2"></xp:label>
 			</xp:td>
 			<xp:td>
-				<xp:inputText id="inputText1"></xp:inputText>
+				<xp:inputText id="entityName"></xp:inputText>
 			</xp:td>
 			
 		</xp:tr>
@@ -36,23 +36,13 @@
 				<xp:label value="List of Fields:" id="label3"></xp:label>
 			</xp:td>
 			<xp:td>
-				<xp:inputTextarea id="inputTextarea1"
+				<xp:inputTextarea id="fields"
 					multipleSeparator=",">
 				</xp:inputTextarea>
 			</xp:td>
 			
 		</xp:tr>
-		<xp:tr>
-			<xp:td>
-				<xp:label value="List of Features" id="label4"></xp:label>
-			</xp:td>
-			<xp:td>
-				<xp:inputTextarea id="inputTextarea2"
-					multipleSeparator=",">
-				</xp:inputTextarea>
-			</xp:td>
-			
-		</xp:tr>
+		
 		<xp:tr>
 			<xp:td></xp:td>
 			<xp:td>
@@ -61,14 +51,14 @@
 						refreshMode="complete">
 						<xp:this.action><![CDATA[#{javascript:var defModule = new bsuite.weber.configure.DefineModule();
 
-var moduleName = getComponent("comboBox1").getValue();
-var entityName = getComponent("inputText1").getValue();
-var fields :java.util.Vector = getComponent("inputTextarea1").getValue();
-var features:java.util.Vector = getComponent("inputTextarea2").getValue();
+var moduleName = getComponent("moduleName").getValue();
+var entityName = getComponent("entityName").getValue();
+var fields :java.util.Vector = getComponent("fields").getValue();
 
-defModule.addEntity(moduleName,entityName, fields,features);
+
+defModule.addEntity(moduleName,entityName, fields);
 var component = getComponent('loadCC'); 
-com.weberon.DynamicCC.removePreview(component);
+bsuite.weber.loadcc.DynamicCC.removePreview(component);
 }]]></xp:this.action>
 					</xp:eventHandler></xp:button></xp:td>
 			

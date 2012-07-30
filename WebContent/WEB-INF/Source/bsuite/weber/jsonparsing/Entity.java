@@ -11,21 +11,22 @@ public class Entity{
 	private String read;
 	private String update;
 	private String delete;
-	private String accessType;
 	private ArrayList<Field> fields;
-	private ArrayList<Feature> features;
+	
+	private String accessType;
 	//Added for fields and features perms
 	//private ArrayList<FieldPerm> fieldPerm;
 	//private ArrayList<FeaturePerm> featurePerm;
 	
-	public String getEntityName() {
-		return entityName;
+	
+	public String getAccessType() {
+		return accessType;
 	}
 
-	public void setEntityName(String entityName) {
-		this.entityName = entityName;
+	public void setAccessType(String accessType) {
+		this.accessType = accessType;
 	}
-	
+
 	public String getCreate() {
 		return create;
 	}
@@ -56,17 +57,17 @@ public class Entity{
 
 	public void setDelete(String delete) {
 		this.delete = delete;
-	}		
-	
-	public String getAccessType() {
-		return accessType;
-	}
-
-	public void setAccessType(String accessType) {
-		this.accessType = accessType;
 	}
 
 	
+		
+	public String getEntityName() {
+		return entityName;
+	}
+
+	public void setEntityName(String entityName) {
+		this.entityName = entityName;
+	}
 	public ArrayList<Field> getFields() {
 		return fields;
 	}
@@ -77,15 +78,7 @@ public class Entity{
 	}
 
 
-	public ArrayList<Feature> getFeatures() {
-		return features;
-	}
 
-
-	public void setFeatures(ArrayList<Feature> features) {
-		this.features = features;
-	}
-	
 /*	public ArrayList<FieldPerm> getFieldPerm() {
 		return fieldPerm;
 	}

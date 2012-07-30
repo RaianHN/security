@@ -13,6 +13,10 @@ import lotus.domino.NotesException;
 import lotus.domino.Session;
 import lotus.domino.View;
 
+import bsuite.weber.loadcc.BSUtil;
+import bsuite.weber.loadcc.CompUtil;
+import bsuite.weber.loadcc.JSFUtil;
+
 import com.ibm.xsp.component.UIPanelEx;
 import com.ibm.xsp.component.xp.XspColumn;
 import com.ibm.xsp.component.xp.XspDataTableEx;
@@ -22,9 +26,6 @@ import com.ibm.xsp.component.xp.XspPager;
 import com.ibm.xsp.extlib.component.dojo.grid.UIDojoDataGrid;
 import com.ibm.xsp.extlib.component.dojo.grid.UIDojoDataGridColumn;
 import com.ibm.xsp.extlib.util.ExtLibUtil;
-import com.weberon.CompUtil;
-import com.weberon.JSFUtil;
-import com.weberon.BSUtil;
 
 
 

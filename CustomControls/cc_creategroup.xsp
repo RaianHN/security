@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+
+	<xp:panel>
+		<xp:table>
+			<xp:tr>
+				<xp:td>
+					<xp:label value="Group Name" id="label1"></xp:label>
+				</xp:td>
+				<xp:td>
+					<xp:inputText id="groupname"></xp:inputText>
+				</xp:td>
+			</xp:tr>
+			<xp:tr>
+				<xp:td>
+					<xp:label value="Description" id="label2"></xp:label>
+				</xp:td>
+				<xp:td>
+					<xp:inputText id="groupdesc"></xp:inputText>
+				</xp:td>
+			</xp:tr>
+			<xp:tr>
+				<xp:td>Group Sources</xp:td>
+				<xp:td></xp:td>
+			</xp:tr>
+			<xp:tr>
+				<xp:td>Select Group Source Type</xp:td>
+				<xp:td>
+					<xp:comboBox id="comboBox1">
+						<xp:selectItem itemLabel="Users" itemValue="users"></xp:selectItem>
+						<xp:selectItem itemLabel="Roles" itemValue="roles"></xp:selectItem>
+						<xp:selectItem itemLabel="Roles and Subordinates" itemValue="rolessub"></xp:selectItem>
+					</xp:comboBox></xp:td>
+			</xp:tr>
+			<xp:tr>
+				<xp:td></xp:td>
+				<xp:td></xp:td>
+			</xp:tr>
+		</xp:table></xp:panel></xp:view>

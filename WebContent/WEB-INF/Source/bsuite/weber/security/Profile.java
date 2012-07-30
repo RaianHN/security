@@ -19,6 +19,11 @@ import bsuite.weber.relationship.Association;
 
 public class Profile extends BsuiteWorkFlow {
 	private ProfileJson profileJson;
+	private String profileName;
+
+	public void setProfileName(String profileName) {
+		this.profileName = profileName;
+	}
 
 	public Profile() {
 		super();
@@ -80,7 +85,7 @@ public class Profile extends BsuiteWorkFlow {
 		
 	}
 
-	public ArrayList<Feature> getVisibleFeatures(String moduleName, String entityName){
+	/*public ArrayList<Feature> getVisibleFeatures(String moduleName, String entityName){
 		Entity entity = getEntity(moduleName,entityName);
 		ArrayList<Feature> vFeatures = new ArrayList<Feature>();
 		for(Feature f:entity.getFeatures()){
@@ -90,8 +95,24 @@ public class Profile extends BsuiteWorkFlow {
 		}
 		
 		return vFeatures;
+	}*/
+
+	
+	public ArrayList<Feature> getVisibleFeatures(String moduleName){
+		//Entity entity = getEntity(moduleName);
+		ArrayList<Feature> vFeatures = new ArrayList<Feature>();
+		Module mod = getModule(moduleName);
+		
+		for(Feature f:mod.getFeatures()){		
+			if(f.getVisible().equals("1")){
+				vFeatures.add(f);
+			}
+		}
+		
+		return vFeatures;
 	}
 
+	
 	public boolean isEntityRead(String moduleName, String entityName){
 		if(getEntity(moduleName,entityName).getRead().equals("1")){
 			return true;
@@ -127,11 +148,18 @@ public class Profile extends BsuiteWorkFlow {
 
 	private Module getModule(String moduleName){
 		System.out.println("--------44");
+		
+		if(moduleName.contains("_")){
+			moduleName = moduleName.replace("_"," ");
+		}
+		
 		if(profileJson==null){
 			return null;
 		}
 		for(Module module:profileJson.getModules()){
+			
 			System.out.println("--------45");
+			System.out.println("--------45 ModuleName "+module.getModuleName());
 			if(module.getModuleName().equals(moduleName)){
 				System.out.println("--------46");
 				return module;
@@ -202,7 +230,7 @@ public class Profile extends BsuiteWorkFlow {
 		
 	}
 
-	public ArrayList<String> getVisibleFeaturesNames(String moduleName, String entityName){
+	/*public ArrayList<String> getVisibleFeaturesNames(String moduleName, String entityName){
 		Entity entity = getEntity(moduleName,entityName);
 		ArrayList<String> vFeatures = new ArrayList<String>();
 		for(Feature f:entity.getFeatures()){
@@ -212,7 +240,32 @@ public class Profile extends BsuiteWorkFlow {
 		}
 		
 		return vFeatures;
-	}
+	}*/
+	
+	
+	public ArrayList<String> getVisibleFeaturesNames(String moduleName){		
+		
+		System.out.println("inside visible Feastures "+moduleName);
+		if(moduleName.contains("_")){
+			moduleName = moduleName.replace("_", " ");
+		}
+		System.out.println("inside visible Feastures after replace "+moduleName);
+		ArrayList<String> vFeatures = new ArrayList<String>();
+		Module mod = getModule(moduleName);
+		System.out.println("478");
+		for(Feature f:mod.getFeatures()){		
+			System.out.println("inside visible Feastures are"+f.getFeatureName());
+
+			if(f.getVisible().equals("1")){
+				vFeatures.add(f.getFeatureName());
+			}
+		}
+		
+		return vFeatures;
+
+	
+}
+	
 	
 	
 	
@@ -282,16 +335,16 @@ public class Profile extends BsuiteWorkFlow {
 		System.out.println("modulename"+moduleName);
 		ArrayList<String> rEntities = new ArrayList<String>();
 		Module mod = getModule(moduleName);
-		System.out.println("--------41");
+		System.out.println("--------411");
 		ArrayList<Entity> entities = mod.getEntities();
 		if(entities==null){
 			return null;
 		}
 		for(Entity entity:entities){
-			System.out.println("--------42");
+			System.out.println("--------421"+entity.getEntityName());
 			if(entity!=null){
 				if(entity.getRead().equals("1")){
-					System.out.println("--------43");
+					System.out.println("--------431");
 					rEntities.add(entity.getEntityName());
 				}
 			}
@@ -299,6 +352,92 @@ public class Profile extends BsuiteWorkFlow {
 		}
 		System.out.println("r enti"+rEntities);
 		return rEntities;
+	}
+	
+	public ArrayList<String> getDeletableEntitiesNames(String moduleName){
+		System.out.println("modulename"+moduleName);
+		ArrayList<String> dEntities = new ArrayList<String>();
+		Module mod = getModule(moduleName);
+		System.out.println("--------411");
+		ArrayList<Entity> entities = mod.getEntities();
+		if(entities==null){
+			return null;
+		}
+		for(Entity entity:entities){
+			System.out.println("--------421"+entity.getEntityName());
+			if(entity!=null){
+				if(entity.getDelete().equals("1")){
+					System.out.println("--------431");
+					dEntities.add(entity.getEntityName());
+				}
+			}
+			
+		}
+		System.out.println("r enti"+dEntities);
+		return dEntities;
+	}
+	
+	public ArrayList<String> getAllEntitiesNames(String moduleName){
+		System.out.println("modulename"+moduleName);
+		ArrayList<String> aEntities = new ArrayList<String>();
+		Module mod = getModule(moduleName);
+		System.out.println("--------411");
+		ArrayList<Entity> entities = mod.getEntities();
+		if(entities==null){
+			return null;
+		}
+		for(Entity entity:entities){
+			System.out.println("--------421"+entity.getEntityName());
+			if(entity!=null){
+				
+					aEntities.add(entity.getEntityName());
+			
+			}
+			
+		}
+		
+	
+		System.out.println("r enti"+aEntities);
+		return aEntities;
+	}
+	public String getProfileName(){
+		return profileName;
+	}
+	
+	
+	
+	//to get all the public R/W entities in the given module
+	public ArrayList<String> getPublicRWEntities(String moduleName){
+		ArrayList<String> aEntities = new ArrayList<String>();
+		Module mod=getModule(moduleName);
+		ArrayList<Entity> entities=mod.getEntities();
+		for(Entity entity:entities){	
+		
+				String access=entity.getAccessType();
+				if(access.equals("2"))
+					aEntities.add(entity.getEntityName());	
+			
+			
+		}
+		return aEntities;
+		
+	}
+	
+	//to get all the public Read entities in the given module
+	public ArrayList<String> getPublicReadEntities(String moduleName){
+		ArrayList<String> aEntities = new ArrayList<String>();
+		Module mod=getModule(moduleName);
+		ArrayList<Entity> entities=mod.getEntities();
+		for(Entity entity:entities){	
+		
+				String access=entity.getAccessType();
+				if(access.equals("3"))
+					aEntities.add(entity.getEntityName());	
+			
+			
+		}
+		return aEntities;
+		
 	}
 	
 }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config>
+  <faces-config-extension>
+    <namespace-uri>http://www.ibm.com/xsp/custom</namespace-uri>
+    <default-prefix>xc</default-prefix>
+  </faces-config-extension>
+  <composite-component>
+    <component-type>ccDebug</component-type>
+    <composite-name>ccDebug</composite-name>
+    <composite-file>/ccDebug.xsp</composite-file>
+    <composite-extension>
+      <designer-extension>
+        <in-palette>true</in-palette>
+        <render-markup>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&#xd;
+&lt;xp:view xmlns:xp="http://www.ibm.com/xsp/core"&gt;&#xd;
+&lt;xp:panel&gt;## Xpages Debug Custom Control v2.0 by Ferry Kranenburg ##&lt;/xp:panel&gt;&#xd;
+&lt;xp:callback facetName="customObjects" id="customObjects"&gt;&lt;/xp:callback&gt;&#xd;
+&lt;/xp:view&gt;</render-markup>
+      </designer-extension>
+    </composite-extension>
+    <property>
+      <property-name>document</property-name>
+      <property-class>java.lang.Object</property-class>
+      <display-name>Document data source</display-name>
+      <description>When you would like to use 'xProperties', please define your document data source here.&#xd;
+e.g. 'document1.getDocument()</description>
+    </property>
+  </composite-component>
+</faces-config>

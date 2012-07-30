@@ -11,6 +11,7 @@ public class Security {
 	private HashMap<String, ArrayList<String>> modulesEntities;
 
 	public Security() {
+		System.out.println("Constructor of Security Bean");
 		profile = new Profile();
 		System.out.println("-------1");
 		role = new Role();

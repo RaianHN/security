@@ -7,7 +7,7 @@ public class Module {
 	private String moduleName;
 	private String tabvis;
 	private ArrayList<Entity> entities;
-	
+	private ArrayList<Feature> features;
 	
 	
 	public ArrayList<Entity> getEntities() {
@@ -28,6 +28,15 @@ public class Module {
 	}
 	public void setTabvis(String tabvis) {
 		this.tabvis = tabvis;
+	}
+	
+	public ArrayList<Feature> getFeatures() {
+		return features;
+	}
+
+
+	public void setFeatures(ArrayList<Feature> features) {
+		this.features = features;
 	}
 	
 	

@@ -26,7 +26,8 @@ var modules:java.util.Vector = getComponent("inputTextarea1").getValue();
 
 defModule.addModules(modules);
 var component = getComponent('loadCC'); 
-com.weberon.DynamicCC.removePreview(component);
+var dynacc = new bsuite.weber.loadcc.DynamicCC();
+dynacc.removePreview(component);
 }]]></xp:this.action>
 					</xp:eventHandler></xp:button></xp:td>
 			

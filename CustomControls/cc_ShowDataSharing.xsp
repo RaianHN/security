@@ -2,22 +2,28 @@
 <xp:view xmlns:xp="http://www.ibm.com/xsp/core">
 
 
-	<xp:this.beforePageLoad><![CDATA[#{javascript:var profileNames = getProfiles();
-viewScope.profileNames = profileNames;}]]></xp:this.beforePageLoad>
+	
 	<xp:this.resources>
 		<xp:script src="/Copy Of CustomControlLib.js"
 			clientSide="true">
 		</xp:script>
 		<xp:script src="/CommonFunctions.jss" clientSide="false"></xp:script>
 	</xp:this.resources>
+	<xp:this.beforePageLoad><![CDATA[#{javascript:var profName = "Admin";
+var profile = new bsuite.weber.jsonparsing.ProfileEdit();
+if(profName!=null){
+viewScope.moduleName= profile.getModuleNames(profName);
+}
+}]]></xp:this.beforePageLoad>
 	<xp:panel>
+		
 		<xp:table id="table2">
 			<xp:tr>
 				<xp:td>
-					Profile:&#160;
+					&#160;
 					<xp:br id="br1"></xp:br>
 					<xp:comboBox id="comboBox2"
-						binding="#{javascript:viewScope.profNam2}">
+						binding="#{javascript:viewScope.profNam2}" rendered="false">
 						<xp:selectItems id="selectItems1">
 							<xp:this.value><![CDATA[#{javascript:viewScope.profileNames}]]></xp:this.value>
 						</xp:selectItems>
@@ -26,130 +32,103 @@ viewScope.profileNames = profileNames;}]]></xp:this.beforePageLoad>
 				<xp:td>
 					Module:
 					<xp:br id="br2"></xp:br>
-					<xp:comboBox id="comboBox3"
-						binding="#{javascript:viewScope.moduleNam2}">
+					
+				<xp:comboBox id="comboBox3" binding="#{javascript:viewScope.moduleNam2}" value="#{viewScope.selModule}">
 						<xp:selectItems id="selectItems2">
-							<xp:this.value><![CDATA[#{javascript:var profName = "Admin";
-var profile = new bsuite.weber.jsonparsing.ProfileEdit();
-if(profName!=null){
-return profile.getModuleNames(profName);
+							<xp:this.value><![CDATA[#{javascript:var moduleName = viewScope.moduleName
+if(moduleName!=null){
+return moduleName
 }
 }]]></xp:this.value>
 						</xp:selectItems>
-					</xp:comboBox>
-				</xp:td>
+						
+						<xp:eventHandler event="onchange" submit="true" refreshMode="partial" execMode="partial" execId="comboBox3" refreshId="table2"></xp:eventHandler></xp:comboBox></xp:td>
 				<xp:td>
 					<xp:br id="br3"></xp:br>
 					<xp:button value="Go" id="button9"
 						style="background-color:rgb(192,192,192);width:100.0px">
-						<xp:eventHandler event="onclick" submit="true"
-							refreshMode="complete" id="eventHandler1">
-							<xp:this.action><![CDATA[#{javascript:viewScope.selProfile = getComponent("comboBox2").getValue();
-viewScope.selModule = getComponent("comboBox3").getValue();
-var moduleVisib = new bsuite.weber.jsonparsing.ProfileEdit();
-moduleVisib.getEntityPermission(viewScope.selProfile,viewScope.selModule);
-}]]></xp:this.action>
-						</xp:eventHandler>
-					</xp:button>
+						
+					<xp:eventHandler event="onclick" submit="true"
+						refreshMode="complete">
+					</xp:eventHandler></xp:button>
 				</xp:td>
 				<xp:td></xp:td>
-				<xp:td></xp:td>
-				<xp:td></xp:td>
-				<xp:td></xp:td>
-				<xp:td><xp:text escape="true" id="computedField1" rendered="false">
-							<xp:this.value><![CDATA[#{javascript:return @Right(rowData,":");}]]></xp:this.value>
-						</xp:text></xp:td>
+		
+			
+				
 			</xp:tr>
 			<xp:tr>
 				<xp:td>Entity Name</xp:td>
-				<xp:td>Create</xp:td>
-				<xp:td>Read</xp:td>
-				<xp:td>Update</xp:td>
-				<xp:td>Delete</xp:td>
 				<xp:td>AccessType</xp:td>
 				<xp:td></xp:td>
+				
+				
+				
 				<xp:td>
 					<xp:button value="Save" id="button4"
 						style="background-color:rgb(192,192,192);width:100.0px">
-						<xp:eventHandler event="onclick" submit="false"
-							id="eventHandler2">
-							<xp:this.script><![CDATA[var table = document.getElementById('#{id:table2}');
 
+					<xp:eventHandler event="onclick" submit="false">
+						<xp:this.script><![CDATA[var table = document.getElementById('#{id:table2}');
+var access="";
 var i = 0;
-var j=0;
+var j = 0;
+var result1 = null;
 var result = new Array();
-alert("table rolws"+table.rows.length);
+
+var temp;
+var moduleName=document.getElementById('#{id:comboBox3}').value;
+//alert(moduleName);
+
 for (i = 2; i < table.rows.length; i++) {
 
-    var entityName = table.rows[i].cells[0].firstChild.innerHTML;
-    alert(entityName);
-    var checkvals1 = table.rows[i].cells[1].firstChild.firstChild.checked;//visibility
-    var checkvals2 = table.rows[i].cells[2].firstChild.firstChild.checked;
-    var checkvals3 = table.rows[i].cells[3].firstChild.firstChild.checked;
-    var checkvals4 = table.rows[i].cells[4].firstChild.firstChild.checked;
-     var radioid=table.rows[i].cells[5].firstchild.firstChild.id;
-     alert(radioid);
-     
-     var result=null;
-     var radio = document.getElementById('#{id:radioGroup1}');
-     alert(radio);
-for(var j=0; j<radio.elements.length; j++){
-    if(document.forms[0].elements[i].name=="#{id:ControlID}" ){
+	var entityName = table.rows[i].cells[0].firstChild.innerHTML;
+	//alert(entityName);
+	// var radioid = table.rows[i].cells[1].firstChild.elements[0].name;
+	for ( var k = 0; k < 3; k++) {
+		alert(k);
+		if (table.rows[i].cells[1].firstChild.elements[k].checked == true) {
+			result1 = table.rows[i].cells[1].firstChild.elements[k].value;
+			//alert(result1);
+			break;
+		}
 
-        if(radio.firstChild.firstChild.firstChild.checked == true){
-            result=radio.firstChild.firstChild.firstChild.value;
-            break; //remove this if for check box groups and collect multiple values above instead
-}}}
-alert(result); //result is the currently selected value of the radio group
-     
-     
-     
-     
-     
-     
-     
-     }
-    //alert("temp"+entityName);
-    
-   /* var temp;
-    if (checkvals1 == true) {
-        temp = entityName + ":"+"1";
-    } else {
-        temp = entityName + ":"+"0";
-    }
-    
-    if (checkvals2 == true) {
-        temp = temp  + "1";
-    } else {
-        temp = temp + "0";
-    }
-    
-     if (checkvals3 == true) {
-        temp = temp  + "1";
-    } else {
-        temp = temp + "0";
-    }
-    
-     if (checkvals4 == true) {
-        temp = temp  + "1";
-    } else {
-        temp = temp + "0";
-    }
-    
-    
-     
-    result[i]=temp;
-    //alert("temp"+temp);
+	}
+	if (result1 == "private") {
+		access = "1";
+	} else if (result1 == "public"){
+		//alert(result1);
+		access = "2";
+		//alert(access);
+	} else if (result1 == "read") {
+		access = "3";
+	}
+	//alert(entityName);
+	//alert(access);
+	temp = moduleName+':'+entityName+':'+ access;	
+	alert(temp);
+	result.push(temp);
+	alert("Outside loop ", result1);
 }
-//alert("temp");
-XSP.executeOnServer('view:_id1:eventEntityPerm', "", "", result);*/]]></xp:this.script>
-						</xp:eventHandler>
-					</xp:button>
+XSP.executeOnServer('view:_id1:accessTypePerm', "", "", result);
+]]></xp:this.script>
+					</xp:eventHandler></xp:button>
 				</xp:td>
 			</xp:tr>
 
+
 			<xp:repeat id="repeat2" rows="30" var="rowData">
-				<xp:this.value><![CDATA[#{javascript:var entityP:java.util.Vector = viewScope.entityPerm;
+				<xp:this.value><![CDATA[#{javascript:println("inside Repeat Control");
+println("ViewScope Entity Perm ",viewScope.entityPerm);
+var val=getComponent("comboBox3").getValue();
+if(val=="<<Select Module>>" || val==null){}else{
+viewScope.selProfile = "Admin";
+viewScope.selModule = getComponent("comboBox3").getValue();
+println("Selected ModuleName ",viewScope.selModule);
+var moduleVisib = new bsuite.weber.jsonparsing.ProfileEdit();
+moduleVisib.getEntityPermission(viewScope.selProfile,viewScope.selModule);
+}
+var entityP:java.util.Vector = viewScope.entityPerm;
 if(entityP!=null){
 return entityP;
 }}]]></xp:this.value>
@@ -160,86 +139,54 @@ return entityP;
 						</xp:inputText>
 					</xp:td>
 					<xp:td>
-						<xp:checkBox text="Create" id="checkBox1">
 
-							<xp:this.defaultChecked><![CDATA[#{javascript:var val = @Right(rowData,":");
-if(val.charAt(0)=="1"){
-return true;
-}
-else{
-return false;
-}}]]></xp:this.defaultChecked>
-						</xp:checkBox>
-					</xp:td>
-					<xp:td>
-						<xp:checkBox text="Read" id="checkBox2">
-
-							<xp:this.defaultChecked><![CDATA[#{javascript:var val = @Right(rowData,":");
-if(val.charAt(1)=="1"){
-return true;
-}
-else{
-return false;
-}}]]></xp:this.defaultChecked>
-						</xp:checkBox>
-					</xp:td>
-					<xp:td>
-						<xp:checkBox text="Update" id="checkBox3">
-
-							<xp:this.defaultChecked><![CDATA[#{javascript:var val = @Right(rowData,":");
-if(val.charAt(2)=="1"){
-return true;
-}
-else{
-return false;
-}}]]></xp:this.defaultChecked>
-						</xp:checkBox>
-					</xp:td>
-					<xp:td>
-						<xp:checkBox text="Delete" id="checkBox4">
-
-							<xp:this.defaultChecked><![CDATA[#{javascript:var val = @Right(rowData,":");
-if(val.charAt(3)=="1"){
-return true;
-}
-else{
-return false;
-}}]]></xp:this.defaultChecked>
-						</xp:checkBox>
-					</xp:td>
-					<xp:td>
-
-					<xp:radioGroup id="radioGroup1">
-						<xp:this.defaultValue><![CDATA[#{javascript:var val = @Right(rowData,":");
+						<xp:radioGroup id="radioGroup1">
+							<xp:this.defaultValue><![CDATA[#{javascript:println("inside default value of radio group");
+println("Row Data ",rowData);
+var ename=@Left(rowData,":");
+println("Entity Name ",ename);
+var val = @Right(rowData,":");
 var res=val.charAt(4);
-println("res ",res);
+
+println("Entity Accesstype ",res);
 if(res=="1"){
 return "private";
 }else if(res=="2"){
 return "public";
-}else{
+}else if(res=="3"){
 return "read";
 }
-}]]></xp:this.defaultValue><xp:selectItem itemLabel="Private"
-							itemValue="private">
-						</xp:selectItem>
-						<xp:selectItem itemLabel="Public R/W/U"
-							itemValue="public">
-						</xp:selectItem>
-						<xp:selectItem itemLabel="Public Read"
-							itemValue="read">
-						</xp:selectItem>
-					</xp:radioGroup></xp:td>
+}]]></xp:this.defaultValue>
+							<xp:selectItem itemLabel="Private"
+								itemValue="private">
+							</xp:selectItem>
+							<xp:selectItem itemLabel="Public R/W/D"
+								itemValue="public">
+							</xp:selectItem>
+							<xp:selectItem itemLabel="Public Read"
+								itemValue="read">
+							</xp:selectItem>
+						</xp:radioGroup>
+					</xp:td>
+					<xp:td>
+
+					</xp:td>
+					<xp:td>
+
+					</xp:td>
+
 				</xp:tr>
 			</xp:repeat>
+		</xp:table>	</xp:panel>
+			
 
-		</xp:table>
-
-
-
-
+		
 
 
 
-	</xp:panel>
+
+
+
+
+
 </xp:view>

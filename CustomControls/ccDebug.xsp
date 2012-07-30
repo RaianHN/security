@@ -1,0 +1,1498 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core" dojoParseOnLoad="true"
+	dojoTheme="true" xmlns:xc="http://www.ibm.com/xsp/custom">
+
+	<xp:this.resources>
+		<xp:dojoModule name="dijit.form.Textarea"></xp:dojoModule>
+		<xp:script><!-- Global SSJS -->
+// Workaround for validation/partial refresh/no update
+function getSubmittedValue( componentId ){				
+	var paramFieldName = getClientId( componentId );
+	var parameter = param.get( paramFieldName );		
+	return (parameter) ? parameter.toString() : '';				
+}
+
+// Helper-class for debugging
+var Debug = {	
+	// Send a stack trace of an exception
+	exception: function( exception ){
+		var stringWriter = new java.io.StringWriter();
+		exception.printStackTrace( new java.io.PrintWriter( stringWriter ) );
+		this.message( this.getExceptionString( exception ), 'Exception!' );
+	},
+	
+	getExceptionString: function( exception ){
+		var stringWriter = new java.io.StringWriter();
+		exception.printStackTrace( new java.io.PrintWriter( stringWriter ) );
+		
+		var message = stringWriter.toString();	
+		
+		//var node = exception.getNode();
+		if( typeof exception === 'com.ibm.jscript.InterpretException' ){
+			message = exception.getNode().getTraceString() + '\n\n' + message;
+		}
+		
+		return message;
+	},
+	
+	// Send a message
+	message: function( message, subject ){
+		var doc:NotesDocument = database.createDocument();
+		doc.replaceItemValue( 'Form', 'Memo' );
+		doc.replaceItemValue( 'Subject', subject || 'Debug..' );
+		doc.replaceItemValue( 'Body', message.toString() );
+		doc.replaceItemValue( 'SendTo', @Name( '[CN]', @UserName() ) );
+		doc.send()
+	}
+}
+			
+			
+		</xp:script>
+	</xp:this.resources>
+	
+	
+	
+	
+	
+	<xp:this.afterPageLoad><![CDATA[#{javascript:try{
+	if (compositeData.document != null){
+		sessionScope.get("dpTools").prepareFields(compositeData.document);
+	}	
+}catch(e){
+	
+}}]]></xp:this.afterPageLoad>
+	<xp:this.beforeRenderResponse><![CDATA[#{javascript:viewScope.remove( 'exception' );
+viewScope.remove( 'expressionInfo' );
+
+
+var ExpressionParser = {
+	// Extracts info about method/field into an object
+	parseMethodOrField: function( items ){
+		try {		
+			var item, parsedItems = [];
+			for( var i=0; i < items.length; i++ ){
+				item = items[i];
+				if( item ){ item = item.toString(); }
+				if( !item || item.indexOf( 'private' ) > -1 ){ continue; }
+				
+				var commandThrows = '';
+				var throwsRegExp = new RegExp( ' throws [\\w\\.]+$' );
+				if( throwsRegExp.test( item ) ){
+					commandThrows = item.match( throwsRegExp )[0];
+					item = item.replace( commandThrows, '' );
+				}					
+				
+				var itemTokens = item.split(' ');
+				var numItems = itemTokens.length;
+				var commandWithClass = itemTokens[ itemTokens.length-1 ];
+				var command = ( /\.\w+\(.*[^)]*\)/.test( commandWithClass ) ) ? 
+					commandWithClass.match( /\.\w+\(.*[^)]*\)/ )[0].substring(1) : @RightBack( commandWithClass, '.' );
+					
+				var commandClass = commandWithClass.replace( '.' + command, '' );
+				var returnClass = itemTokens[ itemTokens.length-2 ];
+				var modifiers = item.replace( ' ' + commandClass + ' ' + command, '' );
+				
+				parsedItems.push({
+					command: command,
+					commandThrows: commandThrows,
+					commandClass: commandClass,
+					returnClass: returnClass,
+					modifiers: modifiers				
+				});								
+			}			
+						
+			// Sort by field/method name
+			parsedItems.sort( function( a, b ){
+				if( a.command > b.command ){ return 1; }
+				if( a.command < b.command ){ return -1;	}
+				return 0;
+			});
+			
+			return parsedItems;
+		} catch( e ){			
+			viewScope.put( 'expressionInfo', '' ); 
+			viewScope.put( 'exception', e.message ); 
+		}
+	},
+	
+	isJavaClassName: function( className:String ){
+		return (className.indexOf( 'java' ) == 0);
+	},
+	isJSFClassName: function( className:String ){
+		return (className.indexOf( 'javax.faces' ) === 0);
+	},
+	
+	// If Java Class -> returns link to Java API
+	makeJavaAPILink: function( className:String ){
+		if( this.isJSFClassName( className ) || !this.isJavaClassName( className ) ){ return ''; }
+				
+		var basePath = 'http://java.sun.com/javase/6/docs/api/';
+		var classPath = className.replace( /\./g, '/' ) + '.html';
+		return  '<a target="_blank" class="more-info java" href="' + basePath + classPath + '">Java</a>'
+	},
+	// If JSF Class -> returns link to JSF API 
+	makeJSFAPILink: function( className:String ){
+		if( !this.isJSFClassName( className ) ){ return ''; }
+		
+		var basePath = 'http://download.oracle.com/docs/cd/E17802_01/j2ee/j2ee/javaserverfaces/1.1_01/docs/api/';
+		var classPath = className.replace( /\./g, '/' ) + '.html';
+		return  '<a target="_blank" class="more-info jsf" href="' + basePath + classPath + '">JSF</a>' 
+	},
+	// Make Google link
+	makeGoogleLink: function( className:String ){
+		return '<a target="_blank" class="more-info google" href="http://google.com/search?q=' + className + '">Google</a>'
+	}
+};
+
+try {
+	var componentId = getSubmittedValue( 'componentId' );
+	viewScope.put( 'componentId', componentId );
+	
+	var expression = (componentId) ? 'getComponent( \'' + componentId + '\' )' : getSubmittedValue( 'expression' );	
+	if( !expression ){ return; }
+		
+	var expressionObj, expressionClass, expressionValue;	
+	
+	// Test expression as Class name
+	try { 
+		expressionClass = eval( 'new ' + expression + '()' ).getClass();
+	} catch(e){
+		try {// Try expression as Class without constructor
+			expressionClass = java.lang.Class.forName( expression );
+		} catch(e){
+			try { // Test expression as object
+				expressionObj = eval( expression );
+				expressionClass = expressionObj.getClass();
+				expressionValue = expressionObj.toString(); 
+			} catch(e){					
+				viewScope.put( 'expressionInfo', '' ); 
+				viewScope.put( 'exception', e.message ); 
+			}
+		}
+	}
+	
+	if( expressionClass ){ className = expressionClass.getName(); }
+	else {
+		viewScope.put( 'expressionInfo', '' ); 
+		return; 
+	}
+	
+	viewScope.put( 'expressionInfo', {
+		className: className,	
+		value: expressionValue,
+		
+		methods: ExpressionParser.parseMethodOrField( expressionClass.getMethods() ),
+		declaredMethods: ExpressionParser.parseMethodOrField( expressionClass.getDeclaredMethods() ),
+			
+		fields: ExpressionParser.parseMethodOrField( expressionClass.getFields() ),
+		declaredFields: ExpressionParser.parseMethodOrField( expressionClass.getDeclaredFields() )
+	});
+	
+} catch( e ){		
+	viewScope.put( 'expressionInfo', '' ); 
+	viewScope.put( 'exception', e.message ); 
+}
+
+
+
+try{
+	if (compositeData.document != null){
+		sessionScope.get("dpTools").unload();
+	}	
+}catch(e){
+	
+}}]]></xp:this.beforeRenderResponse>
+	<style>
+      .debugPane{
+         padding-top:10px;
+         padding-left:20px;
+         padding-bottom:30px;
+      }
+      .debugButton,  .debugButton TD{
+         border-collapse:seperate;
+         padding:5px;
+         margin-right:5px;
+         background-color:#EEEEE0;
+         cursor:pointer;
+         white-space:nowrap;
+      }
+      .debugButton:hover{
+         background-color: #CDCDC1;
+         cursor:pointer;      
+      }
+      .debugTable, .debugTable TD{
+         border-collapse:collapse;
+         padding:5px;
+         border:1px solid #EEEEE0;
+      }
+      
+      .xpage-api-inspector { background: #fff; border: 1px solid #ccc;
+		padding: 10px;  } .xpage-api-inspector table { border-collapse:
+		collapse; } .xpage-api-inspector td{ background: #fff; border:
+		1px solid; line-height: 1.5em; padding: 10px; }
+		.xpage-api-inspector .more-info { background: no-repeat 12px
+		1px; padding-left: 25px; } .xpage-api-inspector .google {
+		background-image: url( /icons/vwicn008.gif ) }
+		.xpage-api-inspector .java, .xpage-api-inspector .jsf {
+		background-image: url( /icons/vwicn011.gif ) }
+		.xpage-api-inspector ul { margin: 0; padding: 0; list-style:
+		none; } .xpage-api-inspector dt { font-weight: bold; }
+		.xpage-api-inspector dd { margin-left: 10px; }
+   </style>
+
+<xp:text escape="true" id="cfDPTools" style="display:none">
+	 	<xp:this.value><![CDATA[#{javascript:
+// xProperties Custom Control SSJS library
+// Version: 0.91 - Date: 2011.06.18
+// Developer: Serdar Basegmez, Developi Information Systems, http://lotusnotus.com/en
+var dpTools={
+
+	//dpFields hold an array structured by field objects.
+	//Each members are objects containing name, type, flag and value of fields.
+	dpFields:new Array(),
+	
+	//loaded property is true if dpFields is filled.
+	loaded:false,
+		
+	//Returns a text for each item type.
+	getTypeName:function(item) {
+		switch(item.getType()) {
+			case NotesItem.ACTIONCD: return "ACTION CD";
+			case NotesItem.ASSISTANTINFO : return "Assistant Info"; 
+			case NotesItem.ATTACHMENT : return "File Attachment"; 
+			case NotesItem.COLLATION : return "Collation";
+			
+			//Caution: Fields with Multivalue have different schemes for getValues() method.
+			case NotesItem.DATETIMES : return "Time/Date" + (item.getValues().size()==1?"":" List");
+			case NotesItem.EMBEDDEDOBJECT: return "Embedded Object"; 
+			case NotesItem.ERRORITEM : return "!!! Error getting the item type"; 
+			case NotesItem.FORMULA : return "Formula"; 
+			case NotesItem.HTML : return "HTML source text"; 
+			case NotesItem.ICON : return "Icon";
+			case NotesItem.LSOBJECT : return "Lotusscript Object";
+			case NotesItem.MIME_PART : return "MIME Part";
+			case NotesItem.NOTELINKS : return "Link to a database, view, or document"; 
+			case NotesItem.NOTEREFS : return "Reference to the parent document";
+			case NotesItem.NUMBERS : return "Number" + (item.getValues().size()==1?"":" List"); 
+			case NotesItem.OTHEROBJECT : return "Other object";
+			case NotesItem.QUERYCD : return "Query CD";
+			case NotesItem.RICHTEXT : return "Rich Text";
+			case NotesItem.RFC822TEXT : return "RFC822 Text";
+			case NotesItem.SIGNATURE : return "Signature";
+	
+			// Immitating classich Notes style... 
+			case NotesItem.AUTHORS : 
+			case NotesItem.NAMES : 
+			case NotesItem.READERS : 
+			case NotesItem.TEXT : return "Text" + ((item.getValues()!=null && item.getValues().size()>1)?" List":""); 
+			case NotesItem.UNAVAILABLE : return "Unavailable";
+			case NotesItem.UNKNOWN : return "Unknown";
+			case NotesItem.USERDATA : return "User data";
+			case NotesItem.USERID : return "User ID";
+			case NotesItem.VIEWMAPDATA : return "View Map Data";
+			case NotesItem.VIEWMAPLAYOUT : return "View Map Layout";
+			default: return "Unknown: "+item.getType();
+		}
+	},
+	
+	//Returns a list of flags for any NotesItem
+	getFlags: function(item:NotesItem) {
+		result=[];
+		if(item.isNames()) result.push("NAMES");
+		if(item.isAuthors()) result.push("AUTHOR");
+		if(item.isReaders()) result.push("READER");
+		if(item.isEncrypted()) result.push("SEAL");
+		if(item.isSummary()) result.push("SUMMARY");
+		if(item.isSigned()) result.push("SIGNED");
+			
+		return result.join(" ");
+		
+	},
+	
+	//Returns value representation for any NotesItem.
+	getFieldValue: function(item:NotesItem) {
+		result="";
+		
+		switch(item.getType()) {
+			case NotesItem.DATETIMES : 
+					values=item.getValues().toArray();
+					for(i=0; i<values.length; i++) values[i]=@Text(values[i]);
+					result=values.join("\n");
+					break;
+			case NotesItem.NOTEREFS:  //Couldn't extract the content in current SSJS
+					result="<i>// Document Unique ID //</i>";
+					break;
+			case NotesItem.MIME_PART:  //Couldn't extract the content in current SSJS
+					result=(item.getValueString()=="")?"<i>// MIME Entity //</i>":item.getValueString();
+					break;
+			case NotesItem.ATTACHMENT:
+			case NotesItem.EMBEDDEDOBJECT:
+					result="<i>// Attached Object/File //</i>";
+					break;
+			case NotesItem.NUMBERS:
+					values=item.getValues().toArray();
+					result=values.join("\n");
+					break;				
+			default: 
+					try {
+						if(item.getValues()!=null && item.getValues().size()>1) {
+							values=item.getValues().toArray();
+							for(i=0; i<values.length; i++) values[i]='"'+values[i]+'"';
+							result=values.join("\n");
+						} else {
+							result= '"'+item.getValueString()+'"';
+						} 
+					} catch(e) {
+							result="<i>// Unable to get data... //</i>";
+						}
+		}
+		
+		return result.replace('\n', '<br/>');
+	},
+	
+	//This is the start-up method that fill dpFields array.
+	prepareFields: function(doc:NotesDocument) {
+
+		//Some documents may contain multiple items with the same name.
+		//We used a tricky way to extract those fields. See readme file.
+		var dpTempDoc:NotesDocument=database.createDocument();
+		this.dpFields=new Array();
+		doc.copyAllItems(dpTempDoc, false);
+		
+		items=doc.getItems().toArray();
+		itemCount=0;
+		
+		for(i=0; i<items.length; i++) {
+			fieldName=items[i].getName();
+			
+			while((item=dpTempDoc.getFirstItem(fieldName))!=null) {
+				this.dpFields[itemCount]=new Object();
+				this.dpFields[itemCount].name=item.getName();
+				this.dpFields[itemCount].type=this.getTypeName(item);
+				this.dpFields[itemCount].length=(item.getValueLength()-2)+" bytes";
+				this.dpFields[itemCount].flags=this.getFlags(item);
+				this.dpFields[itemCount].value=this.getFieldValue(item);
+				
+				item.remove();
+				itemCount++;
+			}		
+		}
+		this.loaded=true;
+		
+		//Reset scope variables to reset the dialog elements
+		requestScope.dpSelectedItem=null;
+	},
+	
+	//Returns a sorted list of all field names with "NAME|ORDERNO" format.
+	//Used in Listbox Values...
+	getSortedFieldList: function() {
+		resultArray=new Array();
+		
+		for(i=0; i<this.dpFields.length;i++) {
+			resultArray.push(this.dpFields[i].name+"|"+i);	
+		}
+
+		return resultArray.sort(function (a, b) {
+					return a.compareToIgnoreCase(b);
+					});
+	},
+	
+	isLoaded: function() {
+		return this.loaded;
+	},
+	
+	//Return 'i'th object from the array...
+	getFieldObj: function(i) {
+		return this.dpFields[i];
+	},
+
+	unload: function() {
+		this.loaded=false;
+		this.dpFields=new Array();
+	}
+
+}
+
+sessionScope.put("dpTools", dpTools);
+
+}]]></xp:this.value>
+	 </xp:text>
+
+   <xp:section id="secDebug" initClosed="true" header="Debug"
+      style="padding-left:20px;line-height:1.4em;">
+	 <xp:section id="secCustom" header="Custom objects"
+	 	initClosed="true" style="padding-left:20px">
+	 	<xp:callback facetName="customObjects" id="customObjects"></xp:callback>
+	 </xp:section>
+
+
+	 <xp:section id="secScopes" initClosed="true" header="Scopes"
+         style="padding-left:20px;line-height:1.4em;">
+         <xp:section id="secApplicationScope" initClosed="true"
+            header="Application Scope"
+            style="padding-left:20px;line-height:1.4em;">
+            <xp:panel styleClass="debugPane">
+
+
+
+               <xp:table>
+                  <xp:tr>
+                     <xp:td styleClass="debugButton" id="td1">
+                        <xp:label value="Refresh scope" id="label13"></xp:label>
+                        <xp:eventHandler event="onclick" submit="true"
+                           refreshMode="partial"
+                           refreshId="tb_Application">
+                        </xp:eventHandler>
+                     </xp:td>
+                     <xp:td id="td2" styleClass="debugButton">
+                        <xp:label value="Clear scope" id="label14"></xp:label>
+                        <xp:eventHandler event="onclick" submit="true"
+                           refreshMode="complete">
+                           <xp:this.script><![CDATA[return confirm('Are you sure to clear the Application Scope?')]]></xp:this.script>
+                           <xp:this.action><![CDATA[#{javascript:var iter = applicationScope.keySet().iterator();
+      while( iter.hasNext() ){ 
+         applicationScope.remove( iter.next() );
+      }
+        }]]></xp:this.action>
+                        </xp:eventHandler>
+                     </xp:td>
+
+                  </xp:tr>
+               </xp:table>
+               <xp:br></xp:br>
+               <xp:br></xp:br>
+               <xp:table id="tb_Application" styleClass="debugTable"
+               	style="width:600.0px">
+               	<xp:tr>
+               		<th>
+               			<xp:label id="label3" value="Name"
+               				style="font-weight:bold">
+               			</xp:label>
+               		</th>
+               		<th>
+               			<xp:label value="Content" id="label4"
+               				style="font-weight:bold">
+               			</xp:label>
+               		</th>
+               		<th>
+               			<xp:label value="Actions" id="label15"
+               				style="font-weight:bold">
+               			</xp:label>
+               		</th>
+               	</xp:tr>
+               	<xp:repeat id="repeat4" rows="50" var="scopeData1">
+               		<xp:this.value><![CDATA[#{javascript:v = new java.util.Vector(applicationScope.keySet());
+      java.util.Collections.sort(v);
+      return v;}]]></xp:this.value>
+               		<xp:tr>
+               			<xp:td>
+               				<xp:text escape="true" id="cfScopeName"
+               					value="#{javascript:scopeData1}" />
+               			</xp:td>
+               			<xp:td>
+               				<xp:inputText id="inputScopeValue"
+               					defaultValue="#{javascript:applicationScope.get(scopeData1)}"
+               					style="width:200.0px">
+               					<xp:this.readonly><![CDATA[#{javascript:var scope = applicationScope.get(scopeData1);
+if (typeof scope == "string"){
+	return false
+}else{
+	return true
+}}]]></xp:this.readonly>
+               				</xp:inputText>
+               			</xp:td>
+               			<xp:td>
+               				<xp:table id="actions">
+               					<xp:tr>
+               						<xp:td styleClass="debugButton"
+               							id="td3">
+
+               							<xp:label value="Remove"
+               								id="label16">
+               							</xp:label>
+
+               							<xp:eventHandler
+               								event="onmousedown" submit="true"
+               								refreshMode="partial"
+               								refreshId="tb_Application">
+               								<xp:this.script><![CDATA[var scope = '#{javascript:return scopeData1;}';
+return confirm("Are you sure to clear '" + scope + "' ?")]]></xp:this.script>
+               								<xp:this.action><![CDATA[#{javascript:applicationScope.remove(scopeData1.toString());
+}]]></xp:this.action>
+               							</xp:eventHandler>
+               						</xp:td>
+               						<xp:td styleClass="debugButton"
+               							id="td4">
+               							<xp:this.rendered><![CDATA[#{javascript:var scope = applicationScope.get(scopeData1);
+if (typeof scope == "string"){
+	return true
+}else{
+	return false
+}}]]></xp:this.rendered>
+               							<xp:label value="Save value"
+               								id="label17">
+               							</xp:label>
+
+               							<xp:eventHandler
+               								event="onclick" submit="true"
+               								refreshMode="complete">
+               								<xp:this.action><![CDATA[#{javascript:applicationScope.put(scopeData1, getComponent("inputScopeValue").getValue())}]]></xp:this.action>
+               							</xp:eventHandler>
+               						</xp:td>
+               					</xp:tr>
+               				</xp:table>
+               			</xp:td>
+               		</xp:tr>
+               	</xp:repeat>
+               </xp:table>
+            </xp:panel>
+         </xp:section>
+         <xp:section id="secSessionScope" initClosed="true"
+         	header="Session Scope"
+         	style="padding-left:20px;line-height:1.4em;">
+         	<xp:panel styleClass="debugPane">
+
+
+
+         		<xp:table>
+         			<xp:tr>
+         				<xp:td styleClass="debugButton" id="td5">
+         					<xp:label value="Refresh scope"
+         						id="label1">
+         					</xp:label>
+         					<xp:eventHandler event="onclick"
+         						submit="true" refreshMode="partial"
+         						refreshId="tb_session">
+         					</xp:eventHandler>
+         				</xp:td>
+         				<xp:td id="td6" styleClass="debugButton">
+         					<xp:label value="Clear scope"
+         						id="label2">
+         					</xp:label>
+         					<xp:eventHandler event="onclick"
+         						submit="true" refreshMode="complete">
+         						<xp:this.script><![CDATA[return confirm('Are you sure to clear the session Scope?')]]></xp:this.script>
+         						<xp:this.action><![CDATA[#{javascript:var iter = sessionScope.keySet().iterator();
+      while( iter.hasNext() ){ 
+         sessionScope.remove( iter.next() );
+      }
+        }]]></xp:this.action>
+         					</xp:eventHandler>
+         				</xp:td>
+
+         			</xp:tr>
+         		</xp:table>
+         		<xp:br></xp:br>
+         		<xp:br></xp:br>
+         		<xp:table id="tb_session" styleClass="debugTable"
+         			style="width:600.0px">
+         			<xp:tr>
+         				<th>
+         					<xp:label id="label18" value="Name"
+         						style="font-weight:bold">
+         					</xp:label>
+         				</th>
+         				<th>
+         					<xp:label value="Content" id="label19"
+         						style="font-weight:bold">
+         					</xp:label>
+         				</th>
+         				<th>
+         					<xp:label value="Actions" id="label20"
+         						style="font-weight:bold">
+         					</xp:label>
+         				</th>
+         			</xp:tr>
+         			<xp:repeat id="repeat5" rows="50"
+         				var="scopeData1">
+         				<xp:this.value><![CDATA[#{javascript:v = new java.util.Vector(sessionScope.keySet());
+      java.util.Collections.sort(v);
+      return v;}]]></xp:this.value>
+         				<xp:tr>
+         					<xp:td>
+         						<xp:text escape="true"
+         							id="computedField7" value="#{javascript:scopeData1}" />
+         					</xp:td>
+         					<xp:td>
+         						<xp:inputText id="inputText1"
+         							defaultValue="#{javascript:sessionScope.get(scopeData1)}"
+         							style="width:200.0px">
+         							<xp:this.readonly><![CDATA[#{javascript:var scope = sessionScope.get(scopeData1);
+if (typeof scope == "string"){
+	return false
+}else{
+	return true
+}}]]></xp:this.readonly>
+         						</xp:inputText>
+         					</xp:td>
+         					<xp:td>
+         						<xp:table id="table1">
+         							<xp:tr>
+         								<xp:td styleClass="debugButton"
+         									id="td7">
+
+         									<xp:label value="Remove"
+         										id="label21">
+         									</xp:label>
+
+         									<xp:eventHandler
+         										event="onmousedown" submit="true"
+         										refreshMode="partial" refreshId="tb_session">
+         										<xp:this.script><![CDATA[var scope = '#{javascript:return scopeData1;}';
+return confirm("Are you sure to clear '" + scope + "' ?")]]></xp:this.script>
+         										<xp:this.action><![CDATA[#{javascript:sessionScope.remove(scopeData1.toString());
+}]]></xp:this.action>
+         									</xp:eventHandler>
+         								</xp:td>
+         								<xp:td styleClass="debugButton"
+         									id="td8">
+         									<xp:this.rendered><![CDATA[#{javascript:var scope = sessionScope.get(scopeData1);
+if (typeof scope == "string"){
+	return true
+}else{
+	return false
+}}]]></xp:this.rendered>
+         									<xp:label
+         										value="Save value" id="label22">
+         									</xp:label>
+
+         									<xp:eventHandler
+         										event="onclick" submit="true"
+         										refreshMode="complete">
+         										<xp:this.action><![CDATA[#{javascript:sessionScope.put(scopeData1, getComponent("inputScopeValue").getValue())}]]></xp:this.action>
+         									</xp:eventHandler>
+         								</xp:td>
+         							</xp:tr>
+         						</xp:table>
+         					</xp:td>
+         				</xp:tr>
+         			</xp:repeat>
+         		</xp:table>
+         	</xp:panel>
+         </xp:section>
+         <xp:section id="secViewScope" initClosed="true"
+         	header="View Scope"
+         	style="padding-left:20px;line-height:1.4em;">
+         	<xp:panel styleClass="debugPane">
+
+
+
+         		<xp:table>
+         			<xp:tr>
+         				<xp:td styleClass="debugButton" id="td9">
+         					<xp:label value="Refresh scope"
+         						id="label5">
+         					</xp:label>
+         					<xp:eventHandler event="onclick"
+         						submit="true" refreshMode="partial"
+         						refreshId="tb_view">
+         					</xp:eventHandler>
+         				</xp:td>
+         				<xp:td id="td10" styleClass="debugButton">
+         					<xp:label value="Clear scope"
+         						id="label6">
+         					</xp:label>
+         					<xp:eventHandler event="onclick"
+         						submit="true" refreshMode="complete">
+         						<xp:this.script><![CDATA[return confirm('Are you sure to clear the view Scope?')]]></xp:this.script>
+         						<xp:this.action><![CDATA[#{javascript:var iter = viewScope.keySet().iterator();
+      while( iter.hasNext() ){ 
+         viewScope.remove( iter.next() );
+      }
+        }]]></xp:this.action>
+         					</xp:eventHandler>
+         				</xp:td>
+
+         			</xp:tr>
+         		</xp:table>
+         		<xp:br></xp:br>
+         		<xp:br></xp:br>
+         		<xp:table id="tb_view" styleClass="debugTable"
+         			style="width:600.0px">
+         			<xp:tr>
+         				<th>
+         					<xp:label id="label23" value="Name"
+         						style="font-weight:bold">
+         					</xp:label>
+         				</th>
+         				<th>
+         					<xp:label value="Content" id="label24"
+         						style="font-weight:bold">
+         					</xp:label>
+         				</th>
+         				<th>
+         					<xp:label value="Actions" id="label25"
+         						style="font-weight:bold">
+         					</xp:label>
+         				</th>
+         			</xp:tr>
+         			<xp:repeat id="repeat6" rows="50"
+         				var="scopeData1">
+         				<xp:this.value><![CDATA[#{javascript:v = new java.util.Vector(viewScope.keySet());
+      java.util.Collections.sort(v);
+      return v;}]]></xp:this.value>
+         				<xp:tr>
+         					<xp:td>
+         						<xp:text escape="true"
+         							id="computedField8" value="#{javascript:scopeData1}" />
+         					</xp:td>
+         					<xp:td>
+         						<xp:inputText id="inputText2"
+         							defaultValue="#{javascript:viewScope.get(scopeData1)}"
+         							style="width:200.0px">
+         							<xp:this.readonly><![CDATA[#{javascript:var scope = viewScope.get(scopeData1);
+if (typeof scope == "string"){
+	return false
+}else{
+	return true
+}}]]></xp:this.readonly>
+         						</xp:inputText>
+         					</xp:td>
+         					<xp:td>
+         						<xp:table id="table2">
+         							<xp:tr>
+         								<xp:td styleClass="debugButton"
+         									id="td11">
+
+         									<xp:label value="Remove"
+         										id="label26">
+         									</xp:label>
+
+         									<xp:eventHandler
+         										event="onmousedown" submit="true"
+         										refreshMode="partial" refreshId="tb_view">
+         										<xp:this.script><![CDATA[var scope = '#{javascript:return scopeData1;}';
+return confirm("Are you sure to clear '" + scope + "' ?")]]></xp:this.script>
+         										<xp:this.action><![CDATA[#{javascript:viewScope.remove(scopeData1.toString());
+}]]></xp:this.action>
+         									</xp:eventHandler>
+         								</xp:td>
+         								<xp:td styleClass="debugButton"
+         									id="td12">
+         									<xp:this.rendered><![CDATA[#{javascript:var scope = viewScope.get(scopeData1);
+if (typeof scope == "string"){
+	return true
+}else{
+	return false
+}}]]></xp:this.rendered>
+         									<xp:label
+         										value="Save value" id="label27">
+         									</xp:label>
+
+         									<xp:eventHandler
+         										event="onclick" submit="true"
+         										refreshMode="complete">
+         										<xp:this.action><![CDATA[#{javascript:viewScope.put(scopeData1, getComponent("inputScopeValue").getValue())}]]></xp:this.action>
+         									</xp:eventHandler>
+         								</xp:td>
+         							</xp:tr>
+         						</xp:table>
+         					</xp:td>
+         				</xp:tr>
+         			</xp:repeat>
+         		</xp:table>
+         	</xp:panel>
+         </xp:section>
+         <xp:section id="secRequestScope" initClosed="true"
+         	header="Request Scope"
+         	style="padding-left:20px;line-height:1.4em;">
+         	<xp:panel styleClass="debugPane">
+         		<xp:table>
+         			<xp:tr>
+         				<xp:td styleClass="debugButton" id="td13">
+         					<xp:label value="Refresh scope"
+         						id="label7">
+         					</xp:label>
+         					<xp:eventHandler event="onclick"
+         						submit="true" refreshMode="partial"
+         						refreshId="tb_request">
+         					</xp:eventHandler>
+         				</xp:td>
+         				<xp:td id="td14" styleClass="debugButton">
+         					<xp:label value="Clear scope"
+         						id="label8">
+         					</xp:label>
+         					<xp:eventHandler event="onclick"
+         						submit="true" refreshMode="complete">
+         						<xp:this.script><![CDATA[return confirm('Are you sure to clear the request Scope?')]]></xp:this.script>
+         						<xp:this.action><![CDATA[#{javascript:var iter = requestScope.keySet().iterator();
+      while( iter.hasNext() ){ 
+         requestScope.remove( iter.next() );
+      }
+        }]]></xp:this.action>
+         					</xp:eventHandler>
+         				</xp:td>
+
+         			</xp:tr>
+         		</xp:table>
+         		<xp:br></xp:br>
+         		<xp:br></xp:br>
+         		<xp:table id="tb_request" styleClass="debugTable"
+         			style="width:600.0px">
+         			<xp:tr>
+         				<th>
+         					<xp:label id="label28" value="Name"
+         						style="font-weight:bold">
+         					</xp:label>
+         				</th>
+         				<th>
+         					<xp:label value="Content" id="label29"
+         						style="font-weight:bold">
+         					</xp:label>
+         				</th>
+         				<th>
+         					<xp:label value="Actions" id="label30"
+         						style="font-weight:bold">
+         					</xp:label>
+         				</th>
+         			</xp:tr>
+         			<xp:repeat id="repeat7" rows="50"
+         				var="scopeData1">
+         				<xp:this.value><![CDATA[#{javascript:v = new java.util.Vector(requestScope.keySet());
+      java.util.Collections.sort(v);
+      return v;}]]></xp:this.value>
+         				<xp:tr>
+         					<xp:td>
+         						<xp:text escape="true"
+         							id="computedField9" value="#{javascript:scopeData1}" />
+         					</xp:td>
+         					<xp:td>
+         						<xp:inputText id="inputText3"
+         							defaultValue="#{javascript:requestScope.get(scopeData1)}"
+         							style="width:200.0px">
+         							<xp:this.readonly><![CDATA[#{javascript:var scope = requestScope.get(scopeData1);
+if (typeof scope == "string"){
+	return false
+}else{
+	return true
+}}]]></xp:this.readonly>
+         						</xp:inputText>
+         					</xp:td>
+         					<xp:td>
+         						<xp:table id="table3">
+         							<xp:tr>
+         								<xp:td styleClass="debugButton"
+         									id="td15">
+
+         									<xp:label value="Remove"
+         										id="label31">
+         									</xp:label>
+
+         									<xp:eventHandler
+         										event="onmousedown" submit="true"
+         										refreshMode="partial" refreshId="tb_request">
+         										<xp:this.script><![CDATA[var scope = '#{javascript:return scopeData1;}';
+return confirm("Are you sure to clear '" + scope + "' ?")]]></xp:this.script>
+         										<xp:this.action><![CDATA[#{javascript:requestScope.remove(scopeData1.toString());
+}]]></xp:this.action>
+         									</xp:eventHandler>
+         								</xp:td>
+         								<xp:td styleClass="debugButton"
+         									id="td16">
+         									<xp:this.rendered><![CDATA[#{javascript:var scope = requestScope.get(scopeData1);
+if (typeof scope == "string"){
+	return true
+}else{
+	return false
+}}]]></xp:this.rendered>
+         									<xp:label
+         										value="Save value" id="label32">
+         									</xp:label>
+
+         									<xp:eventHandler
+         										event="onclick" submit="true"
+         										refreshMode="complete">
+         										<xp:this.action><![CDATA[#{javascript:requestScope.put(scopeData1, getComponent("inputScopeValue").getValue())}]]></xp:this.action>
+         									</xp:eventHandler>
+         								</xp:td>
+         							</xp:tr>
+         						</xp:table>
+         					</xp:td>
+         				</xp:tr>
+         			</xp:repeat>
+         		</xp:table>
+         	</xp:panel>
+         </xp:section>
+
+      </xp:section>
+      
+      <xp:section id="secSummary" header="Summary" initClosed="true"
+         style="padding-left:20px;line-height:1.4em;">
+         <xp:table border="1">
+            <xp:tr>
+               <xp:td
+                  style="background-color:rgb(192,192,192);border-color:rgb(128,128,128)">
+                  <xp:label id="label9" value="User Variable Name"
+                     style="font-weight:bold">
+                  </xp:label>
+               </xp:td>
+               <xp:td
+                  style="width:400.0px;background-color:rgb(192,192,192)">
+                  <xp:label value="User Variable Content" id="label10"
+                     style="font-weight:bold">
+                  </xp:label>
+               </xp:td>
+            </xp:tr>
+            <xp:tr>
+               <xp:td style="width:150.0px">current username</xp:td>
+               <xp:td>
+                  <xp:text escape="true" id="computedField2"
+                     value="#{javascript:@UserName();}">
+                  </xp:text>
+               </xp:td>
+            </xp:tr>
+            <xp:tr>
+               <xp:td>current user access level&#160;</xp:td>
+               <xp:td>
+                  <xp:text escape="true" id="computedField3">
+                     <xp:this.value><![CDATA[#{javascript:var iLevel:Int = database.getCurrentAccessLevel()
+
+if (iLevel == 1) {
+   return "Depositor"
+}
+if (iLevel == 2) {
+   return "Reader"
+}
+if (iLevel == 3) {
+   return "Author"
+}
+// if you have manager access, you still would be an editor in xpages (web)
+if (iLevel == 4) {
+   return "Editor"
+}
+if (iLevel == 5) {
+   return "Designer"
+}
+if (iLevel == 6) {
+   return "Manager"
+}
+
+}]]></xp:this.value>
+                  </xp:text>
+               </xp:td>
+            </xp:tr>
+            <xp:tr>
+               <xp:td>current&#160;userroles</xp:td>
+               <xp:td>
+
+                  <xp:repeat id="repeat1" rows="100" var="rowRole">
+                     <xp:this.value><![CDATA[#{javascript:v = new java.util.Vector(context.getUser().getRoles());
+java.util.Collections.sort(v);
+return v;}]]></xp:this.value>
+                     <xp:text escape="true" id="computedField1"
+                        value="#{javascript:rowRole}">
+                     </xp:text>
+                     <xp:br></xp:br>
+                  </xp:repeat>
+               </xp:td>
+            </xp:tr>
+            <xp:tr>
+               <xp:td>current&#160;user groups</xp:td>
+               <xp:td>
+                  <xp:repeat id="repeat2" rows="200" var="rowGroup">
+                     <xp:this.value><![CDATA[#{javascript:v = new java.util.Vector(context.getUser().getGroups());
+java.util.Collections.sort(v);
+return v;}]]></xp:this.value>
+                     <xp:text escape="true" id="computedField4"
+                        value="#{javascript:rowGroup}">
+                     </xp:text>
+                     <xp:br></xp:br>
+                  </xp:repeat>
+               </xp:td>
+            </xp:tr>
+         </xp:table>
+         <xp:br></xp:br>
+         <xp:table border="1">
+            <xp:tr>
+               <xp:td
+                  style="width:150.0px;background-color:rgb(192,192,192)">
+                  <xp:label id="label11" value="Browser Variable Name"
+                     style="font-weight:bold">
+                  </xp:label>
+               </xp:td>
+               <xp:td
+                  style="width:400.0px;background-color:rgb(192,192,192)">
+                  <xp:label value="Browser Variable Content"
+                     id="label12" style="font-weight:bold">
+                  </xp:label>
+               </xp:td>
+            </xp:tr>
+            <xp:tr>
+               <xp:td>current&#160;cookies</xp:td>
+               <xp:td>
+                  <xp:repeat id="repeat3" rows="100" var="rowCookie">
+                     <xp:this.value><![CDATA[#{javascript:v = new java.util.Vector(cookie.keySet());
+java.util.Collections.sort(v);
+return v;}]]></xp:this.value>
+
+                     <xp:table>
+                        <xp:tr>
+                           <xp:td style="width:150.0px">
+                              <xp:text escape="true" id="computedField5"
+                                 value="#{javascript:rowCookie}">
+                              </xp:text>
+                           </xp:td>
+                           <xp:td>
+                              <xp:text escape="true" id="computedField6"
+                                 value="#{javascript:cookie.get(rowCookie).getValue();}">
+                              </xp:text>
+                           </xp:td>
+                        </xp:tr>
+                     </xp:table>
+
+                  </xp:repeat>
+               </xp:td>
+            </xp:tr>
+            <xp:tr>
+               <xp:td>browser language</xp:td>
+               <xp:td>
+                  <xp:text escape="true" id="computedField16"
+                     value="#{javascript:context.getLocaleString()}">
+
+                  </xp:text>
+                  /&#160;
+                  <xp:text escape="true" id="computedField15"
+                     value="#{javascript:context.getLocale().getDisplayName()}">
+                  </xp:text>
+               </xp:td>
+            </xp:tr>
+            <xp:tr>
+               <xp:td>browser type &amp; version</xp:td>
+               <xp:td>
+                  <xp:text escape="true" id="computedField17">
+                     <xp:this.value><![CDATA[#{javascript:context.getUserAgent().getBrowser() + " " +  context.getUserAgent().getBrowserVersion()}]]></xp:this.value>
+                  </xp:text>
+               </xp:td>
+            </xp:tr>
+            <xp:tr>
+               <xp:td>browser timezone</xp:td>
+               <xp:td>
+                  <xp:text escape="true" id="computedField18"
+                     value="#{javascript:context.getTimeZoneString()}">
+                  </xp:text>
+               </xp:td>
+            </xp:tr>
+
+         </xp:table>
+
+      </xp:section>
+      <xp:section id="secApi" header="Api Inspector V3"
+      	initClosed="true" style="padding-left:20px;">
+      	<!--
+      		<< Copyright 2010 Tommy Valand Licensed under the Apache License,
+      		Version 2.0 (the "License"); you may not use this file except in
+      		compliance with the License. You may obtain a copy of the License at
+      		
+      		http://www.apache.org/licenses/LICENSE-2.0 Unless required by
+      		applicable law or agreed to in writing, software distributed under the
+      		License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+      		CONDITIONS OF ANY KIND, either express or implied. See the License for
+      		the specific language governing permissions and limitations under the
+      		License >>
+      	-->
+      	<xp:br></xp:br>
+      	<xp:link escape="true" text="More info about Api Inspector"
+      		id="link1"
+      		value="http://www.openntf.org/Projects/pmt.nsf/ProjectLookup/XPages%20API%20Inspector">
+      	</xp:link>
+      	<xp:br></xp:br>
+      	<xp:div id="xpageApiInspector"
+      		styleClass="xpage-api-inspector">
+      		Expression (e.g. java.util.ArrayList):
+      		<xp:comboBox id="componentId"
+      			value="#{viewScope.componentId}">
+      			<xp:selectItems>
+      				<xp:this.value><![CDATA[#{javascript:/**
+*	Fetch most (no support for repeat controls) ids
+*/
+// Private function - walks the node tree to collect all components
+function getChildren( component ){
+	var children = component.getChildren();
+	var numChildren = children.size();
+	var componentChildren = [];
+	if( numChildren === 0 ){ 
+		return null; 
+	} else {		
+		for( var i = 0; i < numChildren; i++ ){
+			var childNode = children.get( i );
+			componentChildren.push( childNode );
+			var childrenBelowChild = getChildren( childNode );
+			if( childrenBelowChild !== null ){
+				componentChildren = componentChildren.concat( childrenBelowChild );
+			}
+		}
+	}
+	return componentChildren;
+}
+
+// Loops through all child elements of the container component, view	
+var allChildren = getChildren( view );
+var size = allChildren.length;
+
+// Show _components (eventHandlers++)
+var showHiddenComponents = ( getSubmittedValue( 'chkShowHiddenComponents' ) !== '' );
+
+var itemsArr = [ 'Custom|' ];
+for( var i=0; i < size; i++ ){
+	var child = allChildren[i];
+	
+	var id = child.getId();
+	
+	// Skip
+	if( !id || ( !showHiddenComponents && id.substring( 0, 1 ) === '_' ) ){ continue; }
+	
+	itemsArr.push( id );
+	
+}
+
+return itemsArr;
+}]]></xp:this.value>
+      			</xp:selectItems>
+      			<xp:eventHandler event="onchange" submit="true"
+      				refreshMode="partial" refreshId="xpageApiInspector"
+      				immediate="true">
+      				<xp:this.action><![CDATA[#{javascript:var componentId = this.getParent().value;
+if( componentId ){
+	viewScope.put( 'expression', 'getComponent( \'' + componentId + '\' )' );
+} else {
+	viewScope.remove( 'expression' );
+}}]]></xp:this.action>
+      			</xp:eventHandler>
+      		</xp:comboBox>
+      		<xp:span>
+      			<xp:this.rendered><![CDATA[#{javascript:return ( getSubmittedValue( 'componentId' ) === '' );}]]></xp:this.rendered>
+      			<xp:inputTextarea id="expression"
+      				style="width:300.0px" value="#{viewScope.expression}"
+      				cols="30">
+      			</xp:inputTextarea>
+      			<xp:button value="Inspect" id="btnInspect">
+      				<xp:eventHandler event="onclick" submit="true"
+      					refreshMode="partial" refreshId="xpageApiInspector"
+      					immediate="true">
+      				</xp:eventHandler>
+      			</xp:button>
+      		</xp:span>
+      		<br />
+      		<xp:checkBox value="#{viewScope.showHiddenComponents}"
+      			checkedValue="#{javascript:return true;}"
+      			uncheckedValue="#{javascript:return false;}"
+      			id="chkShowHiddenComponents" text="Show hidden components">
+      			<xp:eventHandler event="onclick" submit="true"
+      				refreshMode="partial" refreshId="xpageApiInspector"
+      				immediate="true">
+      			</xp:eventHandler>
+      		</xp:checkBox>
+      		<xp:br />
+      		<xp:br />
+      		<div>
+      			<xp:text style="color:red" value="Invalid expression"
+      				rendered="#{javascript:return (viewScope.expressionInfo === '');}" />
+      		</div>
+      		<div>
+      			<xp:text style="color:red"
+      				value="#{javascript:'Exception:' + viewScope.exception}"
+      				rendered="#{javascript:viewScope.exception}" />
+      		</div>
+
+      		<xp:panel
+      			rendered="#{javascript:viewScope.expressionInfo}">
+      			<!-- Class name -->
+      			<xp:text id="className" disableTheme="true"
+      				escape="false">
+      				<xp:this.value><![CDATA[#{javascript:var expressionInfo = viewScope.expressionInfo;
+if( !expressionInfo ){ return; }
+
+var className = expressionInfo.className;
+
+'<h1 style="display:inline">' + className + '</h1>'
+	+ ExpressionParser.makeJavaAPILink( className )
+	+ ExpressionParser.makeJSFAPILink( className )
+	+ ExpressionParser.makeGoogleLink( className );}]]></xp:this.value>
+      			</xp:text>
+      			<xp:br />
+      			<!-- Object value (toString) -->
+      			<xp:text id="expressionValue" disableTheme="true"
+      				escape="false">
+      				<xp:this.value><![CDATA[#{javascript:var expressionInfo = viewScope.expressionInfo;
+if( !expressionInfo || !expressionInfo.value ){ return; }
+'<h3>toString: ' + expressionInfo.value + '</h3>';}]]></xp:this.value>
+      			</xp:text>
+
+      			<!-- Methods -->
+      			<xp:br />
+      			<xp:section id="methods"
+      				header="#{javascript: 'Methods (' + expressionInfo.methods.length + ')'}"
+      				initClosed="true">
+      				<xp:this.rendered><![CDATA[#{javascript:var expressionInfo = viewScope.expressionInfo;
+return ( expressionInfo && expressionInfo.methods && expressionInfo.methods.length > 0 );}]]></xp:this.rendered>
+      				<ul>
+      					<xp:repeat id="methodsRepeat" rows="100"
+      						value="#{viewScope.expressionInfo.methods}" var="method">
+      						<li>
+      							<dl>
+      								<dt>
+      									<xp:text disableTheme="true"
+      										value="#{javascript:method.command + method.commandThrows}" />
+      								</dt>
+      								<dd>
+      									<xp:text escape="false"
+      										disableTheme="true">
+      										<xp:this.value><![CDATA[#{javascript:var className = method.returnClass;
+'Returns object of type: ' + className + ExpressionParser.makeJavaAPILink( className )
+	+ ExpressionParser.makeJSFAPILink( className )
+	+ ExpressionParser.makeGoogleLink( className );}]]></xp:this.value>
+      									</xp:text>
+      								</dd>
+      								<dd>
+      									<xp:text escape="false"
+      										disableTheme="true">
+      										<xp:this.value><![CDATA[#{javascript:var className = method.commandClass;
+'Inherited from: ' + className + ExpressionParser.makeJavaAPILink( className )
+	+ ExpressionParser.makeJSFAPILink( className )
+	+ ExpressionParser.makeGoogleLink( className );}]]></xp:this.value>
+      									</xp:text>
+      								</dd>
+      							</dl>
+      						</li>
+      					</xp:repeat>
+      				</ul>
+      			</xp:section>
+      			<!-- Declared Methods -->
+      			<xp:br />
+      			<xp:section id="declaredMethods" initClosed="true"
+      				header="#{javascript: 'Declared Methods (' + expressionInfo.declaredMethods.length + ')'}">
+      				<xp:this.rendered><![CDATA[#{javascript:var expressionInfo = viewScope.expressionInfo;
+return ( expressionInfo && expressionInfo.declaredMethods && expressionInfo.declaredMethods.length > 0 );}]]></xp:this.rendered>
+      				<ul>
+      					<xp:repeat id="declaredMethodsRepeat"
+      						rows="100"
+      						value="#{viewScope.expressionInfo.declaredMethods}"
+      						var="declaredMethod">
+      						<li>
+      							<dl>
+      								<dt>
+      									<xp:text disableTheme="true"
+      										value="#{declaredMethod.command}" />
+      								</dt>
+      								<dd>
+      									<xp:text escape="false"
+      										disableTheme="true">
+      										<xp:this.value><![CDATA[#{javascript:var className = declaredMethod.returnClass;
+'Returns object of type: ' + className + ExpressionParser.makeJavaAPILink( className )
+	+ ExpressionParser.makeJSFAPILink( className )
+	+ ExpressionParser.makeGoogleLink( className );}]]></xp:this.value>
+      									</xp:text>
+      								</dd>
+      								<dd>
+      									<xp:text escape="false"
+      										disableTheme="true">
+      										<xp:this.value><![CDATA[#{javascript:var className = declaredMethod.commandClass;
+'Inherited from: ' + className + ExpressionParser.makeJavaAPILink( className )
+	+ ExpressionParser.makeJSFAPILink( className )
+	+ ExpressionParser.makeGoogleLink( className );}]]></xp:this.value>
+      									</xp:text>
+      								</dd>
+      							</dl>
+      						</li>
+      					</xp:repeat>
+      				</ul>
+      			</xp:section>
+      			<!-- Fields -->
+      			<xp:br />
+      			<xp:section id="fields"
+      				header="#{javascript: 'Fields (' + expressionInfo.fields.length + ')'}"
+      				initClosed="true">
+      				<xp:this.rendered><![CDATA[#{javascript:var expressionInfo = viewScope.expressionInfo;
+return ( expressionInfo && expressionInfo.fields && expressionInfo.fields.length > 0 );}]]></xp:this.rendered>
+      				<ul>
+      					<xp:repeat id="fieldsRepeat" rows="100"
+      						value="#{viewScope.expressionInfo.fields}" var="field">
+      						<li>
+      							<dl>
+      								<dt>
+      									<xp:text disableTheme="true"
+      										value="#{field.command}" />
+      								</dt>
+      								<dd>
+      									<xp:text escape="false"
+      										disableTheme="true">
+      										<xp:this.value><![CDATA[#{javascript:var className = field.returnClass;
+'Returns object of type: ' + className + ExpressionParser.makeJavaAPILink( className )
+	+ ExpressionParser.makeJSFAPILink( className )
+	+ ExpressionParser.makeGoogleLink( className );}]]></xp:this.value>
+      									</xp:text>
+      								</dd>
+      								<dd>
+      									<xp:text escape="false"
+      										disableTheme="true">
+      										<xp:this.value><![CDATA[#{javascript:var className = field.commandClass;
+'Inherited from: ' + className + ExpressionParser.makeJavaAPILink( className )
+	+ ExpressionParser.makeJSFAPILink( className )
+	+ ExpressionParser.makeGoogleLink( className );}]]></xp:this.value>
+      									</xp:text>
+      								</dd>
+      							</dl>
+      						</li>
+      					</xp:repeat>
+      				</ul>
+      			</xp:section>
+      			<!-- Declared Fields -->
+      			<xp:br />
+      			<xp:section id="declaredFields"
+      				header="#{javascript: 'Declared Fields (' + expressionInfo.declaredFields.length + ')'}"
+      				initClosed="true">
+      				<xp:this.rendered><![CDATA[#{javascript:var expressionInfo = viewScope.expressionInfo;
+return ( expressionInfo && expressionInfo.declaredFields && expressionInfo.declaredFields.length > 0 );}]]></xp:this.rendered>
+      				<ul>
+      					<xp:repeat id="declaredFieldsRepeat"
+      						rows="100"
+      						value="#{viewScope.expressionInfo.declaredFields}"
+      						var="declaredField">
+      						<li>
+      							<dl>
+      								<dt>
+      									<xp:text disableTheme="true"
+      										value="#{declaredField.command}" />
+      								</dt>
+      								<dd>
+      									<xp:text escape="false"
+      										disableTheme="true">
+      										<xp:this.value><![CDATA[#{javascript:var className = declaredField.returnClass;
+'Returns object of type: ' + className + ExpressionParser.makeJavaAPILink( className )
+	+ ExpressionParser.makeJSFAPILink( className )
+	+ ExpressionParser.makeGoogleLink( className );}]]></xp:this.value>
+      									</xp:text>
+      								</dd>
+      								<dd>
+      									<xp:text escape="false"
+      										disableTheme="true">
+      										<xp:this.value><![CDATA[#{javascript:var className = declaredField.commandClass;
+'Inherited from: ' + className + ExpressionParser.makeJavaAPILink( className )
+	+ ExpressionParser.makeJSFAPILink( className )
+	+ ExpressionParser.makeGoogleLink( className );}]]></xp:this.value>
+      									</xp:text>
+      								</dd>
+      							</dl>
+      						</li>
+      					</xp:repeat>
+      				</ul>
+      			</xp:section>
+      		</xp:panel>
+      		<xp:messages id="validationMessages" />
+      		<xp:scriptBlock>
+      			<xp:this.value><![CDATA[var expressionArea = dojo.query( 'textarea[id$=expression]' );
+if( expressionArea.length === 1 ){
+	var expressionArea = expressionArea[0];
+	new dijit.form.Textarea().create( { 
+		cols: 50,
+		name: expressionArea.id
+	}, expressionArea );
+}]]></xp:this.value>
+      		</xp:scriptBlock>
+      	</xp:div>
+
+
+
+
+      </xp:section>
+      <xp:section id="secXprops" header="xProperties v0.91"
+      	initClosed="true" style="padding-left:20px;">
+      	<xp:this.rendered><![CDATA[#{javascript:if (compositeData.document != null){
+	return true
+}else{
+	return false
+}}]]></xp:this.rendered>
+      	<xp:br></xp:br>
+      	<xp:link escape="true" text="More info about xProperties"
+      		id="link2">
+      		<xp:this.value><![CDATA[http://www.openntf.org/internal/home.nsf/project.xsp?action=openDocument&name=xProperties%20Custom%20Control]]></xp:this.value>
+      	</xp:link>
+      	<xp:br></xp:br>
+      	<xp:table style="width:175.0px">
+      		<xp:tr>
+      			<xp:td id="td17" styleClass="debugButton">
+      				<xp:label value="Reread current document"
+      					id="label37">
+      				</xp:label>
+      				<xp:eventHandler event="onclick" submit="true"
+      					refreshMode="partial" refreshId="secDebug">
+      					<xp:this.action><![CDATA[#{javascript:try{
+	if (compositeData.document != null){
+		sessionScope.get("dpTools").unload()
+		sessionScope.get("dpTools").prepareFields(compositeData.document);
+	}	
+}catch(e){
+	
+}}]]></xp:this.action>
+
+      				</xp:eventHandler>
+      			</xp:td>
+      		</xp:tr>
+
+      	</xp:table>
+      	<xp:panel style="border:1px solid gray; padding:1px;"
+      		id="dpDialog">
+      		<xp:panel style="width:49%; float:left;">
+      			<xp:listBox style="height:400px;width:100%;"
+      				id="selectField">
+      				<xp:selectItems>
+      					<xp:this.value><![CDATA[#{javascript:return sessionScope.get("dpTools").getSortedFieldList()}]]></xp:this.value>
+      				</xp:selectItems>
+      				<xp:eventHandler event="onchange" submit="true"
+      					refreshMode="partial" refreshId="fieldDetailsWrapper">
+      					<xp:this.action><![CDATA[#{javascript:i=parseInt(this.getParent().getValue());
+	requestScope.dpSelectedItem=sessionScope.get("dpTools").getFieldObj(i);}]]></xp:this.action>
+      				</xp:eventHandler>
+      			</xp:listBox>
+      		</xp:panel>
+      		<xp:panel
+      			style="width:49%; float:right; word-wrap:break-word;overflow-y:auto;"
+      			id="panel1">
+      			<xp:panel id="fieldDetailsWrapper">
+      				<xp:panel id="fieldDetails"
+      					rendered="#{javascript:requestScope.dpSelectedItem!=null}">
+      					<xp:label value="Field Name: " id="label33"
+      						style="color:rgb(128,128,128)">
+      					</xp:label>
+      					<xp:text escape="true" id="computedField10"
+      						value="#{javascript:requestScope.dpSelectedItem.name}"
+      						style="font-weight:bold">
+      					</xp:text>
+      					<xp:br></xp:br>
+      					<xp:label value="Data Type: " id="label34"
+      						style="color:rgb(128,128,128)">
+      					</xp:label>
+      					<xp:text escape="true" id="computedField11"
+      						value="#{javascript:requestScope.dpSelectedItem.type}"
+      						style="font-weight:bold">
+      					</xp:text>
+      					<xp:br></xp:br>
+      					<xp:label value="Data Length: " id="label35"
+      						style="color:rgb(128,128,128)">
+      					</xp:label>
+      					<xp:text escape="true" id="computedField12"
+      						style="font-weight:bold"
+      						value="#{javascript:requestScope.dpSelectedItem.length}">
+      					</xp:text>
+      					<xp:br></xp:br>
+      					<xp:label value="Field Flags: " id="label36"
+      						style="color:rgb(128,128,128)">
+      					</xp:label>
+      					<xp:text escape="true" id="computedField13"
+      						value="#{javascript:requestScope.dpSelectedItem.flags}"
+      						style="font-weight:bold">
+      					</xp:text>
+      					<xp:br></xp:br>
+      					<xp:br></xp:br>
+      					<xp:text escape="false" id="computedField14"
+      						value="#{javascript:requestScope.dpSelectedItem.value}">
+      					</xp:text>
+      				</xp:panel>
+      			</xp:panel>
+      		</xp:panel>
+      		<div style="clear:both"></div>
+      	</xp:panel>
+      </xp:section>
+   </xp:section>
+
+</xp:view>

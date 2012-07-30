@@ -13,7 +13,7 @@ import com.ibm.xsp.extlib.component.rest.UIBaseRestService;
 public class CreateTabTable {
 	
 	
-	public static UIComponent createTT(UIComponent com){
+	public static UIComponent createTT(UIComponent com, boolean homePanel){
 		UIPanelEx panel=new UIPanelEx();
 		
 		  UIDojoTabContainer tabcon = new UIDojoTabContainer();
@@ -22,20 +22,12 @@ public class CreateTabTable {
 		  
 		  UIDojoTabPane pane1 = new UIDojoTabPane();
          pane1.setTitle("HOME");
-          pane1.setId("Home");
-          
-          
-       /*   
-		  UIDojoTabPane pane2 = new UIDojoTabPane();
-         pane2.setTitle("Employees");
-          pane2.setId("djTabPane2");
-         // pane2.setRendered(false);
-          XspCommandButton button1=CompUtil.createButton("Add", "abc");
-          button1.setStyle("background-color:rgb(192,192,192)");
-          pane2.getChildren().add(button1);
-          
-*/          
-          tabcon.getChildren().add(pane1);      
+           pane1.setId("Home");
+           
+          if(homePanel){
+        	  tabcon.getChildren().add(pane1);    //Add home panel if required 
+          }
+            
           panel.getChildren().add(tabcon);
 		com.getChildren().add(panel);
 		
