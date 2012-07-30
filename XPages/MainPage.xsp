@@ -9,28 +9,34 @@
 			clientSide="true">
 		</xp:script>
 	</xp:this.resources>
+	<xp:this.beforePageLoad><![CDATA[#{javascript://Use to store Mname & EName so that it should get entity while switching tabs
+var tabentity=new java.util.ArrayList();
+sessionScope.moduleentity=tabentity;}]]></xp:this.beforePageLoad>
 	<xc:cc_tabtable></xc:cc_tabtable>
-	
-	
+
+
 	<xp:eventHandler id="eventModulePerm" event="onDojo">
 		<xp:this.action><![CDATA[#{javascript:println("calling event");
 setModulePermission(viewScope.selProfile1);
 println("calling event");}]]></xp:this.action>
+
 	</xp:eventHandler>
-	
+
 	<xp:eventHandler id="eventEntityPerm" event="onDojo">
 		<xp:this.action><![CDATA[#{javascript:println("calling event");
 setEntityPermission();
 println("calling event");}]]></xp:this.action>
+		
 	</xp:eventHandler>
-	
+
 	<xp:eventHandler id="eventFieldPerm" event="onDojo">
 		<xp:this.action><![CDATA[#{javascript:println("calling event");
 setFieldPermission();
 println("calling event");}]]></xp:this.action>
+		
 	</xp:eventHandler>
 
-		<xp:eventHandler id="eventFeaturePerm" event="onDojo">
+	<xp:eventHandler id="eventFeaturePerm" event="onDojo">
 		<xp:this.action><![CDATA[#{javascript:println("calling event");
 setFeaturePermission();
 println("calling event");}]]></xp:this.action>
@@ -58,6 +64,46 @@ println("calling event");}]]></xp:this.action>
 		<xp:this.action><![CDATA[#{javascript:println("calling event");
 		getNumberOfFields();
 		}]]></xp:this.action>
-	</xp:eventHandler>	
-		
+	</xp:eventHandler>
+
+	<xp:eventHandler id="getTabPane" event="onDojo" onStart="showWait()"
+		onComplete="hideWait()">
+		<xp:this.action><![CDATA[#{javascript:println("OnShow Event");
+var moduleName=viewScope.moduleName;
+var entityName=viewScope.entityName;
+var submitval=context.getSubmittedValue();
+if(moduleName!=null && submitval!=null)
+{
+	println("Changing the viweScope var for ModuleName");
+	var arr:java.util.ArrayList=sessionScope.moduleentity;
+	println("Changing the viweScope var for ModuleName ",sessionScope.moduleentity);
+	println("Changing the viweScope var for arr ",arr);
+	if(arr.size()>=1)
+	{
+		println("inside if");
+		var i;
+		var ename;
+		for(i=0;i<arr.size();i++)
+			{
+				var mname=arr.get(i).split(":");
+				if(mname[0]==submitval)
+					{
+						 ename=mname[1];
+						viewScope.moduleName=submitval;
+						viewScope.entityName=ename;
+					}
+			}
+	
+	}
+
+}
+}]]></xp:this.action>
+	</xp:eventHandler>
+
+
+	<xp:eventHandler id="accessTypePerm" event="onDojo">
+		<xp:this.action><![CDATA[#{javascript:setAccessTypePermission();
+}]]></xp:this.action>
+	</xp:eventHandler>
+
 </xp:view>

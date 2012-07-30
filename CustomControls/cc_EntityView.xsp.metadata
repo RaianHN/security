@@ -1,14 +1,16 @@
-<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257A1A004C4EAD" version="8.5" xmlns="http://www.lotus.com/dxl">
-<noteinfo noteid="2c46" sequence="41" unid="A9DCB5F84CDB77D765257A1E002955DA">
-<created><datetime>20120615T130129,54+0530</datetime></created>
-<modified><datetime>20120620T131001,69+0530</datetime></modified>
-<revised><datetime>20120620T131001,68+0530</datetime></revised>
-<lastaccessed><datetime>20120620T131001,69+0530</datetime></lastaccessed>
-<addedtofile><datetime>20120616T132225,51+0530</datetime></addedtofile></noteinfo>
-<updatedby><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
-<wassignedby><name>CN=Jaya K Prakash/O=Weberon</name></wassignedby>
-<item name="$Flags"><text>gC~4;</text></item>
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257A2D0037D8F1" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="3266" sequence="43" unid="E4569FB21D092C0465257A2D003BA61B">
+<created><datetime>20120630T162131,47+0530</datetime></created>
+<modified><datetime>20120727T103629,84+0530</datetime></modified>
+<revised><datetime>20120726T184038,22+0530</datetime></revised>
+<lastaccessed><datetime>20120727T103629,84+0530</datetime></lastaccessed>
+<addedtofile><datetime>20120710T174949,56+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Tenzing Sangmo/O=Weberon</name><name>CN=Jaya K Prakash/O=Weberon</name><name>CN=Tenzing Sangmo/O=Weberon</name></updatedby>
+<wassignedby><name>CN=Tenzing Sangmo/O=Weberon</name></wassignedby>
 <item name="$TITLE"><text>cc_EntityView.xsp</text></item>
+<item name="$Flags"><text>gC~4;</text></item>
+
+
 
 
 
@@ -16,7 +18,5 @@
 
 <item name="$FileNames" sign="true"><text>cc_EntityView.xsp</text></item>
 <item name="$DesignerVersion"><text>8.5.2</text></item>
-
-
 
 </note>

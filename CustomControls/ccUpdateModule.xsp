@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xc="http://www.ibm.com/xsp/custom">
+	<xp:table border="1" id="updateTable">
+
+		<xp:tr>
+			<xp:td align="left"><xp:label id="label5" style="font-weight:bold" value="Module Name: ">
+				</xp:label>
+				<xp:comboBox id="comboBox1">
+					<xp:selectItem itemLabel="--Select Module--"
+						id="selectItem1">
+					</xp:selectItem>
+
+					<xp:selectItems>
+						<xp:this.value><![CDATA[#{javascript:return @DbColumn("","Modules",1);}]]></xp:this.value>
+					</xp:selectItems>
+					<xp:eventHandler event="onchange" submit="true"
+						refreshMode="partial" refreshId="updateTable"
+						onComplete="hideWait()" onStart="showWait()">
+						<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("comboBox1").getValue();
+var schemaObj = new bsuite.weber.configure.DefineModule();
+
+if(moduleName!=null){
+viewScope.Features = schemaObj.getFeatures(moduleName);
+viewScope.Entities = schemaObj.getEntityNames(moduleName)
+}
+
+
+}]]></xp:this.action>
+						<xp:this.onError><![CDATA[alert("Error processing reqest")]]></xp:this.onError>
+					</xp:eventHandler>
+				</xp:comboBox>
+			</xp:td>
+			<xp:td><xp:button value="Update" id="button4" rendered="false">
+	<xp:eventHandler event="onclick" submit="true"
+		refreshMode="complete">
+		<xp:this.action><![CDATA[#{javascript:var schemaObj = new bsuite.weber.configure.Deploy();
+schemaObj.updateAllProfiles();}]]></xp:this.action>
+	</xp:eventHandler></xp:button>
+				<xp:button value="Test" id="button1" rendered="false">
+					<xp:eventHandler event="onclick" submit="true"
+						refreshMode="partial" refreshId="updateTable">
+						<xp:this.action><![CDATA[#{javascript:var profileObj = new bsuite.weber.jsonparsing.ProfileEdit();
+profileObj.removeUpdate();}]]></xp:this.action>
+					</xp:eventHandler></xp:button></xp:td>
+			<xp:td></xp:td>
+		</xp:tr>
+		<xp:tr>
+			<xp:td align="left">
+				<xp:label value="Features" id="label1"
+					style="font-weight:bold">
+				</xp:label>
+			</xp:td>
+			<xp:td align="left">
+				<xp:label value="Entities" id="label2"
+					style="font-weight:bold">
+				</xp:label>
+			</xp:td>
+			<xp:td align="left">
+				<xp:label value="Fields" id="label3"
+					style="font-weight:bold">
+				</xp:label>
+			</xp:td>
+		</xp:tr>
+		<xp:tr>
+			<xp:td valign="top">
+				<xp:listBox id="listBox1" style="height:200.0px;width:150.0px">
+
+
+
+					<xp:selectItems>
+						<xp:this.value><![CDATA[#{javascript:var vals = viewScope.Features;
+if(vals!=null){
+return vals;
+}}]]></xp:this.value>
+					</xp:selectItems>
+				</xp:listBox>
+				<xp:br></xp:br>
+				
+				<xp:link escape="true" text="Remove Feature" id="link4">
+				<xp:eventHandler event="onclick" submit="true"
+					refreshMode="partial" onComplete="hideWait()" onStart="showWait()"
+					onError="showError()" refreshId="updateTable">
+					<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("comboBox1").getValue();
+var featureName1 = getComponent("listBox1").getValue();
+var schemaObj = new bsuite.weber.configure.DefineModule();
+var featureName:java.util.Vector = new java.util.Vector();
+featureName.add(featureName1);
+println("feature name"+featureName1);
+if(featureName.size()!=0){
+
+schemaObj.removeFeature(moduleName,featureName1);
+}
+
+
+schemaObj = new bsuite.weber.configure.DefineModule();
+if(moduleName!=null){
+viewScope.Features = schemaObj.getFeatures(moduleName);
+viewScope.Entities = schemaObj.getEntityNames(moduleName)
+}
+
+updateDeleteSchema();
+}]]></xp:this.action>
+				</xp:eventHandler>
+
+				</xp:link></xp:td>
+			<xp:td valign="top">
+				<xp:listBox id="listBox2" style="height:200.0px;width:150.0px">
+
+
+					<xp:selectItems>
+						<xp:this.value><![CDATA[#{javascript:var vals = viewScope.Entities;
+if(vals!=null){
+return vals;
+}}]]></xp:this.value>
+					</xp:selectItems>
+				</xp:listBox>
+				<xp:br></xp:br>
+				
+				<xp:link escape="true" text="Remove Entity" id="link5">
+				<xp:eventHandler event="onclick" submit="true"
+					refreshMode="partial" onComplete="hideWait()" onStart="showWait()"
+					onError="showError()" refreshId="updateTable">
+					<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("comboBox1").getValue();
+var entityName = getComponent("listBox2").getValue();
+var schemaObj = new bsuite.weber.configure.DefineModule();
+
+
+
+if(entityName!=null){
+schemaObj.removeEntity(moduleName,entityName);
+}
+
+
+
+if(moduleName!=null){
+viewScope.Features = schemaObj.getFeatures(moduleName);
+viewScope.Entities = schemaObj.getEntityNames(moduleName)
+}
+
+updateDeleteSchema();}]]></xp:this.action>
+				</xp:eventHandler>
+				</xp:link></xp:td>
+			<xp:td valign="top">
+				<xp:label value="Entity Name: " id="label4"
+					style="font-weight:bold">
+				</xp:label>
+				<xp:comboBox id="comboBox2">
+					<xp:selectItem itemLabel="--Select Entity--"></xp:selectItem>
+
+					<xp:selectItems>
+						<xp:this.value><![CDATA[#{javascript:var vals = viewScope.Entities;
+if(vals!=null){
+return vals;
+}}]]></xp:this.value>
+					</xp:selectItems>
+					<xp:eventHandler event="onchange" submit="true"
+						refreshMode="partial" refreshId="updateTable"
+						onComplete="hideWait()" onError="showError()"
+						onStart="showWait()">
+						<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("comboBox1").getValue();
+var entityName = getComponent("comboBox2").getValue();
+var schemaObj = new bsuite.weber.configure.DefineModule();
+
+if(moduleName!=null){
+viewScope.Fields = schemaObj.getFields(moduleName,entityName);
+}
+}]]></xp:this.action>
+					</xp:eventHandler>
+				</xp:comboBox>
+				<xp:br></xp:br>
+				<xp:listBox id="listBox3"
+					style="height:200.0px;width:150.0px">
+
+					<xp:selectItems>
+						<xp:this.value><![CDATA[#{javascript:var vals = viewScope.Fields;
+if(vals!=null){
+return vals;
+}}]]></xp:this.value>
+					</xp:selectItems>
+				</xp:listBox>
+				
+				<xp:br></xp:br>
+				<xp:link escape="true" text="Remove Field" id="link6">
+				<xp:eventHandler event="onclick" submit="true"
+					refreshMode="partial" onComplete="hideWait()" onStart="showWait()"
+					onError="showError()" refreshId="updateTable">
+					<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("comboBox1").getValue();
+var entityName = getComponent("comboBox2").getValue();
+var fieldName = getComponent("listBox3").getValue();
+var schemaObj = new bsuite.weber.configure.DefineModule();
+if(fieldName!=null){
+schemaObj.removeField(moduleName,entityName,fieldName)
+}
+
+
+
+var schemaObj = new bsuite.weber.configure.DefineModule();
+
+if(moduleName!=null){
+viewScope.Fields = schemaObj.getFields(moduleName,entityName);
+}
+
+updateDeleteSchema();}]]></xp:this.action>
+				</xp:eventHandler>
+				</xp:link></xp:td>
+		</xp:tr>
+		<xp:tr>
+			<xp:td valign="top">
+				<xp:inputText id="inputText1"></xp:inputText>
+				<xp:link escape="true" text="Add Feature" id="link1">
+					<xp:eventHandler event="onclick" submit="true"
+						refreshMode="partial" refreshId="updateTable"
+						onComplete="hideWait()" onStart="showWait()"
+						onError="showError()">
+						<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("comboBox1").getValue();
+var featureName1 = getComponent("inputText1").getValue();
+var schemaObj = new bsuite.weber.configure.DefineModule();
+var featureName:java.util.Vector = new java.util.Vector();
+featureName.add(featureName1);
+
+if(featureName.size()!=0){
+
+schemaObj.addFeatures(moduleName,featureName);
+}
+
+
+
+if(moduleName!=null){
+viewScope.Features = schemaObj.getFeatures(moduleName);
+viewScope.Entities = schemaObj.getEntityNames(moduleName)
+}
+
+updateAddSchema();}]]></xp:this.action>
+					</xp:eventHandler></xp:link>
+				
+			</xp:td>
+			<xp:td valign="top">
+				<xp:inputText id="inputText2"></xp:inputText>
+				<xp:link escape="true" text="Add Entity" id="link2">
+					<xp:eventHandler event="onclick" submit="true"
+						refreshMode="partial" refreshId="updateTable"
+						onComplete="hideWait()" onStart="showWait()"
+						onError="showError()">
+						<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("comboBox1").getValue();
+var entityName = getComponent("inputText2").getValue();
+var schemaObj = new bsuite.weber.configure.DefineModule();
+
+
+
+if(entityName!=null){
+schemaObj.addEntity(moduleName,entityName);
+}
+
+
+
+if(moduleName!=null){
+viewScope.Features = schemaObj.getFeatures(moduleName);
+viewScope.Entities = schemaObj.getEntityNames(moduleName)
+}
+
+
+//updateAddSchema();}]]></xp:this.action>
+					</xp:eventHandler></xp:link>
+				
+			</xp:td>
+			<xp:td valign="top">
+				<xp:inputText id="inputText3"></xp:inputText>
+				<xp:link escape="true" text="Add Field" id="link3">
+					<xp:eventHandler event="onclick" submit="true"
+						refreshMode="partial" refreshId="updateTable"
+						onComplete="hideWait()" onStart="showWait()"
+						onError="showError()">
+						<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("comboBox1").getValue();
+var entityName = getComponent("comboBox2").getValue();
+var fieldName = getComponent("inputText3").getValue();
+var schemaObj = new bsuite.weber.configure.DefineModule();
+if(fieldName!=null){
+schemaObj.addField(moduleName,entityName,fieldName)
+}
+
+
+
+var schemaObj = new bsuite.weber.configure.DefineModule();
+
+if(moduleName!=null){
+viewScope.Fields = schemaObj.getFields(moduleName,entityName);
+}
+
+
+updateAddSchema();}]]></xp:this.action>
+					</xp:eventHandler></xp:link>
+				
+			</xp:td>
+		</xp:tr>
+		<xp:tr>
+			<xp:td align="left">
+				
+			</xp:td>
+			<xp:td></xp:td>
+			<xp:td></xp:td>
+		</xp:tr>
+	</xp:table>
+
+	</xp:view>

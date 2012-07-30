@@ -19,10 +19,16 @@ import bsuite.weber.relationship.Association;
 
 public class Profile extends BsuiteWorkFlow {
 	private ProfileJson profileJson;
+	private String profileName;
+
+	public void setProfileName(String profileName) {
+		this.profileName = profileName;
+	}
 
 	public Profile() {
 		super();
 		this.profileJson = getProfileJsonObject();
+		
 	}
 
 	public ArrayList<Module> getVisibleModules(){
@@ -136,17 +142,24 @@ public class Profile extends BsuiteWorkFlow {
 	
 	public String getEntityAccessType(String moduleName, String entityName) {
 		String accessType=getEntity(moduleName,entityName).getAccessType();
+		System.out.println("--------222222");
+		System.out.println("--------44Access Type "+accessType);
 		return accessType;
 		
 	}
 
 	private Module getModule(String moduleName){
 		System.out.println("--------44");
+		System.out.println("ModuleName From createFeatures "+moduleName);
+		if(moduleName.contains("_")){
+			moduleName = moduleName.replace("_"," ");
+		}
 		if(profileJson==null){
 			return null;
 		}
 		for(Module module:profileJson.getModules()){
 			System.out.println("--------45");
+			System.out.println("ModuleName comparison with Module class"+module.getModuleName());
 			if(module.getModuleName().equals(moduleName)){
 				System.out.println("--------46");
 				return module;
@@ -206,6 +219,7 @@ public class Profile extends BsuiteWorkFlow {
 	
 	
 	public ArrayList<String> getEditableFieldsNames(String moduleName, String entityName){
+		System.out.println("inside getEditable Fields");
 		ArrayList<String> eFields = new ArrayList<String>();
 		Entity entity = getEntity(moduleName,entityName);
 		for(Field f:entity.getFields()){
@@ -231,11 +245,19 @@ public class Profile extends BsuiteWorkFlow {
 	
 	
 	public ArrayList<String> getVisibleFeaturesNames(String moduleName){		
+		
+		System.out.println("inside visible Feastures "+moduleName);
+		if(moduleName.contains("_")){
+			moduleName = moduleName.replace("_", " ");
+		}
+		System.out.println("inside visible Feastures after replace "+moduleName);
 		ArrayList<String> vFeatures = new ArrayList<String>();
 		Module mod = getModule(moduleName);
+		System.out.println("mod "+mod.getModuleName());
 		
 		for(Feature f:mod.getFeatures()){		
 			if(f.getVisible().equals("1")){
+				System.out.println("Visible Feature "+f.getFeatureName());
 				vFeatures.add(f.getFeatureName());
 			}
 		}
@@ -252,6 +274,8 @@ public class Profile extends BsuiteWorkFlow {
 		Module module = getModule(moduleName);
 		for(Entity entity:module.getEntities()){
 			if(entity.getEntityName().equals(entityName)){
+				System.out.println("EntityName "+entity.getEntityName());
+				System.out.println("moduleName "+moduleName);
 				return entity;
 			}
 		}
@@ -270,6 +294,10 @@ public class Profile extends BsuiteWorkFlow {
 		
 		return vFields;
 	}
+	
+	
+	
+	
 	public ArrayList<Field> getVisibleFields(String moduleName, String entityName){
 		ArrayList<Field> vFields = new ArrayList<Field>();
 		Entity entity = getEntity(moduleName,entityName);
@@ -295,6 +323,13 @@ public class Profile extends BsuiteWorkFlow {
 		} catch (NotesException e) {
 			e.printStackTrace();
 		}
+		try {
+			this.profileName = profDoc.getItemValueString("prof_name");
+			System.out.println("pjsonname"+profileName);
+		} catch (NotesException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		try {
 			return mapper.readValue(jsonString, ProfileJson.class);
@@ -305,6 +340,7 @@ public class Profile extends BsuiteWorkFlow {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
 		
 		return null;
 				
@@ -379,5 +415,58 @@ public class Profile extends BsuiteWorkFlow {
 		System.out.println("r enti"+aEntities);
 		return aEntities;
 	}
+	public String getProfileName(){
+		
+		return profileName;
+	}
+	
+	
+	
+	//to get all the public R/W entities in the given module
+	public ArrayList<String> getPublicRWEntities(String moduleName){
+		ArrayList<String> aEntities = new ArrayList<String>();
+		Module mod=getModule(moduleName);
+		ArrayList<Entity> entities=mod.getEntities();
+		for(Entity entity:entities){	
+		
+				String access=entity.getAccessType();
+				if(access.equals("2"))
+					aEntities.add(entity.getEntityName());	
+			
+			
+		}
+		return aEntities;
+		
+	}
+	
+	//to get all the public Read entities in the given module
+	public ArrayList<String> getPublicReadEntities(String moduleName){
+		ArrayList<String> aEntities = new ArrayList<String>();
+		Module mod=getModule(moduleName);
+		ArrayList<Entity> entities=mod.getEntities();
+		for(Entity entity:entities){	
+		
+				String access=entity.getAccessType();
+				if(access.equals("3"))
+					aEntities.add(entity.getEntityName());	
+			
+			
+		}
+		return aEntities;
+		
+	}
+	
+	
+	public ArrayList<String> getAllFieldsNames(String moduleName, String entityName){
+		ArrayList<String> vFields = new ArrayList<String>();
+		Entity entity = getEntity(moduleName,entityName);
+		for(Field f:entity.getFields()){		
+				vFields.add(f.getFieldName());
+			
+		}
+		
+		return vFields;
+	}
+	
 	
 }

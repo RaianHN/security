@@ -5,11 +5,11 @@
 
 
 	
-	<xp:this.afterPageLoad><![CDATA[#{javascript:getComponent("inputNModules").setValue("Modules:3");
-getComponent("inputNFeatures").setValue("Documents:2,In out:2,Employees:2");
-getComponent("inputNEntities").setValue("Documents:1,In out:0,Employees:2");
-getComponent("inputNFields").setValue("Documents+Document:2,In Out+0:0,Employees+Employee:3,Employees+Activity:2");
-//setProfileNumbers();}]]></xp:this.afterPageLoad>
+	<xp:this.afterPageLoad><![CDATA[#{javascript://getComponent("inputNModules").setValue("Modules:3");
+//getComponent("inputNFeatures").setValue("Documents:2,In out:2,Employees:2");
+//getComponent("inputNEntities").setValue("Documents:1,In out:0,Employees:2");
+//getComponent("inputNFields").setValue("Documents+Document:2,In Out+0:0,Employees+Employee:3,Employees+Activity:2");
+setProfileNumbers();}]]></xp:this.afterPageLoad>
 	<xp:table id="table1" border="1" style="width:100%">
 
 		<xp:tr>
@@ -43,43 +43,17 @@ getComponent("inputNFields").setValue("Documents+Document:2,In Out+0:0,Employees
 				<xp:label value="Modules" id="label1"
 					style="font-weight:bold">
 				</xp:label>
-				<xp:text escape="true" id="computedField2"
-					value="#{javascript:this.getClientId(facesContext);}">
-				</xp:text>
-				<xp:button value="Label" id="button1">
-
-
-				<xp:eventHandler event="onclick" submit="false">
-					<xp:this.script><![CDATA[//alert("ex");
-XSP.executeOnServer('view:_id1:eventNModules', "", "", "Admin");
-var nModules = '#{javascript:viewScope.nModules}';
-console.log("%o",nModules);
-//alert(nModules);]]></xp:this.script>
-				</xp:eventHandler></xp:button>
+				
+				
 				
 				<xp:inputHidden id="inputNModules"></xp:inputHidden>
 				<xp:inputHidden id="inputNFeatures"></xp:inputHidden>
 				<xp:inputHidden id="inputNEntities"></xp:inputHidden>
 				<xp:inputHidden id="inputNFields"></xp:inputHidden>
-				<xp:button value="Label" id="button2">
-					<xp:eventHandler event="onclick" submit="true"
-						refreshMode="complete">
-						<xp:this.action><![CDATA[#{javascript:setProfileNumbers();}]]></xp:this.action>
-					</xp:eventHandler></xp:button>
-				<xp:br></xp:br>
-				<xp:inputText id="inputNModules1"></xp:inputText>
-				<xp:inputText id="inputNFeatures1"></xp:inputText>
-				<xp:inputText id="inputNEntities1"></xp:inputText>
-				<xp:inputText id="inputNFields1"></xp:inputText>
+				
 				<xp:table rendered="false">
 					<xp:tr>
-						<xp:td styleClass="debugButton" id="td1">
-							<xp:label value="Save" id="label26"></xp:label>
-							<xp:eventHandler event="onclick"
-								submit="false">
-								<xp:this.script><![CDATA[savePermission()]]></xp:this.script>
-							</xp:eventHandler>
-						</xp:td>
+						
 					</xp:tr>
 				</xp:table>
 			</xp:td>

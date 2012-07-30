@@ -242,15 +242,18 @@ function saveFeaturePermission(){
 function saveModulePermissions(){
 	var profileName = getProfileName;
 	var modulePArray = new Array();
+	//view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:modulediv:moduleRepeatM:0:ccModuleP:repeatModules:0:tabVChk
 	var strBaseId = "view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:";
 	//Get the profile name	
 	var nModulesStr = document.getElementById("view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:modulediv:inputNModules").value
 	//Get number of modules
 	var nModules = getModuleNumber(nModulesStr);
+	//alert("nmodules"+nModules);
 	var k=0;
 	var moduleName = "";
 	var modulePerm = null;
 	for(var i=0;i<nModules;i++){
+		//alert("i"+i);
 		moduleName = document.getElementById(strBaseId+"modulediv:moduleRepeatM:"+i+":ccModuleP:repeatModules:0:moduleM").innerHTML;
 		modulePerm = document.getElementById(strBaseId+"modulediv:moduleRepeatM:"+i+":ccModuleP:repeatModules:0:tabVChk");
 		
@@ -265,7 +268,10 @@ function saveModulePermissions(){
 		 }
 		
 	}
-	XSP.executeOnServer('view:_id1:eventModulePerm', "", "",modulePArray);
+	XSP.executeOnServer('view:_id1:eventModulePerm', "", 
+			""
+			
+			,modulePArray);
 	console.log("%o",modulePArray);	
 }
 
@@ -302,7 +308,9 @@ function saveFeaturePermissions(){
 			}
 		}
 	}
-	XSP.executeOnServer('view:_id1:eventFeaturePerm', "", "",featurePArray);
+	XSP.executeOnServer('view:_id1:eventFeaturePerm', "", 
+			""
+	,featurePArray);
 	console.log("%o",featurePArray);		
 }
 
@@ -373,7 +381,9 @@ view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:modulediv:moduleRepeatM:1:
 			
 		}
 	}
-	XSP.executeOnServer('view:_id1:eventEntityPerm', "", "",entityPArray);
+	XSP.executeOnServer('view:_id1:eventEntityPerm', "", 
+			""
+			,entityPArray);
 	console.log("%o",entityPArray);		
 }
 
@@ -408,9 +418,9 @@ view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:modulediv:moduleRepeatM:1:
 				var fieldV = "";
 				var fieldU = "";
 				for(f=0;f<nFields;f++){
-					fieldName = document.getElementById(strBaseId+"modulediv:moduleRepeatM:"+m+":ccModuleP:repeatModules:0:repeatEntity:0:repeatFields:"+f+":computedField1").innerHTML;
-					fieldV = document.getElementById(strBaseId+"modulediv:moduleRepeatM:"+m+":ccModuleP:repeatModules:0:repeatEntity:0:repeatFields:"+f+":fieldVChk");
-					fieldU = document.getElementById(strBaseId+"modulediv:moduleRepeatM:"+m+":ccModuleP:repeatModules:0:repeatEntity:0:repeatFields:"+f+":fieldUChk");
+					fieldName = document.getElementById(strBaseId+"modulediv:moduleRepeatM:"+m+":ccModuleP:repeatModules:0:repeatEntity:"+e+":repeatFields:"+f+":computedField1").innerHTML;
+					fieldV = document.getElementById(strBaseId+"modulediv:moduleRepeatM:"+m+":ccModuleP:repeatModules:0:repeatEntity:"+e+":repeatFields:"+f+":fieldVChk");
+					fieldU = document.getElementById(strBaseId+"modulediv:moduleRepeatM:"+m+":ccModuleP:repeatModules:0:repeatEntity:"+e+":repeatFields:"+f+":fieldUChk");
 			
 				
 				
@@ -431,7 +441,9 @@ view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:modulediv:moduleRepeatM:1:
 			
 		}
 	}
-	XSP.executeOnServer('view:_id1:eventFieldPerm', "", "",fieldPArray);
+	XSP.executeOnServer('view:_id1:eventFieldPerm', "",
+			{onComplete: function() { hideWait()}, onStart:function(){showWait()}}
+			,fieldPArray);
 	console.log("%o",fieldPArray);		
 }
 

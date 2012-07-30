@@ -39,8 +39,24 @@ if (!var1){
 	return @ProperCase(var1) ;
 }}]]></xp:this.value>
 					</xp:text>
-					<xp:br id="br2"></xp:br>
-				</xp:td>
+					
+					<xp:table>
+						<xp:tr>
+							<xp:td align="right">Profile:</xp:td>
+							<xp:td>
+								<xp:text escape="true"
+									id="computedField1" value="#{security.profileName}">
+								</xp:text></xp:td>
+						</xp:tr>
+						<xp:tr>
+							<xp:td align="right">Role:</xp:td>
+							<xp:td><xp:text escape="true" id="computedField3" value="#{security.roleName}"></xp:text></xp:td>
+						</xp:tr>
+					</xp:table>
+					
+					
+					
+					</xp:td>
 				<xp:td></xp:td>
 			</xp:tr>
 		</xp:table>

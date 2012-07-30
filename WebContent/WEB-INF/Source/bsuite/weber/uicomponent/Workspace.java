@@ -29,6 +29,9 @@ import com.ibm.xsp.component.xp.XspTableRow;
 import com.ibm.xsp.component.xp.XspViewPanel;
 import com.ibm.xsp.extlib.component.dojo.layout.UIDojoTabContainer;
 import com.ibm.xsp.extlib.component.dojo.layout.UIDojoTabPane;
+import com.ibm.xsp.extlib.component.outline.UIOutlineDropDownButton;
+import com.ibm.xsp.extlib.tree.complex.ComplexContainerTreeNode;
+import com.ibm.xsp.extlib.tree.complex.ComplexLeafTreeNode;
 import com.ibm.xsp.util.ManagedBeanUtil;
 
 import bsuite.weber.model.BsuiteWorkFlow;
@@ -51,6 +54,7 @@ public class Workspace extends BsuiteWorkFlow implements Serializable{
 	
 
 	public UIComponent getCentity() {
+		System.out.println("inside getCEntity");
 		centity = new UIPanelEx();
 		Map viewscope = (Map) JSFUtil.getVariableValue("viewScope");
 		String pid = (String) viewscope.get("personunid");		
@@ -70,36 +74,68 @@ public class Workspace extends BsuiteWorkFlow implements Serializable{
 		System.out.println("Inside getTest()");
 		tabs = new UIPanelEx();
 		UIDojoTabContainer tabcont=(UIDojoTabContainer)CreateTabTable.createTT(tabs,true);
+		tabcont.setId("MainTabContainer");
+		
+		
+		//System.out.println("Get Selected tab "+ ((UIDojoTabContainer)JSFUtil.findComponent("MainTabContainer")).getSelectedTab());
+	/*	//tabcont.setDefaultTabContent(sessionScope.defaulttab);
+		  String sourceId = "djTabContainer1/@defaultTabContent";
+          String defaultTabContentExpr = "#{javascript:sessionScope.whichtab;}";
+          ValueBinding defaultTabContent = evaluator.createValueBinding(result, defaultTabContentExpr, sourceId,String.class);
+          result.setValueBinding("defaultTabContent", defaultTabContent);
+		
+
+ 		 String ref = "#{sessionScope.whichtab}";
+ 		System.out.println("String ref "+ref);		
+ 		ValueBinding vb1  = FacesContext.getCurrentInstance().getApplication().createValueBinding(ref);
+ 		tabcont.setValueBinding( "value", vb1);*/
+		
 		ArrayList <String>mnames=(ArrayList<String>) JSFUtil.getBindingValue("#{security.modules}");
 		if(mnames==null){
 			System.out.println("if mnmes is null");
 			return tabs;
 		}
-		HashMap<String, ArrayList<String>> entity=(HashMap<String, ArrayList<String>>) JSFUtil.getBindingValue("#{security.modulesEntities}");
-		Profile profile = (Profile) JSFUtil.getBindingValue("#{security.profile}");
+		//HashMap<String, ArrayList<String>> entity=(HashMap<String, ArrayList<String>>) JSFUtil.getBindingValue("#{security.modulesEntities}");
+		//Profile profile = (Profile) JSFUtil.getBindingValue("#{security.profile}");
 		//System.out.println("Module Names "+mnames);
 		//System.out.println("creatable entities"+entity.get("Employees").get(0));
 		
 		for(String x:mnames){
 			System.out.println("Module Names "+x);
 			
-			ArrayList<String> creatableentites=entity.get(x);
-			ArrayList<String> readableEntities = profile.getReadableEntitiesNames(x);
-			ArrayList<String> deletableEntities = profile.getDeletableEntitiesNames(x);
-			ArrayList<String> allEntities = profile.getAllEntitiesNames(x);
+		//	ArrayList<String> creatableentites=entity.get(x);
+		//	ArrayList<String> readableEntities = profile.getReadableEntitiesNames(x);
+		//	ArrayList<String> deletableEntities = profile.getDeletableEntitiesNames(x);
+		//	ArrayList<String> allEntities = profile.getAllEntitiesNames(x);
 			
 			if(x.contains(" ")){
 				x = x.replace(" ", "_");
 			}
 			
 			UIDojoTabPane pane2=(UIDojoTabPane)CreateTabTable.createTabPane(tabcont,x);
+			//String tabid=pane2.getId();
+			//String onShowExp="console.log(\"hiiiiii\");\nvar thisid =\"#{javascript:this;}\";\nconsole.log(\"%o\",thisid);\nXSP.executeOnServer(\'view:_id1:getTabPane\', \"\", \"\", \""+tabid+"\");";
+			 String onShow = "console.log(\"hiiiiii\");\nXSP.executeOnServer(\'view:_id1:getTabPane\', \"\", \"\",  \""+x+"\");";
+			//ValueBinding vb1  = FacesContext.getCurrentInstance().getApplication().createValueBinding(onShowExp);
+			//pane2.setValueBinding( "onShow", vb1);
+			
+			
+			// String onShowExpr = "console.log(\"hiiiiii\");\nvar thisid =\"#{javascript:this.getId();}\";\nconsole.log(\"%o\",thisid);\nXSP.executeOnServer(\'view:_id1:eventEntityPerm\', \"\", \"\", \"\");";
+	         //   ValueBinding onShow = evaluator.createValueBinding(result, onShowExpr, sourceId,String.class);
+	         //   result.setValueBinding("onShow", onShow);
+	         //   return result;
+			pane2.setOnShow(onShow);
+
 			
 			
 			
-			System.out.println("tab----1");
-			UIComponent entityTabPanel = new UIPanelEx();
-			System.out.println("tab----2");
-			UIDojoTabContainer entityTabs=(UIDojoTabContainer)CreateTabTable.createTT(entityTabPanel,false);
+		
+		//	UIComponent entityTabPanel = new UIPanelEx();
+			
+			createActionBar(pane2,x);
+			
+			
+			/*UIDojoTabContainer entityTabs=(UIDojoTabContainer)CreateTabTable.createTT(entityTabPanel,false);
 			int c=0;//if the entity is creatable, editable, deletable, used when creating action bar
 			int r=0;
 			int d=0;
@@ -184,7 +220,17 @@ public class Workspace extends BsuiteWorkFlow implements Serializable{
 		XspTable utable = new XspTable();
 		utable.setId("tableCreate");
 		Profile profile = (Profile) JSFUtil.getBindingValue("#{security.profile}");
-		loadEditFields(profile.getEditableFieldsNames(moduleName, entityName), profile.getVisibleFieldsNames(moduleName, entityName),utable,0);
+		
+		String eaccess=profile.getEntityAccessType(moduleName, entityName);
+		
+		//When the entity is Public R/W show all the fields, don check the profile whether it is visible or not
+		if(eaccess.equals("2")){
+			loadEditFields(profile.getAllFieldsNames(moduleName, entityName), profile.getAllFieldsNames(moduleName, entityName),utable,0);
+		}else{
+			loadEditFields(profile.getEditableFieldsNames(moduleName, entityName), profile.getVisibleFieldsNames(moduleName, entityName),utable,0);
+		}
+		
+	//	loadEditFields(profile.getEditableFieldsNames(moduleName, entityName), profile.getVisibleFieldsNames(moduleName, entityName),utable,0);
 		centity.getChildren().add(utable);
 		
 		
@@ -201,18 +247,23 @@ public class Workspace extends BsuiteWorkFlow implements Serializable{
 		}
 		
 	}
-	public void createFeatureButtons(UIComponent actionpanel,String moduleName,String entityName){
+	public void createFeatureButtons(UIComponent actionpanel,String moduleName,XspTable acttable,XspTableRow actrow1){
 		//For this entity what features are available that needs to be populated by this method
 		Profile profile = (Profile) JSFUtil.getBindingValue("#{security.profile}");
 		//ArrayList<String> features = profile.getVisibleFeaturesNames(moduleName, entityName);
+		
+		
 		ArrayList<String> features = profile.getVisibleFeaturesNames(moduleName);
 	
 		for(String x:features){
+			XspTableCell cell1=CompUtil.createCell(actrow1, "cell"+x);
 			String expression2="alert(\"Hello: \""+x+")";
 			XspCommandButton button2 =  CompUtil.createButton(x,"button2"+x );
 			XspEventHandler ev2= CompUtil.createEventHandler("onclick", "complete", expression2, false,null);
 			button2.getChildren().add(ev2);
-			actionpanel.getChildren().add(button2);
+			cell1.getChildren().add(button2);
+			
+			//actionpanel.getChildren().add(acttable);
 		}
 		
 		
@@ -281,9 +332,159 @@ public class Workspace extends BsuiteWorkFlow implements Serializable{
 		UIPanelEx actionpanel = new UIPanelEx();
 		//XspTable utable = new XspTable();
 		actionpanel.setId( "actionTable"+moduleName );
-		UIPanelEx actionpanel2 = new UIPanelEx();		
-		actionpanel2.setId( "cEntityPanel"+moduleName );
+		UIPanelEx entitypanel = new UIPanelEx();		
+		entitypanel.setId( "MainEntityPanel"+moduleName );
 		
+		//Create 1 table with 1 row and 2 column
+		XspTable viewtable = new XspTable();
+		//viewtable.setStyle("border-color:rgb(0,0,255);border-style:solid");
+		XspTableRow viewrow = CompUtil.createRow(viewtable, "row" + "0");
+		XspTableCell viewcell1 = CompUtil.createCell(viewrow, "EntityPanel"+moduleName);
+		XspTableCell viewcell2 = CompUtil.createCell(viewrow, "readPanel"+moduleName);
+		viewcell2.setValign("top");
+		entitypanel.getChildren().add(viewtable);
+		//For dropdown button		
+        
+ 		HashMap<String, ArrayList<String>> entity=(HashMap<String, ArrayList<String>>) JSFUtil.getBindingValue("#{security.modulesEntities}");
+ 		Profile profile = (Profile) JSFUtil.getBindingValue("#{security.profile}");
+ 		//this is added to match the modulename which is store in the hashmap
+ 		if(moduleName.contains("_")){
+			moduleName = moduleName.replace("_", " ");
+		}
+ 		
+ 		
+ 		
+ 		//Read&Write Entities of the current module
+ 		ArrayList<String> rwentities=profile.getPublicRWEntities(moduleName); 		
+ 		
+ 		ArrayList<String> creatableentites=entity.get(moduleName);
+        
+ 		//If the createable entities array doesnt contains publi entities then add to the list
+ 		if(rwentities!=null){
+ 	 		for(String a : rwentities){
+ 	 			if(!creatableentites.contains(a)){
+ 	 				creatableentites.add(a);
+ 	 			}
+ 	 		}
+ 	 	}
+ 		
+ 		//to get readable entities for the given moduleName
+ 		ArrayList<String> readentities=profile.getPublicReadEntities(moduleName);
+ 		
+ 		//this is converted back becoz moduleName with underscore is use for component id and also for partial refresh
+ 		if(moduleName.contains(" ")){
+			moduleName = moduleName.replace(" ", "_");
+		}
+ 		
+ 		ArrayList<String> readableEntities = profile.getReadableEntitiesNames(moduleName);
+ 		
+ 		//If the readabe entities array doesnt contains publi entities then add to the list
+ 		if(rwentities!=null){
+ 	 		for(String a : rwentities){
+ 	 			if(!readableEntities.contains(a)){
+ 	 				readableEntities.add(a);
+ 	 			}
+ 	 		}
+ 	 	}
+ 		//If the readabe entities array doesnt contains public readonly entities then add to the list
+ 		if(readentities!=null){
+ 			for(String a : readentities){
+ 	 			if(!readableEntities.contains(a)){
+ 	 				readableEntities.add(a);
+ 	 			}
+ 	 		}
+ 		}
+ 		
+ 		
+ 		
+         System.out.println("Creatable entities "+creatableentites);
+         System.out.println("Readable entities "+readableEntities);
+         
+         XspTable acttable = new XspTable();
+         //acttable.setStyle("border-color:rgb(255,0,0);border-style:solid");
+ 		acttable.setId("actTable");
+ 		XspTableRow actrow1 = CompUtil.createRow(acttable, "row" + "0"); 
+         if(creatableentites!=null){
+        	
+        	  UIOutlineDropDownButton result = new UIOutlineDropDownButton();
+    		  result.setId("dropDownButton1");
+    		  ComplexContainerTreeNode treeNodes = new ComplexContainerTreeNode();
+			  treeNodes.setComponent(result);
+			  treeNodes.setLabel("Create");
+    		  for(String ent : creatableentites){
+    			  ComplexLeafTreeNode children = new ComplexLeafTreeNode();
+    			    children.setComponent(result);
+    			    children.setLabel(ent);
+    			    
+    			    children.setSubmitValue(moduleName+"+"+ent);
+    			     System.out.println("Inside createDropDown12");    
+    			     treeNodes.addChild(children); 
+    		  }
+              
+    		    String onItemClickExpr = "#{javascript:var choice=context.getSubmittedValue()\nvar array=choice.split(\"+\");\nprintln(\"Selected Choice \",choice);\nviewScope.moduleName=array[0];\nviewScope.entityName=array[1];\nsessionScope.documentId=\"\";\nloadCreateEntity(viewScope.moduleName,viewScope.entityName);\n\n\n\n\n}";
+    		    
+    	      	System.out.println("Inside createDropDown1234");
+    	      	String refreshId="EntityPanel"+moduleName;
+    	      	XspEventHandler ev2= CompUtil.createEventHandler("onItemClick", "partial",onItemClickExpr, true,refreshId);
+    	      	ev2.setOnStart("showWait()");
+    	        ev2.setOnComplete("hideWait()");
+    	      	result.getChildren().add(ev2);
+              
+    	      	result.addNode(treeNodes); 
+    	      	
+    	         			
+    			XspTableCell cell = CompUtil.createCell(actrow1, "cell"+"00");
+    			
+    			cell.getChildren().add(result);
+    	      	
+                actionpanel.getChildren().add(acttable);
+     
+         }
+ 
+      
+         if(readableEntities!=null){        	
+
+       	  UIOutlineDropDownButton result1 = new UIOutlineDropDownButton();
+   		  result1.setId("dropDownButton2");
+   		  ComplexContainerTreeNode treeNodes1 = new ComplexContainerTreeNode();
+			  treeNodes1.setComponent(result1);
+			  treeNodes1.setLabel("View");
+   		  for(String readent : readableEntities){
+   			  ComplexLeafTreeNode children1 = new ComplexLeafTreeNode();
+   			    children1.setComponent(result1);
+   			    children1.setLabel(readent);   			    
+   			    children1.setSubmitValue(moduleName+"+"+readent);   			      
+   			     treeNodes1.addChild(children1); 
+   		  }
+             
+   		    String onItemClickExpr = "#{javascript:var choice=context.getSubmittedValue()\nvar array=choice.split(\"+\");\nprintln(\"Selected Read Choice \",choice);\nviewScope.moduleName=array[0];\nviewScope.entityName=array[1];\nloadViewEntity(viewScope.moduleName,viewScope.entityName);\n\n\n\n\n}";
+   		       	      	
+   	      	String refreshId="EntityPanel"+moduleName;
+   	      	XspEventHandler ev3= CompUtil.createEventHandler("onItemClick", "partial",onItemClickExpr, true,refreshId);
+   	 	ev3.setOnStart("showWait()");
+        ev3.setOnComplete("hideWait()");
+   	      	result1.getChildren().add(ev3);
+             
+   	      	result1.addNode(treeNodes1); 
+   	    
+   	   		
+			XspTableCell cell1 = CompUtil.createCell(actrow1, "cell"+"01");
+
+			cell1.getChildren().add(result1);
+          //  actionpanel.getChildren().add(cell1);
+        	 
+         }
+				
+		//For Features buttons
+         System.out.println("Calling createFeatures");
+     	//if(moduleName.contains("_")){
+		//	moduleName = moduleName.replace("_", " ");
+		//}
+         
+         createFeatureButtons(actionpanel,moduleName,acttable,actrow1);	
+	
+   /*
+         
 		//Create Button
 		
 	String expression3="#{javascript:sessionScope.documentId=\"\";viewScope.moduleName=\""+moduleName+"\";loadCreateEntity(\""+moduleName+"\");}";
@@ -371,17 +572,15 @@ public class Workspace extends BsuiteWorkFlow implements Serializable{
 		button2.getChildren().add(ev2);
 		actionpanel.getChildren().add(button2);
 		
+
 		*/
-		
-		
 		
 		
 		//Add combobox to read entities
 		
-		
-		
+	
 		com.getChildren().add( actionpanel );
-		com.getChildren().add( actionpanel2 );
+		com.getChildren().add( entitypanel );
 		
 		//com.getChildren().add( actionpanel );
 	}
@@ -422,7 +621,7 @@ public class Workspace extends BsuiteWorkFlow implements Serializable{
 		}
 		System.out.println("view--2");
 		
-		createFeatureButtons(actionpanel,moduleName,entityName);
+		//createFeatureButtons(actionpanel,moduleName,entityName);
 		comp.getChildren().add( actionpanel );
 	
 	}
@@ -485,15 +684,30 @@ public class Workspace extends BsuiteWorkFlow implements Serializable{
 		XspTable utable = new XspTable();
 		utable.setId("tableRead");
 		Profile profile = (Profile) JSFUtil.getBindingValue("#{security.profile}");
-		loadViewFields(profile.getVisibleFieldsNames(moduleName, entityName),utable,0);
+		String eaccess=profile.getEntityAccessType(moduleName, entityName);
+		
+		//When the entity is Public R/W show all the fields, don check the profile whether it is visible or not
+		if(eaccess.equals("2")){
+			loadViewFields(profile.getAllFieldsNames(moduleName, entityName),utable,0);
+		}else{		
+			loadViewFields(profile.getVisibleFieldsNames(moduleName, entityName),utable,0);
+		}
 		rentity.getChildren().add(utable);
 		
-		if(profile.isEntityUpdate(moduleName, entityName)){
+		//When the entity is Public R/W show Edit button, don't check the profile whether it is visible or not		
+		if(eaccess.equals("2"))
+		{
+			System.out.println("AccessType is 2 the entity is always editable");
 			viewScope.put("editEntity",true);
-		}else{
-			viewScope.put("editEntity",false);
+		}else{ 
+			System.out.println("AccessType is 1 or 3 the entity depend upon profile security");
+			if(profile.isEntityUpdate(moduleName, entityName))
+			{
+				viewScope.put("editEntity",true);
+			}else{
+				viewScope.put("editEntity",false);
+			}
 		}
-		
 		if(profile.isEntityDelete(moduleName, entityName)){
 			viewScope.put("deleteEntity",true);
 		}else{
@@ -535,13 +749,22 @@ public class Workspace extends BsuiteWorkFlow implements Serializable{
 		System.out.println("Inside getMyDocs 1");
 		String moduleName=(String)viewscope.get("moduleName");
 		String entityName=(String)viewscope.get("entityName");	
-		//viewscope.put("Fields", "Form,CreatedBy");
+		System.out.println("Inside getMyDocs moduleName entityName "+moduleName+entityName);
+		viewscope.put("fields", "Form,CreatedBy");
+		Profile profile = (Profile) JSFUtil.getBindingValue("#{security.profile}");
+		//ArrayList fieldNames=profile.getVisibleFieldsNames(moduleName, entityName);
+	//	viewscope.put("fields",fieldNames);
 
 		//System.out.println("Viewscope value fields "+viewscope.get("Fields"));
 		//String moduleName="Employees";
 		//String entityName="Employee";
 		System.out.println("Inside getMyDocs 23"); 
 		System.out.println("Inside getMyDocs ModuleName "+moduleName);
+		
+		if(moduleName.contains("_")){
+			moduleName=moduleName.replace("_"," ");
+		}
+		
 		//get the module name and treat it as database name
 		String dbname=moduleName.toLowerCase().replace(" ", "");
 		dbname=dbname+".nsf";	
@@ -555,15 +778,18 @@ public class Workspace extends BsuiteWorkFlow implements Serializable{
 			System.out.println("View Name "+allView.getName());
 			
 			//check the AccessType for the given EntityName
-			//Profile profile = (Profile) JSFUtil.getBindingValue("#{security.profile}");
-			//String eaccess=profile.getEntityAccessType(moduleName, entityName);
-		//	System.out.println("Entity AccessType "+eaccess);
-			//if(eaccess.equals("1")){//private
-				//to get the query string from the security.searchString		
+		
+	         
+			Profile profile1 = (Profile) JSFUtil.getBindingValue("#{security.profile}");
+			String eaccess=profile1.getEntityAccessType(moduleName, entityName);
+			System.out.println("Entity AccessType "+eaccess);
+			if(eaccess.equals("1")){//private
+				//to get the query string from the security.searchString	
+				System.out.println("Entity AccessType is 1");
 				String querystr= (String)JSFUtil.getBindingValue("#{role.searchString}");			
 				System.out.println("Query String "+querystr);
 				allView.FTSearch(querystr);
-		//	}	
+			}	
 						
 			System.out.println("Doc Count "+allView.getAllEntries().getCount());
 			return allView.getAllEntries();		
@@ -588,4 +814,6 @@ public class Workspace extends BsuiteWorkFlow implements Serializable{
 	private void loadTab(String moduleName,String entityName){
 		
 	}
+	
+	
 }

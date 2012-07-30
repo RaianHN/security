@@ -5,12 +5,23 @@
 	
 	<xp:this.beforePageLoad><![CDATA[#{javascript:println("Bfore pageload creating new doclis array");
 var doclist=new java.util.ArrayList();
-sessionScope.put("doclist",doclist);}]]></xp:this.beforePageLoad>
+sessionScope.put("doclist",doclist);
+var ids = new java.util.ArrayList();
+sessionScope.put("checkboxids",ids);
+}]]></xp:this.beforePageLoad>
 	<xp:table>
 	<xp:tr>
-	<xp:td><xp:button value="Delete" id="button2" style="background-color:rgb(192,192,192)">
-				<xp:eventHandler event="onclick" submit="true" refreshMode="partial">
-					<xp:this.action><![CDATA[#{javascript:/*println("Onclick of Delete");
+	<xp:td>
+		<xp:button value="Delete" id="button2"
+			style="background-color:rgb(192,192,192)"
+			rendered="#{javascript:viewScope.entityDelete;}">
+
+			<xp:eventHandler event="onclick" submit="true"
+				refreshMode="partial"
+				refreshId='#{javascript:var id="EntityPanel"+viewScope.moduleName;
+return id;}'>
+
+				<xp:this.action><![CDATA[#{javascript:/*println("Onclick of Delete");
 var serv=@Subset(@DbName(),1);
 var dbpath=@LeftBack(@Subset(@DbName(),-1),"/")
 var custdb=dbpath+"\\"+"employees.nsf";
@@ -30,13 +41,37 @@ pageaction['delete'].execute("employee");
 }
 //sessionScope.put("doclist","");
 
-wrkspc.resetBean();
-
-
-
+//wrkspc.resetBean();
 
 }]]></xp:this.action>
-				</xp:eventHandler></xp:button>
+				<xp:this.onComplete><![CDATA[
+var ids="#{javascript:sessionScope.checkboxids}";
+console.log("%o",ids);
+
+var arr=new Array();
+arr=ids.split(",");
+console.log(arr);
+var i;
+var temp;
+for(i=0;i<arr.length;i++)
+{
+	temp=arr[i];
+	if(temp.charAt(0)=="[")
+	{
+		temp = temp.replace("[",""); //Remove []
+	}
+	if(temp.charAt(temp.length-1)=="]")
+	{
+		temp = temp.replace("]","");
+	}
+
+var mycheckbox = document.getElementById(temp.trim());
+
+mycheckbox.checked= false;
+}
+]]></xp:this.onComplete>
+			</xp:eventHandler>
+		</xp:button>
 		<xp:panel id="actions" binding="#{wrkspc.features}"></xp:panel></xp:td>
 	
 	</xp:tr>
@@ -53,8 +88,10 @@ wrkspc.resetBean();
 		<xp:tr>
 			<xp:repeat id="repeat4" rows="30" var="colName"
 				indexVar="colIndex" first="0">
-				<xp:this.value><![CDATA[#{javascript:var fields="Form,CreatedBy";
-@Explode(fields);}]]></xp:this.value>
+				<xp:this.value><![CDATA[#{javascript://var fields="Form,CreatedBy";
+var fields=viewScope.fields;
+@Explode(fields);
+//fields;}]]></xp:this.value>
 				<xp:td>
 
 					<xp:text escape="true" id="computedField3"
@@ -66,40 +103,31 @@ wrkspc.resetBean();
 			</xp:repeat>
 		</xp:tr>
 		<xp:repeat id="repeat5" first="0" var="view1col"
-			indexVar="view1index" value="#{wrkspc.getmydocs}" rows="30">
+			indexVar="view1index" value="#{wrkspc.getmydocs}" rows="20">
 			<xp:tr style="background-color: rgb(248, 248, 248);">
 
 
 				<xp:repeat id="repeat6" rows="30" var="colName"
 					indexVar="colIndex" first="0">
-					<xp:this.value><![CDATA[#{javascript:var fields="Form,CreatedBy";
-@Explode(fields);}]]></xp:this.value>
+					<xp:this.value><![CDATA[#{javascript://var fields="Form,CreatedBy";
+var fields=viewScope.fields;
+@Explode(fields);
+//fields;}]]></xp:this.value>
 					<xp:td>
-						<xp:text escape="false" id="computedField4" rendered="false">
-
-
-							<xp:this.value><![CDATA[#{javascript:entry=view1col.getDocument();
-//readEditMode=compositeData.defaultMode;
-entryValue=entry.getItemValue(colName);
-//if (entryValue.length>0){
-//	entryUNID=entry.getUniversalID();
-	//entryURL="<A Href='"+"TestPage.xsp"+"?documentId="+entryUNID+"&action="+readEditMode+"Document'>"+entryValue[0].toString()+"</A>";
-//entryURL="<A Href='#'>"+entryValue[0].toString()+"</A>";
-//entryurl="<a  href=\"#\">"+entryValue[0].toString()+"</a>";
-//if ("1"==colIndex){
-//entryurl;
-//}else{
-	entryValue[0].toString();
-//}
-//}}]]></xp:this.value>
-						</xp:text><xp:checkBox id="checkBox1"><xp:this.rendered><![CDATA[#{javascript:if ("0"==colIndex){
+						<xp:checkBox id="checkBox1">
+							<xp:this.rendered><![CDATA[#{javascript:if ("0"==colIndex){
 return true;
 }else{
 return false;
 }}]]></xp:this.rendered>
-							
-							<xp:eventHandler event="onclick" submit="true" refreshMode="norefresh">
-								<xp:this.action><![CDATA[#{javascript:
+
+							<xp:eventHandler event="onclick"
+								submit="true" refreshMode="partial" refreshId="button2"
+								onStart="showWait()" onComplete="hideWait()">
+								<xp:this.action><![CDATA[#{javascript:var ids:java.util.ArrayList=sessionScope.get("checkboxids");
+var temp=this.getParent().getClientId(facesContext);
+
+
 var val=getComponent("checkBox1").getValue();
 println("Checkbox value ",val);
 var docid=view1col.getDocument().getUniversalID();
@@ -107,11 +135,13 @@ var myArray:java.util.ArrayList=sessionScope.get("doclist");
 
 if(val=="true")
 {
+
 	if(!myArray.contains(docid))
 	{
 	println("adding to the list");
 	myArray.add(docid);
 	}
+	ids.add(temp);
 }
 else if(val=="false")
 {
@@ -119,40 +149,47 @@ else if(val=="false")
 	//var myArray=sessionScope.get("doclist");
 	println("Removing from the list");
 	myArray.remove(docid);
-	
+	ids.remove(temp);
 }
+
 }]]></xp:this.action>
-							</xp:eventHandler></xp:checkBox>
+							</xp:eventHandler>
+						</xp:checkBox>
 						<xp:link escape="true" id="link1">
 							<xp:this.text><![CDATA[#{javascript:entry=view1col.getDocument();
-//readEditMode=compositeData.defaultMode;
 entryValue=entry.getItemValueString(colName);
 return entryValue;
-//if (entryValue.length>0){
-//	entryUNID=entry.getUniversalID();
-	//entryURL="<A Href='"+"TestPage.xsp"+"?documentId="+entryUNID+"&action="+readEditMode+"Document'>"+entryValue[0].toString()+"</A>";
-//entryURL="<A Href='#'>"+entryValue[0].toString()+"</A>";
-
-//if ("1"==colIndex){
-//entryURL;
-//}else{
-	//entryValue[0].toString();
-//}
-//}}]]></xp:this.text>
+}]]></xp:this.text>
 							<xp:eventHandler event="onclick"
-								submit="true" refreshMode="complete">
-								<xp:this.action><![CDATA[#{javascript:var doc:NotesDocument=view1col.getDocument();
+								submit="true" refreshMode="partial"
+								refreshId='#{javascript:var id="readPanel"+viewScope.moduleName;
+
+return id;}'
+								onStart="showWait()" onComplete="hideWait()">
+								<xp:this.action><![CDATA[#{javascript:println("OnClick of the view documwent");
+var doc:NotesDocument=view1col.getDocument();
 var unid=doc.getUniversalID();
-if(sessionScope.documentId!=""){
-	sessionScope.remove("documentId");	
-}
+//var entityName=doc.getItemValueString("obid");
+//println("entityName ",entityName);
+//viewScope.entityName=entityName;
+println("Unid ",unid);
+//if(sessionScope.documentId!=""){
+//	sessionScope.remove("documentId");	
+//}
 sessionScope.put("documentId",unid);
-var c= getComponent('readPanel');
-var Db:NotesDatabase = doc.getParentDatabase();
+var id="readPanel"+viewScope.moduleName;
+//var id="readPanel";
+var c= getComponent(id);
+
+//var Db:NotesDatabase = doc.getParentDatabase();
 //viewScope.moduleName = @Left(Db.getFileName(),".");
 //viewScope.entityName = doc.getItemValueString("Form");
 println("------>"+viewScope.moduleName+viewScope.entityName );
+//if(c.getChildCount()>0){
+//com.weberon.DynamicCC.removePreview(c);
+//}
 wrkspc.resetUI(c, facesContext,"/ccReadEntity.xsp");
+wrkspc.resetBean();
 //loadReadEntity();}]]></xp:this.action>
 							</xp:eventHandler>
 						</xp:link>
@@ -168,8 +205,15 @@ wrkspc.resetUI(c, facesContext,"/ccReadEntity.xsp");
 	
 	</xp:panel></xp:td>
 			<xp:td valign="top">
-				<xp:panel id="readPanel"></xp:panel>
-				<xp:panel id = "editPanel"></xp:panel>
+
+				<xp:panel id="readPanel" rendered="false">
+
+
+
+
+				</xp:panel>
+
 			</xp:td>
 		</xp:tr>
-	</xp:table></xp:view>
+	</xp:table>
+	</xp:view>

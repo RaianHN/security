@@ -112,10 +112,21 @@ public class NSFPageDataProvider extends BsuiteWorkFlow implements DataObjectExt
 		if (doc==null || isRecycled(doc)) {
 			//we need to reload the document
 			//Session session=NotesContext.getCurrent().getCurrentSession();
+			
+			
 			System.out.println("getDocument reference is null");
 			bsuitepath=BSUtil.getBsuitePath(ExtLibUtil.getCurrentDatabase());
-			Database entitydb=ExtLibUtil.getCurrentSession().getDatabase("", bsuitepath+"employees.nsf");
+			String dbname=(String)viewScope.get("moduleName");			
+			
+			if(dbname.contains("_")){
+				dbname=dbname.replace("_"," ");
+			}
+			
+			dbname=dbname.toLowerCase().replace(" ", "")+".nsf";
+			Database entitydb=ExtLibUtil.getCurrentSession().getDatabase("", bsuitepath+dbname);
+			System.out.println("Database where the current selected document is from "+dbname);
 			doc=entitydb.getDocumentByUNID(documentId);
+			
 			//cache it in the viewscope until it gets invalid
 			viewScope.put(VIEWSCOPE_DATADOCUMENT, new DocumentRef(doc));
 		}
@@ -189,7 +200,12 @@ public class NSFPageDataProvider extends BsuiteWorkFlow implements DataObjectExt
 					//we need to create a new document in the database
 					//Session session=NotesContext.getCurrent().getCurrentSession();
 					bsuitepath=BSUtil.getBsuitePath(ExtLibUtil.getCurrentDatabase());
-					String dbname=(String)viewScope.get("moduleName");
+					String dbname=(String)viewScope.get("moduleName");					
+					
+					if(dbname.contains("_")){
+						dbname=dbname.replace("_"," ");
+					}
+					
 					dbname=dbname.toLowerCase().replace(" ", "")+".nsf";
 					System.out.println("Db Name  "+dbname);
 					Association as=new Association();

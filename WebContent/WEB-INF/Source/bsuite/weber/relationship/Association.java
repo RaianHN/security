@@ -1,5 +1,6 @@
 package bsuite.weber.relationship;
 
+import java.util.Map;
 import java.util.Vector;
 
 import lotus.domino.Database;
@@ -166,5 +167,353 @@ public class Association extends BsuiteWorkFlow {
 		}
 		return "";
 	}
+	
+	
+	//This function is use to get the profileName while opening the Employee document. to get default value
+	public String getDefaultProfileName(String employeeId){
+		try{
+			String relDocUnid = getRelationDocUnid("IS_A");
+			String lookupkey = JSFUtil.getlookupkey(relDocUnid,employeeId);
+			Vector tmp = new Vector();
+			tmp.add(lookupkey);
+			String personunid = JSFUtil.DBLookupString("relation",
+					"TargetRelation", tmp, 4);
+			String relationid=getRelationDocUnid("HAS_A");
+			String lookupkey1 = JSFUtil.getlookupkey(relationid,personunid);
+			Vector tmp1 = new Vector();
+			tmp1.add(lookupkey1);
+			String profileunid = JSFUtil.DBLookupString("relation",
+					"SourceRelation", tmp1, 4);
+			Database securitydb = session.getDatabase("", bsuitepath
+					+ "Security.nsf");
+			
+			Document profiledoc = securitydb.getDocumentByUNID(profileunid);
+			
+			return profiledoc.getItemValueString("prof_name");
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return "";
+		
+	}
+	
+
+	//This function is use to get the profileName while opening the Employee document. to get default value
+	public String getDefaultRoleName(String employeeId){
+		try{
+			String relDocUnid = getRelationDocUnid("IS_A");
+			String lookupkey = JSFUtil.getlookupkey(relDocUnid,employeeId);
+			Vector tmp = new Vector();
+			tmp.add(lookupkey);
+			String personunid = JSFUtil.DBLookupString("relation",
+					"TargetRelation", tmp, 4);
+			String relationid=getRelationDocUnid("HAS_ROLE");
+			String lookupkey1 = JSFUtil.getlookupkey(relationid,personunid);
+			Vector tmp1 = new Vector();
+			tmp1.add(lookupkey1);
+			String roleunid = JSFUtil.DBLookupString("relation",
+					"SourceRelation", tmp1, 4);
+			Database securitydb = session.getDatabase("", bsuitepath
+					+ "Security.nsf");
+			
+			Document roledoc = securitydb.getDocumentByUNID(roleunid);
+			
+			return roledoc.getItemValueString("role_name");
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return "";
+		
+	}
+
+	public String getDefaultPersonName(String employeeId){
+	
+		try{
+		
+			Map viewscope = (Map) JSFUtil.getVariableValue("viewScope");
+			String moduleName=(String)viewscope.get("moduleName");
+			if(moduleName.contains("_")){
+				moduleName=moduleName.replace("_"," ");
+			}
+			
+			//get the module name and treat it as database name
+			String dbname=moduleName.toLowerCase().replace(" ", "");
+			dbname=dbname+".nsf";	
+		
+			Database db = session.getDatabase("", bsuitepath+dbname);
+			System.out.println("db Name "+db.getFileName());
+		Document empdoc=db.getDocumentByUNID(employeeId);
+		String fullname=empdoc.getItemValueString("FullName");
+		System.out.println("FullName "+fullname);
+			return fullname;
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		return "";
+	}
+	
+	
+	
+	public void editEmployee(String employeeId,String oldprofile,String newprofile,String oldrole,String newrole){
+			
+		updateAssociatedProfile(employeeId,oldprofile,newprofile);
+		updateAssociatedRole(employeeId,oldrole,newrole);
+	}
+	public void editEmployee(String employeeId,String newrole,String newprofile){
+		
+		updateAssociatedProfile(employeeId,newprofile);
+		updateAssociatedRole(employeeId,newrole);
+	}
+	
+	private void updateAssociatedProfile(String employeeId, String oldprofile,String newprofile){
+		if(!oldprofile.equals(newprofile)){
+			String relDocUnid = getRelationDocUnid("IS_A");
+			String lookupkey = JSFUtil.getlookupkey(relDocUnid,employeeId);
+			Vector tmp = new Vector();
+			tmp.add(lookupkey);
+			//to get personunid and get associated role doc
+			String personunid = JSFUtil.DBLookupString("relation",
+					"TargetRelation", tmp, 4);
+			//get the unid of the new profile name
+			try{
+				Database securitydb = session.getDatabase("", bsuitepath
+						+ "Security.nsf");
+				View view=securitydb.getView("ProfileView");
+				Document newprofiledoc=view.getDocumentByKey(newprofile);
+				String newprofileunid=newprofiledoc.getUniversalID();
+				//get has_a relation
+				String relationId = getRelationDocUnid("HAS_A");
+				String lookupkey1 = JSFUtil.getlookupkey(relationId,personunid);
+				Vector tmp1 = new Vector();
+				tmp1.add(lookupkey1);
+				Database relationdb = session.getDatabase("", bsuitepath
+						+ "relation.nsf");	
+				//get the relationship doc which shows the Role association
+				View relview=relationdb.getView("SourceRelation");
+				Document profileassodoc=relview.getDocumentByKey(lookupkey1);
+				profileassodoc.replaceItemValue("targetid",newprofileunid);
+				profileassodoc.replaceItemValue("trg_data", newprofile);
+				profileassodoc.save(true,false);
+				
+			}catch (Exception e) {
+				// TODO: handle exception
+			}
+			
+		}
+		
+		
+		
+		
+			
+	}
+	private void updateAssociatedProfile(String employeeId, String newprofile){
+		
+			String relDocUnid = getRelationDocUnid("IS_A");
+			String lookupkey = JSFUtil.getlookupkey(relDocUnid,employeeId);
+			Vector tmp = new Vector();
+			tmp.add(lookupkey);
+			//to get personunid and get associated role doc
+			String personunid = JSFUtil.DBLookupString("relation",
+					"TargetRelation", tmp, 4);
+			//get the unid of the new profile name
+			try{
+				Database securitydb = session.getDatabase("", bsuitepath
+						+ "Security.nsf");
+				View view=securitydb.getView("ProfileView");
+				Document newprofiledoc=view.getDocumentByKey(newprofile);
+				String newprofileunid=newprofiledoc.getUniversalID();
+				//get has_a relation
+				String relationId = getRelationDocUnid("HAS_A");
+				String lookupkey1 = JSFUtil.getlookupkey(relationId,personunid);
+				Vector tmp1 = new Vector();
+				tmp1.add(lookupkey1);
+				Database relationdb = session.getDatabase("", bsuitepath
+						+ "relation.nsf");	
+				//get the relationship doc which shows the Role association
+				View relview=relationdb.getView("SourceRelation");
+				Document profileassodoc=relview.getDocumentByKey(lookupkey1);
+				profileassodoc.replaceItemValue("targetid",newprofileunid);
+				profileassodoc.replaceItemValue("trg_data", newprofile);
+				profileassodoc.save(true,false);
+				
+			}catch (Exception e) {
+				// TODO: handle exception
+	
+			}
+		}
+	
+private void updateAssociatedRole(String employeeId, String oldrole,String newrole){
+	
+	if(!oldrole.equals(newrole)){
+		String relDocUnid = getRelationDocUnid("IS_A");
+		String lookupkey = JSFUtil.getlookupkey(relDocUnid,employeeId);
+		Vector tmp = new Vector();
+		tmp.add(lookupkey);
+		//to get personunid and get associated role doc
+		String personunid = JSFUtil.DBLookupString("relation",
+				"TargetRelation", tmp, 4);
+		//get the unid of the new role name
+		
+		try{
+			Database securitydb = session.getDatabase("", bsuitepath
+					+ "Security.nsf");
+			View view=securitydb.getView("RolesView");
+			Document newroledoc=view.getDocumentByKey(newrole);
+			String newroleunid=newroledoc.getUniversalID();
+			//get has_role relation
+			String relationId = getRelationDocUnid("HAS_ROLE");
+			String lookupkey1 = JSFUtil.getlookupkey(relationId,personunid);
+			Vector tmp1 = new Vector();
+			tmp1.add(lookupkey1);
+			Database relationdb = session.getDatabase("", bsuitepath
+					+ "relation.nsf");	
+			//get the relationship doc which shows the Role association
+			View relview=relationdb.getView("SourceRelation");
+			Document roleassodoc=relview.getDocumentByKey(lookupkey1);
+			roleassodoc.replaceItemValue("targetid",newroleunid);
+			roleassodoc.replaceItemValue("trg_data", newrole);
+			roleassodoc.save(true,false);
+			
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		
+	}	
+	
+}
+
+private void updateAssociatedRole(String employeeId, String newrole){
+	
+	
+		String relDocUnid = getRelationDocUnid("IS_A");
+		String lookupkey = JSFUtil.getlookupkey(relDocUnid,employeeId);
+		Vector tmp = new Vector();
+		tmp.add(lookupkey);
+		//to get personunid and get associated role doc
+		String personunid = JSFUtil.DBLookupString("relation",
+				"TargetRelation", tmp, 4);
+		//get the unid of the new role name
+		
+		try{
+			Database securitydb = session.getDatabase("", bsuitepath
+					+ "Security.nsf");
+			View view=securitydb.getView("RolesView");
+			Document newroledoc=view.getDocumentByKey(newrole);
+			String newroleunid=newroledoc.getUniversalID();
+			//get has_role relation
+			String relationId = getRelationDocUnid("HAS_ROLE");
+			String lookupkey1 = JSFUtil.getlookupkey(relationId,personunid);
+			Vector tmp1 = new Vector();
+			tmp1.add(lookupkey1);
+			Database relationdb = session.getDatabase("", bsuitepath
+					+ "relation.nsf");	
+			//get the relationship doc which shows the Role association
+			View relview=relationdb.getView("SourceRelation");
+			Document roleassodoc=relview.getDocumentByKey(lookupkey1);
+			roleassodoc.replaceItemValue("targetid",newroleunid);
+			roleassodoc.replaceItemValue("trg_data", newrole);
+			roleassodoc.save(true,false);
+			
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		
+	
+	
+}
+
+
+public void deleteAssoDoc(String employeeId){
+	deleteEmpPersonAsso(employeeId);
+	deleteProfileDoc(employeeId);
+	deleteRoleDoc(employeeId);
+	
+}
+
+private void deleteRoleDoc(String employeeId){
+	
+	String relDocUnid = getRelationDocUnid("IS_A");
+	String lookupkey = JSFUtil.getlookupkey(relDocUnid,employeeId);
+	Vector tmp = new Vector();
+	tmp.add(lookupkey);
+	//to get personunid and get associated role doc
+	String personunid = JSFUtil.DBLookupString("relation",
+			"TargetRelation", tmp, 4);
+	
+	
+		//get has_a relation
+		String relationId = getRelationDocUnid("HAS_ROLE");
+		String lookupkey1 = JSFUtil.getlookupkey(relationId,personunid);
+		Vector tmp1 = new Vector();
+		tmp1.add(lookupkey1);
+		try{
+			Database relationdb = session.getDatabase("", bsuitepath
+					+ "relation.nsf");	
+			//get the relationship doc which shows the Role association
+			View relview=relationdb.getView("SourceRelation");
+			Document roleassodoc=relview.getDocumentByKey(lookupkey1);
+			roleassodoc.remove(true);
+		}catch (Exception e) {
+			// TODO: handle exception
+		}		
+	
+}
+
+
+
+private void deleteProfileDoc(String employeeId){
+	
+	
+	String relDocUnid = getRelationDocUnid("IS_A");
+	String lookupkey = JSFUtil.getlookupkey(relDocUnid,employeeId);
+	Vector tmp = new Vector();
+	tmp.add(lookupkey);
+	//to get personunid and get associated role doc
+	String personunid = JSFUtil.DBLookupString("relation",
+			"TargetRelation", tmp, 4);
+	
+	
+		//get has_a relation
+		String relationId = getRelationDocUnid("HAS_A");
+		String lookupkey1 = JSFUtil.getlookupkey(relationId,personunid);
+		Vector tmp1 = new Vector();
+		tmp1.add(lookupkey1);
+		try{
+			Database relationdb = session.getDatabase("", bsuitepath
+					+ "relation.nsf");	
+			//get the relationship doc which shows the Role association
+			View relview=relationdb.getView("SourceRelation");
+			Document profileassodoc=relview.getDocumentByKey(lookupkey1);
+			profileassodoc.remove(true);
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+	
+}
+	
+private void deleteEmpPersonAsso(String employeeId){
+
+	String relDocUnid = getRelationDocUnid("IS_A");
+	String lookupkey = JSFUtil.getlookupkey(relDocUnid,employeeId);
+	Vector tmp = new Vector();
+	tmp.add(lookupkey);
+	//to get personunid and get associated role doc
+	try{
+		Database relationdb = session.getDatabase("", bsuitepath
+				+ "relation.nsf");	
+		//get the relationship doc which shows the Role association
+		View relview=relationdb.getView("TargetRelation");
+		Document emppersonassodoc=relview.getDocumentByKey(lookupkey);
+		emppersonassodoc.remove(true);
+	}catch (Exception e) {
+		// TODO: handle exception
+	}
+	
+}
 
 }

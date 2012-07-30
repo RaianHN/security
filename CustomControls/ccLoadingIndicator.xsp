@@ -1,13 +1,11 @@
 <?xm version="1.0" encoding="UTF-8"?>
 <xp:view xmlns:xp="http://www.ibm.com/xsp/core">
 
-	<xp:this.resources>
-		<xp:styleSheet href="/myPanel.css"></xp:styleSheet>
-	</xp:this.resources>
+
 	<xp:panel id="loadingPanel"
 		style="background-color:rgb(255,255,255);height:auto;width:5%">
 
-		 <xp:image url="/loading+%282%29.gif" id="image1"></xp:image>
+		<xp:image url="/loading+%282%29.gif" id="image1"></xp:image>
 		<xp:eventHandler event="onClientLoad" submit="false">
 			<xp:this.script><![CDATA[hideWait();]]></xp:this.script>
 		</xp:eventHandler>
@@ -32,6 +30,11 @@ function showWait(){
 	
 	
 	
+}
+
+function showError(){
+alert("Error processing request");
+hideWait();
 }
 
 ]]></xp:this.value>

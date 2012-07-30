@@ -470,38 +470,82 @@ function setFeaturePermission(){
 }
 
 
-function loadCreateEntity(moduleName){
-	var component = getComponent('cEntityPanel'+moduleName); 
-	var s = facesContext;
-	var c1="/cc_entityForm.xsp"; 
-	var id="entityPanel";
-	sessionScope.employeeRegister = viewScope.entityName;
-	println("viewsco"+viewScope.entityName);
-	println("modulename"+moduleName);
-	com.weberon.DynamicCC.loadCC(s, component, c1, id);	
-}
+function loadViewEntity(moduleName,entityName){
 
-function loadViewEntity(moduleName){
-	var component = getComponent('cEntityPanel'+moduleName); 
+	println("Inside loadViewEntity");
+	var tabentity:java.util.ArrayList=sessionScope.moduleentity;
+	println("TabEntity ",tabentity);	
+	var i;
+	
+		for(i=0;i<tabentity.size();i++)
+		{
+			var mname=tabentity.get(i).split(":");
+			if(mname[0]==moduleName)
+				{
+					tabentity.remove(tabentity.get(i));
+				}
+		}
+	var temp=moduleName+":"+entityName;
+	tabentity.add(temp);
+	
+	println("SessionScope moduleEntity ",sessionScope.moduleentity);
+	println("ModuleName ",moduleName);
+	
+	//In order to show the Delete button in the view
+	var entityDelete = new bsuite.weber.jsonparsing.ProfileEdit;
+	var result=entityDelete.checkEntityDelete(moduleName,entityName);
+	if(result){
+		println("Result is true");
+		viewScope.entityDelete=true;
+	}else{
+		println("Result is false");
+		viewScope.entityDelete=false;
+	}
+	
+	var component = getComponent('EntityPanel'+moduleName); 
 	var s = facesContext;
 	var c1="/cc_EntityView.xsp"; 
 	var id="entityViewPanel";
+	
+	com.weberon.DynamicCC.removePreview(component);
 	com.weberon.DynamicCC.loadCC(s, component, c1, id);	
+	
 }
 
-function loadReadEntity(){
-	var component = getComponent('readPanel'); 
+function loadReadEntity(moduleName){
+	var component = getComponent('EntityName'+moduleName); 
 	var s = facesContext;
 	var c1="/ccReadEntity.xsp"; 
 	var id="readEntityPanel";
 	com.weberon.DynamicCC.loadCC(s, component, c1, id);	
 	
 }
+
+
+
 function loadCreateEntity(moduleName,entityName){
+	wrkspc.resetBean();
+	//Session scoped var declare in beforePageLoad of MainPage
+	var tabentity:java.util.ArrayList=sessionScope.moduleentity;
+	var i=0;
+	if(tabentity!=null)
+	{
+		for(i=0;i<tabentity.size();i++)
+		{
+			var mname=tabentity.get(i).split(":");
+			if(mname[0]==moduleName)
+			{
+				tabentity.remove(tabentity.get(i));
+			}
+		}
+		var temp=moduleName+":"+entityName;
+		tabentity.add(temp);
+	}
+
+	println("SessionScope moduleEntity ",sessionScope.moduleentity);
 	println("viewsco create entity"+viewScope.entityName);
 	println("modulename"+moduleName);
-	//var component = getComponent('actionTable'+moduleName+entityName);
-	var component = getComponent("readPanel");
+	var component = getComponent('EntityPanel'+moduleName);	
 	var s = facesContext;
 	var c1="/cc_entityForm.xsp"; 
 	var id="entityPanel";
@@ -514,6 +558,62 @@ function loadCreateEntity(moduleName,entityName){
 	com.weberon.DynamicCC.loadCC(s, component, c1, id);	
 	
 }
+
+
+
+/*
+function loadViewEntity(moduleName,entityName){
+
+	println("Inside loadViewEntity");
+	var tabentity:java.util.ArrayList=sessionScope.moduleentity;
+	println("TabEntity ",tabentity);	
+	var i;
+	
+		for(i=0;i<tabentity.size();i++)
+		{
+			var mname=tabentity.get(i).split(":");
+			if(mname[0]==moduleName)
+				{
+					tabentity.remove(tabentity.get(i));
+				}
+		}
+	var temp=moduleName+":"+entityName;
+	tabentity.add(temp);
+	
+	println("SessionScope moduleEntity ",sessionScope.moduleentity);
+	println("ModuleName ",moduleName);
+	var component = getComponent('EntityPanel'+moduleName); 
+	var s = facesContext;
+	var c1="/cc_EntityView.xsp"; 
+	var id="entityViewPanel";
+	
+	com.weberon.DynamicCC.removePreview(component);
+	com.weberon.DynamicCC.loadCC(s, component, c1, id);	
+	
+}
+*/
+
+
+function loadEditEntity(moduleName,entityName){
+	wrkspc.resetBean();
+	println("viewsco create entity"+viewScope.entityName);
+	println("modulename"+moduleName);
+	var component=getComponent("readPanel"+moduleName);
+	var s = facesContext;
+	var c1="/cc_EditEntity.xsp"; 
+	var id="entityEditPanel1";
+	sessionScope.employeeRegister = viewScope.entityName;
+	viewScope.moduleName = moduleName;
+	viewScope.entityName = entityName;
+	println("viewsco"+viewScope.entityName);
+	println("modulename"+moduleName);
+	println("Component ",component)
+	com.weberon.DynamicCC.removePreview(component);
+	com.weberon.DynamicCC.loadCC(s, component, c1, id);	
+	
+}
+
+
 function loadTestControl(componentid,cc,ccid,moduleName,entityName){
 	var component = getComponent(componentid); 
 	var s = facesContext;
@@ -655,6 +755,18 @@ function getNumberOfFields(profileName, moduleName, entityName){
 	
 }
 
+
+function setAccessTypePermission(){
+	//var profileName = getComponent("moduleCombo").getValue();
+var profileName="Admin";
+	println("profileName"+profileName);
+	var arr = context.getSubmittedValue().split(",");
+	var entityCrud = new bsuite.weber.jsonparsing.ProfileEdit;
+	println("setting field permission"+typeof(arr)+"submitted type"+typeof(context.getSubmittedValue()));
+	
+	entityCrud.saveAccessTypePerm(profileName,context.getSubmittedValue());
+	entityCrud.saveAccessTypePerm("Standard",context.getSubmittedValue());
+}
 function setProfileNumbers(){
 	var profileName = getComponent("moduleCombo").getValue();
 	//--Select Profile--
@@ -677,4 +789,13 @@ function setProfileNumbers(){
 	
 	
 }
+function updateAddSchema(){
+	var schemaObj = new bsuite.weber.configure.Deploy();
+	schemaObj.updateAllProfiles();
 
+}
+
+function updateDeleteSchema(){
+	var profileObj = new bsuite.weber.jsonparsing.ProfileEdit();
+	profileObj.removeUpdate();
+}

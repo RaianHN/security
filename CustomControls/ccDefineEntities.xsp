@@ -138,10 +138,14 @@ var x= @DbColumn(com,  "($VIMPeople)", 1);
 								submit="true" refreshMode="complete">
 								<xp:this.action><![CDATA[#{javascript:var deploy = new bsuite.weber.configure.Deploy();
 deploy.deploy();
+
+
+
 var user = getComponent("comboBox1").getValue();
 
 var cd = new bsuite.weber.configure.CreateDatabase();
 cd.RegisterEmployee(user)
+
 
 }]]></xp:this.action>
 							</xp:eventHandler>

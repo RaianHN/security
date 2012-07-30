@@ -153,11 +153,11 @@ XSP.executeOnServer = function () {
 
 	// the ID of the event handler we want to execute
 	var functionName = arguments[0];
-
+	//alert("event "+functionName);
 	// OPTIONAL - The Client Side ID that you want to partial refresh after executing the event handler
 	var refreshId = (arguments[1]) ? arguments[1] : "@none";
 	var form = (arguments[1]) ? this.findForm(arguments[1]) : dojo.query('form')[0];
-
+//alert("refresh id"+refreshId);
 	// catch all in case dojo element has moved object outside of form...
 	if (!form)
 		form = dojo.query('form')[0];

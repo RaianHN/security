@@ -2,6 +2,9 @@ package bsuite.weber.security;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+
+import bsuite.weber.tools.JSFUtil;
 
 public class Security {
 
@@ -9,16 +12,43 @@ public class Security {
 	private Role role;
 	private ArrayList<String> modules;
 	private HashMap<String, ArrayList<String>> modulesEntities;
+	private String profileName;
+	private String roleName;
+	
+	public String getProfileName() {
+		return profileName;
+	}
+
+	public void setProfileName(String profileName) {
+		this.profileName = profileName;
+	}
+
+	public String getRoleName() {
+		return roleName;
+	}
+
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
 
 	public Security() {
 		profile = new Profile();
 		System.out.println("-------1");
 		role = new Role();
 		System.out.println("-------2");
-		
+		Map viewscope = (Map) JSFUtil.getVariableValue("viewScope");
 		if(profile!=null){
 			
-		
+		profileName = profile.getProfileName();
+		viewscope.put("profileName",profileName);
+		System.out.println("profilename"+profileName);
+			//profileName = "";
+		if(role!=null){
+			roleName = role.getRoleName();
+			viewscope.put("roleName",roleName);
+		System.out.println("rolename"+roleName);
+			//roleName = "";
+		}
 		modules = profile.getVisibleModulesNames();
 		modulesEntities = new HashMap<String, ArrayList<String>>();
 		System.out.println("-------3");

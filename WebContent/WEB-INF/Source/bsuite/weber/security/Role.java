@@ -28,10 +28,10 @@ public class Role extends BsuiteWorkFlow {
 		//initialize associated role for the current user
 		
 			roleName=as.getAssociatedRoleName(this.currentuser.getBsuiteuser());
-		if(roleName!=null){
-			searchString=createSearchString();
-			System.out.println("Search String"+searchString);
-		}
+		//if(roleName!=null){
+		//	searchString=createSearchString();
+		//	System.out.println("Search String"+searchString);
+		//}
 		
 		
 	}
@@ -68,7 +68,7 @@ public class Role extends BsuiteWorkFlow {
 			}							
 		}							
 		querystr=querystr+")";
-		
+		querystr=querystr+ " OR FIELD shareWithUser contains "+"\""+as.getFormattedName(this.currentuser.getBsuiteuser(), "abr")+"\""+" OR FIELD shareWithRoles contains "+"\""+ this.roleName+"\"";
 		return querystr;
 	}
 
@@ -89,10 +89,26 @@ public class Role extends BsuiteWorkFlow {
 			
 		}
 		System.out.println("DataSharing Rules UserList "+dsusers);
+		
+		//Check whether the shareDataWithPeers is set or not in the Role Document
+		Boolean sharedata=isShareDataWithPeers(RoleName);
+		Vector peersname=new Vector();
+		System.out.println("data Share With Peers Value "+sharedata);
+	
+		
+		
 		//To remove all the duplicated values
 		HashSet userset=new HashSet();
 		userset.addAll(userslist);
 		userset.addAll(dsusers);
+		
+		//if sharedata is true, then add usersname to the final users list
+		if(sharedata){
+			System.out.println("DataSheersWithPeers is set and it is adding the users name to final list");
+			peersname.addAll(getAssociatedUsers(RoleName));
+			userset.addAll(peersname);
+		}
+		
 		finallist.addAll(userset);
 		
 		 return finallist;
@@ -211,6 +227,27 @@ public Vector getAssociatedUsers(String RoleName){
 	return null;
 }
 
+
+public boolean isShareDataWithPeers(String RoleName){
+	try{
+		System.out.println("inside isShareDataWithPeers");
+		Database security = session.getDatabase("", bsuitepath+"Security.nsf");
+		View roleView=security.getView("RolesView");
+		System.out.println("RoleName "+RoleName);
+		
+		Document roledoc=roleView.getDocumentByKey(RoleName);
+		String share=roledoc.getItemValueString("sharewithpeers");
+		System.out.println("Share Value "+share);
+		if(share.equals("1")){
+			return true;
+		}
+	}catch (Exception e) {
+		// TODO: handle exception
+	}
+return false;
+}
+
+
 public String getRoleName() {
 	return roleName;
 }
@@ -222,6 +259,7 @@ public void setRoleName(String roleName) {
 
 
 public String getSearchString() {
+	searchString=createSearchString();
 	return searchString;
 }
 

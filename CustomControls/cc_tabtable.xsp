@@ -8,6 +8,7 @@
 	<xp:div id="maindiv">
 
 		<xc:BsuiteBanner></xc:BsuiteBanner>
+		<xp:br></xp:br>
 		<xc:BsuiteTitleBar></xc:BsuiteTitleBar>		
 		<xc:BsuiteMain rendered="false"></xc:BsuiteMain>
 		<xp:div id="ConfigureDiv">

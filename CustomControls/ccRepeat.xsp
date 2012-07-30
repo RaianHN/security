@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+
+	<xp:panel id="RepeatPanel">
+		<xp:repeat id="repeat2" rows="30" var="rowData">
+			<xp:this.value><![CDATA[#{javascript:
+
+println("in repeat");
+var entityP:java.util.Vector = viewScope.entityPerm;
+println("in repeat"+entityP);
+if(entityP!=null){
+return entityP;
+}}]]></xp:this.value>
+			<xp:this.rendered><![CDATA[#{javascript:var entry = viewScope.entityPerm;
+if(entry==null){
+return false;
+}else{
+return true;
+}}]]></xp:this.rendered>
+			<xp:tr>
+				<xp:td>
+					<xp:inputText id="inputText2">
+						<xp:this.value><![CDATA[#{javascript:@Left(rowData,":");}]]></xp:this.value>
+
+					</xp:inputText>
+				</xp:td>
+				<xp:td>
+
+					<xp:radioGroup id="radioGroup1">
+
+						<xp:this.defaultValue><![CDATA[#{javascript:var val = @Right(rowData,":");
+var res=val.charAt(4);
+println("Defualt of radiovalue");
+println("Character at 4th res ",res);
+if(res=="1"){
+return "private";
+}else if(res=="2"){
+return "public";
+}else if(res=="3"){
+return "read";
+}
+}]]></xp:this.defaultValue>
+						<xp:selectItem itemLabel="Private"
+							itemValue="private">
+						</xp:selectItem>
+						<xp:selectItem itemLabel="Public Read/Write"
+							itemValue="public">
+						</xp:selectItem>
+						<xp:selectItem itemLabel="Public Read Only"
+							itemValue="read">
+						</xp:selectItem>
+					</xp:radioGroup>
+				</xp:td>
+				<xp:td>
+
+				</xp:td>
+				<xp:td>
+
+				</xp:td>
+
+			</xp:tr>
+		</xp:repeat>
+	</xp:panel></xp:view>

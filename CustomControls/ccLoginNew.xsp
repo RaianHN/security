@@ -134,7 +134,15 @@ println("OnLCick of Configure");
 	</xp:link>
 	
 	<xp:link escape="true" text="SetUp" id="link3">
-		<xp:eventHandler event="onmouseover" submit="false">
+		<xp:this.rendered><![CDATA[#{javascript:var adm = viewScope.profileName;
+println("profilename"+profileName);
+if(adm!=null){
+if(adm=="Admin"){
+return true;
+}else{
+return false;
+}
+}}]]></xp:this.rendered><xp:eventHandler event="onmouseover" submit="false">
 			<xp:this.script><![CDATA[XSP.openMenu(thisEvent,#{javascript:getComponent('popupsetup').getMenuCtor()})]]></xp:this.script>
 		</xp:eventHandler></xp:link>
 	<xp:panel id="ref"></xp:panel>
@@ -190,16 +198,26 @@ if (userName == "anonymous") {
 			<xe:basicLeafNode submitValue="profile"
 				label="Create Profile">
 			</xe:basicLeafNode>
-			<xe:basicLeafNode submitValue="datasharing"
+			<xe:basicLeafNode submitValue="createdata"
 				label="Create DataSharing Rules">
 			</xe:basicLeafNode>
+			<xe:basicLeafNode label="Edit Default Organization Setting"
+				submitValue="editdata">
+			</xe:basicLeafNode>
+			<xe:basicLeafNode label="Update Schema"
+				submitValue="updateschema">
+			</xe:basicLeafNode>
+			<xe:basicLeafNode label="Edit Role"
+				submitValue="editrole">
+			</xe:basicLeafNode>
 		</xe:this.treeNodes>
-		
-		
-		<xp:eventHandler event="onItemClick" submit="true" refreshMode="partial" onStart="showWait()" onComplete="hideWait()">
-				<xp:this.action>
-					<xp:executeScript>
-						<xp:this.script><![CDATA[#{javascript:
+
+
+		<xp:eventHandler event="onItemClick" submit="true"
+			refreshMode="partial" onStart="showWait()" onComplete="hideWait()">
+			<xp:this.action>
+				<xp:executeScript>
+					<xp:this.script><![CDATA[#{javascript:
 
 var choice=context.getSubmittedValue()
 if(choice=="configure"){
@@ -223,7 +241,7 @@ var id="modulePermdiv";
 //com.weberon.DynamicCC.loadCC(s, component, c1, id);
 com.weberon.DynamicCC.loadCCinTab(s,component,c1,id,"Profile");
 
-}else if(choice=="datasharing"){
+}else if(choice=="createdata"){
 println("OnClick if DataSharing");
 
 var component = getComponent('MainTabContainer'); 
@@ -231,15 +249,51 @@ var s = facesContext;
 var c1="/ccDataSharing.xsp"; 
 var id="DataSharingdiv";
 //com.weberon.DynamicCC.loadCC(s, component, c1, id);
-com.weberon.DynamicCC.loadCCinTab(s,component,c1,id,"Data_Sharing");
+com.weberon.DynamicCC.loadCCinTab(s,component,c1,id,"DataSharing");
+
+}else if(choice=="editdata"){
+
+println("OnClick of Edit DataSharing");
+
+var component = getComponent('MainTabContainer'); 
+var s = facesContext;
+var c1="/cc_ShowDataSharing.xsp"; 
+var id="editDataSharingdiv";
+//com.weberon.DynamicCC.loadCC(s, component, c1, id);
+com.weberon.DynamicCC.loadCCinTab(s,component,c1,id,"Edit_DefaultSetting");
 
 }
 
+else if(choice=="updateschema"){
+
+println("OnClick of updating schema");
+
+var component = getComponent('MainTabContainer'); 
+var s = facesContext;
+var c1="/ccUpdateModule.xsp"; 
+var id="updatemodulediv";
+//com.weberon.DynamicCC.loadCC(s, component, c1, id);
+com.weberon.DynamicCC.loadCCinTab(s,component,c1,id,"UpdateSchema");
+
+}
+else if(choice=="editrole"){
+println("OnLCick of EditRole");
+var component = getComponent('MainTabContainer'); 
+var s = facesContext;
+var c1="/ccEditRole.xsp"; 
+var id="EditRolediv";
+//com.weberon.DynamicCC.loadCC(s, component, c1, id);
+com.weberon.DynamicCC.loadCCinTab(s,component,c1,id,"Edit_Role");
+
+}
+
+
 }]]></xp:this.script>
-					</xp:executeScript>
-				</xp:this.action></xp:eventHandler>
-		
-		
-		
+				</xp:executeScript>
+			</xp:this.action>
+		</xp:eventHandler>
+
+
+
 	</xe:popupMenu></xp:view>
 
