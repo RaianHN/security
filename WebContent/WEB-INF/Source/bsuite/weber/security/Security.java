@@ -14,7 +14,7 @@ public class Security {
 	private HashMap<String, ArrayList<String>> modulesEntities;
 	private String profileName;
 	private String roleName;
-	
+
 	public String getProfileName() {
 		return profileName;
 	}
@@ -31,45 +31,31 @@ public class Security {
 		this.roleName = roleName;
 	}
 
+	@SuppressWarnings("unchecked")
 	public Security() {
 		profile = new Profile();
-		System.out.println("-------1");
 		role = new Role();
-		System.out.println("-------2");
-		Map viewscope = (Map) JSFUtil.getVariableValue("viewScope");
-		Map sessionScope = (Map) JSFUtil.getVariableValue("sessionScope");
-		if(profile!=null){
-			
-		profileName = profile.getProfileName();
-		sessionScope.put("profileName",profileName);
-		System.out.println("profilename"+profileName);
-			//profileName = "";
-		if(role!=null){
-			roleName = role.getRoleName();
-			sessionScope.put("roleName",roleName);
-		System.out.println("rolename"+roleName);
-			//roleName = "";
-		}
-		modules = profile.getVisibleModulesNames();
-		modulesEntities = new HashMap<String, ArrayList<String>>();
-		System.out.println("-------3");
-		if(modules!=null){
-			for (String x : modules) {
-				System.out.println("-------4");
-				ArrayList<String> entities = new ArrayList<String>();
-				System.out.println("-------4x1");
-				entities = profile.getCreatableEntitiesNames(x);
-				System.out.println("-------4x2");
-				//if (entities != null) {
-					modulesEntities.put(x, entities);
-				//}
-
-				System.out.println("-------5");
-			}
-			System.out.println("-------6");
-			}	
-		}
 		
+		Map sessionScope = (Map) JSFUtil.getVariableValue("sessionScope");
+		if (profile != null) {
+
+			profileName = profile.getProfileName();
+			sessionScope.put("profileName", profileName);
+			if (role != null) {
+				roleName = role.getRoleName();
+				sessionScope.put("roleName", roleName);
+			}
+			modules = profile.getVisibleModulesNames();
+			modulesEntities = new HashMap<String, ArrayList<String>>();
+			if (modules != null) {
+				for (String x : modules) {
+					ArrayList<String> entities = new ArrayList<String>();
+					entities = profile.getCreatableEntitiesNames(x);
+					modulesEntities.put(x, entities);
+				}
+			}
+		}
+
 	}
 
 	public Profile getProfile() {

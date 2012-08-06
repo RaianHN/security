@@ -10,297 +10,273 @@ import lotus.domino.DocumentCollection;
 import lotus.domino.NotesException;
 import lotus.domino.View;
 
-import bsuite.weber.model.BsuiteWorkFlow;
 import bsuite.weber.relationship.Association;
 import bsuite.weber.tools.BsuiteMain;
 import bsuite.weber.tools.JSFUtil;
-import bsuite.weber.tools.BSUtil;
 
 public class Role extends BsuiteMain {
-	
+
 	String roleName;
 	String searchString;
-	Vector<String> hierarchyRoleList=new Vector<String>();
-	Vector<String> dataSharedRoles=new Vector<String>();
-	Vector<String> effectiveUsersList=new Vector<String>();
-	Association as=new Association();
-	
-	
-	public Role(){
-		//initialize associated role for the current user
-		
-		//	roleName=as.getAssociatedRoleName(this.currentuser);
-		//if(roleName!=null){
-		//	searchString=createSearchString();
-		//	System.out.println("Search String"+searchString);
-		//}
-		
-		
+	Vector<String> hierarchyRoleList = new Vector<String>();
+	Vector<String> dataSharedRoles = new Vector<String>();
+	Vector<String> effectiveUsersList = new Vector<String>();
+	Association as = new Association();
+
+	public Role() {
+
 	}
 
-	public String createSearchString(){		
-		//viewScope.put("entityName", "Activity");
-		Map viewScope=(Map) JSFUtil.getVariableValue("viewScope");	
-		String moduleName=(String)viewScope.get("moduleName");
-		String entityName=(String)viewScope.get("entityName");
-		this.hierarchyRoleList= getFinalRoleList(roleName);//to get the child roles of the given role
-		this.dataSharedRoles=getRolesFromDataSharingRules(moduleName,entityName,roleName);//pass current entity the uesr is accessing and roleName
-		this.effectiveUsersList=getFinalUserList(roleName);
-		System.out.println("Hierarchical Roles String"+hierarchyRoleList);
-		System.out.println("Data Shared String"+dataSharedRoles);
-		System.out.println("Effective String"+effectiveUsersList);
-		
-		Vector<String> a = new Vector();	
-		String username;	
-		for(String x:effectiveUsersList){
-			username=as.getFormattedName(x, "common");
+	@SuppressWarnings({ "unchecked"})
+	public String createSearchString() {
+		Map viewScope = (Map) JSFUtil.getVariableValue("viewScope");
+		String moduleName = (String) viewScope.get("moduleName");
+		String entityName = (String) viewScope.get("entityName");
+		this.hierarchyRoleList = getFinalRoleList(roleName);// to get the child
+															// roles of the
+															// given role
+		this.dataSharedRoles = getRolesFromDataSharingRules(moduleName,
+				entityName, roleName);// pass current entity the uesr is
+										// accessing and roleName
+		this.effectiveUsersList = getFinalUserList(roleName);
+		Vector<String> a = new Vector();
+		String username;
+		for (String x : effectiveUsersList) {
+			username = as.getFormattedName(x, "common");
 			a.add(username);
 		}
-		
-		String currentuser1= as.getFormattedName(this.currentuser, "common");
-		a.add(currentuser1);
-		
-		String querystr="(FIELD CreatedBy=";			
-		for(int i=0;i<a.size();i++){
-			if(i==0){
-				querystr=querystr+"\""+ a.get(i)  +"\" " ;
 
-			}else{
-				querystr=querystr+" OR "+"\""+ a.get(i)  +"\"" ;
-			}							
-		}							
-		querystr=querystr+")";
-		querystr=querystr+ " OR FIELD shareWithUser contains "+"\""+as.getFormattedName(this.currentuser, "abr")+"\""+" OR FIELD shareWithRoles contains "+"\""+ this.roleName+"\"";
+		String currentuser1 = as.getFormattedName(this.currentuser, "common");
+		a.add(currentuser1);
+
+		String querystr = "(FIELD CreatedBy=";
+		for (int i = 0; i < a.size(); i++) {
+			if (i == 0) {
+				querystr = querystr + "\"" + a.get(i) + "\" ";
+
+			} else {
+				querystr = querystr + " OR " + "\"" + a.get(i) + "\"";
+			}
+		}
+		querystr = querystr + ")";
+		querystr = querystr + " OR FIELD shareWithUser contains " + "\""
+				+ as.getFormattedName(this.currentuser, "abr") + "\""
+				+ " OR FIELD shareWithRoles contains " + "\"" + this.roleName
+				+ "\"";
 		return querystr;
 	}
 
-	
-	public Vector getFinalUserList(String RoleName){
-		Vector finallist=new Vector();
-		System.out.println("in getFinalUserList");
-		Vector userslist=new Vector();				
+	@SuppressWarnings({ "unchecked"})
+	public Vector getFinalUserList(String RoleName) {
+		Vector finallist = new Vector();
+		Vector userslist = new Vector();
 
-		for (String x : hierarchyRoleList) {			
+		for (String x : hierarchyRoleList) {
 			userslist.addAll(getAssociatedUsers(x));
-		}				
-		
-		//Users from DataSharingRules
-		Vector dsusers=new Vector();
-		for (String x :dataSharedRoles ) {	
-			dsusers.addAll(getAssociatedUsers(x));
-			
 		}
-		System.out.println("DataSharing Rules UserList "+dsusers);
-		
-		//Check whether the shareDataWithPeers is set or not in the Role Document
-		Boolean sharedata=isShareDataWithPeers(RoleName);
-		Vector peersname=new Vector();
-		System.out.println("data Share With Peers Value "+sharedata);
-	
-		
-		
-		//To remove all the duplicated values
-		HashSet userset=new HashSet();
+
+		// Users from DataSharingRules
+		Vector dsusers = new Vector();
+		for (String x : dataSharedRoles) {
+			dsusers.addAll(getAssociatedUsers(x));
+
+		}
+
+		// Check whether the shareDataWithPeers is set or not in the Role
+		// Document
+		Boolean sharedata = isShareDataWithPeers(RoleName);
+		Vector peersname = new Vector();
+
+		// To remove all the duplicated values
+		HashSet userset = new HashSet();
 		userset.addAll(userslist);
 		userset.addAll(dsusers);
-		
-		//if sharedata is true, then add usersname to the final users list
-		if(sharedata){
-			System.out.println("DataSheersWithPeers is set and it is adding the users name to final list");
+
+		// if sharedata is true, then add usersname to the final users list
+		if (sharedata) {
+			
 			peersname.addAll(getAssociatedUsers(RoleName));
 			userset.addAll(peersname);
 		}
-		
+
 		finallist.addAll(userset);
-		
-		 return finallist;
+
+		return finallist;
 	}
-	
-	public Vector getFinalRoleList(String roleName){
+
+	@SuppressWarnings("unchecked")
+	public Vector getFinalRoleList(String roleName) {
 		hierarchyRoleList.removeAllElements();
 		getRoleList(roleName);
 		hierarchyRoleList.removeElementAt(0);
 		return hierarchyRoleList;
 	}
-		
-	public Vector getRolesFromDataSharingRules(String moduleName,String entityName,String roleName){
-		System.out.println("inside DataSharing function");
-		System.out.println("RoleName "+roleName);
+
+	@SuppressWarnings("unchecked")
+	public Vector getRolesFromDataSharingRules(String moduleName,
+			String entityName, String roleName) {
 		Vector roles = new Vector();
-		
-		try{
-			Database security = session.getDatabase("", bsuitepath+"Security.nsf");
+
+		try {
+			Database security = session.getDatabase("", bsuitepath
+					+ "Security.nsf");
 			View datasharingView = security.getView("DataSharingView");
-			String key=moduleName+"+"+entityName+"+"+roleName;
-			//System.out.println("key "+key);
-			DocumentCollection dc=datasharingView.getAllDocumentsByKey(key);
-			//Vector<String> res=JSFUtil.DBLookupVector("Security","DataSharingView",rolename,1);
-			//System.out.println("Data Sharing roles size "+dc.getCount());
+			String key = moduleName + "+" + entityName + "+" + roleName;
+			DocumentCollection dc = datasharingView.getAllDocumentsByKey(key);
 			Document doc = dc.getFirstDocument();
-			String sourceRole="";
-			for(int i=0;i<dc.getCount();i++){
+			String sourceRole = "";
+			for (int i = 0; i < dc.getCount(); i++) {
 				sourceRole = doc.getItemValueString("SourceRole");
-				//System.out.println("Source role name"+sourceRole);
-				roles.add(sourceRole);				
+				roles.add(sourceRole);
 				doc = dc.getNextDocument(doc);
 			}
-			
-		}catch (Exception e) {
-			// TODO: handle exception
+
+		} catch (Exception e) {
 		}
-		
+
 		return roles;
 	}
-	
-public void getRoleList(String roleName){
-	
-	//System.out.println("in getRoleList"+roleName);	
-	hierarchyRoleList.add(roleName);
-	//System.out.println("in getRoleList 2"+hierarchyRoleList.get(0));
-	Vector children = getChildRoles(roleName);
-	for(int i=0;i<children.size();i++){
-		getRoleList(children.get(i).toString());
-	}
-			
-}
 
-public Vector getChildRoles(String roleName){
-	Vector roles = new Vector();
-	try {
-		Database security = session.getDatabase("", bsuitepath+"Security.nsf");
-		View rolesView = security.getView("RolesViewCat");
-		DocumentCollection coll = rolesView.getAllDocumentsByKey(roleName);
-		Document doc = coll.getFirstDocument();
-		String rolename="";
-		for(int i=0;i<coll.getCount();i++){
-			rolename = doc.getItemValueString("role_name");
-		//	System.out.println("role name"+rolename);
-			roles.add(rolename);
-			
-			doc = coll.getNextDocument(doc);
+	@SuppressWarnings("unchecked")
+	public void getRoleList(String roleName) {
+
+		hierarchyRoleList.add(roleName);
+		Vector children = getChildRoles(roleName);
+		for (int i = 0; i < children.size(); i++) {
+			getRoleList(children.get(i).toString());
+		}
+
+	}
+
+	@SuppressWarnings("unchecked")
+	public Vector getChildRoles(String roleName) {
+		Vector roles = new Vector();
+		try {
+			Database security = session.getDatabase("", bsuitepath
+					+ "Security.nsf");
+			View rolesView = security.getView("RolesViewCat");
+			DocumentCollection coll = rolesView.getAllDocumentsByKey(roleName);
+			Document doc = coll.getFirstDocument();
+			String rolename = "";
+			for (int i = 0; i < coll.getCount(); i++) {
+				rolename = doc.getItemValueString("role_name");
+				roles.add(rolename);
+
+				doc = coll.getNextDocument(doc);
+			}
+			return roles;
+		} catch (NotesException e) {
+
+			e.printStackTrace();
 		}
 		return roles;
-	} catch (NotesException e) {
-		
-		e.printStackTrace();
 	}
-	return roles;
-}
 
+	@SuppressWarnings("unchecked")
+	public Vector getAssociatedUsers(String RoleName) {
+		try {
+			// get the rolename unid
+			Database security = session.getDatabase("", bsuitepath
+					+ "Security.nsf");
+			View roleView = security.getView("RolesView");
+			Document roledoc = roleView.getDocumentByKey(RoleName);
+			String roleunid = roledoc.getUniversalID();
 
+			// Get HAS_A relationame unid
+			Database relationDb = session.getDatabase("", bsuitepath
+					+ "Relation.nsf");
+			View relview = relationDb.getView("CategoryRelation");
+			Document reldoc = relview.getDocumentByKey("HAS_ROLE");
+			String relationid = reldoc.getUniversalID();
 
-public Vector getAssociatedUsers(String RoleName){
-	try{
-		//System.out.println("in get associated users");
-		//get the rolename unid
-		Database security = session.getDatabase("", bsuitepath+"Security.nsf");
-		View roleView=security.getView("RolesView");
-		Document roledoc=roleView.getDocumentByKey(RoleName);
-		String roleunid=roledoc.getUniversalID();
-		
-		//Get HAS_A relationame unid
-		Database relationDb = session.getDatabase("", bsuitepath+"Relation.nsf");
-		View relview=relationDb.getView("CategoryRelation");
-		Document reldoc= relview.getDocumentByKey("HAS_ROLE");
-		String relationid=reldoc.getUniversalID();
-		
-		//Do lookup to get the person unids
-		String key=JSFUtil.getlookupkey(relationid,roleunid);
-		Vector tmp=new Vector();			
-		tmp.add(key);
-		Vector<String> personunid=JSFUtil.DBLookupVector("relation","TargetRelation",tmp,4);
-		Database namesdb = session.getDatabase("", "names.nsf");
-	
-		Vector users=new Vector();
-		Document persondoc=null;
-		String fname="";
-		for (String x : personunid) {
-		persondoc=namesdb.getDocumentByUNID(x);
-		fname=persondoc.getItemValueString("FullName");
-		users.add(fname);
+			// Do lookup to get the person unids
+			String key = JSFUtil.getlookupkey(relationid, roleunid);
+			Vector tmp = new Vector();
+			tmp.add(key);
+			Vector<String> personunid = JSFUtil.DBLookupVector("relation",
+					"TargetRelation", tmp, 4);
+			Database namesdb = session.getDatabase("", "names.nsf");
+
+			Vector users = new Vector();
+			Document persondoc = null;
+			String fname = "";
+			for (String x : personunid) {
+				persondoc = namesdb.getDocumentByUNID(x);
+				fname = persondoc.getItemValueString("FullName");
+				users.add(fname);
+			}
+			return users;
+
+		} catch (Exception e) {
+
 		}
-		System.out.println("users "+users);
-		return users;
-		
-	}catch (Exception e) {
-		
+
+		return null;
 	}
-	
-	return null;
-}
 
+	public boolean isShareDataWithPeers(String RoleName) {
+		try {
+			Database security = session.getDatabase("", bsuitepath
+					+ "Security.nsf");
+			View roleView = security.getView("RolesView");
 
-public boolean isShareDataWithPeers(String RoleName){
-	try{
-		System.out.println("inside isShareDataWithPeers");
-		Database security = session.getDatabase("", bsuitepath+"Security.nsf");
-		View roleView=security.getView("RolesView");
-		//System.out.println("RoleName "+RoleName);
-		
-		Document roledoc=roleView.getDocumentByKey(RoleName);
-		String share=roledoc.getItemValueString("sharewithpeers");
-		//System.out.println("Share Value "+share);
-		if(share.equals("1")){
-			return true;
+			Document roledoc = roleView.getDocumentByKey(RoleName);
+			String share = roledoc.getItemValueString("sharewithpeers");
+			if (share.equals("1")) {
+				return true;
+			}
+		} catch (Exception e) {
 		}
-	}catch (Exception e) {
-		// TODO: handle exception
+		return false;
 	}
-return false;
-}
 
+	public String getRoleName() {
+		roleName = as.getAssociatedRoleName(this.currentuser);
+		return roleName;
+	}
 
-public String getRoleName() {
-	roleName=as.getAssociatedRoleName(this.currentuser);
-	return roleName;
-}
+	public void setRoleName(String roleName) {
 
+		this.roleName = roleName;
+	}
 
-public void setRoleName(String roleName) {
-	
-	this.roleName = roleName;
-}
+	public String getSearchString() {
+		searchString = createSearchString();
+		return searchString;
+	}
 
+	public void setSearchString(String searchString) {
+		this.searchString = searchString;
+	}
 
-public String getSearchString() {
-	searchString=createSearchString();
-	return searchString;
-}
+	@SuppressWarnings("unchecked")
+	public Vector getHierarchyRoleList() {
+		return hierarchyRoleList;
+	}
 
+	@SuppressWarnings("unchecked")
+	public void setHierarchyRoleList(Vector hierarchyRoleList) {
+		this.hierarchyRoleList = hierarchyRoleList;
+	}
 
-public void setSearchString(String searchString) {
-	this.searchString = searchString;
-}
+	@SuppressWarnings("unchecked")
+	public Vector getDataSharedRoles() {
+		return dataSharedRoles;
+	}
 
+	@SuppressWarnings("unchecked")
+	public void setDataSharedRoles(Vector dataSharedRoles) {
+		this.dataSharedRoles = dataSharedRoles;
+	}
 
-public Vector getHierarchyRoleList() {
-	return hierarchyRoleList;
-}
+	@SuppressWarnings("unchecked")
+	public Vector getEffectiveUsersList() {
+		return effectiveUsersList;
+	}
 
-
-public void setHierarchyRoleList(Vector hierarchyRoleList) {
-	this.hierarchyRoleList = hierarchyRoleList;
-}
-
-
-public Vector getDataSharedRoles() {
-	return dataSharedRoles;
-}
-
-
-public void setDataSharedRoles(Vector dataSharedRoles) {
-	this.dataSharedRoles = dataSharedRoles;
-}
-
-
-public Vector getEffectiveUsersList() {
-	return effectiveUsersList;
-}
-
-
-public void setEffectiveUsersList(Vector effectiveUsersList) {
-	this.effectiveUsersList = effectiveUsersList;
-}
-
+	@SuppressWarnings("unchecked")
+	public void setEffectiveUsersList(Vector effectiveUsersList) {
+		this.effectiveUsersList = effectiveUsersList;
+	}
 
 }

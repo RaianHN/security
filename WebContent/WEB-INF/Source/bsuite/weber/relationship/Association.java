@@ -7,16 +7,14 @@ import lotus.domino.Database;
 import lotus.domino.Document;
 import lotus.domino.Name;
 import lotus.domino.View;
-import bsuite.weber.model.BsuiteWorkFlow;
-import bsuite.weber.tools.BSUtil;
 import bsuite.weber.tools.BsuiteMain;
 import bsuite.weber.tools.JSFUtil;
 
 public class Association extends BsuiteMain {
 	
+	@SuppressWarnings({ "unchecked"})
 	public  Document getAssociatedProfile(String currentuser) {
 		try {
-			System.out.println("in get assoprofile");
 			Database reldb = session.getDatabase("", bsuitepath
 					+ "relation.nsf");
 			String relname = "HAS_A";
@@ -28,26 +26,19 @@ public class Association extends BsuiteMain {
 			// Changing the canonical form to abr form so that it will lookup in
 			// the $VIMPeople view
 			String abbrname = getFormattedName(currentuser, "abr");
-			System.out.println("in get assoprofile1");
 			Document persondoc = getPerson(abbrname);
-			System.out.println("in get assoprofile2");
 			String persondocunid = persondoc.getUniversalID();
-			System.out.println("in get assoprofile3");
 			String lookupkey = JSFUtil.getlookupkey(reldocunid, persondocunid);
-			System.out.println("in get assoprofile4");
 			Vector tmp = new Vector();
 			tmp.add(lookupkey);
 			String targetunid = JSFUtil.DBLookupString("relation",
 					"SourceRelation", tmp, 4);
-			System.out.println("in get assoprofile5");
 			Database securitydb = session.getDatabase("", bsuitepath
 					+ "Security.nsf");
-			System.out.println("in get assoprofile6");
 			if(targetunid==null){
 				return null;
 			}
 			Document profiledoc = securitydb.getDocumentByUNID(targetunid);
-			System.out.println("in get assoprofile2");
 			return profiledoc;
 
 		} catch (Exception e) {
@@ -57,9 +48,9 @@ public class Association extends BsuiteMain {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public  String getAssociatedRoleName(String currentuser){
 		try {
-			System.out.println("get ass rolename1 ");
 			Database reldb = session.getDatabase("", bsuitepath
 					+ "relation.nsf");
 			String relname = "HAS_ROLE";
@@ -73,7 +64,6 @@ public class Association extends BsuiteMain {
 			String abbrname = getFormattedName(currentuser, "abr");
 			Document persondoc = getPerson(abbrname);
 			String persondocunid = persondoc.getUniversalID();
-			System.out.println("get ass rolename2 ");
 			String lookupkey = JSFUtil.getlookupkey(reldocunid, persondocunid);
 			Vector tmp = new Vector();
 			tmp.add(lookupkey);
@@ -85,7 +75,6 @@ public class Association extends BsuiteMain {
 				return null;
 			}
 			Document roledoc = securitydb.getDocumentByUNID(targetunid);
-			System.out.println("get ass rolename3 ");
 			return roledoc.getItemValueString("role_name");
 
 		} catch (Exception e) {
@@ -125,7 +114,6 @@ public class Association extends BsuiteMain {
 			}
 
 		} catch (Exception e) {
-			// TODO: handle exception
 		}
 		return null;
 	}
@@ -143,15 +131,13 @@ public class Association extends BsuiteMain {
 		
 	}
 	
+	@SuppressWarnings({ "unchecked"})
 	public String getParentEntity(String entityName){	
 		String entityUnid = getEntityUnid(entityName);
 		String relDocUnid = getRelationDocUnid("IS_A");
 		String lookupkey = JSFUtil.getlookupkey(relDocUnid, entityUnid);
 		Vector tmp = new Vector();
 		tmp.add(lookupkey);
-		String targetunid = JSFUtil.DBLookupString("relation","SourceRelation", tmp, 4);
-		//Not complete
-		
 		return "";
 	}
 	
@@ -172,6 +158,7 @@ public class Association extends BsuiteMain {
 	
 	
 	//This function is use to get the profileName while opening the Employee document. to get default value
+	@SuppressWarnings("unchecked")
 	public String getDefaultProfileName(String employeeId){
 		try{
 			String relDocUnid = getRelationDocUnid("IS_A");
@@ -193,7 +180,6 @@ public class Association extends BsuiteMain {
 			
 			return profiledoc.getItemValueString("prof_name");
 		}catch (Exception e) {
-			// TODO: handle exception
 		}
 		
 		return "";
@@ -202,6 +188,7 @@ public class Association extends BsuiteMain {
 	
 
 	//This function is use to get the profileName while opening the Employee document. to get default value
+	@SuppressWarnings("unchecked")
 	public String getDefaultRoleName(String employeeId){
 		try{
 			String relDocUnid = getRelationDocUnid("IS_A");
@@ -223,13 +210,13 @@ public class Association extends BsuiteMain {
 			
 			return roledoc.getItemValueString("role_name");
 		}catch (Exception e) {
-			// TODO: handle exception
 		}
 		
 		return "";
 		
 	}
 
+	@SuppressWarnings("unchecked")
 	public String getDefaultPersonName(String employeeId){
 	
 		try{
@@ -245,13 +232,10 @@ public class Association extends BsuiteMain {
 			dbname=dbname+".nsf";	
 		
 			Database db = session.getDatabase("", bsuitepath+dbname);
-			System.out.println("db Name "+db.getFileName());
 		Document empdoc=db.getDocumentByUNID(employeeId);
 		String fullname=empdoc.getItemValueString("FullName");
-		System.out.println("FullName "+fullname);
 			return fullname;
 		}catch (Exception e) {
-			// TODO: handle exception
 		}
 		return "";
 	}
@@ -269,6 +253,7 @@ public class Association extends BsuiteMain {
 		updateAssociatedRole(employeeId,newrole);
 	}
 	
+	@SuppressWarnings("unchecked")
 	private void updateAssociatedProfile(String employeeId, String oldprofile,String newprofile){
 		if(!oldprofile.equals(newprofile)){
 			String relDocUnid = getRelationDocUnid("IS_A");
@@ -300,7 +285,6 @@ public class Association extends BsuiteMain {
 				profileassodoc.save(true,false);
 				
 			}catch (Exception e) {
-				// TODO: handle exception
 			}
 			
 		}
@@ -310,6 +294,7 @@ public class Association extends BsuiteMain {
 		
 			
 	}
+	@SuppressWarnings("unchecked")
 	private void updateAssociatedProfile(String employeeId, String newprofile){
 		
 			String relDocUnid = getRelationDocUnid("IS_A");
@@ -341,11 +326,11 @@ public class Association extends BsuiteMain {
 				profileassodoc.save(true,false);
 				
 			}catch (Exception e) {
-				// TODO: handle exception
 	
 			}
 		}
 	
+@SuppressWarnings("unchecked")
 private void updateAssociatedRole(String employeeId, String oldrole,String newrole){
 	
 	if(!oldrole.equals(newrole)){
@@ -379,7 +364,6 @@ private void updateAssociatedRole(String employeeId, String oldrole,String newro
 			roleassodoc.save(true,false);
 			
 		}catch (Exception e) {
-			// TODO: handle exception
 		}
 		
 		
@@ -387,6 +371,7 @@ private void updateAssociatedRole(String employeeId, String oldrole,String newro
 	
 }
 
+@SuppressWarnings("unchecked")
 private void updateAssociatedRole(String employeeId, String newrole){
 	
 	
@@ -420,7 +405,6 @@ private void updateAssociatedRole(String employeeId, String newrole){
 			roleassodoc.save(true,false);
 			
 		}catch (Exception e) {
-			// TODO: handle exception
 		}
 		
 		
@@ -436,6 +420,7 @@ public void deleteAssoDoc(String employeeId){
 	
 }
 
+@SuppressWarnings("unchecked")
 private void deleteRoleDoc(String employeeId){
 	
 	String relDocUnid = getRelationDocUnid("IS_A");
@@ -460,13 +445,13 @@ private void deleteRoleDoc(String employeeId){
 			Document roleassodoc=relview.getDocumentByKey(lookupkey1);
 			roleassodoc.remove(true);
 		}catch (Exception e) {
-			// TODO: handle exception
 		}		
 	
 }
 
 
 
+@SuppressWarnings("unchecked")
 private void deleteProfileDoc(String employeeId){
 	
 	
@@ -492,12 +477,12 @@ private void deleteProfileDoc(String employeeId){
 			Document profileassodoc=relview.getDocumentByKey(lookupkey1);
 			profileassodoc.remove(true);
 		}catch (Exception e) {
-			// TODO: handle exception
 		}
 		
 	
 }
 	
+@SuppressWarnings("unchecked")
 private void deleteEmpPersonAsso(String employeeId){
 
 	String relDocUnid = getRelationDocUnid("IS_A");
@@ -513,7 +498,6 @@ private void deleteEmpPersonAsso(String employeeId){
 		Document emppersonassodoc=relview.getDocumentByKey(lookupkey);
 		emppersonassodoc.remove(true);
 	}catch (Exception e) {
-		// TODO: handle exception
 	}
 	
 }

@@ -13,6 +13,7 @@ import com.ibm.xsp.extlib.component.rest.UIBaseRestService;
 public class CreateTabTable {
 	
 	
+	@SuppressWarnings("unchecked")
 	public static UIComponent createTT(UIComponent com, boolean homePanel){
 		UIPanelEx panel=new UIPanelEx();
 		
@@ -36,7 +37,8 @@ public class CreateTabTable {
 		
 	}
 	
-      public static UIComponent createTabPane(UIComponent tabcont, String title ){
+      @SuppressWarnings("unchecked")
+	public static UIComponent createTabPane(UIComponent tabcont, String title ){
     	  UIDojoTabPane pane2 = new UIDojoTabPane();
     	  pane2.setTitle(title);
     	  pane2.setId(title);
