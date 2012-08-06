@@ -9,12 +9,13 @@ import lotus.domino.View;
 import bsuite.weber.model.BsuiteWorkFlow;
 import bsuite.weber.relationship.Association;
 import bsuite.weber.tools.BSUtil;
+import bsuite.weber.tools.BsuiteMain;
 import bsuite.weber.tools.JSFUtil;
 import lotus.domino.Document;
 
 import com.ibm.xsp.extlib.util.ExtLibUtil;
 
-public class ManualSharing extends BsuiteWorkFlow {
+public class ManualSharing extends BsuiteMain {
 
 	
 	public  void sharing(){
@@ -22,7 +23,7 @@ public class ManualSharing extends BsuiteWorkFlow {
 		Map viewscope=(Map) JSFUtil.getVariableValue("viewScope");
 		Map sessionscope=(Map) JSFUtil.getVariableValue("sessionScope");
 		
-		bsuitepath=BSUtil.getBsuitePath(ExtLibUtil.getCurrentDatabase());
+	//	bsuitepath=BSUtil.getBsuitePath(ExtLibUtil.getCurrentDatabase());
 		String dbname=(String)viewscope.get("moduleName");
 		
 		if(dbname.contains("_")){
@@ -57,10 +58,12 @@ public class ManualSharing extends BsuiteWorkFlow {
 	public boolean sharevisible(){
 		System.out.println("Inside shareVisble ");
 		Association as=new Association();
-		String currentuser=as.getFormattedName(this.currentuser.getBsuiteuser(), "common");
+		
+		String currentuser=as.getFormattedName(this.currentuser, "common");
+		System.out.println("Inside shareVisble currentuser "+ this.currentuser);
 		Map viewscope=(Map) JSFUtil.getVariableValue("viewScope");
 		Map sessionscope=(Map) JSFUtil.getVariableValue("sessionScope");
-		bsuitepath=BSUtil.getBsuitePath(ExtLibUtil.getCurrentDatabase());
+		//bsuitepath=BSUtil.getBsuitePath(ExtLibUtil.getCurrentDatabase());
 		String dbname=(String)viewscope.get("moduleName");
 		
 		if(dbname.contains("_")){
@@ -72,9 +75,10 @@ public class ManualSharing extends BsuiteWorkFlow {
 	
 		try{
 			Database entitydb=ExtLibUtil.getCurrentSession().getDatabase("", bsuitepath+dbname);
-			System.out.println("Database where the current selected document is from "+dbname);
+			System.out.println("Bsuitepath "+bsuitepath);
+			System.out.println("Database inside ManualSharing class "+dbname);
 			String documentId=(String)sessionscope.get("documentId");
-			
+			System.out.println("Session Scope Document id "+documentId);
 			Document doc=entitydb.getDocumentByUNID(documentId);
 			String createdBy=doc.getItemValueString("createdBy");
 			System.out.println("Current User "+currentuser);
@@ -102,7 +106,7 @@ public class ManualSharing extends BsuiteWorkFlow {
 				doc = vie.getNextDocument(doc);
 			}
 			Association as=new Association();
-			String currentuser=as.getFormattedName(this.currentuser.getBsuiteuser(), "abr");
+			String currentuser=as.getFormattedName(this.currentuser, "abr");
 			profileNames.remove(currentuser);
 			
 		}catch (Exception e) {

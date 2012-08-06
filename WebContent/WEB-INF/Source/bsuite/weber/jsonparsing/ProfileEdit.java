@@ -2,25 +2,38 @@ package bsuite.weber.jsonparsing;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Vector;
+
+import javax.faces.context.FacesContext;
 
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
+import com.ibm.xsp.extlib.util.ExtLibUtil;
+
 import bsuite.weber.configure.DefineModule;
 import bsuite.weber.configure.Deploy;
 import bsuite.weber.model.BsuiteWorkFlow;
 import bsuite.weber.security.Profile;
+import bsuite.weber.tools.BSUtil;
+import bsuite.weber.tools.BsuiteMain;
 import bsuite.weber.tools.JSFUtil;
 import lotus.domino.Database;
 import lotus.domino.Document;
 import lotus.domino.NotesException;
+import lotus.domino.Session;
 import lotus.domino.View;
 
-public class ProfileEdit extends BsuiteWorkFlow {
-
+public class ProfileEdit extends BsuiteMain {
+	
+	
+	public ProfileEdit(){
+		
+	}
+	
 	public void getModulePermission(String profileName) throws NotesException {
 		Document profDoc = getProfileDoc(getSecurityDatabase(), profileName);
 		String jsonString = "";
@@ -36,8 +49,8 @@ public class ProfileEdit extends BsuiteWorkFlow {
 
 	public Vector<String> getEntityPermission(String profileName,
 			String moduleName) {
-		System.out.println("getting feature perm for" + profileName + " "
-				+ moduleName);
+		//System.out.println("getting feature perm for" + profileName + " "
+			//	+ moduleName);
 		Document profDoc = getProfileDoc(getSecurityDatabase(), profileName);
 		String jsonString = "";
 		try {
@@ -83,8 +96,8 @@ public class ProfileEdit extends BsuiteWorkFlow {
 
 	public Vector<String> getFeaturePermission(String profileName,
 			String moduleName) {
-		System.out.println("getting feature perm for" + profileName + " "
-				+ moduleName);
+		//System.out.println("getting feature perm for" + profileName + " "
+			//	+ moduleName);
 		Document profDoc = getProfileDoc(getSecurityDatabase(), profileName);
 		String jsonString = "";
 		try {
@@ -114,9 +127,10 @@ public class ProfileEdit extends BsuiteWorkFlow {
 	}
 
 	public Database getSecurityDatabase() {
-		System.out.println("inside getSecurityDatabase");
+		//System.out.println("inside getSecurityDatabase");
 		Database securitydb = null;
 		try {
+			
 			securitydb = session.getDatabase("", bsuitepath + "Security.nsf");
 		} catch (NotesException e) {
 
@@ -126,7 +140,7 @@ public class ProfileEdit extends BsuiteWorkFlow {
 	}
 
 	public Database getDatabase(String dbName) {
-		System.out.println("inside getSecurityDatabase");
+		//System.out.println("inside getSecurityDatabase");
 		Database db = null;
 		try {
 			db = session.getDatabase("", bsuitepath + dbName);
@@ -146,7 +160,7 @@ public class ProfileEdit extends BsuiteWorkFlow {
 		}
 		viewScope.put("modulePermission", moduleSecurity);
 		viewScope.put("numberOfModules", moduleSecurity.size());
-		System.out.println("profile " + moduleSecurity);
+		//System.out.println("profile " + moduleSecurity);
 	}
 
 	public ProfileJson getJsonProfileObj(String jsonString) {
@@ -168,12 +182,12 @@ public class ProfileEdit extends BsuiteWorkFlow {
 	}
 
 	public void saveModulePerm(String profileName, String vals) {
-		System.out.println("moduleperm1");
-		System.out.println("moduleperm11" + vals);
+		//System.out.println("moduleperm1");
+		//System.out.println("moduleperm11" + vals);
 		String[] arr = vals.split(",");
-		System.out.println("moduleperm20");
+		//System.out.println("moduleperm20");
 		Document profDoc = getProfileDoc(getSecurityDatabase(), profileName);
-		System.out.println("moduleperm2");
+		//System.out.println("moduleperm2");
 
 		String jsonString = "";
 		try {
@@ -182,31 +196,32 @@ public class ProfileEdit extends BsuiteWorkFlow {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("moduleperm3");
+		//System.out.println("moduleperm3");
 
 		ProfileJson profile = getJsonProfileObj(jsonString);
-		System.out.println("moduleperm4");
+		//System.out.println("moduleperm4");
 
 		String[] moduleSecurity;
 
 		String mSec = "";
 		for (int i = 0; i < arr.length; i++) {
-			System.out.println("moduleperm5");
+			//System.out.println("moduleperm5");
 
 			mSec = arr[i];
 			moduleSecurity = mSec.split(":");
-			System.out.println("ftrsecurity " + moduleSecurity);
+			//System.out.println("ftrsecurity " + moduleSecurity);
 			for (Module mod : profile.getModules()) {
-				System.out.println("comparing " + moduleSecurity[0] + " "
-						+ mod.getModuleName());
+				//System.out.println("comparing " + moduleSecurity[0] + " "
+				//		+ mod.getModuleName());
 				if (moduleSecurity[0].equals(mod.getModuleName())) {
-					System.out.println("module permission" + moduleSecurity[1]
-							+ "  ");
+					//System.out.println("module permission" + moduleSecurity[1]
+					//		+ "  ");
 					mod.setTabvis(moduleSecurity[1]);
+					break;
 				}
 			}
 		}
-		System.out.println("moduleperm6");
+		//System.out.println("moduleperm6");
 
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonString2 = "";
@@ -219,7 +234,7 @@ public class ProfileEdit extends BsuiteWorkFlow {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("moduleperm7");
+		//System.out.println("moduleperm7");
 
 		try {
 			profDoc.replaceItemValue("JsonString", jsonString2);
@@ -231,12 +246,12 @@ public class ProfileEdit extends BsuiteWorkFlow {
 	}
 
 	public void saveFeaturePerm(String profileName, String vals) {
-		System.out.println("moduleperm1");
-		System.out.println("moduleperm11" + vals);
+		//System.out.println("moduleperm1");
+		//System.out.println("moduleperm11" + vals);
 		String[] arr = vals.split(",");
-		System.out.println("moduleperm20");
+		//System.out.println("moduleperm20");
 		Document profDoc = getProfileDoc(getSecurityDatabase(), profileName);
-		System.out.println("moduleperm2");
+		//System.out.println("moduleperm2");
 
 		String jsonString = "";
 		try {
@@ -245,38 +260,39 @@ public class ProfileEdit extends BsuiteWorkFlow {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("moduleperm3");
+		//System.out.println("moduleperm3");
 
 		ProfileJson profile = getJsonProfileObj(jsonString);
-		System.out.println("moduleperm4");
+		//System.out.println("moduleperm4");
 
 		String[] moduleSecurity;
 
 		String mSec = "";
 		for (int i = 0; i < arr.length; i++) {
-			System.out.println("moduleperm5");
+			//System.out.println("moduleperm5");
 
 			mSec = arr[i];
 			moduleSecurity = mSec.split(":");
-			System.out.println("ftrsecurity " + moduleSecurity);
+			//System.out.println("ftrsecurity " + moduleSecurity);
 			for (Module mod : profile.getModules()) {
-				System.out.println("comparing " + moduleSecurity[0] + " "
-						+ mod.getModuleName());
+				//System.out.println("comparing " + moduleSecurity[0] + " "
+				//		+ mod.getModuleName());
 				if (moduleSecurity[0].equals(mod.getModuleName())) {
-					System.out.println("module permission" + moduleSecurity[1]
-							+ "  ");
+					//System.out.println("module permission" + moduleSecurity[1]
+					//		+ "  ");
 					for (Feature feature : mod.getFeatures()) {
-						System.out.println("comparing " + moduleSecurity[1]
-								+ " " + feature.getFeatureName());
+						//System.out.println("comparing " + moduleSecurity[1]
+						//		+ " " + feature.getFeatureName());
 						if (moduleSecurity[1].equals(feature.getFeatureName())) {
-							System.out.println("module permission"
-									+ moduleSecurity[2] + "  ");
+							//System.out.println("module permission"
+							//		+ moduleSecurity[2] + "  ");
 							feature.setVisible(moduleSecurity[2]);
+							break;
 						}
 					}
 				}
 			}
-			System.out.println("moduleperm6");
+			//System.out.println("moduleperm6");
 
 			ObjectMapper mapper = new ObjectMapper();
 			String jsonString2 = "";
@@ -289,7 +305,7 @@ public class ProfileEdit extends BsuiteWorkFlow {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			System.out.println("moduleperm7");
+			//System.out.println("moduleperm7");
 
 			try {
 				profDoc.replaceItemValue("JsonString", jsonString2);
@@ -306,8 +322,8 @@ public class ProfileEdit extends BsuiteWorkFlow {
 			String moduleName) {
 		Vector<String> entitySecurity = new Vector<String>();
 		Module module = null;
-		System.out.println("inside entity perm " + profile.getProfName() + " "
-				+ moduleName);
+		//System.out.println("inside entity perm " + profile.getProfName() + " "
+				//+ moduleName);
 		for (Module mod : profile.getModules()) {
 			if (mod.getModuleName().equals(moduleName)) {
 				module = mod;
@@ -315,18 +331,19 @@ public class ProfileEdit extends BsuiteWorkFlow {
 			}
 
 		}
-		System.out.println("inside entity perm1");
+		//System.out.println("inside entity perm1");
 		if (module.getEntities() == null) {
 			return null;
 		}
-		System.out.println("inside entity perm2");
+		//System.out.println("inside entity perm2");
 		for (Entity e : module.getEntities()) {
 			entitySecurity.add(e.getEntityName() + ":" + e.getCreate()
 					+ e.getRead() + e.getUpdate() + e.getDelete()
 					+ e.getAccessType());
 		}
-		System.out.println("inside entity perm3");
-		System.out.println("vect entity perm" + entitySecurity);
+		//System.out.println("inside entity perm3");
+		//System.out.println("vect entity perm" + entitySecurity);
+		
 		viewScope.put("entityPerm", entitySecurity);
 		return entitySecurity;
 
@@ -337,8 +354,8 @@ public class ProfileEdit extends BsuiteWorkFlow {
 			String moduleName, String entityName) {
 		Vector<String> fieldSecurity = new Vector<String>();
 		Module module = null;
-		System.out.println("inside entity perm " + profile.getProfName() + " "
-				+ moduleName);
+		//System.out.println("inside entity perm " + profile.getProfName() + " "
+			//	+ moduleName);
 		for (Module mod : profile.getModules()) {
 			if (mod.getModuleName().equals(moduleName)) {
 				module = mod;
@@ -358,7 +375,7 @@ public class ProfileEdit extends BsuiteWorkFlow {
 			fieldSecurity.add(f.getFieldName() + ":" + f.getVisible()
 					+ f.getReadonly());
 		}
-		System.out.println("vect entity perm" + fieldSecurity);
+		//System.out.println("vect entity perm" + fieldSecurity);
 		viewScope.put("fieldPerm", fieldSecurity);
 		return fieldSecurity;
 
@@ -369,7 +386,7 @@ public class ProfileEdit extends BsuiteWorkFlow {
 			String moduleName) {
 		Vector<String> featureSecurity = new Vector<String>();
 		Module module = null;
-		// System.out.println("inside entity perm "+profile.getProfName()+" "+moduleName);
+		// //System.out.println("inside entity perm "+profile.getProfName()+" "+moduleName);
 		for (Module mod : profile.getModules()) {
 			if (mod.getModuleName().equals(moduleName)) {
 				module = mod;
@@ -381,32 +398,32 @@ public class ProfileEdit extends BsuiteWorkFlow {
 		for (Feature f : module.getFeatures()) {
 			featureSecurity.add(f.getFeatureName() + ":" + f.getVisible());
 		}
-		System.out.println("vect entity perm" + featureSecurity);
+		//System.out.println("vect entity perm" + featureSecurity);
 		viewScope.put("featurePerm", featureSecurity);
-		System.out.println("features" + featureSecurity);
+		//System.out.println("features" + featureSecurity);
 		return featureSecurity;
 
 	}
 
 	public void saveEntityPerm(String profileName, String vals) {
-		System.out.println("inside save" + vals);
-		// System.out.println("entity name" + moduleName);
+		//System.out.println("inside save" + vals);
+		// //System.out.println("entity name" + moduleName);
 		String[] arr = vals.split(",");
 		String[] arrs = null;
-		System.out.println("inside save 1--" + arr[1]);
+		//System.out.println("inside save 1--" + arr[1]);
 		Document profDoc = getProfileDoc(getSecurityDatabase(), profileName);
 		String jsonString = "";
-		System.out.println("inside save 2");
+		//System.out.println("inside save 2");
 		try {
 			jsonString = profDoc.getItemValueString("JsonString");
 		} catch (NotesException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("inside save 3");
+		//System.out.println("inside save 3");
 		ProfileJson profile = getJsonProfileObj(jsonString);
 		Module module = null;
-		System.out.println("inside save 4");
+		//System.out.println("inside save 4");
 		String moduleName = "";
 		String entityName = "";
 		String entityPerm = "";
@@ -425,19 +442,19 @@ public class ProfileEdit extends BsuiteWorkFlow {
 				}
 
 			}
-			System.out.println("inside save 5");
+			//System.out.println("inside save 5");
 			String[] entitySecurity;
 			String eSec = "";
 		
 				
 				for (Entity entity : module.getEntities()) {
-					System.out.println("inside save 53");
-					System.out.println("entity name" + entityName
-							+ " getfname" + entity.getEntityName());
+					//System.out.println("inside save 53");
+					//System.out.println("entity name" + entityName
+						//	+ " getfname" + entity.getEntityName());
 
 					if (entityName.equals(entity.getEntityName())) {
-						System.out
-								.println("inside save 54" + entityPerm);
+						//System.out
+						//		.println("inside save 54" + entityPerm);
 						entity.setCreate(Character.toString(entityPerm
 								.charAt(0)));
 						entity.setRead(Character.toString(entityPerm
@@ -446,10 +463,11 @@ public class ProfileEdit extends BsuiteWorkFlow {
 								.charAt(2)));
 						entity.setDelete(Character.toString(entityPerm
 								.charAt(3)));
+						break;
 					}
 				}
 		}
-			System.out.println("inside save 6");
+			//System.out.println("inside save 6");
 
 			ObjectMapper mapper = new ObjectMapper();
 			String jsonString2 = "";
@@ -462,7 +480,7 @@ public class ProfileEdit extends BsuiteWorkFlow {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			System.out.println("inside save 7");
+			//System.out.println("inside save 7");
 
 			try {
 				profDoc.replaceItemValue("JsonString", jsonString2);
@@ -471,29 +489,29 @@ public class ProfileEdit extends BsuiteWorkFlow {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			System.out.println("inside save 8");
+			//System.out.println("inside save 8");
 		
 	}
 
 	public void saveFieldPerm(String profileName, String moduleName,
 			String entityName, String vals) {
-		System.out.println("inside save" + vals);
-		System.out.println("entity name" + moduleName);
+		//System.out.println("inside save" + vals);
+		//System.out.println("entity name" + moduleName);
 		String[] arr = vals.split(",");
-		System.out.println("inside save 1--" + arr[1]);
+		//System.out.println("inside save 1--" + arr[1]);
 		Document profDoc = getProfileDoc(getSecurityDatabase(), profileName);
 		String jsonString = "";
-		System.out.println("inside save 2");
+		//System.out.println("inside save 2");
 		try {
 			jsonString = profDoc.getItemValueString("JsonString");
 		} catch (NotesException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("inside save 3");
+		//System.out.println("inside save 3");
 		ProfileJson profile = getJsonProfileObj(jsonString);
 		Module module = null;
-		System.out.println("inside save 4");
+		//System.out.println("inside save 4");
 		for (Module mod : profile.getModules()) {
 			if (mod.getModuleName().equals(moduleName)) {
 				module = mod;
@@ -510,31 +528,32 @@ public class ProfileEdit extends BsuiteWorkFlow {
 
 		}
 
-		System.out.println("inside save 5");
+		//System.out.println("inside save 5");
 		String[] fieldSecurity;
 		String fSec = "";
 		for (int i = 1; i < arr.length; i++) {
 			fSec = arr[i];
-			System.out.println("inside save 51");
-			System.out.println(fSec);
+			//System.out.println("inside save 51");
+			//System.out.println(fSec);
 			fieldSecurity = fSec.split(":");
-			System.out.println("after split" + fieldSecurity[0]);
-			System.out.println("inside save 52");
+			//System.out.println("after split" + fieldSecurity[0]);
+			//System.out.println("inside save 52");
 			for (Field field : entity.getFields()) {
-				System.out.println("inside save 53");
-				System.out.println("field name" + fieldSecurity[0]
-						+ " getfname" + field.getFieldName());
+				//System.out.println("inside save 53");
+				//System.out.println("field name" + fieldSecurity[0]
+				//		+ " getfname" + field.getFieldName());
 
 				if (fieldSecurity[0].equals(field.getFieldName())) {
-					System.out.println("inside save 54" + fieldSecurity[1]);
+					//System.out.println("inside save 54" + fieldSecurity[1]);
 					field.setVisible(Character.toString(fieldSecurity[1]
 							.charAt(0)));
 					field.setReadonly(Character.toString(fieldSecurity[1]
 							.charAt(1)));
+					break;
 				}
 			}
 		}
-		System.out.println("inside save 6");
+		//System.out.println("inside save 6");
 
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonString2 = "";
@@ -547,7 +566,7 @@ public class ProfileEdit extends BsuiteWorkFlow {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("inside save 7");
+		//System.out.println("inside save 7");
 
 		try {
 			profDoc.replaceItemValue("JsonString", jsonString2);
@@ -556,30 +575,30 @@ public class ProfileEdit extends BsuiteWorkFlow {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("inside save 8");
+		//System.out.println("inside save 8");
 
 	}
 
 	public void saveFieldPerm(String profileName, String vals) {
-		System.out.println("inside field permission" + vals);
+		//System.out.println("inside field permission" + vals);
 		String[] arr = vals.split(",");
 		String[] arrs = null;
-		System.out.println("inside save 1--" + arr[1]);
+		//System.out.println("inside save 1--" + arr[1]);
 		Document profDoc = getProfileDoc(getSecurityDatabase(), profileName);
 		String jsonString = "";
-		System.out.println("inside save 2");
+		//System.out.println("inside save 2");
 		try {
 			jsonString = profDoc.getItemValueString("JsonString");
 		} catch (NotesException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("inside save 3");
+		//System.out.println("inside save 3");
 		ProfileJson profile = getJsonProfileObj(jsonString);
 		Module module = null;
-		System.out.println("inside save 4");
+		//System.out.println("inside save 4");
 
-		System.out.println("inside save 5");
+		//System.out.println("inside save 5");
 		String[] fieldSecurity;
 		String fSec = "";
 		String moduleName = "";
@@ -616,10 +635,11 @@ public class ProfileEdit extends BsuiteWorkFlow {
 
 					field.setVisible(Character.toString(fieldSec.charAt(0)));
 					field.setReadonly(Character.toString(fieldSec.charAt(1)));
+					break;
 				}
 			}
 		}
-		System.out.println("inside save 6");
+		//System.out.println("inside save 6");
 
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonString2 = "";
@@ -632,7 +652,7 @@ public class ProfileEdit extends BsuiteWorkFlow {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("inside save 7");
+		//System.out.println("inside save 7");
 
 		try {
 			profDoc.replaceItemValue("JsonString", jsonString2);
@@ -641,22 +661,22 @@ public class ProfileEdit extends BsuiteWorkFlow {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("inside save 8");
+		//System.out.println("inside save 8");
 
 	}
 
 	/*
 	 * public void saveFeaturePerm(String profileName, String moduleName,String
-	 * entityName, String vals){ System.out.println("inside save"+vals);
-	 * System.out.println("entity name"+moduleName); String[] arr =
-	 * vals.split(","); System.out.println("inside save 1--"+arr[1]); Document
+	 * entityName, String vals){ //System.out.println("inside save"+vals);
+	 * //System.out.println("entity name"+moduleName); String[] arr =
+	 * vals.split(","); //System.out.println("inside save 1--"+arr[1]); Document
 	 * profDoc = getProfileDoc(getSecurityDatabase(),profileName); String
-	 * jsonString=""; System.out.println("inside save 2"); try { jsonString =
+	 * jsonString=""; //System.out.println("inside save 2"); try { jsonString =
 	 * profDoc.getItemValueString("JsonString"); } catch (NotesException e) { //
 	 * TODO Auto-generated catch block e.printStackTrace(); }
-	 * System.out.println("inside save 3"); ProfileJson profile =
+	 * //System.out.println("inside save 3"); ProfileJson profile =
 	 * getJsonProfileObj(jsonString); Module module = null;
-	 * System.out.println("inside save 4"); for(Module
+	 * //System.out.println("inside save 4"); for(Module
 	 * mod:profile.getModules()){ if(mod.getModuleName().equals(moduleName)){
 	 * module = mod; break; }
 	 * 
@@ -665,31 +685,31 @@ public class ProfileEdit extends BsuiteWorkFlow {
 	 * 
 	 * }
 	 * 
-	 * System.out.println("inside save 5"); String[] featureSecurity; String
+	 * //System.out.println("inside save 5"); String[] featureSecurity; String
 	 * fSec=""; for(int i=1;i<arr.length;i++){ fSec = arr[i];
-	 * System.out.println("inside save 51"); System.out.println(fSec);
+	 * //System.out.println("inside save 51"); //System.out.println(fSec);
 	 * featureSecurity = fSec.split(":");
-	 * System.out.println("after split"+featureSecurity[0]);
-	 * System.out.println("inside save 52"); for(Feature
-	 * feature:entity.getFeatures()){ System.out.println("inside save 53");
-	 * System.out.println("field name"+featureSecurity[0]+" getfname"+feature.
+	 * //System.out.println("after split"+featureSecurity[0]);
+	 * //System.out.println("inside save 52"); for(Feature
+	 * feature:entity.getFeatures()){ //System.out.println("inside save 53");
+	 * //System.out.println("field name"+featureSecurity[0]+" getfname"+feature.
 	 * getFeatureName());
 	 * 
 	 * if(featureSecurity[0].equals(feature.getFeatureName())){
-	 * System.out.println("inside save 54"+featureSecurity[1]);
+	 * //System.out.println("inside save 54"+featureSecurity[1]);
 	 * feature.setVisible(Character.toString(featureSecurity[1].charAt(0)));
 	 * 
-	 * } } } System.out.println("inside save 6");
+	 * } } } //System.out.println("inside save 6");
 	 * 
 	 * ObjectMapper mapper = new ObjectMapper(); String jsonString2 = ""; try {
 	 * jsonString2 = mapper.writeValueAsString(profile); } catch
 	 * (JsonGenerationException e) { e.printStackTrace(); } catch
 	 * (JsonMappingException e) { e.printStackTrace(); } catch (IOException e) {
-	 * e.printStackTrace(); } System.out.println("inside save 7");
+	 * e.printStackTrace(); } //System.out.println("inside save 7");
 	 * 
 	 * try { profDoc.replaceItemValue("JsonString",jsonString2 );
 	 * profDoc.save(); } catch (NotesException e) { // TODO Auto-generated catch
-	 * block e.printStackTrace(); } System.out.println("inside save 8");
+	 * block e.printStackTrace(); } //System.out.println("inside save 8");
 	 * 
 	 * 
 	 * }
@@ -855,47 +875,47 @@ public class ProfileEdit extends BsuiteWorkFlow {
 	 * block e.printStackTrace(); }
 	 * 
 	 * } public void saveFieldCrud(String profileName, String entityName, String
-	 * vals){ System.out.println("inside save"+vals);
-	 * System.out.println("entity name"+entityName); String[] arr =
-	 * vals.split(","); System.out.println("inside save 1--"+arr[1]); Document
+	 * vals){ //System.out.println("inside save"+vals);
+	 * //System.out.println("entity name"+entityName); String[] arr =
+	 * vals.split(","); //System.out.println("inside save 1--"+arr[1]); Document
 	 * profDoc = getProfileDoc(getSecurityDatabase(),profileName); String
-	 * jsonString=""; System.out.println("inside save 2"); try { jsonString =
+	 * jsonString=""; //System.out.println("inside save 2"); try { jsonString =
 	 * profDoc.getItemValueString("JsonString"); } catch (NotesException e) { //
 	 * TODO Auto-generated catch block e.printStackTrace(); }
-	 * System.out.println("inside save 3"); ProfileJson profile =
+	 * //System.out.println("inside save 3"); ProfileJson profile =
 	 * getJsonProfileObj(jsonString); Module module = null;
-	 * System.out.println("inside save 4"); for(Module
+	 * //System.out.println("inside save 4"); for(Module
 	 * mod:profile.getModules()){ if(mod.getModuleName().equals(entityName)){
 	 * module = mod; break; }
 	 * 
-	 * } System.out.println("inside save 5"); String[] fldSecurity; String
+	 * } //System.out.println("inside save 5"); String[] fldSecurity; String
 	 * fSec=""; for(int i=1;i<arr.length;i++){ fSec = arr[i];
-	 * System.out.println("inside save 51"); System.out.println(fSec);
+	 * //System.out.println("inside save 51"); //System.out.println(fSec);
 	 * fldSecurity = fSec.split(":");
-	 * System.out.println("after split"+fldSecurity[0]);
-	 * System.out.println("inside save 52"); for(FieldPerm
-	 * fldPrm:module.getFieldsperm()){ System.out.println("inside save 53");
+	 * //System.out.println("after split"+fldSecurity[0]);
+	 * //System.out.println("inside save 52"); for(FieldPerm
+	 * fldPrm:module.getFieldsperm()){ //System.out.println("inside save 53");
 	 * System
 	 * .out.println("field name"+fldSecurity[1]+" getfname"+fldPrm.getFname());
 	 * 
 	 * if(fldSecurity[1].equals(fldPrm.getFname())){
-	 * System.out.println("inside save 54"+fldSecurity[2]);
+	 * //System.out.println("inside save 54"+fldSecurity[2]);
 	 * fldPrm.setVisible(Character.toString(fldSecurity[2].charAt(0)));
-	 * System.out.println("inside save 541 visble"+fldSecurity[2].charAt(0));
+	 * //System.out.println("inside save 541 visble"+fldSecurity[2].charAt(0));
 	 * fldPrm.setReadonly(Character.toString(fldSecurity[2].charAt(1)));
-	 * System.out.println("inside save 541 ronly"+fldSecurity[2].charAt(1));
-	 * System.out.println("inside save 55"); } } }
-	 * System.out.println("inside save 6");
+	 * //System.out.println("inside save 541 ronly"+fldSecurity[2].charAt(1));
+	 * //System.out.println("inside save 55"); } } }
+	 * //System.out.println("inside save 6");
 	 * 
 	 * ObjectMapper mapper = new ObjectMapper(); String jsonString2 = ""; try {
 	 * jsonString2 = mapper.writeValueAsString(profile); } catch
 	 * (JsonGenerationException e) { e.printStackTrace(); } catch
 	 * (JsonMappingException e) { e.printStackTrace(); } catch (IOException e) {
-	 * e.printStackTrace(); } System.out.println("inside save 7");
+	 * e.printStackTrace(); } //System.out.println("inside save 7");
 	 * 
 	 * try { profDoc.replaceItemValue("JsonString",jsonString2 );
 	 * profDoc.save(); } catch (NotesException e) { // TODO Auto-generated catch
-	 * block e.printStackTrace(); } System.out.println("inside save 8");
+	 * block e.printStackTrace(); } //System.out.println("inside save 8");
 	 * 
 	 * 
 	 * } public void saveFeatureCrud(String profileName, String entityName,
@@ -914,12 +934,12 @@ public class ProfileEdit extends BsuiteWorkFlow {
 	 * 
 	 * 
 	 * String fSec=""; for(int i=1;i<arr.length;i++){ fSec = arr[i]; ftrSecurity
-	 * = fSec.split(":"); System.out.println("ftrsecurity "+ftrSecurity);
+	 * = fSec.split(":"); //System.out.println("ftrsecurity "+ftrSecurity);
 	 * for(FeaturePerm ftrPrm:module.getFeaturesperm()){
-	 * System.out.println("comparing "+ftrSecurity[1]+ " "
+	 * //System.out.println("comparing "+ftrSecurity[1]+ " "
 	 * +ftrPrm.getFeaturename());
 	 * if(ftrSecurity[1].equals(ftrPrm.getFeaturename())){
-	 * System.out.println("ftr permission"+ftrSecurity[2]+"  ");
+	 * //System.out.println("ftr permission"+ftrSecurity[2]+"  ");
 	 * ftrPrm.setVisible(ftrSecurity[2]); } } }
 	 * 
 	 * ObjectMapper mapper = new ObjectMapper(); String jsonString2 = ""; try {
@@ -934,7 +954,7 @@ public class ProfileEdit extends BsuiteWorkFlow {
 	 */
 
 	public int getNumberOfMOdules(String profileName) {
-		System.out.println("inside getNumber of modules" + profileName);
+		//System.out.println("inside getNumber of modules" + profileName);
 		Document profDoc = getProfileDoc(getSecurityDatabase(), profileName);
 		String jsonString = "";
 		try {
@@ -943,7 +963,7 @@ public class ProfileEdit extends BsuiteWorkFlow {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("inside getNumber of modules2" + profileName);
+		//System.out.println("inside getNumber of modules2" + profileName);
 		return getModuleNumber(getJsonProfileObj(jsonString));
 
 	}
@@ -1057,25 +1077,25 @@ public class ProfileEdit extends BsuiteWorkFlow {
 
 	@SuppressWarnings("unchecked")
 	private int getModuleNumber(ProfileJson profile) {
-		System.out.println("getNumber of modules");
+		//System.out.println("getNumber of modules");
 		ArrayList<Module> modules = profile.getModules();
 		if (modules != null) {
 			return modules.size();
 		}
-		System.out.println("getNumber of modules2");
+		//System.out.println("getNumber of modules2");
 
 		return 0;
 	}
 	
 	
 	public Vector<String> getModuleNames(String profileName){
-		System.out.println("1");
+		//System.out.println("1");
 		ProfileJson profile = getProfileObj(profileName);
-		System.out.println("2");
+		//System.out.println("2");
 		Vector<String> modules = new Vector<String>();
 		for(Module mod:profile.getModules()){
-			System.out.println("3");
-			System.out.println(mod.getModuleName());
+			//System.out.println("3");
+			//System.out.println(mod.getModuleName());
 			modules.add(mod.getModuleName());
 			}
 			return modules;
@@ -1098,7 +1118,7 @@ public class ProfileEdit extends BsuiteWorkFlow {
 		for(Entity entity:module.getEntities()){
 			entities.add(entity.getEntityName());
 			}
-		System.out.println("Entities: "+entities);
+		//System.out.println("Entities: "+entities);
 			return entities;
 		}
 	public Vector<String> getEntityNames(ProfileJson profile,String moduleName){
@@ -1107,7 +1127,7 @@ public class ProfileEdit extends BsuiteWorkFlow {
 		for(Entity entity:module.getEntities()){
 			entities.add(entity.getEntityName());
 			}
-		System.out.println("Entities: "+entities);
+		//System.out.println("Entities: "+entities);
 			return entities;
 		}
 	private Module getModule(ProfileJson profile,String moduleName){
@@ -1122,36 +1142,36 @@ public class ProfileEdit extends BsuiteWorkFlow {
 	
 	
 	public void saveAccessTypePerm(String profileName, String vals) {
-		System.out.println("inside save" + vals);
-		// System.out.println("entity name" + moduleName);
+		//System.out.println("inside save" + vals);
+		// //System.out.println("entity name" + moduleName);
 		String[] arr = null;
 		String[] arrs = null;
 		if(vals.contains(",")){
-			System.out.println("with comma");
+			//System.out.println("with comma");
 			 arr = vals.split(",");
 		}else{
-			System.out.println("withiout comma");
-			System.out.println("inside save" + vals);
+			//System.out.println("withiout comma");
+			//System.out.println("inside save" + vals);
 			arr = new String[1];
 			 arr[0] = vals;
-			 System.out.println("inside save arr[0]" + arr[0]);
+			 //System.out.println("inside save arr[0]" + arr[0]);
 		}
 		
 		
-		System.out.println("inside save 1--" + arr[0]);
+		//System.out.println("inside save 1--" + arr[0]);
 		Document profDoc = getProfileDoc(getSecurityDatabase(), profileName);
 		String jsonString = "";
-		System.out.println("inside save 2");
+		//System.out.println("inside save 2");
 		try {
 			jsonString = profDoc.getItemValueString("JsonString");
 		} catch (NotesException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("inside save 3");
+		//System.out.println("inside save 3");
 		ProfileJson profile = getJsonProfileObj(jsonString);
 		Module module = null;
-		System.out.println("inside save 4");
+		//System.out.println("inside save 4");
 		String moduleName = "";
 		String entityName = "";
 		String accessPerm = "";
@@ -1170,24 +1190,25 @@ public class ProfileEdit extends BsuiteWorkFlow {
 				}
 
 			}
-			System.out.println("inside save 5");
+			//System.out.println("inside save 5");
 			String[] entitySecurity;
 			String eSec = "";
 		
 				
 				for (Entity entity : module.getEntities()) {
-					System.out.println("inside save 53");
-					System.out.println("entity name" + entityName
-							+ " getfname" + entity.getEntityName());
+					//System.out.println("inside save 53");
+					//System.out.println("entity name" + entityName
+					//		+ " getfname" + entity.getEntityName());
 
 					if (entityName.equals(entity.getEntityName())) {
-						System.out.println("inside save 54" + accessPerm);
+						//System.out.println("inside save 54" + accessPerm);
 				
 						entity.setAccessType(accessPerm);
+						break;
 					}
 				}
 		}
-			System.out.println("inside save 6");
+			//System.out.println("inside save 6");
 
 			ObjectMapper mapper = new ObjectMapper();
 			String jsonString2 = "";
@@ -1200,7 +1221,7 @@ public class ProfileEdit extends BsuiteWorkFlow {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			System.out.println("inside save 7");
+			//System.out.println("inside save 7");
 
 			try {
 				profDoc.replaceItemValue("JsonString", jsonString2);
@@ -1209,7 +1230,7 @@ public class ProfileEdit extends BsuiteWorkFlow {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			System.out.println("inside save 8");
+			//System.out.println("inside save 8");
 		
 	}
 	
@@ -1333,7 +1354,7 @@ public class ProfileEdit extends BsuiteWorkFlow {
 		for(Feature feature:module.getFeatures()){
 			features.add(feature.getFeatureName());
 			}
-		System.out.println("Features: "+features);
+		//System.out.println("Features: "+features);
 			return features;
 	}
 	
@@ -1344,7 +1365,7 @@ public class ProfileEdit extends BsuiteWorkFlow {
 		Vector<String> fields = new Vector<String>();	
 		
 		if(module.getEntities()==null){
-			System.out.println("Entities is null");
+			//System.out.println("Entities is null");
 			return fields;
 		}
 		Entity ent = null;
@@ -1358,7 +1379,7 @@ public class ProfileEdit extends BsuiteWorkFlow {
 		for(Field f:ent.getFields()){
 			fields.add(f.getFieldName());
 		}
-		System.out.println("Fields: "+fields);
+		//System.out.println("Fields: "+fields);
 		return fields;
 	}
 	public ProfileJson  removeFeature(ProfileJson profile, String moduleName, String featureName){
@@ -1369,7 +1390,7 @@ public class ProfileEdit extends BsuiteWorkFlow {
 		for(Feature f:module.getFeatures()){
 			if(f.getFeatureName().equals(featureName)){
 				module.getFeatures().remove(f);
-				System.out.println("Removed feature: "+f.getFeatureName());
+				//System.out.println("Removed feature: "+f.getFeatureName());
 			}
 		}
 		
@@ -1383,7 +1404,7 @@ public class ProfileEdit extends BsuiteWorkFlow {
 		for(Entity e:module.getEntities()){
 			if(e.getEntityName().equals(entityName)){
 				module.getEntities().remove(e);
-				System.out.println("Removed entity: "+e.getEntityName());
+				//System.out.println("Removed entity: "+e.getEntityName());
 			}
 		}		
 		return profile;
@@ -1425,7 +1446,7 @@ public class ProfileEdit extends BsuiteWorkFlow {
 		Vector<String> ftrs = dm.getFeatures(moduleName);
 		Vector<String> profFtrs = getFeatureNames(profileName, moduleName);
 		profFtrs.removeAll(ftrs);
-		System.out.println("Removable Features"+profFtrs);
+		//System.out.println("Removable Features"+profFtrs);
 		
 		for(String rFtr:profFtrs){
 			removeFeature(profile,moduleName,rFtr);
@@ -1439,7 +1460,7 @@ public class ProfileEdit extends BsuiteWorkFlow {
 		Vector<String> ets = dm.getEntityNames(moduleName);
 		Vector<String> profEts = getEntityNames(profileName, moduleName);
 		profEts.removeAll(ets);
-		System.out.println("Removable Features"+profEts);
+		//System.out.println("Removable Features"+profEts);
 		
 		for(String rEnt:profEts){
 			removeEntity(profile,moduleName,rEnt);
@@ -1452,7 +1473,7 @@ public class ProfileEdit extends BsuiteWorkFlow {
 		Vector<String> fields = dm.getFields(moduleName, entityName);
 		Vector<String> proFields = getFieldNames(profileName, moduleName, entityName);
 		proFields.removeAll(fields);
-		System.out.println("Removable fields"+proFields);
+		//System.out.println("Removable fields"+proFields);
 		if(proFields.size()==0){
 			return profile;
 		}
@@ -1481,14 +1502,14 @@ public class ProfileEdit extends BsuiteWorkFlow {
 			for(Module module:profile.getModules()){
 				
 				moduleName = module.getModuleName();
-				System.out.println("This module=="+moduleName);
+				//System.out.println("This module=="+moduleName);
 				removeFeature1(profile,profileName,moduleName);
 				removeEntity1(profile,profileName,moduleName);
 				entities = getEntityNames(profile,moduleName);
 				
 				if(entities.size()!=0){
 					for(String entityName:entities){
-						System.out.println("This entity=="+entityName);
+						//System.out.println("This entity=="+entityName);
 						removeField1(profile,profileName,moduleName,entityName);
 					}
 				}
@@ -1521,10 +1542,34 @@ public class ProfileEdit extends BsuiteWorkFlow {
 	
 	public boolean checkEntityDelete(String moduleName,String entityName){
 		Profile profile = (Profile) JSFUtil.getBindingValue("#{security.profile}");
-		if(profile.isEntityDelete(moduleName, entityName)){
-			return true;
-		}else{
-			return false;
+		
+		String eaccess=profile.getEntityAccessType(moduleName, entityName);
+		//If it is Public read/Write then do nothing
+		if(!eaccess.equals("2"))
+		{
+			if(profile.isEntityDelete(moduleName, entityName))
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		}
+		return false;
 	}
+	
+	/*public static String getBsuitePath1(Database tadb) throws NotesException{
+		String bsuitePath=null;
+		try {
+			int len=(tadb.getFilePath()).length() - (tadb.getFileName()).length();
+			bsuitePath=tadb.getFilePath().substring(0,len);
+			return bsuitePath;
+		} catch (NotesException e) {
+			System.out.println(e.id + " " + e.text);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return bsuitePath;
+	}*/
 }

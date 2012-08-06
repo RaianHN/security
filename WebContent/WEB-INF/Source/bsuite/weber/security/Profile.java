@@ -16,8 +16,10 @@ import bsuite.weber.jsonparsing.*;
 import bsuite.weber.model.BsuiteWorkFlow;
 
 import bsuite.weber.relationship.Association;
+import bsuite.weber.tools.BSUtil;
+import bsuite.weber.tools.BsuiteMain;
 
-public class Profile extends BsuiteWorkFlow {
+public class Profile extends BsuiteMain  {
 	private ProfileJson profileJson;
 	private String profileName;
 
@@ -149,8 +151,8 @@ public class Profile extends BsuiteWorkFlow {
 	}
 
 	private Module getModule(String moduleName){
-		System.out.println("--------44");
-		System.out.println("ModuleName From createFeatures "+moduleName);
+		//System.out.println("--------44");
+		//System.out.println("ModuleName From createFeatures "+moduleName);
 		if(moduleName.contains("_")){
 			moduleName = moduleName.replace("_"," ");
 		}
@@ -158,10 +160,10 @@ public class Profile extends BsuiteWorkFlow {
 			return null;
 		}
 		for(Module module:profileJson.getModules()){
-			System.out.println("--------45");
-			System.out.println("ModuleName comparison with Module class"+module.getModuleName());
+			//System.out.println("--------45");
+			//System.out.println("ModuleName comparison with Module class"+module.getModuleName());
 			if(module.getModuleName().equals(moduleName)){
-				System.out.println("--------46");
+				//System.out.println("--------46");
 				return module;
 			}
 		}
@@ -312,7 +314,7 @@ public class Profile extends BsuiteWorkFlow {
 	
 	private ProfileJson getProfileJsonObject(){
 		Association as = new Association();
-		Document profDoc = as.getAssociatedProfile(currentuser.getBsuiteuser());
+		Document profDoc = as.getAssociatedProfile(currentuser);
 		if(profDoc==null){
 			return null;
 		}
@@ -430,6 +432,7 @@ public class Profile extends BsuiteWorkFlow {
 		for(Entity entity:entities){	
 		
 				String access=entity.getAccessType();
+				System.out.println("Access Type in RWEntities "+access);
 				if(access.equals("2"))
 					aEntities.add(entity.getEntityName());	
 			

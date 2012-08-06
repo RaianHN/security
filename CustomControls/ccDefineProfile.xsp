@@ -28,8 +28,7 @@ viewScope.profileNames = profileNames;}]]></xp:this.beforePageLoad>
 								</xp:selectItems>
 
 								<xp:eventHandler event="onchange"
-									submit="true" refreshMode="partial" refreshId="panelPermission"
-									onStart="showWait()" onComplete="hideWait()">
+									submit="true" refreshMode="complete" onStart="showWait()">
 									<xp:this.action><![CDATA[#{javascript:viewScope.modulePermission = null;
 var profName = getComponent("moduleCombo").getValue();
 var moduleVisib = new bsuite.weber.jsonparsing.ProfileEdit();
@@ -55,7 +54,8 @@ bsuite.weber.loadcc.DynamicCC.loadCC(s, component, c1, id);}]]></xp:this.action>
 
 
 								</xp:eventHandler>
-							</xp:button>&#160;&#160;&#160;
+							</xp:button>
+							&#160;&#160;&#160;
 							<xp:link escape="true" text="Create New"
 								id="link37" style="font-size:7pt">
 								<xp:eventHandler event="onclick"
@@ -95,14 +95,8 @@ bsuite.weber.loadcc.DynamicCC.loadCC(s, component, c1, id);}]]></xp:this.action>
 			</xp:td>
 		</xp:tr>
 	</xp:table>
-	<xp:this.resources>
-		<xp:script src="/CommonFunctions.jss" clientSide="false"></xp:script>
-		<xp:script src="/Copy Of CustomControlLib.js"
-			clientSide="true">
-		</xp:script>
-		<xp:script src="/commonCScript.js" clientSide="true"></xp:script>
-	</xp:this.resources>
-	
+
+
 	<xp:br></xp:br>
 	<xp:br></xp:br>
 	<xe:tooltipDialog id="tooltipDialog13">

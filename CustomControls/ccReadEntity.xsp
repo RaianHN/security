@@ -3,9 +3,14 @@
 	xmlns:xe="http://www.ibm.com/xsp/coreex">
 	<xp:panel>
 		<xp:button value="Edit" id="button9"
-			style="background-color:rgb(192,192,192)"
-			rendered="#{javascript:viewScope.editEntity}">
-			<xp:eventHandler event="onclick" submit="true"
+			style="background-color:rgb(192,192,192)">
+			<xp:this.rendered><![CDATA[#{javascript:var manual=new bsuite.weber.security.ManualSharing();
+var ownervis=manual.sharevisible();
+//ViewScope.editEntity is set in Workspace bean
+if(ownervis || viewScope.editEntity){
+return true;
+}
+}]]></xp:this.rendered><xp:eventHandler event="onclick" submit="true"
 				refreshMode="partial"
 				refreshId='#{javascript:var id="readPanel"+viewScope.moduleName;
 return id;}'
@@ -15,9 +20,16 @@ loadEditEntity(viewScope.moduleName,viewScope.entityName);}]]></xp:this.action>
 			</xp:eventHandler>
 		</xp:button>
 		<xp:button value="Delete" id="button1"
-			style="background-color:rgb(192,192,192)"
-			rendered="#{javascript:viewScope.deleteEntity;}">
-			<xp:eventHandler event="onclick" submit="true"
+			style="background-color:rgb(192,192,192)">
+			<xp:this.rendered><![CDATA[#{javascript:
+var manual=new bsuite.weber.security.ManualSharing();
+var ownervis=manual.sharevisible();
+
+//viewscope.deleteEntity is saved in Workspace bean
+if(ownervis || viewScope.deleteEntity){
+return true;
+}
+}]]></xp:this.rendered><xp:eventHandler event="onclick" submit="true"
 				refreshMode="partial"
 				refreshId='#{javascript:var id="MainEntityPanel"+viewScope.moduleName;
 id;}'>
@@ -52,61 +64,61 @@ com.weberon.DynamicCC.removePreview(component);}]]></xp:this.action>
 
 
 	<xe:tooltipDialog id="tooltipDialog1">
-	
-	<xp:panel>
-			
-			<xp:table>
-				<xp:tr>
-					<xp:td>Select Users</xp:td>
-					<xp:td>Select Roles</xp:td>
-				</xp:tr>
 
-				<xp:tr>
-					<xp:td valign="top">
-						<xp:checkBoxGroup id="checkBoxGroup1"
-							layout="pageDirection" value="#{viewScope.users}">
+	<xp:panel style="overflow:auto;height:350px;width:500px">
 
+		<xp:table>
+			<xp:tr>
+				<xp:td>Select Users</xp:td>
+				<xp:td>Select Roles</xp:td>
+			</xp:tr>
 
+			<xp:tr>
+				<xp:td valign="top">
+					<xp:checkBoxGroup id="checkBoxGroup1"
+						layout="pageDirection" value="#{viewScope.users}">
 
 
-							<xp:this.defaultValue><![CDATA[#{javascript:var manual=new bsuite.weber.security.ManualSharing();
+
+
+						<xp:this.defaultValue><![CDATA[#{javascript:var manual=new bsuite.weber.security.ManualSharing();
 manual.defaultValues();
 }]]></xp:this.defaultValue>
-							<xp:selectItems>
-								<xp:this.value><![CDATA[#{javascript:var manual=new bsuite.weber.security.ManualSharing();
+						<xp:selectItems>
+							<xp:this.value><![CDATA[#{javascript:var manual=new bsuite.weber.security.ManualSharing();
 manual.getFullName();
 }]]></xp:this.value>
-							</xp:selectItems>
-						</xp:checkBoxGroup>
-					</xp:td>
-					<xp:td valign="top">
-						<xp:checkBoxGroup id="checkBoxGroup2"
-							layout="pageDirection" value="#{viewScope.roles}">
+						</xp:selectItems>
+					</xp:checkBoxGroup>
+				</xp:td>
+				<xp:td valign="top">
+					<xp:checkBoxGroup id="checkBoxGroup2"
+						layout="pageDirection" value="#{viewScope.roles}">
 
 
 
-							<xp:this.defaultValue><![CDATA[#{javascript:var manual=new bsuite.weber.security.ManualSharing();
+						<xp:this.defaultValue><![CDATA[#{javascript:var manual=new bsuite.weber.security.ManualSharing();
 manual.defaultValuesRoles();
 }]]></xp:this.defaultValue>
-							<xp:selectItems>
-								<xp:this.value><![CDATA[#{javascript:var path =database.getFilePath();
+						<xp:selectItems>
+							<xp:this.value><![CDATA[#{javascript:var path =database.getFilePath();
 var dbpath =  @LeftBack(path ,"/");
 var db= dbpath+"/Security.nsf";
 var serv = @Word(@Implode(@DbName(),", "),", ", 1);
 var com = new Array(serv,db);
 @DbColumn(com,"RolesView",1);}]]></xp:this.value>
-							</xp:selectItems>
-						</xp:checkBoxGroup>
-					</xp:td>
-				</xp:tr>
-				<xp:tr>
-					<xp:td>
-						<xp:button id="button3" value="OK"
-							styleClass="lotusFormButton">
-							<xp:eventHandler event="onclick"
-								submit="true" refreshMode="complete" onStart="showWait()"
-								onComplete="hideWait()" onError="showError()">
-								<xp:this.action><![CDATA[#{javascript:println("Selected Users ",viewScope.users);
+						</xp:selectItems>
+					</xp:checkBoxGroup>
+				</xp:td>
+			</xp:tr>
+			<xp:tr>
+				<xp:td>
+					<xp:button id="button3" value="OK"
+						styleClass="lotusFormButton">
+						<xp:eventHandler event="onclick" submit="true"
+							refreshMode="complete" onStart="showWait()"
+							onComplete="hideWait()" onError="showError()">
+							<xp:this.action><![CDATA[#{javascript:println("Selected Users ",viewScope.users);
 println("Selected Roles ",viewScope.roles);
 println("Type of users ",typeof(viewScope.users));
 println("Type of Roles ",typeof(viewScope.roles));
@@ -115,18 +127,21 @@ manual.sharing();
 println("After calling the Mnaul Sharing");
 var c = getComponent("tooltipDialog1");
 c.hide()}]]></xp:this.action>
-							</xp:eventHandler>
-						</xp:button><xp:button value="CANCEL" id="button4" styleClass="lotusFormButton">
-							<xp:eventHandler event="onclick"
-								submit="true" refreshMode="complete" onStart="showWait()"
-								onComplete="hideWait()" onError="showError()">
-								<xp:this.action><![CDATA[#{javascript:var c = getComponent("tooltipDialog1")
+						</xp:eventHandler>
+					</xp:button>
+					<xp:button value="CANCEL" id="button4"
+						styleClass="lotusFormButton">
+						<xp:eventHandler event="onclick" submit="true"
+							refreshMode="complete" onStart="showWait()"
+							onComplete="hideWait()" onError="showError()">
+							<xp:this.action><![CDATA[#{javascript:var c = getComponent("tooltipDialog1")
 c.hide()}]]></xp:this.action>
-							</xp:eventHandler>
-</xp:button></xp:td>
-					<xp:td>
-						</xp:td>
-				</xp:tr>
-			</xp:table></xp:panel>
-	
+						</xp:eventHandler>
+					</xp:button>
+				</xp:td>
+				<xp:td></xp:td>
+			</xp:tr>
+		</xp:table>
+	</xp:panel>
+
 	</xe:tooltipDialog></xp:view>

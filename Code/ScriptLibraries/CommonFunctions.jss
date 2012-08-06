@@ -764,8 +764,17 @@ var profileName="Admin";
 	var entityCrud = new bsuite.weber.jsonparsing.ProfileEdit;
 	println("setting field permission"+typeof(arr)+"submitted type"+typeof(context.getSubmittedValue()));
 	
-	entityCrud.saveAccessTypePerm(profileName,context.getSubmittedValue());
-	entityCrud.saveAccessTypePerm("Standard",context.getSubmittedValue());
+	var securityDb:NotesDatabase = getDatabase("Security.nsf");
+	var vie:NotesView = securityDb.getView("ProfileView");
+	var doc:NotesDocument = vie.getFirstDocument();
+	
+	while(doc!=null){
+		var pname=doc.getItemValueString("prof_name");
+		entityCrud.saveAccessTypePerm(pname,context.getSubmittedValue());
+		doc=vie.getNextDocument(doc);
+	}
+
+	//entityCrud.saveAccessTypePerm("Standard",context.getSubmittedValue());
 }
 function setProfileNumbers(){
 	var profileName = getComponent("moduleCombo").getValue();

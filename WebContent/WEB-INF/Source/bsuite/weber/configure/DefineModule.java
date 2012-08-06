@@ -17,9 +17,11 @@ import lotus.domino.ViewEntry;
 import lotus.domino.ViewEntryCollection;
 
 import bsuite.weber.model.BsuiteWorkFlow;
+import bsuite.weber.tools.BSUtil;
+import bsuite.weber.tools.BsuiteMain;
 
 @SuppressWarnings("unused")
-public class DefineModule extends BsuiteWorkFlow {
+public class DefineModule extends BsuiteMain {
 	public void addModules(Vector<String> modules) {
 		for (String moduleName : modules) {
 			String moduleJson = createJsonString(moduleName);

@@ -13,10 +13,10 @@ sessionScope.put("checkboxids",ids);
 	<xp:tr>
 	<xp:td>
 		<xp:button value="Delete" id="button2"
-			style="background-color:rgb(192,192,192)"
-			rendered="#{javascript:viewScope.entityDelete;}">
+			style="background-color:rgb(192,192,192)">
 
-			<xp:eventHandler event="onclick" submit="true"
+			<xp:this.rendered><![CDATA[#{javascript://It is set in loadViewEntity
+viewScope.entityDelete;}]]></xp:this.rendered><xp:eventHandler event="onclick" submit="true"
 				refreshMode="partial"
 				refreshId='#{javascript:var id="EntityPanel"+viewScope.moduleName;
 return id;}'>

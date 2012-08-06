@@ -12,12 +12,13 @@ import lotus.domino.NotesException;
 import bsuite.weber.model.BsuiteWorkFlow;
 import bsuite.weber.relationship.Association;
 import bsuite.weber.tools.BSUtil;
+import bsuite.weber.tools.BsuiteMain;
 import bsuite.weber.tools.JSFUtil;
 
 import com.ibm.xsp.extlib.util.ExtLibUtil;
 
 
-public class NSFPageDataProvider extends BsuiteWorkFlow implements DataObjectExt {
+public class NSFPageDataProvider extends BsuiteMain implements DataObjectExt {
 
 	/**
 	 * 
@@ -101,6 +102,7 @@ public class NSFPageDataProvider extends BsuiteWorkFlow implements DataObjectExt
 	 */
 	@SuppressWarnings("unchecked")
 	private Document getDocument() throws NotesException {
+		Map viewScope=(Map) JSFUtil.getVariableValue("viewScope");
 		String documentId=getDocumentId();
 		if ("".equals(documentId))
 			return null;
@@ -117,7 +119,7 @@ public class NSFPageDataProvider extends BsuiteWorkFlow implements DataObjectExt
 			System.out.println("getDocument reference is null");
 			bsuitepath=BSUtil.getBsuitePath(ExtLibUtil.getCurrentDatabase());
 			String dbname=(String)viewScope.get("moduleName");			
-			
+			System.out.println("ViewScope variable  "+viewScope.get("moduleName"));
 			if(dbname.contains("_")){
 				dbname=dbname.replace("_"," ");
 			}
@@ -209,7 +211,7 @@ public class NSFPageDataProvider extends BsuiteWorkFlow implements DataObjectExt
 					dbname=dbname.toLowerCase().replace(" ", "")+".nsf";
 					System.out.println("Db Name  "+dbname);
 					Association as=new Association();
-					String currentuser=this.currentuser.getBsuiteuser();
+					String currentuser=this.currentuser;
 					String commonname=as.getFormattedName(currentuser, "common");
 					Database userdb=ExtLibUtil.getCurrentSession().getDatabase("", bsuitepath+dbname);
 					doc=userdb.createDocument();

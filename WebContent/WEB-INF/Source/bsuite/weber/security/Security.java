@@ -37,15 +37,16 @@ public class Security {
 		role = new Role();
 		System.out.println("-------2");
 		Map viewscope = (Map) JSFUtil.getVariableValue("viewScope");
+		Map sessionScope = (Map) JSFUtil.getVariableValue("sessionScope");
 		if(profile!=null){
 			
 		profileName = profile.getProfileName();
-		viewscope.put("profileName",profileName);
+		sessionScope.put("profileName",profileName);
 		System.out.println("profilename"+profileName);
 			//profileName = "";
 		if(role!=null){
 			roleName = role.getRoleName();
-			viewscope.put("roleName",roleName);
+			sessionScope.put("roleName",roleName);
 		System.out.println("rolename"+roleName);
 			//roleName = "";
 		}

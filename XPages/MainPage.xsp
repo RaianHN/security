@@ -66,12 +66,13 @@ println("calling event");}]]></xp:this.action>
 		}]]></xp:this.action>
 	</xp:eventHandler>
 
-	<xp:eventHandler id="getTabPane" event="onDojo" onStart="showWait()"
-		onComplete="hideWait()">
+	<xp:eventHandler id="getTabPane" event="onDojo">
 		<xp:this.action><![CDATA[#{javascript:println("OnShow Event");
 var moduleName=viewScope.moduleName;
 var entityName=viewScope.entityName;
 var submitval=context.getSubmittedValue();
+println("ModuleName ",moduleName);
+println("Submit Vlaue ",submitval);
 if(moduleName!=null && submitval!=null)
 {
 	println("Changing the viweScope var for ModuleName");
@@ -91,6 +92,8 @@ if(moduleName!=null && submitval!=null)
 						 ename=mname[1];
 						viewScope.moduleName=submitval;
 						viewScope.entityName=ename;
+						println("OnSHowEvent viewcopemoduleName ",viewScope.moduleName);
+						println("OnSHowEvent viewcopeentityName ",viewScope.moduleName);
 					}
 			}
 	

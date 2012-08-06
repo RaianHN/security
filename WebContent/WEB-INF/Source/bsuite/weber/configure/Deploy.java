@@ -12,6 +12,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import bsuite.weber.jsonparsing.ProfileEdit;
 import bsuite.weber.jsonparsing.ProfileJson;
 import bsuite.weber.model.BsuiteWorkFlow;
+import bsuite.weber.tools.BsuiteMain;
 
 import lotus.domino.Database;
 import lotus.domino.Document;
@@ -19,7 +20,7 @@ import lotus.domino.DocumentCollection;
 import lotus.domino.NotesException;
 import lotus.domino.View;
 
-public class Deploy extends BsuiteWorkFlow{
+public class Deploy extends BsuiteMain{
 
 	public void createRoleDocs(){
 		try {

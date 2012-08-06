@@ -8,9 +8,11 @@ import lotus.domino.Document;
 import lotus.domino.Name;
 import lotus.domino.View;
 import bsuite.weber.model.BsuiteWorkFlow;
+import bsuite.weber.tools.BSUtil;
+import bsuite.weber.tools.BsuiteMain;
 import bsuite.weber.tools.JSFUtil;
 
-public class Association extends BsuiteWorkFlow {
+public class Association extends BsuiteMain {
 	
 	public  Document getAssociatedProfile(String currentuser) {
 		try {

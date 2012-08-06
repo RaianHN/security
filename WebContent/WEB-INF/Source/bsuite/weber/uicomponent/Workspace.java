@@ -37,10 +37,12 @@ import com.ibm.xsp.util.ManagedBeanUtil;
 import bsuite.weber.model.BsuiteWorkFlow;
 import bsuite.weber.relationship.Association;
 import bsuite.weber.security.Profile;
+import bsuite.weber.tools.BsuiteMain;
 import bsuite.weber.tools.CompUtil;
 import bsuite.weber.tools.JSFUtil;
+import bsuite.weber.tools.BSUtil;
 
-public class Workspace extends BsuiteWorkFlow implements Serializable{
+public class Workspace extends BsuiteMain implements Serializable{
 	private  String BEAN_NAME="employee";
 	private UIComponent tabs;
 	private UIComponent centity;
@@ -116,7 +118,8 @@ public class Workspace extends BsuiteWorkFlow implements Serializable{
 			//String tabid=pane2.getId();
 			//String onShowExp="console.log(\"hiiiiii\");\nvar thisid =\"#{javascript:this;}\";\nconsole.log(\"%o\",thisid);\nXSP.executeOnServer(\'view:_id1:getTabPane\', \"\", \"\", \""+tabid+"\");";
 			 String onShow = "console.log(\"hiiiiii\");\nXSP.executeOnServer(\'view:_id1:getTabPane\', \"\", \"\",  \""+x+"\");";
-			//ValueBinding vb1  = FacesContext.getCurrentInstance().getApplication().createValueBinding(onShowExp);
+			
+			 //ValueBinding vb1  = FacesContext.getCurrentInstance().getApplication().createValueBinding(onShowExp);
 			//pane2.setValueBinding( "onShow", vb1);
 			
 			
@@ -233,19 +236,26 @@ public class Workspace extends BsuiteWorkFlow implements Serializable{
 	//	loadEditFields(profile.getEditableFieldsNames(moduleName, entityName), profile.getVisibleFieldsNames(moduleName, entityName),utable,0);
 		centity.getChildren().add(utable);
 		
-		
-		if(profile.isEntityUpdate(moduleName, entityName)){
+		if(eaccess.equals("2"))
+		{
+			System.out.println("AccessType is 2 the entity is always editable");
 			viewScope.put("editEntity",true);
-		}else{
-			viewScope.put("editEntity",false);
+		}else{			
+			if(profile.isEntityUpdate(moduleName, entityName)){
+				viewScope.put("editEntity",true);
+			}else{
+				viewScope.put("editEntity",false);
+			}
 		}
 		
-		if(profile.isEntityDelete(moduleName, entityName)){
-			viewScope.put("deleteEntity",true);
-		}else{
-			viewScope.put("deleteEntity",false);
+		//If accesstype is Public Read/Write then no need to check about the EntityDelete,Delete should be seen only by document owner
+		if(!eaccess.equals("2")){	
+			if(profile.isEntityDelete(moduleName, entityName)){
+				viewScope.put("deleteEntity",true);
+			}else{
+				viewScope.put("deleteEntity",false);
+			}
 		}
-		
 	}
 	public void createFeatureButtons(UIComponent actionpanel,String moduleName,XspTable acttable,XspTableRow actrow1){
 		//For this entity what features are available that needs to be populated by this method
@@ -356,7 +366,7 @@ public class Workspace extends BsuiteWorkFlow implements Serializable{
  		
  		//Read&Write Entities of the current module
  		ArrayList<String> rwentities=profile.getPublicRWEntities(moduleName); 		
- 		
+ 		System.out.println("RWEntities "+rwentities);
  		ArrayList<String> creatableentites=entity.get(moduleName);
         
  		//If the createable entities array doesnt contains publi entities then add to the list
@@ -708,10 +718,17 @@ public class Workspace extends BsuiteWorkFlow implements Serializable{
 				viewScope.put("editEntity",false);
 			}
 		}
-		if(profile.isEntityDelete(moduleName, entityName)){
-			viewScope.put("deleteEntity",true);
-		}else{
-			viewScope.put("deleteEntity",false);
+		
+		//If accesstype is Public Read/Write then no need to check about the EntityDelete,Delete should be seen only by document owner
+		if(!eaccess.equals("2")){			
+		
+			if(profile.isEntityDelete(moduleName, entityName)){
+				viewScope.put("deleteEntity",true);
+			}else{
+				viewScope.put("deleteEntity",false);
+			}	
+		
+		
 		}
 		
 	}
@@ -744,7 +761,6 @@ public class Workspace extends BsuiteWorkFlow implements Serializable{
 
 
 	public ViewEntryCollection getGetmydocs() {
-		System.out.println("Inside getMyDocs");
 		Map viewscope = (Map) JSFUtil.getVariableValue("viewScope");
 		System.out.println("Inside getMyDocs 1");
 		String moduleName=(String)viewscope.get("moduleName");
@@ -752,12 +768,7 @@ public class Workspace extends BsuiteWorkFlow implements Serializable{
 		System.out.println("Inside getMyDocs moduleName entityName "+moduleName+entityName);
 		viewscope.put("fields", "Form,CreatedBy");
 		Profile profile = (Profile) JSFUtil.getBindingValue("#{security.profile}");
-		//ArrayList fieldNames=profile.getVisibleFieldsNames(moduleName, entityName);
-	//	viewscope.put("fields",fieldNames);
-
-		//System.out.println("Viewscope value fields "+viewscope.get("Fields"));
-		//String moduleName="Employees";
-		//String entityName="Employee";
+		
 		System.out.println("Inside getMyDocs 23"); 
 		System.out.println("Inside getMyDocs ModuleName "+moduleName);
 		

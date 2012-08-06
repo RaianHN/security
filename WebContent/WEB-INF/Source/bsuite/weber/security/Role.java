@@ -12,9 +12,11 @@ import lotus.domino.View;
 
 import bsuite.weber.model.BsuiteWorkFlow;
 import bsuite.weber.relationship.Association;
+import bsuite.weber.tools.BsuiteMain;
 import bsuite.weber.tools.JSFUtil;
+import bsuite.weber.tools.BSUtil;
 
-public class Role extends BsuiteWorkFlow {
+public class Role extends BsuiteMain {
 	
 	String roleName;
 	String searchString;
@@ -27,7 +29,7 @@ public class Role extends BsuiteWorkFlow {
 	public Role(){
 		//initialize associated role for the current user
 		
-			roleName=as.getAssociatedRoleName(this.currentuser.getBsuiteuser());
+		//	roleName=as.getAssociatedRoleName(this.currentuser);
 		//if(roleName!=null){
 		//	searchString=createSearchString();
 		//	System.out.println("Search String"+searchString);
@@ -55,7 +57,7 @@ public class Role extends BsuiteWorkFlow {
 			a.add(username);
 		}
 		
-		String currentuser1= as.getFormattedName(this.currentuser.getBsuiteuser(), "common");
+		String currentuser1= as.getFormattedName(this.currentuser, "common");
 		a.add(currentuser1);
 		
 		String querystr="(FIELD CreatedBy=";			
@@ -68,7 +70,7 @@ public class Role extends BsuiteWorkFlow {
 			}							
 		}							
 		querystr=querystr+")";
-		querystr=querystr+ " OR FIELD shareWithUser contains "+"\""+as.getFormattedName(this.currentuser.getBsuiteuser(), "abr")+"\""+" OR FIELD shareWithRoles contains "+"\""+ this.roleName+"\"";
+		querystr=querystr+ " OR FIELD shareWithUser contains "+"\""+as.getFormattedName(this.currentuser, "abr")+"\""+" OR FIELD shareWithRoles contains "+"\""+ this.roleName+"\"";
 		return querystr;
 	}
 
@@ -130,15 +132,15 @@ public class Role extends BsuiteWorkFlow {
 			Database security = session.getDatabase("", bsuitepath+"Security.nsf");
 			View datasharingView = security.getView("DataSharingView");
 			String key=moduleName+"+"+entityName+"+"+roleName;
-			System.out.println("key "+key);
+			//System.out.println("key "+key);
 			DocumentCollection dc=datasharingView.getAllDocumentsByKey(key);
 			//Vector<String> res=JSFUtil.DBLookupVector("Security","DataSharingView",rolename,1);
-			System.out.println("Data Sharing roles size "+dc.getCount());
+			//System.out.println("Data Sharing roles size "+dc.getCount());
 			Document doc = dc.getFirstDocument();
 			String sourceRole="";
 			for(int i=0;i<dc.getCount();i++){
 				sourceRole = doc.getItemValueString("SourceRole");
-				System.out.println("Source role name"+sourceRole);
+				//System.out.println("Source role name"+sourceRole);
 				roles.add(sourceRole);				
 				doc = dc.getNextDocument(doc);
 			}
@@ -152,9 +154,9 @@ public class Role extends BsuiteWorkFlow {
 	
 public void getRoleList(String roleName){
 	
-	System.out.println("in getRoleList"+roleName);	
+	//System.out.println("in getRoleList"+roleName);	
 	hierarchyRoleList.add(roleName);
-	System.out.println("in getRoleList 2"+hierarchyRoleList.get(0));
+	//System.out.println("in getRoleList 2"+hierarchyRoleList.get(0));
 	Vector children = getChildRoles(roleName);
 	for(int i=0;i<children.size();i++){
 		getRoleList(children.get(i).toString());
@@ -172,7 +174,7 @@ public Vector getChildRoles(String roleName){
 		String rolename="";
 		for(int i=0;i<coll.getCount();i++){
 			rolename = doc.getItemValueString("role_name");
-			System.out.println("role name"+rolename);
+		//	System.out.println("role name"+rolename);
 			roles.add(rolename);
 			
 			doc = coll.getNextDocument(doc);
@@ -189,7 +191,7 @@ public Vector getChildRoles(String roleName){
 
 public Vector getAssociatedUsers(String RoleName){
 	try{
-		System.out.println("in get associated users");
+		//System.out.println("in get associated users");
 		//get the rolename unid
 		Database security = session.getDatabase("", bsuitepath+"Security.nsf");
 		View roleView=security.getView("RolesView");
@@ -233,11 +235,11 @@ public boolean isShareDataWithPeers(String RoleName){
 		System.out.println("inside isShareDataWithPeers");
 		Database security = session.getDatabase("", bsuitepath+"Security.nsf");
 		View roleView=security.getView("RolesView");
-		System.out.println("RoleName "+RoleName);
+		//System.out.println("RoleName "+RoleName);
 		
 		Document roledoc=roleView.getDocumentByKey(RoleName);
 		String share=roledoc.getItemValueString("sharewithpeers");
-		System.out.println("Share Value "+share);
+		//System.out.println("Share Value "+share);
 		if(share.equals("1")){
 			return true;
 		}
@@ -249,11 +251,13 @@ return false;
 
 
 public String getRoleName() {
+	roleName=as.getAssociatedRoleName(this.currentuser);
 	return roleName;
 }
 
 
 public void setRoleName(String roleName) {
+	
 	this.roleName = roleName;
 }
 

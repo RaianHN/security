@@ -10,10 +10,11 @@ import lotus.domino.Name;
 import lotus.domino.View;
 import bsuite.weber.model.BsuiteWorkFlow;
 import bsuite.weber.tools.BSUtil;
+import bsuite.weber.tools.BsuiteMain;
 
 import com.ibm.xsp.extlib.util.ExtLibUtil;
 
-public class CreateDatabase extends BsuiteWorkFlow {
+public class CreateDatabase extends BsuiteMain {
 
 	public Database createDB(String dbName) {
 		try {
