@@ -7,7 +7,6 @@ import javax.faces.FacesException;
 import bsuite.weber.tools.JSFUtil;
 
 import com.ibm.domino.xsp.module.nsf.NotesContext;
-import com.ibm.xsp.component.UIPanelEx;
 import com.ibm.xsp.model.DataObject;
 
 

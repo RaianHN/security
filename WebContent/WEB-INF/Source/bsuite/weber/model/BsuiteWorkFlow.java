@@ -75,12 +75,12 @@ import com.ibm.xsp.extlib.util.ExtLibUtil;
 			
 			 try {
 				 bsuitepath=getBsuitePath(currentdb);
-			//	profile=getGlobalProfile(currentdb);
+				profile=getGlobalProfile(currentdb);
 				this.currentuser = new Person();
-				//uprofile = this.currentuser.getUserProfile();
-				//if(uprofile==null){
-				//	return ;
-				//}
+				uprofile = this.currentuser.getUserProfile();
+				if(uprofile==null){
+					return ;
+				}
 				
 			} catch (NotesException e) {
 				

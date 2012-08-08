@@ -21,9 +21,9 @@ setFieldPermission(viewScope.profNam3,viewScope.moduleNam3,viewScope.entityNam3)
 println("calling event");}]]></xp:this.action>
 	</xp:eventHandler>
 
-	<xp:eventHandler id="eventFeaturePerm" event="onDojo">
+		<xp:eventHandler id="eventFeaturePerm" event="onDojo">
 		<xp:this.action><![CDATA[#{javascript:println("calling event");
-setFeaturePermission(viewScope.profNam4,viewScope.modulNam4,viewScope.entityNam4);
+setFeaturePermission(viewScope.profNam3,viewScope.moduleNam3,viewScope.entityNam3);
 println("calling event");}]]></xp:this.action>
 	</xp:eventHandler>
 </xp:view>

@@ -7,16 +7,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-import javax.annotation.PreDestroy;
 import javax.faces.FacesException;
-import javax.faces.context.FacesContext;
-
 import lotus.domino.Database;
 import lotus.domino.Document;
 import lotus.domino.NotesException;
 
 
-import com.ibm.domino.xsp.module.nsf.NotesContext;
 import com.ibm.xsp.extlib.util.ExtLibUtil;
 
 
@@ -46,12 +42,6 @@ public class ActivityPageDataProvider implements DataObjectExt{
 	public ActivityPageDataProvider() throws NotesException {
 		m_cachedValues=new HashMap<String,String>();
 		m_changedValues=new HashMap<String,String>();
-		Database currentdb= ExtLibUtil.getCurrentDatabase();
-		// bsuitepath=BSUtil.getBsuitePath(currentdb);
-		//session =  ExtLibUtil.getCurrentSession();
-		//Database actdb= session.getDatabase("", bsuitepath+"activity.nsf");
-		//m_pendingLogEntries=new ArrayList<DataChangeLogEntry>();
-		// TODO Auto-generated constructor stub
 	}
 
 	@SuppressWarnings("unchecked")

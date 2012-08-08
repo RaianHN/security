@@ -1,6 +1,5 @@
 package bsuite.weber.components;
 
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.Vector;
 
@@ -9,9 +8,6 @@ import com.ibm.xsp.extlib.util.ExtLibUtil;
 import lotus.domino.Database;
 import lotus.domino.Document;
 import lotus.domino.NotesException;
-import lotus.domino.Session;
-
-
 import bsuite.weber.tools.BSUtil;
 import bsuite.weber.tools.JSFUtil;
 
@@ -21,11 +17,7 @@ public class UIUserData {
 
 	
 
-	private Session session;
-
-	
-	//m_FIELDS=new ArrayList<DataChangeLogEntry>();
-	
+	@SuppressWarnings("unchecked")
 	private static String getDocumentId() {
 		if (m_documentId==null) {
 			//read query parameter 'documentId'

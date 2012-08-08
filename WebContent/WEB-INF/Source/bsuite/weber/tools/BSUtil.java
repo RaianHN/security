@@ -1,10 +1,21 @@
 package bsuite.weber.tools;
 
+import java.util.Map;
+
+import javax.faces.context.FacesContext;
+
+import bsuite.weber.model.Person;
+
+import com.ibm.xsp.extlib.util.ExtLibUtil;
+
 import lotus.domino.Database;
 import lotus.domino.NotesException;
+import lotus.domino.Session;
 
 public class BSUtil {
 
+	
+	
 	public static String getBsuitePath(Database tadb){
 		String bsuitePath=null;
 		try {

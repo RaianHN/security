@@ -42,7 +42,8 @@ return false;
 				<xp:td colspan="2">
 					<xp:button value="Save" id="button1" style="background-color:rgb(192,192,192)">
 						<xp:eventHandler event="onclick" submit="true"
-							refreshMode="partial" refreshId="ShowRoleDoc">
+							refreshMode="partial" refreshId="ShowRoleDoc"
+							onStart="showWait();" onComplete="hideWait();">
 							<xp:this.action><![CDATA[#{javascript:var rolename=getComponent("computedField1").getValue();
 var parentrole=getComponent("computedField2").getValue();
 var share=getComponent("checkBox1").getValue();
@@ -66,7 +67,8 @@ doc.save(true,false);
 						</xp:eventHandler></xp:button>
 					<xp:button value="Close" id="button2" style="background-color:rgb(192,192,192)">
 						<xp:eventHandler event="onclick" submit="true"
-							refreshMode="partial" refreshId="ShowRoleDoc">
+							refreshMode="partial" refreshId="ShowRoleDoc"
+							onStart="showWait();" onComplete="hideWait();">
 							<xp:this.action><![CDATA[#{javascript:var component = getComponent("ShowRoleDoc");
 com.weberon.DynamicCC.removePreview(component);}]]></xp:this.action>
 						</xp:eventHandler></xp:button></xp:td>

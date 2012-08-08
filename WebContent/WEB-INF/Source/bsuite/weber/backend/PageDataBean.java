@@ -3,8 +3,6 @@ package bsuite.weber.backend;
 import java.util.Map;
 
 import javax.faces.FacesException;
-import javax.faces.context.FacesContext;
-
 import com.ibm.domino.xsp.module.nsf.NotesContext;
 import com.ibm.xsp.model.DataObject;
 

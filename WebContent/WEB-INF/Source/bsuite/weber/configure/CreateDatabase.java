@@ -7,17 +7,14 @@ import lotus.domino.Database;
 import lotus.domino.DbDirectory;
 import lotus.domino.Document;
 import lotus.domino.Name;
-import lotus.domino.NotesException;
-import lotus.domino.NotesFactory;
-import lotus.domino.Session;
 import lotus.domino.View;
 import bsuite.weber.model.BsuiteWorkFlow;
 import bsuite.weber.tools.BSUtil;
+import bsuite.weber.tools.BsuiteMain;
 
-import com.ibm.security.pkcs7.Data;
 import com.ibm.xsp.extlib.util.ExtLibUtil;
 
-public class CreateDatabase extends BsuiteWorkFlow {
+public class CreateDatabase extends BsuiteMain {
 
 	public Database createDB(String dbName) {
 		try {
@@ -26,6 +23,7 @@ public class CreateDatabase extends BsuiteWorkFlow {
 			// //NotesFactory.createSession();
 
 			Database db1 = null;
+			@SuppressWarnings("unused")
 			Database currentdb = ExtLibUtil.getCurrentDatabase();
 			String path = BSUtil.getBsuitePath(ExtLibUtil.getCurrentDatabase());
 			boolean found = false;
@@ -82,6 +80,23 @@ public class CreateDatabase extends BsuiteWorkFlow {
 	 * }
 	 */
 
+	public View getView(Database db, String viewName){
+		try {
+			if(!db.isOpen()){
+			db.open();
+			}
+			
+			
+			if(db.getView(viewName)!=null){
+				System.out.println("View Exists, not creting");
+				return db.getView(viewName);
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+		
+	}
 	public View createView(Database db, String viewName, String selFormula) {
 		
 		try {
@@ -108,6 +123,7 @@ public class CreateDatabase extends BsuiteWorkFlow {
 		return null;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void createViewColumn(View view,int pos,String title,String formula){
 		try{
 			System.out.println("inside createViewColumn");
@@ -126,6 +142,7 @@ public class CreateDatabase extends BsuiteWorkFlow {
 		
 	}
 
+@SuppressWarnings("unchecked")
 public void createDatabases(Vector<String> modules) {
 		DefineModule dmodule = new DefineModule();
 		View view1=null;
@@ -283,6 +300,7 @@ public void createDatabases(Vector<String> modules) {
 		
 	
 	}
+	@SuppressWarnings("unused")
 	private String getFormattedName(String currentuser, String param) {
 		try {			
 
@@ -303,6 +321,7 @@ public void createDatabases(Vector<String> modules) {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	public void createDatabases(){
 		DefineModule def = new DefineModule();
 		Vector<String> moduleNames = def.getModules();
@@ -328,9 +347,6 @@ public void createDatabases(Vector<String> modules) {
 			//empdoc.replaceItemValue("Form","Employee");
 			//empdoc.save(true,false);	
 			Document empdoc = empdb.getDocumentByUNID(edocid);
-			
-			
-			
 			String relId = getRelationNameUnid("IS_A");
 			createRelationship(persondoc.getUniversalID(),"names.nsf","Person","Employee.nsf","Employee",empdoc.getUniversalID(),relId);
 			//Store the Person Name in the employee document so that user names should be shown while manually sharing the records

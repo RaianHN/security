@@ -434,57 +434,41 @@ function setModulePermission(profileName){
 	entityCrud.saveModulePerm(profileName,context.getSubmittedValue());
 }
 
-function setEntityPermission(profileName,moduleName){
-	var profileName = getComponent("entityCombo1").getValue();
-	var moduleName = getComponent("entityCombo2").getValue();
+function setEntityPermission(){
+	var profileName = getComponent("moduleCombo").getValue();
+
 	println("profileName"+profileName);
-	println("moduleName"+moduleName);
 	var arr = context.getSubmittedValue().split(",");
 	var entityCrud = new bsuite.weber.jsonparsing.ProfileEdit;
 	println("setting field permission"+typeof(arr)+"submitted type"+typeof(context.getSubmittedValue()));
 	
-	entityCrud.saveEntityPerm(profileName,moduleName,context.getSubmittedValue());
+	entityCrud.saveEntityPerm(profileName,context.getSubmittedValue());
 }
 function setFieldPermission(profileName,moduleName,entityName){
-	var profileName = getComponent("fieldCombo1").getValue();
-	var moduleName = getComponent("fieldCombo2").getValue();
-	var entityName = getComponent("fieldCombo3").getValue();
-	println("profileName"+profileName);
-	println("moduleName"+moduleName);
-	println("entityName"+entityName);
+	var profileName = getComponent("moduleCombo").getValue();
+
+
 	var arr = context.getSubmittedValue().split(",");
 	var fieldCrud = new bsuite.weber.jsonparsing.ProfileEdit;
 	println("setting field permission"+typeof(arr)+"submitted type"+typeof(context.getSubmittedValue()));
 	
-	fieldCrud.saveFieldPerm(profileName,moduleName,entityName,context.getSubmittedValue());
+	fieldCrud.saveFieldPerm(profileName,context.getSubmittedValue());
 }
 
-function setFeaturePermission(profileName,moduleName,entityName){
-	var profileName = getComponent("featureCombo1").getValue();
-	var moduleName = getComponent("featureCombo2").getValue();
-	var entityName = getComponent("featureCombo3").getValue();
+function setFeaturePermission(){
+	var profileName = getComponent("moduleCombo").getValue();
+	
 	
 	println("profileName"+profileName);
-	println("moduleName"+moduleName);
-	println("entityName"+entityName);
+
 	var arr = context.getSubmittedValue().split(",");
 	var featureCrud = new bsuite.weber.jsonparsing.ProfileEdit;
 	println("setting feature permission"+typeof(arr)+"submitted type"+typeof(context.getSubmittedValue()));
 	
-	featureCrud.saveFeaturePerm(profileName,moduleName,entityName,context.getSubmittedValue());
+	//featureCrud.saveFeaturePerm(profileName,moduleName,entityName,context.getSubmittedValue());
+	featureCrud.saveFeaturePerm(profileName,context.getSubmittedValue());
 }
 
-
-function loadCreateEntity(moduleName){
-	var component = getComponent('EntityPanel'+moduleName); 
-	var s = facesContext;
-	var c1="/cc_entityForm.xsp"; 
-	var id="entityPanel";
-	sessionScope.employeeRegister = viewScope.entityName;
-	println("viewsco"+viewScope.entityName);
-	println("modulename"+moduleName);
-	com.weberon.DynamicCC.loadCC(s, component, c1, id);	
-}
 
 function loadViewEntity(moduleName,entityName){
 
@@ -506,6 +490,18 @@ function loadViewEntity(moduleName,entityName){
 	
 	println("SessionScope moduleEntity ",sessionScope.moduleentity);
 	println("ModuleName ",moduleName);
+	
+	//In order to show the Delete button in the view
+	var entityDelete = new bsuite.weber.jsonparsing.ProfileEdit;
+	var result=entityDelete.checkEntityDelete(moduleName,entityName);
+	if(result){
+		println("Result is true");
+		viewScope.entityDelete=true;
+	}else{
+		println("Result is false");
+		viewScope.entityDelete=false;
+	}
+	
 	var component = getComponent('EntityPanel'+moduleName); 
 	var s = facesContext;
 	var c1="/cc_EntityView.xsp"; 
@@ -524,6 +520,9 @@ function loadReadEntity(moduleName){
 	com.weberon.DynamicCC.loadCC(s, component, c1, id);	
 	
 }
+
+
+
 function loadCreateEntity(moduleName,entityName){
 	wrkspc.resetBean();
 	//Session scoped var declare in beforePageLoad of MainPage
@@ -561,6 +560,40 @@ function loadCreateEntity(moduleName,entityName){
 }
 
 
+
+/*
+function loadViewEntity(moduleName,entityName){
+
+	println("Inside loadViewEntity");
+	var tabentity:java.util.ArrayList=sessionScope.moduleentity;
+	println("TabEntity ",tabentity);	
+	var i;
+	
+		for(i=0;i<tabentity.size();i++)
+		{
+			var mname=tabentity.get(i).split(":");
+			if(mname[0]==moduleName)
+				{
+					tabentity.remove(tabentity.get(i));
+				}
+		}
+	var temp=moduleName+":"+entityName;
+	tabentity.add(temp);
+	
+	println("SessionScope moduleEntity ",sessionScope.moduleentity);
+	println("ModuleName ",moduleName);
+	var component = getComponent('EntityPanel'+moduleName); 
+	var s = facesContext;
+	var c1="/cc_EntityView.xsp"; 
+	var id="entityViewPanel";
+	
+	com.weberon.DynamicCC.removePreview(component);
+	com.weberon.DynamicCC.loadCC(s, component, c1, id);	
+	
+}
+*/
+
+
 function loadEditEntity(moduleName,entityName){
 	wrkspc.resetBean();
 	println("viewsco create entity"+viewScope.entityName);
@@ -581,8 +614,6 @@ function loadEditEntity(moduleName,entityName){
 }
 
 
-
-
 function loadTestControl(componentid,cc,ccid,moduleName,entityName){
 	var component = getComponent(componentid); 
 	var s = facesContext;
@@ -597,6 +628,133 @@ function loadTestControl(componentid,cc,ccid,moduleName,entityName){
 		com.weberon.DynamicCC.loadCC(s, component, c1, ccid);
 	}
 }
+function getModuleNames(){
+	var arr:java.util.Vector = new java.util.Vector();
+arr.add("Module1");
+arr.add("Module2");
+arr.add("Module3");
+arr.add("Module4");
+arr.add("Module5");
+viewScope.moduleNames = arr;
+return arr;
+}
+
+function getFeaturePerm(moduleName){
+	var featurePerm:java.util.HashMap = new  java.util.HashMap();
+	var arr:java.util.Vector = new java.util.Vector();
+	arr.add("feature1:1");
+	arr.add("feature2:1");
+	arr.add("feature3:0");
+	arr.add("feature4:1");
+	arr.add("feature5:1");
+	featurePerm.put("Module1",arr);
+	featurePerm.put("Module2",arr);
+	featurePerm.put("Module3",arr);
+	featurePerm.put("Module4",arr);
+	featurePerm.put("Module5",arr);
+	
+	
+	return featurePerm.get(moduleName);	
+	
+}
+function ifChecked(permission){
+	if(permission!=null){
+		var chk = @Right(permission,":")
+		if(chk){
+			if(chk=="1"){
+				return true;
+			}else{
+				return false;
+			}
+		}
+	}
+	
+}
+function getChkBoxid(moduleName,featurePerm){
+	var moduleName = moduleName;
+	var featureName = @Left(featurePerm,":");
+	if((moduleName!=null)&&(featureName!=null)){
+	return "chkbx"+moduleName+featureName;
+	}
+}
+
+function crateFeaturePermArr() {
+    var featurePerm: java.util.Vector = new java.util.Vector();
+    var arr: java.util.Vector = new java.util.Vector();
+    arr.add("feature1:1");
+    arr.add("feature2:1");
+    arr.add("feature3:0");
+    arr.add("feature4:1");
+    arr.add("feature5:1");
+    featurePerm.add(arr);
+    featurePerm.add(arr);
+    featurePerm.add(arr);
+    featurePerm.add(arr);
+    featurePerm.add(arr);
+    var moduleRepeatId = "moduleRepeat";
+    var featureRepeatId = "featureRepeat";
+    var chkBxId = "chk";
+    var result: java.util.Vector = new java.util.Vector();
+	var strChkBxId = "moduleRepeat:0:featureRepeat:0:chk";
+	var chkBox = null;
+    for (var x = 0; x < featurePerm.size(); x++) {
+        var arr: java.util.Vector = featurePerm.elementAt(x);
+        for (var s = 0; s < arr.size(); s++) {
+        	strChkBxId = "moduleRepeat:"+x+":featureRepeat:"+s+":chk";
+        	chkBox = strChkBxId+getComponent(strChkBxId);
+        	if(chkBox!=null){
+        		result.add(chkBox.isChecked());
+        	}
+			
+        }
+    }
+    viewScope.result = result;
+}
+
+function createModulePermArr(){
+	
+}
+
+function getNumberOfModules(profileName){
+	println("in getn");
+	profileName = context.getSubmittedValue();
+	println("in getn"+profileName);
+	var moduleN = new bsuite.weber.jsonparsing.ProfileEdit().getNumberOfMOdules(profileName);
+	getComponent("inputNModules").setValue(moduleN);
+}
+function getNumberOfFeatures(){
+	println("in getn features");
+	params = context.getSubmittedValue().split(":");//will hold profileName,moduleName
+	profileName = params[0];
+	moduleName = params[1];
+	println("in getn "+profileName+" "+moduleName);
+	var featuresN = new bsuite.weber.jsonparsing.ProfileEdit().getNumberOfFeatures(profileName,moduleName);
+	getComponent("inputNFeatures").setValue(featuresN);
+	println("in get features "+profileName+" "+moduleName+" "+featuresN);
+	
+}
+function getNumberOfEntities(profileName, moduleName){
+	println("in getn entities");
+	params = context.getSubmittedValue().split(":");//will hold profileName,moduleName
+	profileName = params[0];
+	moduleName = params[1];
+	println("in getn "+profileName+" "+moduleName);
+	var entitiesN = new bsuite.weber.jsonparsing.ProfileEdit().getNumberOfEntities(profileName, moduleName);
+	getComponent("inputNEntities").setValue(entitiesN);
+	println("in get entities "+profileName+" "+moduleName+" "+entitiesN);
+}
+function getNumberOfFields(profileName, moduleName, entityName){
+	println("in getn");
+	params = context.getSubmittedValue().split(":");//will hold profileName,moduleName, entityName
+	profileName = params[0];
+	moduleName = params[1];
+	entityName = params[2];
+	println("in getn "+profileName+" "+moduleName);
+	var fieldsN = new bsuite.weber.jsonparsing.ProfileEdit().getNumberOfFields(profileName, moduleName, entityName);
+	getComponent("inputNFields").setValue(fieldsN);
+	
+}
+
 
 function setAccessTypePermission(){
 	//var profileName = getComponent("moduleCombo").getValue();
@@ -606,104 +764,47 @@ var profileName="Admin";
 	var entityCrud = new bsuite.weber.jsonparsing.ProfileEdit;
 	println("setting field permission"+typeof(arr)+"submitted type"+typeof(context.getSubmittedValue()));
 	
-	entityCrud.saveAccessTypePerm(profileName,context.getSubmittedValue());
-	entityCrud.saveAccessTypePerm("Standard",context.getSubmittedValue());
+	var securityDb:NotesDatabase = getDatabase("Security.nsf");
+	var vie:NotesView = securityDb.getView("ProfileView");
+	var doc:NotesDocument = vie.getFirstDocument();
+	
+	while(doc!=null){
+		var pname=doc.getItemValueString("prof_name");
+		entityCrud.saveAccessTypePerm(pname,context.getSubmittedValue());
+		doc=vie.getNextDocument(doc);
+	}
+
+	//entityCrud.saveAccessTypePerm("Standard",context.getSubmittedValue());
+}
+function setProfileNumbers(){
+	var profileName = getComponent("moduleCombo").getValue();
+	//--Select Profile--
+	if(profileName=="--Select Profile--"){
+		return ;
+	}
+	
+	var profileEdit = new bsuite.weber.jsonparsing.ProfileEdit();
+	var strModuleN = profileEdit.getModuleN(profileName);
+	var strFeatureN = profileEdit.getFeatureN(profileName);
+	var strEntityN = profileEdit.getEntityN(profileName);
+	var strFieldN  = profileEdit.getFieldN(profileName);
+	
+	
+	getComponent("inputNModules").setValue(strModuleN);
+	getComponent("inputNFeatures").setValue(strFeatureN);
+	getComponent("inputNEntities").setValue(strEntityN);
+	getComponent("inputNFields").setValue(strFieldN);
+	
+	
+	
+}
+function updateAddSchema(){
+	var schemaObj = new bsuite.weber.configure.Deploy();
+	schemaObj.updateAllProfiles();
+
 }
 
-
-
-function editEmployee(eunid){
-var employeeDb:NotesDatabase = getDatabase("Employee.nsf");
-var eDoc:NotesDocument = employeeDb.getDocumentByUNID(eunid);
-//var vectFields:java.util.Vector = viewScope.editFields;
-//for(x in vectFields){
-//	eDoc.replaceItemValue(x,getComponent(x).getValue());
-//}
-//updateAssociatedProfile(eunid,viewScope.ProfileName,getComponent("comboBox1").getValue());
-updateAssociatedProfile(eunid,getComponent("comboBox1").getValue());
-//updateAssociatedRole(eunid,viewScope.RoleName,getComponent("comboBox2").getValue());
-updateAssociatedRole(eunid,getComponent("comboBox2").getValue());
-
-eDoc.save(true,false);
-eDoc.recycle();
-}
-
-
-function updateAssociatedRole(employeeId,newRoleName){
-	//if(oldRoleName!=newRoleName){
-		println("change Role name");
-		var relId = getRelationNameUnid("IS_A");
-		var key=getlookupkey(relId,employeeId);
-		var tmp = new java.util.Vector();
-		tmp.add(key);
-		
-		//to get personunid and get associated role doc
-		var personunid=bsuite.weber.tools.JSFUtil.DBLookupString("relation","TargetRelation",tmp,4);
-		
-		//get the unid of the new role name
-		var securityDb:NotesDatabase = getDatabase("Security.nsf");
-		var vie:NotesView = securityDb.getView("RolesView");
-		var newroledoc:NotesDocument = vie.getDocumentByKey(newRoleName);
-		var newroleunid=newroledoc.getUniversalID();
-		//get has_a relation
-		var relationid=getRelationNameUnid("HAS_ROLE");
-		var lookupkey=getlookupkey(relationid,personunid);
-		var tmp1=new java.util.Vector();
-		tmp1.add(lookupkey);
-		var relationDb:NotesDatabase = getDatabase("Relation.nsf");
-		var relview: NotesView=relationDb.getView("SourceRelation");
-		//get the relationship doc which shows the Role association
-		var roleassodoc: NotesDocument=relview.getDocumentByKey(lookupkey);
-		roleassodoc.replaceItemValue("targetid",newroleunid);
-		roleassodoc.replaceItemValue("trg_data",newRoleName);
-		roleassodoc.save(true,false);
-		roleassodoc.recycle();
-		newroledoc.recycle();
-		
-	//}	
-		
-}
-
-
-
-function updateAssociatedProfile(employeeId,newProfName){
-	//if(oldProfName!=newProfName){
-		println("change profile name");
-		var relId = getRelationNameUnid("IS_A");
-		var key=getlookupkey(relId,employeeId);
-		var tmp = new java.util.Vector();
-		tmp.add(key);
-		
-		//to get personunid and get associated profile doc
-		var personunid=bsuite.weber.tools.JSFUtil.DBLookupString("relation","TargetRelation",tmp,4);
-		
-		//get the unid of the new profile name
-		var securityDb:NotesDatabase = getDatabase("Security.nsf");
-		var vie:NotesView = securityDb.getView("ProfileView");
-		var newprofdoc:NotesDocument = vie.getDocumentByKey(newProfName);
-		var newprofunid=newprofdoc.getUniversalID();
-		//get has_a relation
-		var relationid=getRelationNameUnid("HAS_A");
-		var lookupkey=getlookupkey(relationid,personunid);
-		var tmp1=new java.util.Vector();
-		tmp1.add(lookupkey);
-		var relationDb:NotesDatabase = getDatabase("Relation.nsf");
-		var relview: NotesView=relationDb.getView("SourceRelation");
-		//get the relationship doc which shows the profile association
-		var profassodoc: NotesDocument=relview.getDocumentByKey(lookupkey);
-		profassodoc.replaceItemValue("targetid",newprofunid);
-		profassodoc.replaceItemValue("trg_data",newProfName);
-		profassodoc.save(true,false);
-		profassodoc.recycle();
-		newprofdoc.recycle();
-		
-//	}	
-		
-}
-
-function getlookupkey(relationunid,sourceunid){
-	if(relationunid==null){
-		return null;
-		}									
-	return (sourceunid+"|"+relationunid);	
+function updateDeleteSchema(){
+	var profileObj = new bsuite.weber.jsonparsing.ProfileEdit();
+	profileObj.removeUpdate();
 }

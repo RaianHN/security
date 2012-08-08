@@ -12,7 +12,7 @@
 				</xp:td>
 				<xp:td>
 					<xp:comboBox id="ModuleName">
-						<xp:selectItems>
+						<xp:selectItem itemLabel="&lt;&lt;Select ModuleName&gt;&gt;"></xp:selectItem><xp:selectItems>
 							<xp:this.value><![CDATA[#{javascript://db = new Array(@DbName()[0], 'Demo/Security.nsf');
 
 //@DbColumn(database,"All Documents",1);
@@ -24,13 +24,15 @@ return profile.getModuleNames(profName);
 }}]]></xp:this.value>
 						</xp:selectItems>
 						<xp:eventHandler event="onchange" submit="true"
-							refreshMode="complete">
+							refreshMode="partial" refreshId="EntityName">
 						</xp:eventHandler>
+						
 					</xp:comboBox>
 				</xp:td>
 				<xp:td>
 					<xp:comboBox id="EntityName" rendered="true"
 						loaded="true">
+						
 						<xp:selectItems>
 							<xp:this.value><![CDATA[#{javascript:var profName="Admin";
 var moduleName=getComponent("ModuleName").getValue();
@@ -59,9 +61,12 @@ profile.getEntityNames(profName,moduleName);
 				<xp:td>
 					<xp:comboBox id="SourceRole">
 						<xp:selectItems id="selectItems1">
-							<xp:this.value><![CDATA[#{javascript:db = new Array(@DbName()[0], 'mvc2/Security.nsf');
-
-@DbColumn(db,"RolesView",1);}]]></xp:this.value>
+							<xp:this.value><![CDATA[#{javascript:var path =database.getFilePath();
+var dbpath =  @LeftBack(path ,"/");
+var db= dbpath+"/Security.nsf";
+var serv = @Word(@Implode(@DbName(),", "),", ", 1);
+var com = new Array(serv,db);
+@DbColumn(com,"RolesView",1);}]]></xp:this.value>
 						</xp:selectItems>
 					</xp:comboBox>
 				</xp:td>
@@ -80,14 +85,17 @@ profile.getEntityNames(profName,moduleName);
 				<xp:td>
 					<xp:comboBox id="TargetRole">
 						<xp:selectItems id="selectItems2">
-							<xp:this.value><![CDATA[#{javascript:db = new Array(@DbName()[0], 'mvc2/Security.nsf');
-
-@DbColumn(db,"RolesView",1);}]]></xp:this.value>
+							<xp:this.value><![CDATA[#{javascript:var path =database.getFilePath();
+var dbpath =  @LeftBack(path ,"/");
+var db= dbpath+"/Security.nsf";
+var serv = @Word(@Implode(@DbName(),", "),", ", 1);
+var com = new Array(serv,db);
+@DbColumn(com,"RolesView",1);}]]></xp:this.value>
 						</xp:selectItems>
 					</xp:comboBox>
 				</xp:td>
 			</xp:tr>
-			<xp:tr>
+			<xp:tr rendered="false">
 				<xp:td>
 					<xp:label value="Access Type" id="label3"></xp:label>
 				</xp:td>
@@ -103,7 +111,7 @@ profile.getEntityNames(profName,moduleName);
 				</xp:td>
 				<xp:td></xp:td>
 			</xp:tr>
-			<xp:tr>
+			<xp:tr rendered="false">
 				<xp:td>
 					<xp:checkBox text="Superior Allowed"
 						id="SuperiorAllowed">

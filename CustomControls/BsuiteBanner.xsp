@@ -5,17 +5,29 @@
 	<xp:panel styleClass="bsuiteBanner">
 		<xp:table style="width:100%">
 			<xp:tr>
-				<xp:td style="width:75.0%">
-					<xp:image url="/Logo+Company.gif" id="image1"></xp:image>
+				<xp:td style="width:75.0%" align="left">
 					
-					
-				</xp:td>
+
+
+				
+				<xp:table>
+					<xp:tr>
+						<xp:td>
+							<xp:image url="/Logo+Company.gif"
+								id="image1">
+							</xp:image></xp:td>
+						<xp:td>
+							<xc:ccLoadingIndicator></xc:ccLoadingIndicator></xp:td>
+					</xp:tr>
+				</xp:table></xp:td>
+				<xp:td>
+					</xp:td>
 				<xp:td align="right">
 					<xp:image url="/bsuite_logo.gif" id="image2"></xp:image>
-					<xp:br></xp:br>
+					<xp:br id="br1"></xp:br>
 
 
-					
+
 					<xp:text escape="true" id="computedField2">
 						<xp:this.value><![CDATA[#{javascript:var server=@Subset(@DbName(),1);
 var pfolder=@LeftBack(@Subset(@DbName(),-1),"/")+"\\"+"admntool.nsf";
@@ -27,8 +39,24 @@ if (!var1){
 	return @ProperCase(var1) ;
 }}]]></xp:this.value>
 					</xp:text>
-					<xp:br></xp:br>
-				</xp:td>
+					
+					<xp:table>
+						<xp:tr>
+							<xp:td align="right">Profile:</xp:td>
+							<xp:td>
+								<xp:text escape="true"
+									id="computedField1" value="#{security.profileName}">
+								</xp:text></xp:td>
+						</xp:tr>
+						<xp:tr>
+							<xp:td align="right">Role:</xp:td>
+							<xp:td><xp:text escape="true" id="computedField3" value="#{security.roleName}"></xp:text></xp:td>
+						</xp:tr>
+					</xp:table>
+					
+					
+					
+					</xp:td>
 				<xp:td></xp:td>
 			</xp:tr>
 		</xp:table>

@@ -15,12 +15,13 @@ sessionScope.put("checkboxids",ids);
 		<xp:button value="Delete" id="button2"
 			style="background-color:rgb(192,192,192)">
 
-		<xp:eventHandler event="onclick" submit="true"
-			refreshMode="partial"
-			refreshId='#{javascript:var id="EntityPanel"+viewScope.moduleName;
+			<xp:this.rendered><![CDATA[#{javascript://It is set in loadViewEntity
+viewScope.entityDelete;}]]></xp:this.rendered><xp:eventHandler event="onclick" submit="true"
+				refreshMode="partial"
+				refreshId='#{javascript:var id="EntityPanel"+viewScope.moduleName;
 return id;}'>
 
-			<xp:this.action><![CDATA[#{javascript:/*println("Onclick of Delete");
+				<xp:this.action><![CDATA[#{javascript:/*println("Onclick of Delete");
 var serv=@Subset(@DbName(),1);
 var dbpath=@LeftBack(@Subset(@DbName(),-1),"/")
 var custdb=dbpath+"\\"+"employees.nsf";
@@ -39,19 +40,17 @@ sessionScope.put("documentId",unid);
 pageaction['delete'].execute("employee");
 }
 //sessionScope.put("doclist","");
-//var myArray:java.util.ArrayList=sessionScope.get("doclist");
-//myArray.removeAll();
-//list.removeAll();
+
 //wrkspc.resetBean();
 
 }]]></xp:this.action>
-			<xp:this.onComplete><![CDATA[var ids="#{javascript:sessionScope.checkboxids}";
+				<xp:this.onComplete><![CDATA[
+var ids="#{javascript:sessionScope.checkboxids}";
 console.log("%o",ids);
-
 
 var arr=new Array();
 arr=ids.split(",");
-console.log(arr)
+console.log(arr);
 var i;
 var temp;
 for(i=0;i<arr.length;i++)
@@ -67,10 +66,12 @@ for(i=0;i<arr.length;i++)
 	}
 
 var mycheckbox = document.getElementById(temp.trim());
+
 mycheckbox.checked= false;
 }
 ]]></xp:this.onComplete>
-		</xp:eventHandler></xp:button>
+			</xp:eventHandler>
+		</xp:button>
 		<xp:panel id="actions" binding="#{wrkspc.features}"></xp:panel></xp:td>
 	
 	</xp:tr>
@@ -102,7 +103,7 @@ var fields=viewScope.fields;
 			</xp:repeat>
 		</xp:tr>
 		<xp:repeat id="repeat5" first="0" var="view1col"
-			indexVar="view1index" value="#{wrkspc.getmydocs}" rows="30">
+			indexVar="view1index" value="#{wrkspc.mydocs}" rows="20">
 			<xp:tr style="background-color: rgb(248, 248, 248);">
 
 
@@ -121,7 +122,8 @@ return false;
 }}]]></xp:this.rendered>
 
 							<xp:eventHandler event="onclick"
-								submit="true" refreshMode="partial" refreshId="button2">
+								submit="true" refreshMode="partial" refreshId="button2"
+								onStart="showWait()" onComplete="hideWait()">
 								<xp:this.action><![CDATA[#{javascript:var ids:java.util.ArrayList=sessionScope.get("checkboxids");
 var temp=this.getParent().getClientId(facesContext);
 
@@ -130,7 +132,7 @@ var val=getComponent("checkBox1").getValue();
 println("Checkbox value ",val);
 var docid=view1col.getDocument().getUniversalID();
 var myArray:java.util.ArrayList=sessionScope.get("doclist");
-println("Array value before adding outside ",myArray);
+
 if(val=="true")
 {
 
@@ -138,7 +140,7 @@ if(val=="true")
 	{
 	println("adding to the list");
 	myArray.add(docid);
-	}	
+	}
 	ids.add(temp);
 }
 else if(val=="false")
@@ -161,33 +163,17 @@ return entryValue;
 							<xp:eventHandler event="onclick"
 								submit="true" refreshMode="partial"
 								refreshId='#{javascript:var id="readPanel"+viewScope.moduleName;
-println("Id to be reffreshed "+id);
-return id;}'>
-								<xp:this.action><![CDATA[#{javascript:println("OnClick of the view documwent");
-var doc:NotesDocument=view1col.getDocument();
+
+return id;}'
+								onStart="showWait()" onComplete="hideWait()">
+								<xp:this.action><![CDATA[#{javascript:var doc:NotesDocument=view1col.getDocument();
 var unid=doc.getUniversalID();
-//var entityName=doc.getItemValueString("obid");
-//println("entityName ",entityName);
-//viewScope.entityName=entityName;
-println("Unid ",unid);
-//if(sessionScope.documentId!=""){
-//	sessionScope.remove("documentId");	
-//}
 sessionScope.put("documentId",unid);
 var id="readPanel"+viewScope.moduleName;
-//var id="readPanel";
 var c= getComponent(id);
-
-//var Db:NotesDatabase = doc.getParentDatabase();
-//viewScope.moduleName = @Left(Db.getFileName(),".");
-//viewScope.entityName = doc.getItemValueString("Form");
-println("------>"+viewScope.moduleName+viewScope.entityName );
-//if(c.getChildCount()>0){
-//com.weberon.DynamicCC.removePreview(c);
-//}
 wrkspc.resetUI(c, facesContext,"/ccReadEntity.xsp");
 wrkspc.resetBean();
-//loadReadEntity();}]]></xp:this.action>
+}]]></xp:this.action>
 							</xp:eventHandler>
 						</xp:link>
 					</xp:td>

@@ -6,16 +6,12 @@ import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.Vector;
 
-import javax.annotation.PreDestroy;
-import javax.faces.application.Application;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
 import lotus.domino.Database;
 import lotus.domino.Document;
 import lotus.domino.NotesException;
-import lotus.domino.ViewColumn;
-
 import bsuite.weber.tools.BSUtil;
 import bsuite.weber.tools.CompUtil;
 import bsuite.weber.tools.JSFUtil;
@@ -36,20 +32,14 @@ public class UICurrentActivity implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -8042866678261204991L;
-	private static Object dataItem;
-	private static Object active;
 	private static String m_documentId;
 	private UIPanelEx actpanel;
-	private UIPanelEx pagePanel;
 	public static FacesContext context;
-	private Application app;
 	private  String BEAN_NAME;
 	private String[] fields;
-	private String newfield;
+	@SuppressWarnings("unchecked")
 	private static Map requestscope;
-	private Vector<ViewColumn> viewlist;
-	private Database actdb;
-	private String bsuitepath;
+	@SuppressWarnings("unchecked")
 	private static Map sessionscope;
 	
 	
@@ -106,12 +96,13 @@ public void resetBean() {
 }
 	
 
+	@SuppressWarnings("unchecked")
 	public UIPanelEx getActivityPanel()
 	{
 		actpanel = null;
 		m_documentId=null;
 		context=FacesContext.getCurrentInstance();
-		app = FacesContext.getCurrentInstance().getApplication();
+		FacesContext.getCurrentInstance().getApplication();
 		requestscope = (Map) JSFUtil.getVariableValue("requestScope");
 		sessionscope = (Map) JSFUtil.getVariableValue("sessionScope");
 		BEAN_NAME= (String) sessionscope.get("Beanid");
@@ -126,6 +117,7 @@ public void resetBean() {
 	}
 
 
+	@SuppressWarnings("unchecked")
 	private void createActivity() {
 		
 		
@@ -259,7 +251,6 @@ public void resetBean() {
 	}
 
 	
-	@SuppressWarnings("unchecked")
 	private static String getDocumentId() {
 		
 			//read query parameter 'documentId'

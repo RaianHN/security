@@ -1,10 +1,7 @@
 package bsuite.weber.data;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.faces.FacesException;
@@ -12,19 +9,16 @@ import javax.faces.FacesException;
 import lotus.domino.Database;
 import lotus.domino.Document;
 import lotus.domino.NotesException;
-import lotus.domino.Session;
-
-
 import bsuite.weber.model.BsuiteWorkFlow;
 import bsuite.weber.relationship.Association;
 import bsuite.weber.tools.BSUtil;
+import bsuite.weber.tools.BsuiteMain;
 import bsuite.weber.tools.JSFUtil;
 
-import com.ibm.domino.xsp.module.nsf.NotesContext;
 import com.ibm.xsp.extlib.util.ExtLibUtil;
 
 
-public class NSFPageDataProvider extends BsuiteWorkFlow implements DataObjectExt {
+public class NSFPageDataProvider extends BsuiteMain implements DataObjectExt {
 
 	/**
 	 * 
@@ -40,6 +34,7 @@ public class NSFPageDataProvider extends BsuiteWorkFlow implements DataObjectExt
 	private String m_documentId;
 	private String bsuitepath;
 	//to get the viewScope variable
+	@SuppressWarnings("unchecked")
 	Map viewScope=(Map) JSFUtil.getVariableValue("viewScope");
 	//Map sessionScope = (Map) JSFUtil.getVariableValue("sessionScope");
 	//Map sessionScope=(Map) JSFUtil.getVariableValue("sessionScope");
@@ -51,6 +46,7 @@ public class NSFPageDataProvider extends BsuiteWorkFlow implements DataObjectExt
 		
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void reset(){
 		System.out.println(" reset called");
 		m_cachedValues.clear();
@@ -104,23 +100,26 @@ public class NSFPageDataProvider extends BsuiteWorkFlow implements DataObjectExt
 	 * @return document or <code>null</code> if the document has not been saved before
 	 * @throws NotesException
 	 */
+	@SuppressWarnings("unchecked")
 	private Document getDocument() throws NotesException {
-		Map viewscope=(Map) JSFUtil.getVariableValue("viewScope");
+		Map viewScope=(Map) JSFUtil.getVariableValue("viewScope");
 		String documentId=getDocumentId();
 		if ("".equals(documentId))
 			return null;
 		
 		//System.out.println("getDocument reference");
-		DocumentRef docRef=(DocumentRef) viewscope.get(VIEWSCOPE_DATADOCUMENT);
+		DocumentRef docRef=(DocumentRef) viewScope.get(VIEWSCOPE_DATADOCUMENT);
 		Document doc=docRef==null ? null : docRef.getDocument();
 		
 		if (doc==null || isRecycled(doc)) {
 			//we need to reload the document
 			//Session session=NotesContext.getCurrent().getCurrentSession();
+			
+			
 			System.out.println("getDocument reference is null");
 			bsuitepath=BSUtil.getBsuitePath(ExtLibUtil.getCurrentDatabase());
-			String dbname=(String)viewscope.get("moduleName");
-			
+			String dbname=(String)viewScope.get("moduleName");			
+			System.out.println("ViewScope variable  "+viewScope.get("moduleName"));
 			if(dbname.contains("_")){
 				dbname=dbname.replace("_"," ");
 			}
@@ -129,6 +128,7 @@ public class NSFPageDataProvider extends BsuiteWorkFlow implements DataObjectExt
 			Database entitydb=ExtLibUtil.getCurrentSession().getDatabase("", bsuitepath+dbname);
 			System.out.println("Database where the current selected document is from "+dbname);
 			doc=entitydb.getDocumentByUNID(documentId);
+			
 			//cache it in the viewscope until it gets invalid
 			viewScope.put(VIEWSCOPE_DATADOCUMENT, new DocumentRef(doc));
 		}
@@ -190,6 +190,7 @@ public class NSFPageDataProvider extends BsuiteWorkFlow implements DataObjectExt
 
 	
 	
+	@SuppressWarnings("unchecked")
 	public void store() {
 		Map sessionscope=(Map) JSFUtil.getVariableValue("sessionScope");
 		Map viewScope=(Map) JSFUtil.getVariableValue("viewScope");
@@ -201,14 +202,16 @@ public class NSFPageDataProvider extends BsuiteWorkFlow implements DataObjectExt
 					//we need to create a new document in the database
 					//Session session=NotesContext.getCurrent().getCurrentSession();
 					bsuitepath=BSUtil.getBsuitePath(ExtLibUtil.getCurrentDatabase());
-					String dbname=(String)viewScope.get("moduleName");
+					String dbname=(String)viewScope.get("moduleName");					
+					
 					if(dbname.contains("_")){
 						dbname=dbname.replace("_"," ");
 					}
+					
 					dbname=dbname.toLowerCase().replace(" ", "")+".nsf";
 					System.out.println("Db Name  "+dbname);
 					Association as=new Association();
-					String currentuser=this.currentuser.getBsuiteuser();
+					String currentuser=this.currentuser;
 					String commonname=as.getFormattedName(currentuser, "common");
 					Database userdb=ExtLibUtil.getCurrentSession().getDatabase("", bsuitepath+dbname);
 					doc=userdb.createDocument();

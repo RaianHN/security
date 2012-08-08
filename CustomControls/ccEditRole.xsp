@@ -29,7 +29,8 @@
 								id="viewColumnHeader1">
 							</xp:viewColumnHeader>
 							<xp:eventHandler event="onclick"
-								submit="true" refreshMode="partial" refreshId="ShowRoleDoc">
+								submit="true" refreshMode="partial" refreshId="ShowRoleDoc"
+								onStart="showWait();" onComplete="hideWait();">
 								<xp:this.action><![CDATA[#{javascript:var component = getComponent("ShowRoleDoc");
 com.weberon.DynamicCC.removePreview(component);
 var doc:NotesDocument=viewEntry.getDocument();

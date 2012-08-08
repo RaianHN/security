@@ -37,6 +37,7 @@ public class ContextController {
 
 		return c;
 	}
+	@SuppressWarnings("unchecked")
 	public static String getAssociatedSrcString(String relation){//for manager
 		
 		String c=null;				
@@ -79,6 +80,7 @@ public class ContextController {
 		
 	}
 	
+	@SuppressWarnings("unchecked")
 	public static Vector getAssociatedTrgVector(String relation){
 		
 		Vector c=  new Vector();		
@@ -97,6 +99,7 @@ public class ContextController {
 		return  c;
 		
 	}
+	@SuppressWarnings("unchecked")
 	private static String getlookupkey(Vector tmp){
 		String  y;
 		String reluid;

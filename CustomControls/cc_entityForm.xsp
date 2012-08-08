@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
-	xmlns:xe="http://www.ibm.com/xsp/coreex">
-
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+	
+	
 	<xp:panel>
-		Select &#160;User
-		<xp:this.rendered><![CDATA[#{javascript:if(sessionScope.employeeRegister=="Employee"){
+	
+	<xp:panel>
+				Select
+				&#160;User<xp:this.rendered><![CDATA[#{javascript:if(sessionScope.employeeRegister=="Employee"){
 return true;
 }else{
 return false;
-}}]]></xp:this.rendered>
-		<xp:comboBox id="comboBox3">
-			<xp:selectItems>
-				<xp:this.value><![CDATA[#{javascript://var path =database.getFilePath();
+}}]]></xp:this.rendered><xp:comboBox id="comboBox3">
+		<xp:selectItems>
+			<xp:this.value><![CDATA[#{javascript://var path =database.getFilePath();
 //var dbpath =  @LeftBack(path ,"/");
 //var db= dbpath+"/Security.nsf";
 var db="names.nsf";
@@ -19,11 +20,8 @@ var serv = @Word(@Implode(@DbName(),", "),", ", 1);
 var com = new Array(serv,db);
 var x= @DbColumn(com,  "($VIMPeople)", 1);
 @Explode(x,",;",true);}]]></xp:this.value>
-			</xp:selectItems>
-		</xp:comboBox>
-		&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Profile:
-		<xp:comboBox id="comboBox1" required="true"
-			defaultValue="#{javascript:viewScope.ProfileName;}">
+		</xp:selectItems>
+	</xp:comboBox>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Profile:<xp:comboBox id="comboBox1" required="true" defaultValue="#{javascript:viewScope.ProfileName;}">
 
 			<xp:selectItems>
 				<xp:this.value><![CDATA[#{javascript:var path =database.getFilePath();
@@ -35,10 +33,7 @@ var x= @DbColumn(com,  "ProfileView", 1);
 @Explode(x,",;",true);}]]></xp:this.value>
 			</xp:selectItems>
 
-		</xp:comboBox>
-		&#160;&#160;&#160;&#160;&#160;&#160;Role:
-		<xp:comboBox id="comboBox2"
-			defaultValue="#{javascript:viewScope.RoleName;}">
+		</xp:comboBox> &#160;&#160;&#160;&#160;&#160;&#160;Role:<xp:comboBox id="comboBox2" defaultValue="#{javascript:viewScope.RoleName;}">
 			<xp:selectItems>
 				<xp:this.value><![CDATA[#{javascript:var path =database.getFilePath();
 var dbpath =  @LeftBack(path ,"/");
@@ -49,16 +44,15 @@ var x= @DbColumn(com,  "RolesView", 1);
 @Explode(x,",;",true);}]]></xp:this.value>
 			</xp:selectItems>
 		</xp:comboBox>
-		<xp:br></xp:br>
-	</xp:panel>
-	<xp:panel>
-		<xp:button value="Save" id="button9"
-			style="background-color:rgb(192,192,192)">
-			<xp:eventHandler event="onclick" submit="true"
-				refreshMode="partial"
-				refreshId='#{javascript:var id="EntityPanel"+viewScope.moduleName;
-return id;}'>
-				<xp:this.action><![CDATA[#{javascript://viewScope.put("entityName","Employee");
+				<xp:br></xp:br></xp:panel>
+	<xp:panel>	
+			<xp:button value="Save" id="button9" style="background-color:rgb(192,192,192)">
+		<xp:eventHandler event="onclick" submit="true"
+			refreshMode="partial"
+			refreshId='#{javascript:var id="EntityPanel"+viewScope.moduleName;
+return id;}'
+			onStart="showWait()" onComplete="hideWait()">
+			<xp:this.action><![CDATA[#{javascript://viewScope.put("entityName","Employee");
 //sessionScope.put("entityName","Activity");
 println("vsr "+sessionScope.get("registerEmployee"));
 println("vsr2"+viewScope.entityName);
@@ -81,14 +75,12 @@ if (viewScope.entityName == "Employee") {
 }
 
 wrkspc.resetBean();}]]></xp:this.action>
-			</xp:eventHandler>
-		</xp:button>
-
-		<xp:button value="Delete" id="button1"
-			style="background-color:rgb(192,192,192)" rendered="false">
-			<xp:eventHandler event="onclick" submit="true"
-				refreshMode="complete">
-				<xp:this.action><![CDATA[#{javascript:println("Onclick of Delete");
+		</xp:eventHandler></xp:button>
+			
+			<xp:button value="Delete" id="button1" style="background-color:rgb(192,192,192)" rendered="false">
+				<xp:eventHandler event="onclick" submit="true"
+					refreshMode="complete">
+					<xp:this.action><![CDATA[#{javascript:println("Onclick of Delete");
 var serv=@Subset(@DbName(),1);
 var dbpath=@LeftBack(@Subset(@DbName(),-1),"/")
 var custdb=dbpath+"\\"+"employees.nsf";
@@ -108,22 +100,21 @@ pageaction['delete'].execute("employee");
 
 
 }]]></xp:this.action>
-			</xp:eventHandler>
-		</xp:button>
-		<xp:button value="Close" id="button2"
-			style="background-color:rgb(192,192,192)">
-			<xp:eventHandler event="onclick" submit="true"
-				refreshMode="partial"
-				refreshId='#{javascript:var id="EntityPanel"+viewScope.moduleName;
-return id;}'>
-				<xp:this.action><![CDATA[#{javascript:var component = getComponent('EntityPanel'+viewScope.moduleName);
+				</xp:eventHandler></xp:button>
+			<xp:button value="Close" id="button2" style="background-color:rgb(192,192,192)">
+				<xp:eventHandler event="onclick" submit="true"
+					refreshMode="partial"
+					refreshId='#{javascript:var id="EntityPanel"+viewScope.moduleName;
+return id;}'
+					onComplete="hideWait()" onStart="showWait()">
+					<xp:this.action><![CDATA[#{javascript:var component = getComponent('EntityPanel'+viewScope.moduleName);
 com.weberon.DynamicCC.removePreview(component);}]]></xp:this.action>
-			</xp:eventHandler>
-		</xp:button>
-		
-		<xp:div id="div1" binding="#{wrkspc.centity}">
+				</xp:eventHandler></xp:button>
+			<xp:div id="div1" binding="#{wrkspc.centity}">
 
-		</xp:div>
+			</xp:div>
+	</xp:panel>
+	
 	</xp:panel>
 	
 	</xp:view>

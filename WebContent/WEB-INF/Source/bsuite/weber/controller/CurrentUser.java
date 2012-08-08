@@ -9,17 +9,20 @@ import bsuite.weber.model.BsuiteWorkFlow;
 import bsuite.weber.model.User;
 
 
+@SuppressWarnings("unused")
 public class CurrentUser extends BsuiteWorkFlow{
  private User cur_user;
 
 
+@SuppressWarnings("unchecked")
 private Map sessionScope;
 
 public CurrentUser() {
 	super();
 	// TODO Auto-generated constructor stub
 }
- public void init(){
+ @SuppressWarnings("unchecked")
+public void init(){
 	 
 		sessionScope = (Map) context.getApplication().getVariableResolver().resolveVariable(context, "sessionScope");
 		this.getDocumenttoProcess();

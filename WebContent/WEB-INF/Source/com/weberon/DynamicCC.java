@@ -4,8 +4,6 @@ package com.weberon;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.el.MethodBinding;
-import javax.faces.el.ValueBinding;
 
 import bsuite.weber.tools.CompUtil;
 
@@ -24,7 +22,7 @@ import com.ibm.xsp.extlib.tree.complex.ComplexLeafTreeNode;
 
 public class DynamicCC {
 	public static void loadCC(FacesContext s, UIComponent component, String c1, String id)
-	{	System.out.println("inside loadCC");
+	{	System.out.println("view--12");
 	System.out.println("component"+component.getId());
 	System.out.println("c1 "+c1);
 	System.out.println("id "+id);
@@ -79,7 +77,6 @@ public class DynamicCC {
 	}
 	
 	
-	
 	public static void createDropDown(UIComponent component){
 		System.out.println("Inside createDropDown");
 		  UIOutlineDropDownButton result = new UIOutlineDropDownButton();
@@ -120,4 +117,7 @@ public class DynamicCC {
 		
 		
 	}
+	
+	
+	
 }

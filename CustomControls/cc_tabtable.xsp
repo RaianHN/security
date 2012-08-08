@@ -2,15 +2,17 @@
 <xp:view xmlns:xp="http://www.ibm.com/xsp/core"
 	xmlns:xc="http://www.ibm.com/xsp/custom"
 	xmlns:xe="http://www.ibm.com/xsp/coreex">
+	
 
 
 	<xp:div id="maindiv">
 
 		<xc:BsuiteBanner></xc:BsuiteBanner>
+		<xp:br></xp:br>
 		<xc:BsuiteTitleBar></xc:BsuiteTitleBar>		
 		<xc:BsuiteMain rendered="false"></xc:BsuiteMain>
 		<xp:div id="ConfigureDiv">
-			<xp:div id="CCLoadDiv" style="height:682px;width:100%;"
+			<xp:div id="CCLoadDiv" style="height:auto;width:100%"
 				binding="#{wrkspc.tabs}">
 			</xp:div>
 		</xp:div>

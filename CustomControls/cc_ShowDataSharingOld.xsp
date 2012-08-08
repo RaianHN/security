@@ -10,162 +10,163 @@ viewScope.profileNames = profileNames;}]]></xp:this.beforePageLoad>
 		</xp:script>
 		<xp:script src="/CommonFunctions.jss" clientSide="false"></xp:script>
 	</xp:this.resources>
-	
-	<xp:br></xp:br>
-	<xp:br></xp:br>Organizational Wide Settings<xp:br></xp:br><xp:br></xp:br>
-	
-	<xp:panel>
-	<xp:table id="table1">
+	<xp:panel id="panelAccess">
+		<xp:table id="table2">
 			<xp:tr>
-				<xp:td>	Profile:&#160;
-					<xp:br id="br5"></xp:br>
-					<xp:comboBox id="comboBox4"
-						binding="#{javascript:viewScope.profNam2}">
-						<xp:selectItems id="selectItems4">
-							<xp:this.value><![CDATA[#{javascript:viewScope.profileNames}]]></xp:this.value>
-						</xp:selectItems>
-					</xp:comboBox></xp:td>
 				<xp:td>
-					Module:
-					<xp:br id="br4"></xp:br>
-					<xp:comboBox binding="#{javascript:viewScope.moduleNam2}" id="moduleName" rendered="false">
-						<xp:selectItems id="selectItems3">
-							<xp:this.value><![CDATA[#{javascript:var profName = "Admin";
-var profile = new bsuite.weber.jsonparsing.ProfileEdit();
-if(profName!=null){
-println("inside this");
-return profile.getModuleNames(profName);
-}
-}]]></xp:this.value>
+					<xp:br id="br1"></xp:br>
+					<xp:comboBox id="comboBox2"
+						binding="#{javascript:viewScope.profNam2}" rendered="false">
+						<xp:selectItems id="selectItems1">
+							<xp:this.value><![CDATA[#{javascript:viewScope.profileNames}]]></xp:this.value>
 						</xp:selectItems>
 					</xp:comboBox>
 				</xp:td>
 				<xp:td>
-					<xp:br id="br6"></xp:br>
-					<xp:button value="Go" id="button1"
+					Module:<xp:br></xp:br><xp:comboBox id="comboBox3" binding="#{javascript:viewScope.moduleNam2}">
+						<xp:selectItem itemLabel="&lt;&lt;Select Module&gt;&gt;"></xp:selectItem><xp:selectItems id="selectItems2">
+							<xp:this.value><![CDATA[#{javascript:var profName = "Admin";
+var profile = new bsuite.weber.jsonparsing.ProfileEdit();
+if(profName!=null){
+return profile.getModuleNames(profName);
+}
+}]]></xp:this.value>
+						</xp:selectItems>
+						
+						</xp:comboBox></xp:td>
+				<xp:td>
+					<xp:br id="br3"></xp:br>
+					<xp:button value="Go" id="button9"
 						style="background-color:rgb(192,192,192);width:100.0px">
 						<xp:eventHandler event="onclick" submit="true"
-							refreshMode="complete" id="eventHandler3">
-							<xp:this.action><![CDATA[#{javascript:viewScope.selProfile = "Admin";
-viewScope.selModule = "Employees"
-//viewScope.selModule = getComponent("moduleName").getValue();
+							refreshMode="complete" id="eventHandler1">
+							<xp:this.action><![CDATA[#{javascript://viewScope.selProfile = getComponent("comboBox2").getValue();
+viewScope.selProfile = "Admin";
+viewScope.selModule = getComponent("comboBox3").getValue();
 var moduleVisib = new bsuite.weber.jsonparsing.ProfileEdit();
 moduleVisib.getEntityPermission(viewScope.selProfile,viewScope.selModule);
 }]]></xp:this.action>
 						</xp:eventHandler>
 					</xp:button>
 				</xp:td>
-				
-				
-				
 				<xp:td></xp:td>
-				<xp:td><xp:text escape="true" id="computedField2" rendered="false">
-							<xp:this.value><![CDATA[#{javascript:return @Right(rowData,":");}]]></xp:this.value>
-						</xp:text></xp:td>
+		
+			
+				
 			</xp:tr>
 			<xp:tr>
 				<xp:td>Entity Name</xp:td>
 				<xp:td>AccessType</xp:td>
-			
 				<xp:td></xp:td>
-				<xp:td></xp:td>
+				
+				
+				
 				<xp:td>
-					<xp:button value="Save" id="button2"
+					<xp:button value="Save" id="button4"
 						style="background-color:rgb(192,192,192);width:100.0px">
 
-					<xp:eventHandler event="onclick" submit="false">
-						<xp:this.script><![CDATA[var table = document.getElementById('#{id:table1}');
-//var moduleName="#{viewScope.selModule}";
-//var moduleName=document.getElementById('#{id:moduleName}').innerHTML;
-//alert(moduleName);
+					<xp:eventHandler event="onclick" submit="false"
+						onComplete="hideWait();" onStart="showWait();">
+						<xp:this.script><![CDATA[var table = document.getElementById('#{id:table2}');
 var access="";
 var i = 0;
 var j = 0;
 var result1 = null;
 var result = new Array();
-var temp="";
+
+var temp;
+var moduleName=document.getElementById('#{id:comboBox3}').value;
+//alert(moduleName);
 
 for (i = 2; i < table.rows.length; i++) {
 
 	var entityName = table.rows[i].cells[0].firstChild.innerHTML;
-	alert(entityName);
+	//alert(entityName);
 	// var radioid = table.rows[i].cells[1].firstChild.elements[0].name;
 	for ( var k = 0; k < 3; k++) {
-		alert(k);
+		//alert(k);
 		if (table.rows[i].cells[1].firstChild.elements[k].checked == true) {
 			result1 = table.rows[i].cells[1].firstChild.elements[k].value;
-			alert(result1);
+			//alert(result1);
 			break;
 		}
 
 	}
 	if (result1 == "private") {
 		access = "1";
-	} else if (result1 == "public") {
-	alert(result1);
+	} else if (result1 == "public"){
+		//alert(result1);
 		access = "2";
-		alert(access);
+		//alert(access);
 	} else if (result1 == "read") {
 		access = "3";
 	}
-	alert(entityName);
-	alert(access);
-	temp = entityName+':'+ access;	
-	alert(temp);
+	//alert(entityName);
+	//alert(access);
+	temp = moduleName+':'+entityName+':'+ access;	
+	//alert(temp);
 	result.push(temp);
-	alert("Outside loop ", result1);
+	//alert("Outside loop ", result1);
 }
- XSP.executeOnServer('view:_id1:accessTypePerm', "", "", result);
+XSP.executeOnServer('view:_id1:accessTypePerm', "", "", result);
 ]]></xp:this.script>
 					</xp:eventHandler></xp:button>
 				</xp:td>
 			</xp:tr>
 
-			<xp:repeat id="repeat1" rows="30" var="rowData">
+			<xp:repeat id="repeat2" rows="30" var="rowData">
 				<xp:this.value><![CDATA[#{javascript:var entityP:java.util.Vector = viewScope.entityPerm;
 if(entityP!=null){
 return entityP;
 }}]]></xp:this.value>
 				<xp:tr>
 					<xp:td>
-						<xp:inputText id="inputText1">
+						<xp:inputText id="inputText2">
 							<xp:this.value><![CDATA[#{javascript:@Left(rowData,":");}]]></xp:this.value>
 						</xp:inputText>
 					</xp:td>
 					<xp:td>
-						
-					<xp:radioGroup id="radioGroup2">
-						<xp:this.defaultValue><![CDATA[#{javascript:var val = @Right(rowData,":");
+
+						<xp:radioGroup id="radioGroup1">
+							<xp:this.defaultValue><![CDATA[#{javascript:var val = @Right(rowData,":");
 var res=val.charAt(4);
 println("res ",res);
 if(res=="1"){
 return "private";
 }else if(res=="2"){
 return "public";
-}else{
+}else if(res=="3"){
 return "read";
 }
-}]]></xp:this.defaultValue><xp:selectItem itemLabel="Private"
-							itemValue="private">
-						</xp:selectItem>
-						<xp:selectItem itemLabel="Public R/W/U"
-							itemValue="public">
-						</xp:selectItem>
-						<xp:selectItem itemLabel="Public Read"
-							itemValue="read">
-						</xp:selectItem>
-						</xp:radioGroup></xp:td>
-					<xp:td>
-						
+}]]></xp:this.defaultValue>
+							<xp:selectItem itemLabel="Private"
+								itemValue="private">
+							</xp:selectItem>
+							<xp:selectItem itemLabel="Public Read/Write"
+								itemValue="public">
+							</xp:selectItem>
+							<xp:selectItem itemLabel="Public Read Only"
+								itemValue="read">
+							</xp:selectItem>
+						</xp:radioGroup>
 					</xp:td>
-					
-					
-					
+					<xp:td>
+
+					</xp:td>
+					<xp:td>
+
+					</xp:td>
+
 				</xp:tr>
 			</xp:repeat>
 
 		</xp:table>
-	
-	
-	
-	</xp:panel></xp:view>
+
+
+
+
+
+
+
+	</xp:panel>
+</xp:view>

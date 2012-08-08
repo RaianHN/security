@@ -7,6 +7,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 public class EntitySchema {
 	
+	@SuppressWarnings("unchecked")
 	public static void createEntity(String eName,Vector fieldNames,Vector featureNames){
 		
 	Entity entity=new Entity();	
@@ -28,7 +29,7 @@ public class EntitySchema {
 	//to set the entityname
 	  entity.setEntityName(eName);
 	  entity.setFields(flds);
-	  entity.setFeatures(ftrs);
+	 // entity.setFeatures(ftrs);
 	  
 	  ObjectMapper mapper=new ObjectMapper();
 	  String val="";
@@ -39,7 +40,7 @@ public class EntitySchema {
 	}
 	 
 	  
-	  System.out.println("Json String "+ val);
+	  //System.out.println("Json String "+ val);
 	  
 	  
 	

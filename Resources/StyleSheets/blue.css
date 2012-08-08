@@ -93,14 +93,14 @@
 }
 
 
-
+/*
 .xspButtonCommand{
 	color:white;
 	border:0px;
 	background-color:transparent;
 	cursor:pointer;
 }
-
+*/
 .xspButtonCommand-hover{
 	text-decoration: underline;
 }
