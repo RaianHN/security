@@ -6,8 +6,22 @@ import java.util.Map;
 
 import bsuite.weber.tools.JSFUtil;
 
+
+
+
+/**
+[Class description.  The first sentence should be a meaningful summary of the class since it
+   will be displayed as the class summary on the Javadoc package page.]
+   
+   [Other notes, including guaranteed invariants, usage instructions and/or examples, reminders
+   about desired improvements, etc.]
+   
+ 	@author JPrakash
+  
+ */
 public class Security {
 
+	
 	private Profile profile;
 	private Role role;
 	private ArrayList<String> modules;
@@ -23,19 +37,24 @@ public class Security {
 		this.profileName = profileName;
 	}
 
+	
 	public String getRoleName() {
 		return roleName;
 	}
 
+	
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
 	}
 
+	
+	
 	@SuppressWarnings("unchecked")
 	public Security() {
+		
 		profile = new Profile();
 		role = new Role();
-		
+
 		Map sessionScope = (Map) JSFUtil.getVariableValue("sessionScope");
 		if (profile != null) {
 
@@ -62,6 +81,7 @@ public class Security {
 		return profile;
 	}
 
+	
 	public void setProfile(Profile profile) {
 		this.profile = profile;
 	}
