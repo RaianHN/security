@@ -1,0 +1,42 @@
+<?xm version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+
+
+	<xp:panel id="loadingPanel"
+		style="background-color:rgb(255,255,255);height:auto;width:5%">
+
+		<xp:image url="/loading+%282%29.gif" id="image1"></xp:image>
+		<xp:eventHandler event="onClientLoad" submit="false">
+			<xp:this.script><![CDATA[hideWait();]]></xp:this.script>
+		</xp:eventHandler>
+	</xp:panel>
+
+	<xp:scriptBlock id="scriptBlock1" type="text/javascript">
+		<xp:this.value><![CDATA[// Generic Function to call out dynamic functions
+function showWait(){
+	var id = '#{id:loadingPanel}'
+	var ele = document.getElementById(id);
+	ele.style.display = "block";
+
+	
+}
+
+		function hideWait()
+		{
+	
+	var id = '#{id:loadingPanel}'
+		var ele = document.getElementById(id);
+	ele.style.display = "none";
+	
+	
+	
+}
+
+function showError(){
+alert("Error processing request");
+hideWait();
+}
+
+]]></xp:this.value>
+	</xp:scriptBlock>
+</xp:view>

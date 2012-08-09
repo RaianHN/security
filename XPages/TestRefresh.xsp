@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+
+	<xp:table>
+		<xp:tr>
+			<xp:td>Button</xp:td>
+			<xp:td>Value</xp:td>
+		</xp:tr>
+		<xp:tr>
+			<xp:td>
+				<xp:button value="Partial Refresh" id="button1"
+					styleClass="lotusFormButton">
+				<xp:eventHandler event="onclick" submit="true"
+					refreshMode="partial" refreshId="computedField1"
+					id="eventHandler1">
+					<xp:this.action><![CDATA[#{javascript:var now = @Now()
+println("rqst sent partial");
+viewScope.val = now.getHour()+" "+now.getMinute()+" "+now.getSeconds();}]]></xp:this.action>
+				</xp:eventHandler></xp:button></xp:td>
+			<xp:td>
+				<xp:text escape="true" id="computedField1"><xp:this.value><![CDATA[#{javascript:var val = viewScope.val;
+if(val!=null){
+return val;
+}}]]></xp:this.value></xp:text></xp:td>
+		</xp:tr>
+	<xp:tr><xp:td><xp:button value="Full Refresh" id="button2" styleClass="lotusFormButton">
+				<xp:eventHandler event="onclick" submit="true"
+					refreshMode="complete" id="eventHandler2">
+					<xp:this.action><![CDATA[#{javascript:var now = @Now()
+println("rqst sent full");
+viewScope.val = now.getHour()+" "+now.getMinute()+" "+now.getSeconds();}]]></xp:this.action>
+				</xp:eventHandler></xp:button></xp:td><xp:td></xp:td></xp:tr><xp:tr><xp:td>
+	<xp:button value="No Refresh" id="button3">
+		<xp:eventHandler event="onclick" submit="true"
+			refreshMode="norefresh">
+			<xp:this.action><![CDATA[#{javascript:println("No refresh")}]]></xp:this.action>
+		</xp:eventHandler></xp:button></xp:td><xp:td></xp:td></xp:tr></xp:table></xp:view>

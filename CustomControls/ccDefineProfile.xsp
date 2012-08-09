@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xc="http://www.ibm.com/xsp/custom"
+	xmlns:xe="http://www.ibm.com/xsp/coreex">
+
+
+	<xp:this.beforePageLoad><![CDATA[#{javascript:var profileNames = getProfiles();
+viewScope.profileNames = profileNames;}]]></xp:this.beforePageLoad>
+	<xp:table style="width:100%">
+		<xp:tr>
+			<xp:td align="left">
+				<xp:table>
+					<xp:tr>
+						<xp:td>
+							<xp:span style="font-weight:bold">
+								Profile
+							</xp:span>
+							:
+						</xp:td>
+						<xp:td>
+							<xp:comboBox id="moduleCombo"
+								binding="#{javascript:viewScope.selProfile1}">
+								<xp:selectItem
+									itemLabel="--Select Profile--" id="selectItem1">
+								</xp:selectItem>
+								<xp:selectItems id="selectItems1">
+									<xp:this.value><![CDATA[#{javascript:viewScope.profileNames}]]></xp:this.value>
+								</xp:selectItems>
+
+								<xp:eventHandler event="onchange"
+									submit="true" refreshMode="complete" onStart="showWait()">
+									<xp:this.action><![CDATA[#{javascript:viewScope.modulePermission = null;
+var profName = getComponent("moduleCombo").getValue();
+var moduleVisib = new bsuite.weber.jsonparsing.ProfileEdit();
+moduleVisib.getModulePermission(profName);
+
+var component = getComponent('panelPermission'); 
+var s = facesContext;
+var c1="/ccPermissions.xsp";
+// var c1="/cc_TestPage.xsp";
+var id="modulediv";
+bsuite.weber.loadcc.DynamicCC.removePreview(component);
+bsuite.weber.loadcc.DynamicCC.loadCC(s, component, c1, id);}]]></xp:this.action>
+								</xp:eventHandler>
+							</xp:comboBox>
+						</xp:td>
+						<xp:td styleClass="debugButton">
+							<xp:button value="Save" id="button1"
+								style="background-color:rgb(192,192,192);color:rgb(0,0,0)">
+								<xp:eventHandler event="onclick"
+									submit="false">
+									<xp:this.script><![CDATA[savePermissions();]]></xp:this.script>
+
+
+
+								</xp:eventHandler>
+							</xp:button>
+							&#160;&#160;&#160;
+							<xp:link escape="true" text="Create New"
+								id="link37" style="font-size:7pt">
+								<xp:eventHandler event="onclick"
+									submit="false">
+									<xp:this.script><![CDATA[XSP.openTooltipDialog('#{id:tooltipDialog13}','#{id:link37}')]]></xp:this.script>
+								</xp:eventHandler>
+							</xp:link>
+
+
+
+						</xp:td>
+
+
+
+					</xp:tr>
+				</xp:table>
+
+			</xp:td>
+			<xp:td>
+
+			</xp:td>
+
+
+
+
+
+
+
+
+
+
+		</xp:tr>
+
+		<xp:tr>
+			<xp:td colspan="5">
+				<xp:panel id="panelPermission" style="width:auto"></xp:panel>
+			</xp:td>
+		</xp:tr>
+	</xp:table>
+
+
+	<xp:br></xp:br>
+	<xp:br></xp:br>
+	<xe:tooltipDialog id="tooltipDialog13">
+		<xp:panel>
+			<xp:table>
+
+				<xp:tr>
+					<xp:td>
+						<xp:inputText id="inputText3">
+
+
+						</xp:inputText>
+
+					</xp:td>
+					<xp:td></xp:td>
+				</xp:tr>
+				<xp:tr>
+					<xp:td>
+						<xp:button value="Save" id="button32"
+							styleClass="lotusFormButton" style="font-size:7pt">
+
+
+							<xp:eventHandler event="onclick"
+								submit="true" refreshMode="partial" refreshId="panelPermission"
+								onStart="showWait()" onComplete="hideWait()"
+								onError="showError()">
+								<xp:this.script><![CDATA[XSP.closeTooltipDialog('#{id:tooltipDialog13}')]]></xp:this.script>
+
+								<xp:this.action><![CDATA[#{javascript:var profName = getComponent("inputText3").getValue();
+var dp = new bsuite.weber.configure.Deploy();
+dp.createProfileDoc(profName);}]]></xp:this.action>
+							</xp:eventHandler>
+						</xp:button>
+						&#160;
+						<xp:button value="Cancel" id="button33"
+							style="font-size:7pt" styleClass="lotusFormButton">
+							<xp:eventHandler event="onclick"
+								submit="false" id="eventHandler55">
+								<xp:this.script><![CDATA[XSP.closeTooltipDialog('#{id:tooltipDialog13}')]]></xp:this.script>
+							</xp:eventHandler>
+						</xp:button>
+					</xp:td>
+					<xp:td></xp:td>
+				</xp:tr>
+			</xp:table>
+		</xp:panel>
+
+	</xe:tooltipDialog>
+</xp:view>

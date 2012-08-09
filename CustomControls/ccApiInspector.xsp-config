@@ -5,9 +5,9 @@
     <default-prefix>xc</default-prefix>
   </faces-config-extension>
   <composite-component>
-    <component-type>cc_creategroup</component-type>
-    <composite-name>cc_creategroup</composite-name>
-    <composite-file>/cc_creategroup.xsp</composite-file>
+    <component-type>ccApiInspector</component-type>
+    <composite-name>ccApiInspector</composite-name>
+    <composite-file>/ccApiInspector.xsp</composite-file>
     <composite-extension>
       <designer-extension>
         <in-palette>true</in-palette>

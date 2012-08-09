@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core" xmlns:xc="http://www.ibm.com/xsp/custom"
+	xmlns:xe="http://www.ibm.com/xsp/coreex">
+	
+	<xc:ccDebug></xc:ccDebug>
+	<xp:br></xp:br>
+	<xc:ccApiInspector></xc:ccApiInspector>
+	<xp:br></xp:br>
+
+
+	<xp:this.resources>
+		<xp:script src="/CommonFunctions.jss" clientSide="false"></xp:script>
+		<xp:script src="/commonCScript.js" clientSide="true"></xp:script>
+	</xp:this.resources>
+
+
+
+
+
+	<xp:button value="Label" id="button2">
+		<xp:eventHandler event="onclick" submit="true"
+			refreshMode="partial" id="testEvent">
+			<xp:this.action><![CDATA[#{javascript:var thisObj:com.ibm.xsp.component.xp.XspEventHandler = this;
+
+var id  = thisObj.getParent().getClientId(facesContext);
+viewScope.clId = @LeftBack(id,":");
+var arr = new Array();
+arr[0] = 4;
+arr[1] = 4;
+arr[2] = 4;
+viewScope.arrCount = arr;
+}]]></xp:this.action>
+		</xp:eventHandler></xp:button>
+	
+	2:<xp:button value="Label" id="button1">
+	<xp:eventHandler event="onclick" submit="false">
+		<xp:this.script><![CDATA[var clId = "#{javascript:viewScope.clId}"
+var arrNumberOfFeatures = "#{javascript:viewScope.arrCount}"
+getFeaturePermission(clId,arrNumberOfFeatures);]]></xp:this.script>
+	</xp:eventHandler></xp:button>
+	<xp:table>
+		<xp:tr>
+			<xp:td>Module Name</xp:td>
+			<xp:td>Feature Name</xp:td>
+			<xp:td>Visibility</xp:td>
+		</xp:tr>
+		<xp:repeat rows="30" var="rowData">
+			<xp:this.value><![CDATA[#{javascript:getModuleNames();}]]></xp:this.value>
+			<xp:this.id><![CDATA[${javascript:return "moduleRepeat"}]]></xp:this.id>
+			<xp:tr>
+				<xp:td>
+					<xp:text escape="true" id="moduleName"
+						value="#{javascript:rowData}">
+					</xp:text>
+				</xp:td>
+				<xp:td></xp:td>
+				<xp:td></xp:td>
+			</xp:tr>
+			<xp:repeat rows="30" var="rowData2"
+				value="#{javascript:getFeaturePerm(rowData);}">
+
+				<xp:this.id><![CDATA[${javascript:return "featureRepeat"}]]></xp:this.id>
+				<xp:tr>
+					<xp:td>
+
+					</xp:td>
+					<xp:td>
+						<xp:text escape="true" id="computedField2"
+							value="#{javascript:rowData2}">
+						</xp:text>
+					</xp:td>
+					<xp:td>
+
+						<xp:checkBox>
+
+							<xp:this.defaultChecked><![CDATA[#{javascript:rowData;
+ifChecked(rowData2)}]]></xp:this.defaultChecked>
+							<xp:this.id><![CDATA[${javascript:return "chk"}]]></xp:this.id>
+						</xp:checkBox>
+					</xp:td>
+				</xp:tr>
+
+			</xp:repeat>
+		</xp:repeat>
+	</xp:table>
+</xp:view>

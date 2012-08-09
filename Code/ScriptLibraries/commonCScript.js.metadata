@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><note class="filter" maintenanceversion="3.0" replicaid="65257A2D0037D8F1" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="2242" sequence="124" unid="652E39C6A035A88665257A2900387EB1">
+<created><datetime>20120626T154704,49+0530</datetime></created>
+<modified><datetime>20120711T141444,34+0530</datetime></modified>
+<revised><datetime>20120711T141044,00+0530</datetime></revised>
+<lastaccessed><datetime>20120711T141444,34+0530</datetime></lastaccessed>
+<addedtofile><datetime>20120630T160105,64+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Jaya K Prakash/O=Weberon</name><name>CN=Tenzing Sangmo/O=Weberon</name><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
+<wassignedby><name>CN=Jaya K Prakash/O=Weberon</name></wassignedby>
+<item name="$TITLE" sign="true"><text>commonCScript</text></item>
+<item name="$Flags"><text>h534Q</text></item>
+<item name="$PublicAccess" sign="true"><text>1</text></item>
+<item name="$DesignerVersion"><text>8.5.3</text></item>
+
+<item name="$Comment"><text>Will contain common client side scripts</text></item></note>
