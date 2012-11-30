@@ -2,7 +2,7 @@
 <xp:view xmlns:xp="http://www.ibm.com/xsp/core" xmlns:xc="http://www.ibm.com/xsp/custom"
 	xmlns:xe="http://www.ibm.com/xsp/coreex">
 	
-	<xc:delSample></xc:delSample>
+	
 
 
 
@@ -10,7 +10,7 @@
 
 
 
-	<xe:djTabContainer id="djTabContainer1"
+	<xe:djTabContainer id="MainTabContainer"
 		style="height:50px;width:50px">
 		<xe:djTabPane id="djTabPane1" title="Home"></xe:djTabPane>
 	</xe:djTabContainer>
