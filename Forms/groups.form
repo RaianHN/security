@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE note SYSTEM 'xmlschemas/domino_8_5_3.dtd'>
+<note class='form' xmlns='http://www.lotus.com/dxl' version='8.5' maintenanceversion='3.0'
+ replicaid='65257AC30021844F'>
+<noteinfo noteid='6066' unid='DB36CC6A909872E565257AC30023E4CD' sequence='1'>
+<created><datetime>20121127T120203,33+0530</datetime></created>
+<modified><datetime>20121127T122648,10+0530</datetime></modified>
+<revised><datetime>20121127T120205,00+0530</datetime></revised>
+<lastaccessed><datetime>20121127T122648,10+0530</datetime></lastaccessed>
+<addedtofile><datetime>20121127T122648,10+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Admin BSUITE/O=Development</name><name>CN=Tenzing Sangmo/O=Weberon</name><name
+>CN=Jaya K Prakash/O=Weberon</name></updatedby>
+<wassignedby><name>CN=Tenzing Sangmo/O=Weberon</name></wassignedby>
+<item name='$Comment' sign='true'><text/></item>
+<item name='$HTMLCode' sign='true'>
+<rawitemdata type='1'>
+X/8QAAIADwAHAAAAAAAAAA==
+</rawitemdata></item>
+<item name='$TITLE'><text>groups</text></item>
+<item name='$Info' sign='true'>
+<rawitemdata type='1'>
+hhgBAIAAAAAAgAAAAQABAP///wAQAAAA
+</rawitemdata></item>
+<item name='$Flags'><text/></item>
+<item name='$DesignerVersion'><text>8.5.2</text></item>
+<item name='$$ScriptName' summary='false' sign='true'><text>groups</text></item>
+<item name='g_name' placeholder='true'>
+<rawitemdata type='0'>
+</rawitemdata></item>
+<item name='g_members' placeholder='true'>
+<rawitemdata type='0'>
+</rawitemdata></item>
+<item name='$Fields'><textlist><text>g_members</text><text>g_name</text></textlist></item>
+<item name='$Body' sign='true'>
+<rawitemdata type='1'>
+gQKC/1oAAQAAAAAAAAAAAKAFAACgBQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAABAAAAAJSHAAAAAAAAAAAAAAAAAQAAAAQAAACDBAEAhf8IAAEAAArdBgAAiv/+/1AA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4AHgAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAIr/KgCKAAAFADACAAAAAAAAAgEAAAoAAAAAAAAAAAYAAAAAAGdf
+bmFtZWIOAQCEAAAAAAAAAAAA3gYAAIr/hf8IAAEAAArdBgAAiv/+/1AAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAB4AHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAIr/LgCKAAEFBjACAAAAAAAAAgEAAAoAAAAAAAAAAAkAAAAAAGdfbWVtYmVycwBiDgEAhAAA
+AAAAAAAAAN4GAACK/4X/CAABAAAK
+</rawitemdata></item></note>
+
