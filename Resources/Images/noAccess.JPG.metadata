@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257AC30021844F" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="6292" sequence="1" unid="82D8013AB21DAF4A65257AC3003D9EB7">
+<created><datetime>20121127T164303,27+0530</datetime></created>
+<modified><datetime>20121127T164303,32+0530</datetime></modified>
+<revised><datetime>20121127T164303,31+0530</datetime></revised>
+<lastaccessed><datetime>20121127T164303,32+0530</datetime></lastaccessed>
+<addedtofile><datetime>20121127T164303,32+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
+<wassignedby><name>CN=Jaya K Prakash/O=Weberon</name></wassignedby>
+<item name="$TITLE"><text>noAccess.JPG</text></item>
+<item name="$Flags"><text>34CiQ</text></item>
+<item name="$FlagsExt"><text>D</text></item>
+<item name="$ImagesWide" sign="true"><number>1</number></item>
+<item name="$ImagesHigh" sign="true"><number>1</number></item>
+<item name="$ImagesColorize" sign="true"><number>0</number></item>
+
+
+<item name="$MimeType" sign="true"><text>image/jpeg</text></item>
+<item name="$FileModDT" sign="true"><datetime>20121127T164209,96+0530</datetime></item>
+<item name="$ImageNames" sign="true"><text>noAccess.JPG</text></item>
+<item name="$DesignerVersion"><text>8.5.3</text></item></note>

@@ -1,22 +1,21 @@
-<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257A1A004C4EAD" version="8.5" xmlns="http://www.lotus.com/dxl">
-<noteinfo noteid="40f6" sequence="3" unid="9ADA0924665E083D65257A2A001B3570">
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257AC30021844F" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="36ee" sequence="4" unid="9ADA0924665E083D65257A2A001B3570">
 <created><datetime>20120627T102711,52+0530</datetime></created>
-<modified><datetime>20120629T094949,94+0530</datetime></modified>
-<revised><datetime>20120629T094949,93+0530</datetime></revised>
-<lastaccessed><datetime>20120629T094949,94+0530</datetime></lastaccessed>
-<addedtofile><datetime>20120627T102711,53+0530</datetime></addedtofile></noteinfo>
-<updatedby><name>CN=Satyanarayan Porwal/O=Weberon</name><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
+<modified><datetime>20121127T122605,08+0530</datetime></modified>
+<revised><datetime>20120809T144358,02+0530</datetime></revised>
+<lastaccessed><datetime>20121127T122605,08+0530</datetime></lastaccessed>
+<addedtofile><datetime>20121127T122605,08+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
 <wassignedby><name>CN=Jaya K Prakash/O=Weberon</name></wassignedby>
 <item name="$TITLE"><text>loading (2).gif</text></item>
 <item name="$FlagsExt"><text>D</text></item>
 <item name="$ImagesWide" sign="true"><number>1</number></item>
 <item name="$ImagesHigh" sign="true"><number>1</number></item>
 <item name="$ImagesColorize" sign="true"><number>0</number></item>
-
-
-<item name="$MimeType" sign="true"><text>image/gif</text></item>
 <item name="$FileModDT" sign="true"><datetime>20120622T152117,39+0530</datetime></item>
 <item name="$ImageNames" sign="true"><text>loading (2).gif</text></item>
-<item name="$DesignerVersion"><text>8.5.3</text></item>
 <item name="$Flags"><text>34CiQ$</text></item>
-<item name="$EditFilePath"><text>C:\DOCUME~1\JPrakash\LOCALS~1\Temp\notes87944B\~loading%20(2)2.gif</text></item></note>
+<item name="$EditFilePath"><text>C:\DOCUME~1\JPrakash\LOCALS~1\Temp\notes87944B\~loading%20(2)2.gif</text></item>
+<item name="$DesignerVersion"><text>8.5.3</text></item>
+
+</note>
