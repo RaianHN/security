@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+
+	<xp:table>
+		<xp:tr>
+			<xp:td style="font-weight:bold">User</xp:td>
+			<xp:td style="font-weight:bold">Profile</xp:td>
+			<xp:td style="font-weight:bold">Role</xp:td>
+			<xp:td></xp:td>
+		</xp:tr>
+		<xp:tr>
+			<xp:td>
+				<xp:comboBox id="comboBox1">
+					<xp:selectItems id="selectItems1">
+						<xp:this.value><![CDATA[#{javascript:var path =database.getFilePath();
+var dbpath =  @LeftBack(path ,"/");
+//var db= dbpath+"/Security.nsf";
+var db=dbpath+"/admntool.nsf";
+var serv = @Word(@Implode(@DbName(),", "),", ", 1);
+var com = new Array(serv,db);
+var x= @DbColumn(com,  "employeeprofile", 1);
+@Explode(x,",;",true);}]]></xp:this.value>
+					</xp:selectItems>
+				</xp:comboBox>
+			</xp:td>
+			<xp:td>
+			<xp:comboBox id="comboBox2">
+				<xp:selectItems>
+					<xp:this.value><![CDATA[#{javascript:var profileNames = getProfiles();
+return profileNames;}]]></xp:this.value>
+				</xp:selectItems>
+			</xp:comboBox>
+			
+			</xp:td>
+			<xp:td>
+				
+				
+			<xp:comboBox id="comboBox3">
+				<xp:this.defaultValue><![CDATA[#{javascript://var as= new bsuite.weber.relationship.Association();
+//var rname=as.getDefaultRoleName(sessionScope.documentId);
+//viewScope.oldrole=rname;
+//rname;}]]></xp:this.defaultValue>
+				<xp:selectItems>
+					<xp:this.value><![CDATA[#{javascript:var path =database.getFilePath();
+var dbpath =  @LeftBack(path ,"/");
+var db= dbpath+"/Security.nsf";
+var serv = @Word(@Implode(@DbName(),", "),", ", 1);
+var com = new Array(serv,db);
+var x= @DbColumn(com,  "RolesView", 1);
+@Explode(x,",;",true);}]]></xp:this.value>
+				</xp:selectItems>
+			</xp:comboBox></xp:td>
+			<xp:td>
+				<xp:button value="Save" id="button1">
+					<xp:eventHandler event="onclick" submit="true"
+						refreshMode="complete">
+						<xp:this.action><![CDATA[#{javascript:var personName = getComponent("comboBox1").getValue();
+var profileName = getComponent("comboBox2").getValue();
+var roleName = getComponent("comboBox3").getValue();
+var cd = new bsuite.weber.configure.CreateDatabase();
+cd.createRoleProfileAssociation(personName,profileName,roleName);
+}]]></xp:this.action>
+					</xp:eventHandler></xp:button></xp:td>
+		</xp:tr>
+	</xp:table></xp:view>

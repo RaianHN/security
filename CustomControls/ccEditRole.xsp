@@ -29,10 +29,10 @@
 								id="viewColumnHeader1">
 							</xp:viewColumnHeader>
 							<xp:eventHandler event="onclick"
-								submit="true" refreshMode="partial" refreshId="ShowRoleDoc"
-								onStart="showWait();" onComplete="hideWait();">
+								submit="true" refreshMode="partial" onStart="showWait();"
+								onComplete="hideWait();" refreshId="ShowRoleDoc">
 								<xp:this.action><![CDATA[#{javascript:var component = getComponent("ShowRoleDoc");
-com.weberon.DynamicCC.removePreview(component);
+bsuite.weber.loadcc.DynamicCC.removePreview(component);
 var doc:NotesDocument=viewEntry.getDocument();
 var unid=doc.getUniversalID();
 println("UNID ",unid);
@@ -42,7 +42,7 @@ var component= getComponent('ShowRoleDoc');
 var s = facesContext;
 var c1="/ccRoleForm.xsp"; 
 var id="RoleFormdiv";
-com.weberon.DynamicCC.loadCC(s, component, c1, id);}]]></xp:this.action>
+bsuite.weber.loadcc.DynamicCC.loadCC(s, component, c1, id);}]]></xp:this.action>
 							</xp:eventHandler>
 						</xp:viewColumn>
 						<xp:viewColumn columnName="role_to"

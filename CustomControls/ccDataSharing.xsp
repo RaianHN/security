@@ -12,7 +12,9 @@
 				</xp:td>
 				<xp:td>
 					<xp:comboBox id="ModuleName">
-						<xp:selectItem itemLabel="&lt;&lt;Select ModuleName&gt;&gt;"></xp:selectItem><xp:selectItems>
+					<xp:selectItem itemLabel="&lt;&lt;Select ModuleName&gt;&gt;"></xp:selectItem>
+						<xp:selectItems>
+						
 							<xp:this.value><![CDATA[#{javascript://db = new Array(@DbName()[0], 'Demo/Security.nsf');
 
 //@DbColumn(database,"All Documents",1);
@@ -26,18 +28,19 @@ return profile.getModuleNames(profName);
 						<xp:eventHandler event="onchange" submit="true"
 							refreshMode="partial" refreshId="EntityName">
 						</xp:eventHandler>
+
 						
 					</xp:comboBox>
 				</xp:td>
 				<xp:td>
-					<xp:comboBox id="EntityName" rendered="true"
-						loaded="true">
-						
+					<xp:comboBox id="EntityName" loaded="true">
+
 						<xp:selectItems>
 							<xp:this.value><![CDATA[#{javascript:var profName="Admin";
 var moduleName=getComponent("ModuleName").getValue();
 var profile = new bsuite.weber.jsonparsing.ProfileEdit();
-if(profName!=null && moduleName!=null){
+if(profName!=null && moduleName!=null && moduleName!="<<Select ModuleName>>"){
+println("profilename "+profName+" module"+moduleName)
 profile.getEntityNames(profName,moduleName);
 }
 }]]></xp:this.value>

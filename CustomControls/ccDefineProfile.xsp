@@ -90,7 +90,7 @@ bsuite.weber.loadcc.DynamicCC.loadCC(s, component, c1, id);}]]></xp:this.action>
 		</xp:tr>
 
 		<xp:tr>
-			<xp:td colspan="5">
+			<xp:td colspan="5" id="profileTable">
 				<xp:panel id="panelPermission" style="width:auto"></xp:panel>
 			</xp:td>
 		</xp:tr>

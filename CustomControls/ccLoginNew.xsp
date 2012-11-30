@@ -135,13 +135,15 @@ println("OnLCick of Configure");
 	
 	<xp:link escape="true" text="SetUp" id="link3">
 		<xp:this.rendered><![CDATA[#{javascript:var adm = sessionScope.profileName;
-println("sess profilename"+adm);
+var roleBoolean = context.getUser().getRoles().contains('[Deployer]');//Added if defined Deployer in Acl
 if(adm!=null){
 if(adm=="Admin"){
 return true;
 }else{
 return false;
 }
+}else if(roleBoolean){
+	return true;//To check Acl deployer role
 }}]]></xp:this.rendered>
 		<xp:eventHandler event="onmouseover" submit="false">
 			<xp:this.script><![CDATA[XSP.openMenu(thisEvent,#{javascript:getComponent('popupsetup').getMenuCtor()})]]></xp:this.script>

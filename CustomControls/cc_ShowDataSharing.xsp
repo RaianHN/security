@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xp:view xmlns:xp="http://www.ibm.com/xsp/core">
-
-
-	
 	<xp:this.resources>
-		<xp:script src="/Copy Of CustomControlLib.js"
-			clientSide="true">
+		<xp:script src="/Copy Of CustomControlLib.js" clientSide="true">
 		</xp:script>
 		<xp:script src="/CommonFunctions.jss" clientSide="false"></xp:script>
 	</xp:this.resources>
 	<xp:panel>
-		
+
 		<xp:table id="table2">
 			<xp:tr>
 				<xp:td rendered="false">
 					&#160;
 					<xp:br id="br1"></xp:br>
-					<xp:comboBox id="comboBox2"
-						binding="#{javascript:viewScope.profNam2}" rendered="false">
+					<xp:comboBox id="comboBox2" binding="#{javascript:viewScope.profNam2}"
+						rendered="false">
 						<xp:selectItems id="selectItems1">
 							<xp:this.value><![CDATA[#{javascript:viewScope.profileNames}]]></xp:this.value>
 						</xp:selectItems>
@@ -26,15 +22,15 @@
 				<xp:td>
 					Module:
 					<xp:br id="br2"></xp:br>
-					<xp:comboBox id="comboBox3"
-						binding="#{javascript:viewScope.moduleNam2}">
-						<xp:selectItem
-							itemLabel="&lt;&lt;Select Module&gt;&gt;" id="selectItem4">
+					<xp:comboBox id="comboBox3" binding="#{javascript:viewScope.moduleNam2}">
+						<xp:selectItem itemLabel="&lt;&lt;Select Module&gt;&gt;"
+							id="selectItem4">
 						</xp:selectItem>
 						<xp:selectItems id="selectItems2">
 							<xp:this.value><![CDATA[#{javascript:var profName = "Admin";
 var profile = new bsuite.weber.jsonparsing.ProfileEdit();
 if(profName!=null){
+
 return profile.getModuleNames(profName);
 }
 }]]></xp:this.value>
@@ -75,9 +71,9 @@ bsuite.weber.loadcc.DynamicCC.loadCC(s, component, c1, id);}]]></xp:this.action>
 						</xp:eventHandler>
 					</xp:comboBox>
 					<xp:button value="Label" id="button1" rendered="false">
-						
-					<xp:eventHandler event="onclick" submit="false">
-						<xp:this.script><![CDATA[var table = document.getElementById('#{id:table2}');
+
+						<xp:eventHandler event="onclick" submit="false">
+							<xp:this.script><![CDATA[var table = document.getElementById('#{id:table2}');
 var access="";
 var i = 0;
 var j = 0;
@@ -120,13 +116,13 @@ for (i = 3; i < table.rows.length; i++) {
 }
 XSP.executeOnServer('view:_id1:accessTypePerm', "", "", result);
 ]]></xp:this.script>
-					</xp:eventHandler></xp:button>
+						</xp:eventHandler>
+					</xp:button>
 				</xp:td>
 				<xp:td>
 					<xp:br id="br3"></xp:br>
 					<xp:button value="Go" id="button9"
-						style="background-color:rgb(192,192,192);width:100.0px"
-						rendered="false">
+						style="background-color:rgb(192,192,192);width:100.0px" rendered="false">
 						<xp:eventHandler event="onclick" submit="true"
 							refreshMode="complete" id="eventHandler1">
 							<xp:this.action><![CDATA[#{javascript://viewScope.selProfile = getComponent("comboBox2").getValue();
@@ -207,8 +203,7 @@ XSP.executeOnServer('view:_id1:accessTypePerm', "",
 				</xp:td>
 			</xp:tr>
 
-			<xp:repeat id="repeat2" rows="30" var="rowData"
-				rendered="false">
+			<xp:repeat id="repeat2" rows="30" var="rowData" rendered="false">
 				<xp:this.value><![CDATA[#{javascript:
 
 println("in repeat");
@@ -241,8 +236,8 @@ return "public";
 return "read";
 }
 }]]></xp:this.defaultValue>
-							<xp:selectItem itemLabel="Private"
-								itemValue="private" id="selectItem1">
+							<xp:selectItem itemLabel="Private" itemValue="private"
+								id="selectItem1">
 							</xp:selectItem>
 							<xp:selectItem itemLabel="Public Read/Write"
 								itemValue="public" id="selectItem2">

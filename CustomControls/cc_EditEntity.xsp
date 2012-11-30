@@ -12,13 +12,13 @@ return false;
 				<xp:this.defaultValue><![CDATA[#{javascript://var as= new bsuite.weber.relationship.Association();
 //as.getDefaultPersonName(sessionScope.documentId);}]]></xp:this.defaultValue>
 				<xp:selectItems>
-					<xp:this.value><![CDATA[#{javascript://var path =database.getFilePath();
-//var dbpath =  @LeftBack(path ,"/");
+					<xp:this.value><![CDATA[#{javascript:var path =database.getFilePath();
+var dbpath =  @LeftBack(path ,"/");
 //var db= dbpath+"/Security.nsf";
-var db="names.nsf";
+var db=dbpath+"/admntool.nsf";
 var serv = @Word(@Implode(@DbName(),", "),", ", 1);
 var com = new Array(serv,db);
-var x= @DbColumn(com,  "($VIMPeople)", 1);
+var x= @DbColumn(com,  "employeeprofile", 1);
 @Explode(x,",;",true);}]]></xp:this.value>
 				</xp:selectItems>
 			</xp:comboBox>

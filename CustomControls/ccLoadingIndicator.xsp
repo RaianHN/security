@@ -5,7 +5,7 @@
 	<xp:panel id="loadingPanel"
 		style="background-color:rgb(255,255,255);height:auto;width:5%">
 
-		<xp:image url="/loading+%282%29.gif" id="image1"></xp:image>
+		<xp:image url="/loading-indicator.gif" id="image1"></xp:image>
 		<xp:eventHandler event="onClientLoad" submit="false">
 			<xp:this.script><![CDATA[hideWait();]]></xp:this.script>
 		</xp:eventHandler>
@@ -23,7 +23,6 @@ function showWait(){
 
 		function hideWait()
 		{
-	
 	var id = '#{id:loadingPanel}'
 		var ele = document.getElementById(id);
 	ele.style.display = "none";
@@ -33,6 +32,7 @@ function showWait(){
 }
 
 function showError(){
+
 alert("Error processing request");
 hideWait();
 }

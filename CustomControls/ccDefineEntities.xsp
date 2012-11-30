@@ -22,8 +22,7 @@
 										id="button2"
 										style="background-color:rgb(192,192,192);width:100.0px">
 										<xp:eventHandler event="onclick"
-											submit="true" refreshMode="partial" refreshId="ConfigureDiv"
-											id="eventHandler1">
+											submit="true" refreshMode="complete" id="eventHandler1">
 											<xp:this.action><![CDATA[#{javascript:var component = getComponent('loadCC');
 if(component.getChildren!=null){
 bsuite.weber.loadcc.DynamicCC.removePreview(component);
@@ -64,8 +63,7 @@ bsuite.weber.loadcc.DynamicCC.loadCC(s, component, c1, id);
 										id="button1"
 										style="background-color:rgb(192,192,192);width:100.0px">
 										<xp:eventHandler event="onclick"
-											submit="true" refreshMode="partial" refreshId="ConfigureDiv"
-											id="eventHandler2">
+											submit="true" refreshMode="complete" id="eventHandler2">
 											<xp:this.action><![CDATA[#{javascript:var component = getComponent('loadCC'); 
 if(component.getChildren!=null){
 bsuite.weber.loadcc.DynamicCC.removePreview(component);
@@ -86,8 +84,7 @@ bsuite.weber.loadcc.DynamicCC.loadCC(s, component, c1, id);
 										value="Add Roles"
 										style="background-color:rgb(192,192,192);width:100.0px">
 										<xp:eventHandler event="onclick"
-											submit="true" refreshMode="partial" refreshId="ConfigureDiv"
-											id="eventHandler3">
+											submit="true" refreshMode="complete" id="eventHandler3">
 											<xp:this.action><![CDATA[#{javascript:var component = getComponent('loadCC'); 
 if(component.getChildren!=null){
 bsuite.weber.loadcc.DynamicCC.removePreview(component);
@@ -121,13 +118,13 @@ bsuite.weber.loadcc.DynamicCC.loadCC(s, component, c1, id);
 					<xp:td>
 						<xp:comboBox id="comboBox1">
 							<xp:selectItems>
-								<xp:this.value><![CDATA[#{javascript://var path =database.getFilePath();
-//var dbpath =  @LeftBack(path ,"/");
+								<xp:this.value><![CDATA[#{javascript:var path =database.getFilePath();
+var dbpath =  @LeftBack(path ,"/");
 //var db= dbpath+"/Security.nsf";
-var db="names.nsf";
+var db=dbpath+"/admntool.nsf";
 var serv = @Word(@Implode(@DbName(),", "),", ", 1);
 var com = new Array(serv,db);
-var x= @DbColumn(com,  "($VIMPeople)", 1);
+var x= @DbColumn(com,  "employeeprofile", 1);
 @Explode(x,",;",true);}]]></xp:this.value>
 							</xp:selectItems>
 						</xp:comboBox>
