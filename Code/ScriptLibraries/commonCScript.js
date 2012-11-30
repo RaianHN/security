@@ -243,12 +243,15 @@ function saveModulePermissions(){
 	var profileName = getProfileName;
 	var modulePArray = new Array();
 	//view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:modulediv:moduleRepeatM:0:ccModuleP:repeatModules:0:tabVChk
-	var strBaseId = "view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:";
+	//var strBaseId = "view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:";
+	var strBaseId = "view:_id1:_id2:MainTabContainer:djProfile:_id74:";
+	//view:_id1:_id2:MainTabContainer:djProfile:_id74:modulediv:moduleRepeatM:0:ccModuleP:repeatModules:0:tabVChk
+	//view:_id1:_id2:MainTabContainer:djProfile:_id74:modulediv:inputNModules
 	//Get the profile name	
-	var nModulesStr = document.getElementById("view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:modulediv:inputNModules").value
+	var nModulesStr = document.getElementById(strBaseId+"modulediv:inputNModules").value
 	//Get number of modules
 	var nModules = getModuleNumber(nModulesStr);
-	//alert("nmodules"+nModules);
+	alert("nmodules"+nModules);
 	var k=0;
 	var moduleName = "";
 	var modulePerm = null;
@@ -279,8 +282,9 @@ function saveModulePermissions(){
 function saveFeaturePermissions(){
 	var profileName = getProfileName;
 	var featurePArray = new Array();
-	var strBaseId = "view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:";
-	var nModulesStr = document.getElementById("view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:modulediv:inputNModules").value
+	//var strBaseId = "view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:";
+	var strBaseId = "view:_id1:_id2:MainTabContainer:djProfile:_id74:";
+	var nModulesStr = document.getElementById(strBaseId+"modulediv:inputNModules").value
 	//Get number of modules
 	var nModules = getModuleNumber(nModulesStr);
 	var nFeatures=0;
@@ -318,8 +322,9 @@ function saveFeaturePermissions(){
 function saveEntityPermissions(){
 	var profileName = getProfileName;
 	var entityPArray = new Array();
-	var strBaseId = "view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:";
-	var nModulesStr = document.getElementById("view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:modulediv:inputNModules").value
+	//var strBaseId = "view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:";
+	var strBaseId = "view:_id1:_id2:MainTabContainer:djProfile:_id74:";
+	var nModulesStr = document.getElementById(strBaseId+"modulediv:inputNModules").value
 	//Get number of modules
 	var nModules = getModuleNumber(nModulesStr);
 	var nEntities=0;
@@ -390,8 +395,9 @@ view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:modulediv:moduleRepeatM:1:
 function saveFieldPermissions(){
 	var profileName = getProfileName;
 	var fieldPArray = new Array();
-	var strBaseId = "view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:";
-	var nModulesStr = document.getElementById("view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:modulediv:inputNModules").value
+	//var strBaseId = "view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:";
+	var strBaseId = "view:_id1:_id2:MainTabContainer:djProfile:_id74:";
+	var nModulesStr = document.getElementById(strBaseId+"modulediv:inputNModules").value
 	//Get number of modules
 	var nModules = getModuleNumber(nModulesStr);
 	var nEntities = 0;
@@ -468,14 +474,14 @@ function getModuleNumber(strValue){
 	return null;
 }
 function getProfileName(){
-	var strBaseId = "view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:";
+	var strBaseId = "view:_id1:_id2:MainTabContainer:djProfile:_id74:";
 	var x = document.getElementById(strBaseId+"moduleCombo").selectedIndex;
 	var y=document.getElementById(strBaseId+"moduleCombo").options;
 	return y[x].text;
 }
 
 function getFeatureNumber(moduleName){
-	var ele = document.getElementById("view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:modulediv:inputNFeatures");
+	var ele = document.getElementById("view:_id1:_id2:MainTabContainer:djProfile:_id74:modulediv:inputNFeatures");
 	if(ele==null){
 		alert("no features found for"+moduleName);
 		return 0;
@@ -494,7 +500,7 @@ function getFeatureNumber(moduleName){
 }
 
 function getEntityNumber(moduleName){
-	var ele = document.getElementById("view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:modulediv:inputNEntities");
+	var ele = document.getElementById("view:_id1:_id2:MainTabContainer:djProfile:_id74:modulediv:inputNEntities");
 	if(ele==null){
 		alert("no features found for"+moduleName);
 		return 0;
@@ -519,7 +525,7 @@ function getCheckedValue(ele){
 }
 
 function getFieldNumber(moduleName,entityName){
-	var ele = document.getElementById("view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:modulediv:inputNFields");
+	var ele = document.getElementById("view:_id1:_id2:MainTabContainer:djProfile:_id74:modulediv:inputNFields");
 	if(ele==null){
 		alert("no features found for"+moduleName);
 		return 0;
