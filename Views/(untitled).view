@@ -1,15 +1,15 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE note SYSTEM 'xmlschemas/domino_8_5_3.dtd'>
-<note class='view' xmlns='http://www.lotus.com/dxl' version='8.5' maintenanceversion='3.0'
- replicaid='65257A2D0037D8F1'>
-<noteinfo noteid='5b6' unid='AFF7EC2FCF74457765257A11002504F0' sequence='21'>
-<created><datetime>20120602T121420,96+0530</datetime></created>
-<modified><datetime>20120710T174902,51+0530</datetime></modified>
-<revised><datetime>20120630T162633,17+0530</datetime></revised>
-<lastaccessed><datetime>20120710T174902,51+0530</datetime></lastaccessed>
-<addedtofile><datetime>20120710T174902,51+0530</datetime></addedtofile></noteinfo>
-<updatedby><name>CN=Jaya K Prakash/O=Weberon</name><name>CN=Tenzing Sangmo/O=Weberon</name></updatedby>
-<wassignedby><name>CN=Tenzing Sangmo/O=Weberon</name></wassignedby>
+<note default='true' class='view' xmlns='http://www.lotus.com/dxl' version='8.5'
+ maintenanceversion='3.0' replicaid='65257AC30021844F'>
+<noteinfo noteid='172' unid='66D9F5700D388B4D65257A55002CB2FC' sequence='2'>
+<created><datetime>20120809T133814,04+0530</datetime></created>
+<modified><datetime>20121127T122456,54+0530</datetime></modified>
+<revised><datetime>20120809T144546,84+0530</datetime></revised>
+<lastaccessed><datetime>20121127T122813,15+0530</datetime></lastaccessed>
+<addedtofile><datetime>20121127T122456,54+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
+<wassignedby><name>CN=Jaya K Prakash/O=Weberon</name></wassignedby>
 <item name='$TITLE'><text/></item>
 <item name='$Formula' summary='true'><formula compiled='true'>
 HAAFAA4ACgABAAQAJCQkJAQABAAAAAgAZgADAA==
