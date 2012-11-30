@@ -5,17 +5,26 @@ import java.util.Map;
 import java.util.Vector;
 
 import lotus.domino.Database;
+import lotus.domino.NotesException;
 import lotus.domino.View;
 import bsuite.weber.relationship.Association;
-import bsuite.weber.tools.BSUtil;
-import bsuite.weber.tools.BsuiteMain;
-import bsuite.weber.tools.JSFUtil;
+import com.bsuite.utility.*;
+
 import lotus.domino.Document;
 
 import com.ibm.xsp.extlib.util.ExtLibUtil;
 
-public class ManualSharing extends BsuiteMain {
+public class ManualSharing {
 
+	String userName;	
+	public ManualSharing() {
+		try {
+			userName = ExtLibUtil.getCurrentSession().getEffectiveUserName();
+		} catch (NotesException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	@SuppressWarnings("unchecked")
 	public void sharing() {
 		Map viewscope = (Map) JSFUtil.getVariableValue("viewScope");
@@ -29,8 +38,8 @@ public class ManualSharing extends BsuiteMain {
 
 		dbname = dbname.toLowerCase().replace(" ", "") + ".nsf";
 		try {
-			Database entitydb = ExtLibUtil.getCurrentSession().getDatabase("",
-					bsuitepath + dbname);
+			
+			Database entitydb = Utility.getDatabase(dbname);
 			String documentId = (String) sessionscope.get("documentId");
 			Document doc = entitydb.getDocumentByUNID(documentId);
 
@@ -48,8 +57,8 @@ public class ManualSharing extends BsuiteMain {
 	@SuppressWarnings("unchecked")
 	public boolean sharevisible() {
 		Association as = new Association();
-
-		String currentuser = as.getFormattedName(this.currentuser, "common");
+		
+		String currentuser = as.getFormattedName(userName, "common");
 		Map viewscope = (Map) JSFUtil.getVariableValue("viewScope");
 		Map sessionscope = (Map) JSFUtil.getVariableValue("sessionScope");
 		String dbname = (String) viewscope.get("moduleName");
@@ -61,8 +70,8 @@ public class ManualSharing extends BsuiteMain {
 		dbname = dbname.toLowerCase().replace(" ", "") + ".nsf";
 
 		try {
-			Database entitydb = ExtLibUtil.getCurrentSession().getDatabase("",
-					bsuitepath + dbname);
+			
+			Database entitydb = Utility.getDatabase(dbname);
 			String documentId = (String) sessionscope.get("documentId");
 			Document doc = entitydb.getDocumentByUNID(documentId);
 			String createdBy = doc.getItemValueString("createdBy");
@@ -79,8 +88,9 @@ public class ManualSharing extends BsuiteMain {
 	public Vector getFullName() {
 		Vector profileNames = new Vector();
 		try {
-			Database employeesdb = ExtLibUtil.getCurrentSession().getDatabase(
-					"", bsuitepath + "employees.nsf");
+			
+			
+			Database employeesdb = Utility.getDatabase("employees.nsf");
 			View vie = employeesdb.getView("Employee");
 			Document doc = vie.getFirstDocument();
 
@@ -89,7 +99,7 @@ public class ManualSharing extends BsuiteMain {
 				doc = vie.getNextDocument(doc);
 			}
 			Association as = new Association();
-			String currentuser = as.getFormattedName(this.currentuser, "abr");
+			String currentuser = as.getFormattedName(userName, "abr");
 			profileNames.remove(currentuser);
 
 		} catch (Exception e) {
@@ -102,7 +112,8 @@ public class ManualSharing extends BsuiteMain {
 	public Vector defaultValues() {
 		Map viewscope = (Map) JSFUtil.getVariableValue("viewScope");
 		Map sessionscope = (Map) JSFUtil.getVariableValue("sessionScope");
-		bsuitepath = BSUtil.getBsuitePath(ExtLibUtil.getCurrentDatabase());
+		
+		
 		String dbname = (String) viewscope.get("moduleName");
 
 		if (dbname.contains("_")) {
@@ -112,15 +123,11 @@ public class ManualSharing extends BsuiteMain {
 		dbname = dbname.toLowerCase().replace(" ", "") + ".nsf";
 		Vector defaultusers = new Vector();
 		try {
-			Database entitydb = ExtLibUtil.getCurrentSession().getDatabase("",
-					bsuitepath + dbname);
-
+			
+			Database entitydb = Utility.getDatabase(dbname);
 			String documentId = (String) sessionscope.get("documentId");
-
 			Document doc = entitydb.getDocumentByUNID(documentId);
-
 			defaultusers = doc.getItemValue("shareWithUser");
-
 		} catch (Exception e) {
 		}
 		return defaultusers;
@@ -130,7 +137,8 @@ public class ManualSharing extends BsuiteMain {
 	public Vector defaultValuesRoles() {
 		Map viewscope = (Map) JSFUtil.getVariableValue("viewScope");
 		Map sessionscope = (Map) JSFUtil.getVariableValue("sessionScope");
-		bsuitepath = BSUtil.getBsuitePath(ExtLibUtil.getCurrentDatabase());
+		
+		
 		String dbname = (String) viewscope.get("moduleName");
 
 		if (dbname.contains("_")) {
@@ -140,8 +148,7 @@ public class ManualSharing extends BsuiteMain {
 		dbname = dbname.toLowerCase().replace(" ", "") + ".nsf";
 		Vector defaultroles = new Vector();
 		try {
-			Database entitydb = ExtLibUtil.getCurrentSession().getDatabase("",
-					bsuitepath + dbname);
+			Database entitydb = Utility.getDatabase(dbname);
 
 			String documentId = (String) sessionscope.get("documentId");
 

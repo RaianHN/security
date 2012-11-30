@@ -8,13 +8,12 @@ import lotus.domino.DbDirectory;
 import lotus.domino.Document;
 import lotus.domino.Name;
 import lotus.domino.View;
-import bsuite.weber.model.BsuiteWorkFlow;
-import bsuite.weber.tools.BSUtil;
-import bsuite.weber.tools.BsuiteMain;
 
+
+import com.bsuite.utility.Utility;
 import com.ibm.xsp.extlib.util.ExtLibUtil;
 
-public class CreateDatabase extends BsuiteMain {
+public class CreateDatabase {
 
 	public Database createDB(String dbName) {
 		try {
@@ -25,16 +24,16 @@ public class CreateDatabase extends BsuiteMain {
 			Database db1 = null;
 			@SuppressWarnings("unused")
 			Database currentdb = ExtLibUtil.getCurrentDatabase();
-			String path = BSUtil.getBsuitePath(ExtLibUtil.getCurrentDatabase());
+			String path = Utility.getBsuitePath(ExtLibUtil.getCurrentDatabase());
 			boolean found = false;
 			String dbpath = path + dbName.toLowerCase().replace(" ", "");
 
-			DbDirectory dir = session.getDbDirectory(null);
+			DbDirectory dir = ExtLibUtil.getCurrentSession().getDbDirectory(null);
 
 			Database db = dir.getFirstDatabase(DbDirectory.DATABASE);
 			while (db != null) {
 				String fn = db.getFileName();
-				String currentpath = BSUtil.getBsuitePath(db);
+				String currentpath = Utility.getBsuitePath(db);
 				String fulldb=currentpath+fn;
 				//System.out.println("Current dbpth,"+fulldb);
 				//System.out.println("dbpath,"+dbpath);
@@ -190,7 +189,7 @@ public void createDatabases(Vector<String> modules) {
 		Document persondoc=getPerson(name);
 		String personDocId=persondoc.getUniversalID();
 	System.out.println("UNID "+personDocId);
-			Database empdb = session.getDatabase("", bsuitepath
+			/*Database empdb = session.getDatabase("", bsuitepath
 					+ "employees.nsf");
 			
 			Document empdoc=empdb.createDocument();
@@ -201,19 +200,19 @@ public void createDatabases(Vector<String> modules) {
 		
 			String relId = getRelationNameUnid("IS_A");
 			createRelationship(persondoc.getUniversalID(),"names.nsf","Person","Employee.nsf","Employee",empdoc.getUniversalID(),relId);
-			
+			*/
 			
 			String src_data=name;
 			String relationid = getRelationNameUnid("HAS_A");
 			String trg_data="Admin";
-			Database securityDb  = session.getDatabase("", bsuitepath
-					+ "Security.nsf");
+			Database securityDb  = Utility.getDatabase("Security.nsf");
+			
 			View profileview= securityDb.getView("ProfileView");
 			Document profiledoc = profileview.getDocumentByKey(trg_data);
 			String targetid=profiledoc.getUniversalID();
 			String srcunid=personDocId;
 			//creating relationship between person and admin profile
-			createRelationship(srcunid,"names.nsf",src_data,securityDb.getFileName(),trg_data,targetid,relationid);
+			createRelationship(srcunid,"admntool.nsf",src_data,securityDb.getFileName(),trg_data,targetid,relationid);
 			
 			//Create Role Association with the Person
 			createRoleAssociation(name,"CEO" );
@@ -234,14 +233,14 @@ public void createDatabases(Vector<String> modules) {
 		String personDocId=persondoc.getUniversalID();
 		String relationid = getRelationNameUnid("HAS_ROLE");
 		String rolename=roleName;
-		Database securityDb  = session.getDatabase("", bsuitepath
-				+ "Security.nsf");
+		
+		Database securityDb  = Utility.getDatabase("Security.nsf");
 		View roleview=  securityDb.getView("RolesView");
 		Document roledoc= roleview.getDocumentByKey(rolename);
 		String roleunid=roledoc.getUniversalID();
-		createRelationship(personDocId,"names.nsf",src_data,securityDb.getFileName(),rolename,roleunid,relationid);
+		createRelationship(personDocId,"admntool.nsf",src_data,securityDb.getFileName(),rolename,roleunid,relationid);
 		}catch (Exception e) {
-			// TODO: handle exception
+			
 		}
 	}
 	
@@ -249,8 +248,9 @@ public void createDatabases(Vector<String> modules) {
 	private Document getPerson(String username) {
 		try {
 
-			Database namesdb = session.getDatabase("", "names.nsf");
-			View peopleview = namesdb.getView("($VIMPeople)");
+			
+			Database namesdb = Utility.getDatabase("admntool.nsf");
+			View peopleview = namesdb.getView("employeeprofile");
 			Document userdoc = peopleview.getDocumentByKey(username);
 			return userdoc;
 		} catch (Exception e) {
@@ -263,8 +263,8 @@ public void createDatabases(Vector<String> modules) {
 	
 	public String  getRelationNameUnid(String relationName){
 		try{
-			 Database relationDb = session.getDatabase("", bsuitepath
-						+ "Relation.nsf");
+			Database relationDb  = Utility.getDatabase("Relation.nsf");
+			
 					View relview=relationDb.getView("CategoryRelation");
 					Document reldoc= relview.getDocumentByKey(relationName);
 					return reldoc.getUniversalID();
@@ -279,9 +279,8 @@ public void createDatabases(Vector<String> modules) {
 	public void createRelationship(String srcunid,String sourcedb,String src_data,String targetdb,String trg_data,String targetid,String relationid){
 	
 		try{
-			 Database relationDb = session.getDatabase("", bsuitepath
-						+ "Relation.nsf");
-				
+			 
+			 Database relationDb  = Utility.getDatabase("Relation.nsf");
 			 Document reldoc=relationDb.createDocument();
 			 reldoc.replaceItemValue("Form","association");
 			 reldoc.replaceItemValue("sourceid", srcunid);
@@ -304,7 +303,7 @@ public void createDatabases(Vector<String> modules) {
 	private String getFormattedName(String currentuser, String param) {
 		try {			
 
-			Name user = session.createName(currentuser);
+			Name user = ExtLibUtil.getCurrentSession().createName(currentuser);
 			if (param.equals("abr")) {
 				return user.getAbbreviated();
 			}
@@ -340,15 +339,15 @@ public void createDatabases(Vector<String> modules) {
 		Document persondoc=getPerson(personName);
 		String personDocId=persondoc.getUniversalID();
 	System.out.println("UNID "+personDocId);
-			Database empdb = session.getDatabase("", bsuitepath
-				+ "employees.nsf");
+	Database empdb  = Utility.getDatabase("employees.nsf");
+			
 			
 			//Document empdoc=empdb.createDocument();
 			//empdoc.replaceItemValue("Form","Employee");
 			//empdoc.save(true,false);	
 			Document empdoc = empdb.getDocumentByUNID(edocid);
 			String relId = getRelationNameUnid("IS_A");
-			createRelationship(persondoc.getUniversalID(),"names.nsf","Person","Employee.nsf","Employee",empdoc.getUniversalID(),relId);
+			createRelationship(persondoc.getUniversalID(),"admntool.nsf","Person","Employee.nsf","Employee",empdoc.getUniversalID(),relId);
 			//Store the Person Name in the employee document so that user names should be shown while manually sharing the records
 			empdoc.replaceItemValue("FullName", personName);
 			empdoc.save(true,false);
@@ -356,14 +355,13 @@ public void createDatabases(Vector<String> modules) {
 			String src_data=personName;
 			String relationid = getRelationNameUnid("HAS_A");
 			String trg_data=profileName;
-			Database securityDb  = session.getDatabase("", bsuitepath
-					+ "Security.nsf");
+			Database securityDb  = Utility.getDatabase("Security.nsf");		
 			View profileview= securityDb.getView("ProfileView");
 			Document profiledoc = profileview.getDocumentByKey(trg_data);
 			String targetid=profiledoc.getUniversalID();
 			String srcunid=personDocId;
 			//creating relationship between person and admin profile
-			createRelationship(srcunid,"names.nsf",src_data,securityDb.getFileName(),trg_data,targetid,relationid);
+			createRelationship(srcunid,"admntool.nsf",src_data,securityDb.getFileName(),trg_data,targetid,relationid);
 			
 			//Create Role Association with the Person
 			createRoleAssociation(personName, role);
@@ -373,5 +371,29 @@ public void createDatabases(Vector<String> modules) {
 		}
 	
 		
+	}
+	public void createProfileAssociation(String personName, String profileName){
+		
+		try{
+			Document persondoc=getPerson(personName);
+			String personDocId=persondoc.getUniversalID();
+			String src_data=personName;
+			String relationid = getRelationNameUnid("HAS_A");
+			String trg_data=profileName;
+			Database securityDb  = Utility.getDatabase("Security.nsf");		
+			View profileview= securityDb.getView("ProfileView");
+			Document profiledoc = profileview.getDocumentByKey(trg_data);
+			String targetid=profiledoc.getUniversalID();
+			String srcunid=personDocId;
+			//creating relationship between person and admin profile
+			createRelationship(srcunid,"admntool.nsf",src_data,securityDb.getFileName(),trg_data,targetid,relationid);
+		}
+		catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+	public void createRoleProfileAssociation(String personName, String profileName, String roleName){
+		createProfileAssociation(personName,profileName);
+		createRoleAssociation(personName, roleName);
 	}
 }

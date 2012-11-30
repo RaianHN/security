@@ -9,9 +9,10 @@ import lotus.domino.Document;
 import lotus.domino.NotesException;
 import bsuite.weber.jsonparsing.*;
 import bsuite.weber.relationship.Association;
-import bsuite.weber.tools.BsuiteMain;
+import com.ibm.xsp.extlib.util.ExtLibUtil;
 
-public class Profile extends BsuiteMain {
+
+public class Profile{
 	private ProfileJson profileJson;
 	private String profileName;
 
@@ -250,7 +251,18 @@ public class Profile extends BsuiteMain {
 	}
 
 	private ProfileJson getProfileJsonObject() {
+		System.out.println("get profile json1");
 		Association as = new Association();
+		System.out.println("get profile json2");
+		String currentuser=null;
+		try {
+			System.out.println("get profile json3");
+			currentuser = ExtLibUtil.getCurrentSession().getEffectiveUserName();
+			System.out.println("profile json1"+currentuser);
+		} catch (NotesException e1) {
+			e1.printStackTrace();
+		}
+		System.out.println("profile json2"+currentuser);
 		Document profDoc = as.getAssociatedProfile(currentuser);
 		if (profDoc == null) {
 			return null;
@@ -385,5 +397,17 @@ public class Profile extends BsuiteMain {
 
 		return vFields;
 	}
+	
+
+	public boolean isEntityCreate(String moduleName, String entityName){
+		if (getEntity(moduleName, entityName).getCreate().equals("1")) {
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
+
+
 
 }

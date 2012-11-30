@@ -1,4 +1,4 @@
-package bsuite.weber.jsonparsing;
+package bsuite.weber.configure;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -1100,9 +1100,6 @@ public class ProfileEdit {
 		//System.out.println("1");
 		ProfileJson profile = getProfileObj(profileName);
 		//System.out.println("2");
-		if(profile==null){
-			return null;
-		}
 		Vector<String> modules = new Vector<String>();
 		for(Module mod:profile.getModules()){
 			//System.out.println("3");
@@ -1113,9 +1110,6 @@ public class ProfileEdit {
 		}
 	private ProfileJson getProfileObj(String profileName){
 		Document profDoc = getProfileDoc(getSecurityDatabase(),profileName);
-		if(profDoc==null){
-			return null;
-		}
 		String jsonString="";
 		try {
 			jsonString = profDoc.getItemValueString("JsonString");

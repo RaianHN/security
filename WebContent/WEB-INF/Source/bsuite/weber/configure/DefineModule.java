@@ -9,6 +9,9 @@ import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
+import com.ibm.xsp.extlib.util.ExtLibUtil;
+
+import lotus.domino.Database;
 import lotus.domino.Document;
 import lotus.domino.DocumentCollection;
 import lotus.domino.NotesException;
@@ -16,12 +19,16 @@ import lotus.domino.View;
 import lotus.domino.ViewEntry;
 import lotus.domino.ViewEntryCollection;
 
-import bsuite.weber.model.BsuiteWorkFlow;
-import bsuite.weber.tools.BSUtil;
-import bsuite.weber.tools.BsuiteMain;
+
 
 @SuppressWarnings("unused")
-public class DefineModule extends BsuiteMain {
+public class DefineModule{
+	Database currentdb;
+	
+	public DefineModule() {
+		currentdb = ExtLibUtil.getCurrentDatabase();
+	}
+	
 	public void addModules(Vector<String> modules) {
 		for (String moduleName : modules) {
 			String moduleJson = createJsonString(moduleName);
@@ -38,7 +45,7 @@ public class DefineModule extends BsuiteMain {
 	private void createModuleDocument(String moduleJson, String moduleName) {
 
 		try {
-			Document doc = currentdb.createDocument();
+			Document doc = ExtLibUtil.getCurrentDatabase().createDocument();
 			doc.replaceItemValue("obid", "module");
 			doc.replaceItemValue("moduleName", moduleName);
 			doc.replaceItemValue("JsonString", moduleJson);

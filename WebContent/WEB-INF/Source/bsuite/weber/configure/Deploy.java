@@ -9,39 +9,36 @@ import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
-import bsuite.weber.jsonparsing.ProfileEdit;
+import com.bsuite.utility.Utility;
+import com.ibm.xsp.extlib.util.ExtLibUtil;
+
+
 import bsuite.weber.jsonparsing.ProfileJson;
-import bsuite.weber.model.BsuiteWorkFlow;
-import bsuite.weber.tools.BsuiteMain;
+
 
 import lotus.domino.Database;
 import lotus.domino.Document;
-import lotus.domino.DocumentCollection;
 import lotus.domino.NotesException;
 import lotus.domino.View;
 
-public class Deploy extends BsuiteMain{
+public class Deploy {
 
 	public void createRoleDocs(){
-		try {
-			createRoleDocuments(session.getDatabase("", bsuitepath+"Security.nsf"));
-		} catch (NotesException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+			
+			createRoleDocuments(Utility.getDatabase("Security.nsf"));
+		
 	}
 	public void createProfileDocs(){
-		try {
-			createProfileDocument(session.getDatabase("", bsuitepath+"Security.nsf"), "Admin");
-			createProfileDocument(session.getDatabase("", bsuitepath+"Security.nsf"), "Standard");
-		} catch (NotesException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+			createProfileDocument(Utility.getDatabase("Security.nsf"), "Admin");
+			createProfileDocument(Utility.getDatabase("Security.nsf"), "Standard");
+	
 	}
 	public void testView(){
 		try {
-			currentdb.createView("Test View");
+			ExtLibUtil.getCurrentDatabase().createView("Test View");
+			
 		} catch (NotesException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -66,13 +63,8 @@ public class Deploy extends BsuiteMain{
 	}
 
 	@SuppressWarnings("unchecked")
-	public void createProfileDoc(String profileName){
-		try {
-			createProfileDocument(session.getDatabase("", bsuitepath+"Security.nsf"), profileName);
-		} catch (NotesException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void createProfileDoc(String profileName) throws NotesException{
+		createProfileDocument(Utility.getDatabase("Security.nsf"), profileName);
 		
 	}
 	
@@ -242,7 +234,7 @@ public class Deploy extends BsuiteMain{
 		
 	}
 	public void deploy(){
-		createDatabases();//Create databases for modules
+		//createDatabases();//Create databases for modules
 		createRoleDocs();//Create role documents for the role hierarchy created in security.nsf
 		createProfileDocs();//Create the profile documents, standard and admin in Security.nsf
 		
@@ -253,7 +245,7 @@ public class Deploy extends BsuiteMain{
 		ArrayList<Document> dc = new ArrayList<Document>();
 		Document doc = null;
 		try {
-			db = session.getDatabase("", bsuitepath+"Security.nsf");
+			db = Utility.getDatabase("Security.nsf");
 			view = db.getView("ProfileView");
 			doc = view.getFirstDocument();
 			while(doc!=null){
@@ -489,7 +481,8 @@ public class Deploy extends BsuiteMain{
 				System.out.println("5..");
 				for(int j=0;j<modules.size();j++){//For each module in the schema
 					moduleName = modules.get(j);
-					db = pf.getDatabase(moduleName+".nsf");
+					//db = pf.getDatabase(moduleName+".nsf");
+					db = Utility.getDatabase(moduleName+".nsf");
 					features = df.getFeatures(moduleName); //for the features defined in each module
 					 entities = df.getEntityNames(moduleName);
 					 view = null;

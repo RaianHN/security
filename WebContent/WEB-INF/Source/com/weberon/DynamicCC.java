@@ -5,7 +5,7 @@ package com.weberon;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
-import bsuite.weber.tools.CompUtil;
+
 
 import com.ibm.xsp.component.UIIncludeComposite;
 import com.ibm.xsp.component.xp.XspEventHandler;

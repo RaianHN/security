@@ -9,29 +9,53 @@ import lotus.domino.Document;
 import lotus.domino.DocumentCollection;
 import lotus.domino.NotesException;
 import lotus.domino.View;
+import com.ibm.xsp.extlib.util.ExtLibUtil;
 
 import bsuite.weber.relationship.Association;
-import bsuite.weber.tools.BsuiteMain;
-import bsuite.weber.tools.JSFUtil;
 
-public class Role extends BsuiteMain {
+import com.bsuite.utility.*;
 
-	String roleName;
-	String searchString;
-	Vector<String> hierarchyRoleList = new Vector<String>();
-	Vector<String> dataSharedRoles = new Vector<String>();
-	Vector<String> effectiveUsersList = new Vector<String>();
-	Association as = new Association();
+/**
+[Class description-- To get the user's associated rolename]
+   
+  @author TSangmo
+  @created On Aug 8, 2012
+ */
+public class Role {
 
+	private String roleName;
+	private String searchString;
+	private Vector<String> hierarchyRoleList = new Vector<String>();
+	private Vector<String> dataSharedRoles = new Vector<String>();
+	private Vector<String> effectiveUsersList = new Vector<String>();
+	private Association as = new Association();
+	private String currentuser;
 	public Role() {
-
+		try{
+			currentuser = ExtLibUtil.getCurrentSession().getEffectiveUserName();
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		
+		
+		roleName=as.getAssociatedRoleName(currentuser);
 	}
 
+	
+	/**
+	 
+	 [this is called from getmydocs() in workspace to create the search String to be applied on view]
+	  
+	  @return [It will return search string]
+	 
+	@return
+	 */
 	@SuppressWarnings({ "unchecked"})
 	public String createSearchString() {
 		Map viewScope = (Map) JSFUtil.getVariableValue("viewScope");
 		String moduleName = (String) viewScope.get("moduleName");
 		String entityName = (String) viewScope.get("entityName");
+		System.out.println("roleNam "+roleName);
 		this.hierarchyRoleList = getFinalRoleList(roleName);// to get the child
 															// roles of the
 															// given role
@@ -72,19 +96,19 @@ public class Role extends BsuiteMain {
 		Vector userslist = new Vector();
 
 		for (String x : hierarchyRoleList) {
-			userslist.addAll(getAssociatedUsers(x));
+			userslist.addAll(as.getAssociatedUsers(x));
 		}
 
 		// Users from DataSharingRules
 		Vector dsusers = new Vector();
 		for (String x : dataSharedRoles) {
-			dsusers.addAll(getAssociatedUsers(x));
+			dsusers.addAll(as.getAssociatedUsers(x));
 
 		}
 
 		// Check whether the shareDataWithPeers is set or not in the Role
 		// Document
-		Boolean sharedata = isShareDataWithPeers(RoleName);
+		Boolean sharedata = as.isShareDataWithPeers(RoleName);
 		Vector peersname = new Vector();
 
 		// To remove all the duplicated values
@@ -95,7 +119,7 @@ public class Role extends BsuiteMain {
 		// if sharedata is true, then add usersname to the final users list
 		if (sharedata) {
 			
-			peersname.addAll(getAssociatedUsers(RoleName));
+			peersname.addAll(as.getAssociatedUsers(RoleName));
 			userset.addAll(peersname);
 		}
 
@@ -115,11 +139,11 @@ public class Role extends BsuiteMain {
 	@SuppressWarnings("unchecked")
 	public Vector getRolesFromDataSharingRules(String moduleName,
 			String entityName, String roleName) {
-		Vector roles = new Vector();
+		Vector roles = new Vector(); 
 
 		try {
-			Database security = session.getDatabase("", bsuitepath
-					+ "Security.nsf");
+			
+			Database security = Utility.getDatabase("Security.nsf");
 			View datasharingView = security.getView("DataSharingView");
 			String key = moduleName + "+" + entityName + "+" + roleName;
 			DocumentCollection dc = datasharingView.getAllDocumentsByKey(key);
@@ -152,8 +176,7 @@ public class Role extends BsuiteMain {
 	public Vector getChildRoles(String roleName) {
 		Vector roles = new Vector();
 		try {
-			Database security = session.getDatabase("", bsuitepath
-					+ "Security.nsf");
+			Database security = Utility.getDatabase("Security.nsf");
 			View rolesView = security.getView("RolesViewCat");
 			DocumentCollection coll = rolesView.getAllDocumentsByKey(roleName);
 			Document doc = coll.getFirstDocument();
@@ -172,66 +195,8 @@ public class Role extends BsuiteMain {
 		return roles;
 	}
 
-	@SuppressWarnings("unchecked")
-	public Vector getAssociatedUsers(String RoleName) {
-		try {
-			// get the rolename unid
-			Database security = session.getDatabase("", bsuitepath
-					+ "Security.nsf");
-			View roleView = security.getView("RolesView");
-			Document roledoc = roleView.getDocumentByKey(RoleName);
-			String roleunid = roledoc.getUniversalID();
-
-			// Get HAS_A relationame unid
-			Database relationDb = session.getDatabase("", bsuitepath
-					+ "Relation.nsf");
-			View relview = relationDb.getView("CategoryRelation");
-			Document reldoc = relview.getDocumentByKey("HAS_ROLE");
-			String relationid = reldoc.getUniversalID();
-
-			// Do lookup to get the person unids
-			String key = JSFUtil.getlookupkey(relationid, roleunid);
-			Vector tmp = new Vector();
-			tmp.add(key);
-			Vector<String> personunid = JSFUtil.DBLookupVector("relation",
-					"TargetRelation", tmp, 4);
-			Database namesdb = session.getDatabase("", "names.nsf");
-
-			Vector users = new Vector();
-			Document persondoc = null;
-			String fname = "";
-			for (String x : personunid) {
-				persondoc = namesdb.getDocumentByUNID(x);
-				fname = persondoc.getItemValueString("FullName");
-				users.add(fname);
-			}
-			return users;
-
-		} catch (Exception e) {
-
-		}
-
-		return null;
-	}
-
-	public boolean isShareDataWithPeers(String RoleName) {
-		try {
-			Database security = session.getDatabase("", bsuitepath
-					+ "Security.nsf");
-			View roleView = security.getView("RolesView");
-
-			Document roledoc = roleView.getDocumentByKey(RoleName);
-			String share = roledoc.getItemValueString("sharewithpeers");
-			if (share.equals("1")) {
-				return true;
-			}
-		} catch (Exception e) {
-		}
-		return false;
-	}
-
 	public String getRoleName() {
-		roleName = as.getAssociatedRoleName(this.currentuser);
+		
 		return roleName;
 	}
 
