@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257AC30021844F" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="6c76" sequence="12" unid="F98DF3CC8EDC2EF665257AC900405B0C">
+<created><datetime>20121203T171256,12+0530</datetime></created>
+<modified><datetime>20121205T164447,68+0530</datetime></modified>
+<revised><datetime>20121205T164447,67+0530</datetime></revised>
+<lastaccessed><datetime>20121205T164447,68+0530</datetime></lastaccessed>
+<addedtofile><datetime>20121203T171256,14+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
+<wassignedby><name>CN=Jaya K Prakash/O=Weberon</name></wassignedby>
+<item name="$Flags"><text>gC~4;</text></item>
+<item name="$TITLE"><text>cc_ConfigureSecurity.xsp</text></item>
+<item name="$Comment" sign="true"><text>To configure dynamic security.</text></item>
+
+
+
+
+<item name="$FileNames" sign="true"><text>cc_ConfigureSecurity.xsp</text></item>
+<item name="$DesignerVersion"><text>8.5</text></item>
+
+
+
+
+</note>

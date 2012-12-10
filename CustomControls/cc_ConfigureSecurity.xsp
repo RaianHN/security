@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+
+	<xp:table>
+		<xp:tr>
+			<xp:td></xp:td>
+			<xp:td>
+				<xp:button value="Setup" id="button1"></xp:button>
+			</xp:td>
+		</xp:tr>
+		<xp:tr>
+			<xp:td>
+				<xp:image url="" id="img"></xp:image></xp:td>
+			<xp:td>
+				
+				
+			<xp:text escape="true" id="computedField1"></xp:text></xp:td>
+		</xp:tr>
+		<xp:tr>
+			<xp:td>
+				<xp:image url="" id="image2"></xp:image></xp:td>
+			<xp:td>
+				
+				<xp:text escape="true" id="computedField2"></xp:text></xp:td>
+		</xp:tr>
+		<xp:tr>
+			<xp:td>
+				<xp:image url="" id="image3"></xp:image></xp:td>
+			<xp:td>
+				<xp:text escape="true" id="computedField3"></xp:text></xp:td>
+		</xp:tr>
+		<xp:tr>
+			<xp:td><xp:image url="" id="image4"></xp:image></xp:td>
+			<xp:td>
+				<xp:text escape="true" id="computedField4"></xp:text></xp:td>
+		</xp:tr>
+	</xp:table>
+	<xp:br></xp:br>
+	<xp:br></xp:br>
+	<xp:section id="section1" header="Log">
+		<xp:text escape="true" id="logField"></xp:text></xp:section></xp:view>

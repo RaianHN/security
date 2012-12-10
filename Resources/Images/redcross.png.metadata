@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257AC30021844F" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="6c86" sequence="1" unid="8B610D735983BA4A65257ACB00384C27">
+<created><datetime>20121205T154455,11+0530</datetime></created>
+<modified><datetime>20121205T154455,15+0530</datetime></modified>
+<revised><datetime>20121205T154455,14+0530</datetime></revised>
+<lastaccessed><datetime>20121205T154455,15+0530</datetime></lastaccessed>
+<addedtofile><datetime>20121205T154455,15+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
+<wassignedby><name>CN=Jaya K Prakash/O=Weberon</name></wassignedby>
+<item name="$TITLE"><text>redcross.png</text></item>
+<item name="$Flags"><text>34CiQ</text></item>
+<item name="$FlagsExt"><text>D</text></item>
+<item name="$ImagesWide" sign="true"><number>1</number></item>
+<item name="$ImagesHigh" sign="true"><number>1</number></item>
+<item name="$ImagesColorize" sign="true"><number>0</number></item>
+
+
+<item name="$FileModDT" sign="true"><datetime>20121205T154420,48+0530</datetime></item>
+<item name="$ImageNames" sign="true"><text>redcross.png</text></item>
+<item name="$DesignerVersion"><text>8.5.3</text></item></note>
