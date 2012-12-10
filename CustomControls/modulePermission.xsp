@@ -26,9 +26,9 @@ Module Permissions<xp:table>
 						refreshMode="complete">
 						<xp:this.action><![CDATA[#{javascript:viewScope.modulePermission = null;
 var profName = getComponent("moduleCombo").getValue();
-var moduleVisib = new bsuite.weber.jsonparsing.ProfileEdit();
 
-moduleVisib.getModulePermission(profName);
+//var moduleVisib = new bsuite.jsonparsing.ProfileEdit();
+//moduleVisib.getModulePermission(profName);
 }]]></xp:this.action>
 					</xp:eventHandler>
 				</xp:comboBox></xp:td>
@@ -136,7 +136,7 @@ XSP.executeOnServer('view:_id1:eventModulePerm', "", "", result);]]></xp:this.sc
 					<xp:selectItem itemLabel="--Select Module--"></xp:selectItem>
 					<xp:selectItems>
 						<xp:this.value><![CDATA[#{javascript:var profName = "Admin";
-var profile = new bsuite.weber.jsonparsing.ProfileEdit();
+var profile = new bsuite.jsonparsing.ProfileEdit();
 if(profName!=null){
 return profile.getModuleNames(profName);
 }
@@ -146,7 +146,7 @@ return profile.getModuleNames(profName);
 						refreshMode="partial" refreshId="table2">
 						<xp:this.action><![CDATA[#{javascript:viewScope.selProfile = getComponent("entityCombo1").getValue();
 viewScope.selModule = getComponent("entityCombo2").getValue();
-var moduleVisib = new bsuite.weber.jsonparsing.ProfileEdit();
+var moduleVisib = new bsuite.jsonparsing.ProfileEdit();
 moduleVisib.getEntityPermission(viewScope.selProfile,viewScope.selModule);}]]></xp:this.action>
 					</xp:eventHandler>
 				</xp:comboBox></xp:td>
@@ -318,7 +318,7 @@ XSP.executeOnServer('view:_id1:eventEntityPerm', "", "", result);]]></xp:this.sc
 					<xp:selectItem itemLabel="--Select Module--"></xp:selectItem>
 					<xp:selectItems>
 						<xp:this.value><![CDATA[#{javascript:var profName = "Admin";
-var profile = new bsuite.weber.jsonparsing.ProfileEdit();
+var profile = new bsuite.jsonparsing.ProfileEdit();
 if(profName!=null){
 return profile.getModuleNames(profName);
 }}]]></xp:this.value>
@@ -327,7 +327,7 @@ return profile.getModuleNames(profName);
 						refreshMode="partial" refreshId="table3">
 						<xp:this.action><![CDATA[#{javascript:var profName = getComponent("fieldCombo1").getValue();
 var moduleName = getComponent("fieldCombo2").getValue();
-var profile = new bsuite.weber.jsonparsing.ProfileEdit();
+var profile = new bsuite.jsonparsing.ProfileEdit();
 if(profName!=null&&moduleName!=null){
 viewScope.entityNamesL = profile.getEntityNames(profName,moduleName);
 }}]]></xp:this.action>
@@ -353,7 +353,7 @@ return values;
 						<xp:this.action><![CDATA[#{javascript:viewScope.selProfile = getComponent("fieldCombo1").getValue();
 viewScope.selModule = getComponent("fieldCombo2").getValue();
 viewScope.selEntity = getComponent("fieldCombo3").getValue();
-var moduleVisib = new bsuite.weber.jsonparsing.ProfileEdit();
+var moduleVisib = new bsuite.jsonparsing.ProfileEdit();
 moduleVisib.getFieldPermission(viewScope.selProfile,viewScope.selModule,viewScope.selEntity);
 }]]></xp:this.action>
 					</xp:eventHandler>
@@ -491,7 +491,7 @@ XSP.executeOnServer('view:_id1:eventFieldPerm', "", "", result);]]></xp:this.scr
 					<xp:selectItem itemLabel="--Select Module--"></xp:selectItem>
 					<xp:selectItems>
 						<xp:this.value><![CDATA[#{javascript:var profName = "Admin";
-var profile = new bsuite.weber.jsonparsing.ProfileEdit();
+var profile = new bsuite.jsonparsing.ProfileEdit();
 if(profName!=null){
 return profile.getModuleNames(profName);
 }}]]></xp:this.value>
@@ -500,7 +500,7 @@ return profile.getModuleNames(profName);
 						refreshMode="partial" refreshId="table4">
 						<xp:this.action><![CDATA[#{javascript:var profName = getComponent("featureCombo1").getValue();
 var moduleName = getComponent("featureCombo2").getValue();
-var profile = new bsuite.weber.jsonparsing.ProfileEdit();
+var profile = new bsuite.jsonparsing.ProfileEdit();
 if(profName!=null&&moduleName!=null){
 viewScope.entityNamesL2 = profile.getEntityNames(profName,moduleName);
 }}]]></xp:this.action>
@@ -525,7 +525,7 @@ return values;
 						<xp:this.action><![CDATA[#{javascript:var profileName = getComponent("featureCombo1").getValue();
 var moduleName = getComponent("featureCombo2").getValue();
 var entityName = getComponent("featureCombo3").getValue();
-var moduleVisib = new bsuite.weber.jsonparsing.ProfileEdit();
+var moduleVisib = new bsuite.jsonparsing.ProfileEdit();
 
 viewScope.selfProfile = profileName;
 viewScope.selfModule = moduleName;

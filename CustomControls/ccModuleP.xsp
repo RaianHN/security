@@ -76,7 +76,7 @@ return true;
 								<xp:this.value><![CDATA[#{javascript:var profileName = getComponent("moduleCombo").getValue();;
 var moduleName = @Left(rowData,":");
 
-var moduleVisib = new bsuite.weber.jsonparsing.ProfileEdit();
+var moduleVisib = new bsuite.jsonparsing.ProfileEdit();
 var result = moduleVisib.getFeaturePermission(profileName,moduleName);
 if(result!=null){
 return result;
@@ -109,7 +109,7 @@ return true;
 							<xp:this.value><![CDATA[#{javascript:var profileName = getComponent("moduleCombo").getValue();;
 var moduleName = @Left(rowData,":");
 println("module and profile"+moduleName+" "+profileName);
-var moduleVisib = new bsuite.weber.jsonparsing.ProfileEdit();
+var moduleVisib = new bsuite.jsonparsing.ProfileEdit();
 var entityPermission = moduleVisib.getEntityPermission(profileName,moduleName);
 if(entityPermission!=null){
 return entityPermission;
@@ -238,7 +238,7 @@ return false;
 											<xp:this.value><![CDATA[#{javascript:var profileName = getComponent("moduleCombo").getValue();;
 var moduleName = @Left(rowData,":");
 var entityName = @Left(rowEntity,":")
-var moduleVisib = new bsuite.weber.jsonparsing.ProfileEdit();
+var moduleVisib = new bsuite.jsonparsing.ProfileEdit();
 var fieldPermission = moduleVisib.getFieldPermission(profileName,moduleName,entityName);
 if(fieldPermission!=null){
 return fieldPermission;

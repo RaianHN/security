@@ -70,7 +70,7 @@ doc.save(true,false);
 							refreshMode="partial" refreshId="ShowRoleDoc"
 							onStart="showWait();" onComplete="hideWait();">
 							<xp:this.action><![CDATA[#{javascript:var component = getComponent("ShowRoleDoc");
-com.weberon.DynamicCC.removePreview(component);}]]></xp:this.action>
+bsuite.weberon.DynamicCC.removePreview(component);}]]></xp:this.action>
 						</xp:eventHandler></xp:button></xp:td>
 				
 			</xp:tr>

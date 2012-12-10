@@ -22,15 +22,15 @@
 				<xp:td>
 					Module:
 					<xp:br id="br2"></xp:br>
-					<xp:comboBox id="comboBox3" binding="#{javascript:viewScope.moduleNam2}">
+					<xp:comboBox id="comboBox3" binding="#{javascript:viewScope.moduleNam2}" rendered="false">
 						<xp:selectItem itemLabel="&lt;&lt;Select Module&gt;&gt;"
 							id="selectItem4">
 						</xp:selectItem>
 						<xp:selectItems id="selectItems2">
 							<xp:this.value><![CDATA[#{javascript:var profName = "Admin";
-var profile = new bsuite.weber.jsonparsing.ProfileEdit();
+							
+var profile = new bsuite.jsonparsing.ProfileEdit();
 if(profName!=null){
-
 return profile.getModuleNames(profName);
 }
 }]]></xp:this.value>
@@ -51,7 +51,7 @@ println("inside Repeat control");
 viewScope.entityPerm = null;
 viewScope.selProfile = "Admin";
 viewScope.selModule = getComponent("comboBox3").getValue();
-var moduleVisib = new bsuite.weber.jsonparsing.ProfileEdit();
+var moduleVisib = new bsuite.jsonparsing.ProfileEdit();
 moduleVisib.getEntityPermission(viewScope.selProfile,viewScope.selModule);
 
 */
@@ -59,15 +59,15 @@ moduleVisib.getEntityPermission(viewScope.selProfile,viewScope.selModule);
 viewScope.entityPerm = null;
 viewScope.selProfile = "Admin";
 viewScope.selModule = getComponent("comboBox3").getValue();
-var moduleVisib = new bsuite.weber.jsonparsing.ProfileEdit();
+var moduleVisib = new bsuite.jsonparsing.ProfileEdit();
 moduleVisib.getEntityPermission(viewScope.selProfile,viewScope.selModule);
 var component=getComponent("tableRepeat");
 var s = facesContext;
 var c1="/ccRepeat.xsp"; 
 var id="Repeatdiv";
-bsuite.weber.loadcc.DynamicCC.loadCC(s, component, c1, id);
-bsuite.weber.loadcc.DynamicCC.removePreview(component);
-bsuite.weber.loadcc.DynamicCC.loadCC(s, component, c1, id);}]]></xp:this.action>
+bsuite.loadcc.DynamicCC.loadCC(s, component, c1, id);
+bsuite.loadcc.DynamicCC.removePreview(component);
+bsuite.loadcc.DynamicCC.loadCC(s, component, c1, id);}]]></xp:this.action>
 						</xp:eventHandler>
 					</xp:comboBox>
 					<xp:button value="Label" id="button1" rendered="false">
@@ -128,7 +128,7 @@ XSP.executeOnServer('view:_id1:accessTypePerm', "", "", result);
 							<xp:this.action><![CDATA[#{javascript://viewScope.selProfile = getComponent("comboBox2").getValue();
 viewScope.selProfile = "Admin";
 viewScope.selModule = getComponent("comboBox3").getValue();
-var moduleVisib = new bsuite.weber.jsonparsing.ProfileEdit();
+var moduleVisib = new bsuite.jsonparsing.ProfileEdit();
 moduleVisib.getEntityPermission(viewScope.selProfile,viewScope.selModule);
 }]]></xp:this.action>
 						</xp:eventHandler>

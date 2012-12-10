@@ -36,7 +36,7 @@ return profileNames;}]]></xp:this.value>
 				
 				
 			<xp:comboBox id="comboBox3">
-				<xp:this.defaultValue><![CDATA[#{javascript://var as= new bsuite.weber.relationship.Association();
+				<xp:this.defaultValue><![CDATA[#{javascript://var as= new bsuite.relationship.Association();
 //var rname=as.getDefaultRoleName(sessionScope.documentId);
 //viewScope.oldrole=rname;
 //rname;}]]></xp:this.defaultValue>
@@ -57,7 +57,7 @@ var x= @DbColumn(com,  "RolesView", 1);
 						<xp:this.action><![CDATA[#{javascript:var personName = getComponent("comboBox1").getValue();
 var profileName = getComponent("comboBox2").getValue();
 var roleName = getComponent("comboBox3").getValue();
-var cd = new bsuite.weber.configure.CreateDatabase();
+var cd = new bsuite.configure.CreateDatabase();
 cd.createRoleProfileAssociation(personName,profileName,roleName);
 }]]></xp:this.action>
 					</xp:eventHandler></xp:button></xp:td>

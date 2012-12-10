@@ -9,7 +9,7 @@ return true;
 return false;
 }}]]></xp:this.rendered>
 			<xp:comboBox id="comboBox3">
-				<xp:this.defaultValue><![CDATA[#{javascript://var as= new bsuite.weber.relationship.Association();
+				<xp:this.defaultValue><![CDATA[#{javascript://var as= new bsuite.relationship.Association();
 //as.getDefaultPersonName(sessionScope.documentId);}]]></xp:this.defaultValue>
 				<xp:selectItems>
 					<xp:this.value><![CDATA[#{javascript:var path =database.getFilePath();
@@ -25,7 +25,7 @@ var x= @DbColumn(com,  "employeeprofile", 1);
 			&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Profile:
 			<xp:comboBox id="comboBox1" required="true">
 
-				<xp:this.defaultValue><![CDATA[#{javascript:/*var as= new bsuite.weber.relationship.Association();
+				<xp:this.defaultValue><![CDATA[#{javascript:/*var as= new bsuite.relationship.Association();
 var pname=as.getDefaultProfileName(sessionScope.documentId);
 viewScope.oldprofile=pname;
 pname;
@@ -43,7 +43,7 @@ var x= @DbColumn(com,  "ProfileView", 1);
 			</xp:comboBox>
 			&#160;&#160;&#160;&#160;&#160;&#160;Role:
 			<xp:comboBox id="comboBox2">
-				<xp:this.defaultValue><![CDATA[#{javascript://var as= new bsuite.weber.relationship.Association();
+				<xp:this.defaultValue><![CDATA[#{javascript://var as= new bsuite.relationship.Association();
 //var rname=as.getDefaultRoleName(sessionScope.documentId);
 //viewScope.oldrole=rname;
 //rname;}]]></xp:this.defaultValue>
@@ -80,7 +80,7 @@ var empunid=sessionScope.documentId;
     var personName = getComponent("comboBox3").getValue();
     var newprofile = getComponent("comboBox1").getValue();
     var newrole = getComponent("comboBox2").getValue();
-   var as= new bsuite.weber.relationship.Association();
+   var as= new bsuite.relationship.Association();
 //as.editEmployee(empunid,viewScope.oldprofile,newprofile,viewScope.oldrole,newrole);
     
    as.editEmployee(empunid,newrole,newprofile);
@@ -112,7 +112,7 @@ id;}'
 					onStart="showWait()" onComplete="hideWait()">
 					<xp:this.action><![CDATA[#{javascript://var component = getComponent('EntityPanel'+viewScope.moduleName);
 var component=getComponent("readPanel"+viewScope.moduleName);
-com.weberon.DynamicCC.removePreview(component);}]]></xp:this.action>
+bsuite.weberon.DynamicCC.removePreview(component);}]]></xp:this.action>
 				</xp:eventHandler>
 			</xp:button>
 			<xp:div id="div1" binding="#{wrkspc.centity}">

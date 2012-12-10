@@ -104,10 +104,10 @@ if (getComponent("DefineEntities") == null)
 var r = getComponent('container'); 
 var s = facesContext; 
 var ccheader="/ccHeader.xsp";
-com.weberon.DynamicCC1.createPortlet(s, r,ccheader,'/ccDefineEntities.xsp',"DefineEntities","DefineEntities");
+bsuite.weberon.DynamicCC1.createPortlet(s, r,ccheader,'/ccDefineEntities.xsp',"DefineEntities","DefineEntities");
 println("After createPortleeeee");
  var l = getComponent('linklist');
- com.weberon.DynamicCC1.createLink(l, "DefineEntities", "DefineEntities"+"link");
+ bsuite.weberon.DynamicCC1.createLink(l, "DefineEntities", "DefineEntities"+"link");
 }else{
  	if(viewScope.moveableToggle=="1"){
  		var parent = getComponent('container');	
@@ -126,8 +126,8 @@ var component = getComponent('MainTabContainer');
 var s = facesContext;
 var c1="/ccDefineEntities.xsp"; 
 var id="modulediv";
-//com.weberon.DynamicCC.loadCC(s, component, c1, id);
-com.weberon.DynamicCC.loadCCinTab(s,component,c1,id,"Configure");
+//bsuite.weberon.DynamicCC.loadCC(s, component, c1, id);
+bsuite.weberon.DynamicCC.loadCCinTab(s,component,c1,id,"Configure");
 println("OnLCick of Configure");
 }]]></xp:this.action>
 		</xp:eventHandler>
@@ -231,8 +231,8 @@ var component = getComponent('MainTabContainer');
 var s = facesContext;
 var c1="/ccDefineEntities.xsp"; 
 var id="modulediv";
-//com.weberon.DynamicCC.loadCC(s, component, c1, id);
-com.weberon.DynamicCC.loadCCinTab(s,component,c1,id,"Configure");
+//bsuite.weberon.DynamicCC.loadCC(s, component, c1, id);
+bsuite.weberon.DynamicCC.loadCCinTab(s,component,c1,id,"Configure");
 println("OnLCick of Configure");
 
 }else if(choice=="profile"){
@@ -242,8 +242,8 @@ var component = getComponent('MainTabContainer');
 var s = facesContext;
 var c1="/ccDefineProfile.xsp"; 
 var id="modulePermdiv";
-//com.weberon.DynamicCC.loadCC(s, component, c1, id);
-com.weberon.DynamicCC.loadCCinTab(s,component,c1,id,"Profile");
+//bsuite.weberon.DynamicCC.loadCC(s, component, c1, id);
+bsuite.weberon.DynamicCC.loadCCinTab(s,component,c1,id,"Profile");
 
 }else if(choice=="createdata"){
 println("OnClick if DataSharing");
@@ -252,8 +252,8 @@ var component = getComponent('MainTabContainer');
 var s = facesContext;
 var c1="/ccDataSharing.xsp"; 
 var id="DataSharingdiv";
-//com.weberon.DynamicCC.loadCC(s, component, c1, id);
-com.weberon.DynamicCC.loadCCinTab(s,component,c1,id,"DataSharing");
+//bsuite.weberon.DynamicCC.loadCC(s, component, c1, id);
+bsuite.weberon.DynamicCC.loadCCinTab(s,component,c1,id,"DataSharing");
 
 }else if(choice=="editdata"){
 
@@ -263,8 +263,8 @@ var component = getComponent('MainTabContainer');
 var s = facesContext;
 var c1="/cc_ShowDataSharing.xsp"; 
 var id="editDataSharingdiv";
-//com.weberon.DynamicCC.loadCC(s, component, c1, id);
-com.weberon.DynamicCC.loadCCinTab(s,component,c1,id,"Edit_DefaultSetting");
+//bsuite.weberon.DynamicCC.loadCC(s, component, c1, id);
+bsuite.weberon.DynamicCC.loadCCinTab(s,component,c1,id,"Edit_DefaultSetting");
 
 }
 
@@ -276,8 +276,8 @@ var component = getComponent('MainTabContainer');
 var s = facesContext;
 var c1="/ccUpdateModule.xsp"; 
 var id="updatemodulediv";
-//com.weberon.DynamicCC.loadCC(s, component, c1, id);
-com.weberon.DynamicCC.loadCCinTab(s,component,c1,id,"UpdateSchema");
+//bsuite.weberon.DynamicCC.loadCC(s, component, c1, id);
+bsuite.weberon.DynamicCC.loadCCinTab(s,component,c1,id,"UpdateSchema");
 
 }
 else if(choice=="editrole"){
@@ -286,8 +286,8 @@ var component = getComponent('MainTabContainer');
 var s = facesContext;
 var c1="/ccEditRole.xsp"; 
 var id="EditRolediv";
-//com.weberon.DynamicCC.loadCC(s, component, c1, id);
-com.weberon.DynamicCC.loadCCinTab(s,component,c1,id,"Edit_Role");
+//bsuite.weberon.DynamicCC.loadCC(s, component, c1, id);
+bsuite.weberon.DynamicCC.loadCCinTab(s,component,c1,id,"Edit_Role");
 
 }
 

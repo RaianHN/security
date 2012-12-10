@@ -4,7 +4,7 @@
 	<xp:panel>
 		<xp:button value="Edit" id="button9"
 			style="background-color:rgb(192,192,192)">
-			<xp:this.rendered><![CDATA[#{javascript:var manual=new bsuite.weber.security.ManualSharing();
+			<xp:this.rendered><![CDATA[#{javascript:var manual=new bsuite.security.ManualSharing();
 var ownervis=manual.sharevisible();
 //ViewScope.editEntity is set in Workspace bean
 if(ownervis || viewScope.editEntity){
@@ -22,7 +22,7 @@ loadEditEntity(viewScope.moduleName,viewScope.entityName);}]]></xp:this.action>
 		<xp:button value="Delete" id="button1"
 			style="background-color:rgb(192,192,192)">
 			<xp:this.rendered><![CDATA[#{javascript:
-var manual=new bsuite.weber.security.ManualSharing();
+var manual=new bsuite.security.ManualSharing();
 var ownervis=manual.sharevisible();
 
 //viewscope.deleteEntity is saved in Workspace bean
@@ -36,13 +36,13 @@ id;}'>
 				<xp:this.action><![CDATA[#{javascript:println("SessionScope doc unid ",sessionScope.documentId);
 pageaction['delete'].execute("employee");
 var component = getComponent('readPanel'+viewScope.moduleName);
-com.weberon.DynamicCC.removePreview(component);}]]></xp:this.action>
+bsuite.weberon.DynamicCC.removePreview(component);}]]></xp:this.action>
 			</xp:eventHandler>
 		</xp:button>
 
 		<xp:button value="Share" id="button2"
 			style="background-color:rgb(192,192,192)">
-			<xp:this.rendered><![CDATA[#{javascript:var manual=new bsuite.weber.security.ManualSharing();
+			<xp:this.rendered><![CDATA[#{javascript:var manual=new bsuite.security.ManualSharing();
 manual.sharevisible();}]]></xp:this.rendered>
 			
 			<xp:eventHandler event="onclick" submit="false"
@@ -56,7 +56,7 @@ manual.sharevisible();}]]></xp:this.rendered>
 return id;}'
 				onStart="showWait();" onComplete="hideWait();">
 				<xp:this.action><![CDATA[#{javascript:var component = getComponent('readPanel'+viewScope.moduleName);
-com.weberon.DynamicCC.removePreview(component);}]]></xp:this.action>
+bsuite.weberon.DynamicCC.removePreview(component);}]]></xp:this.action>
 			</xp:eventHandler></xp:button></xp:panel>
 	<xp:div id="div1" binding="#{wrkspc.rentity}">
 
@@ -81,11 +81,11 @@ com.weberon.DynamicCC.removePreview(component);}]]></xp:this.action>
 
 
 
-						<xp:this.defaultValue><![CDATA[#{javascript:var manual=new bsuite.weber.security.ManualSharing();
+						<xp:this.defaultValue><![CDATA[#{javascript:var manual=new bsuite.security.ManualSharing();
 manual.defaultValues();
 }]]></xp:this.defaultValue>
 						<xp:selectItems>
-							<xp:this.value><![CDATA[#{javascript:var manual=new bsuite.weber.security.ManualSharing();
+							<xp:this.value><![CDATA[#{javascript:var manual=new bsuite.security.ManualSharing();
 manual.getFullName();
 }]]></xp:this.value>
 						</xp:selectItems>
@@ -97,7 +97,7 @@ manual.getFullName();
 
 
 
-						<xp:this.defaultValue><![CDATA[#{javascript:var manual=new bsuite.weber.security.ManualSharing();
+						<xp:this.defaultValue><![CDATA[#{javascript:var manual=new bsuite.security.ManualSharing();
 manual.defaultValuesRoles();
 }]]></xp:this.defaultValue>
 						<xp:selectItems>
@@ -122,7 +122,7 @@ var com = new Array(serv,db);
 println("Selected Roles ",viewScope.roles);
 println("Type of users ",typeof(viewScope.users));
 println("Type of Roles ",typeof(viewScope.roles));
-var manual=new bsuite.weber.security.ManualSharing();
+var manual=new bsuite.security.ManualSharing();
 manual.sharing();
 println("After calling the Mnaul Sharing");
 var c = getComponent("tooltipDialog1");

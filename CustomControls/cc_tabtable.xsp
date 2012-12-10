@@ -34,7 +34,7 @@
 			<xe:djTabPane id="djSchema" title="Schema">
 				<xc:ccUpdateModule></xc:ccUpdateModule>
 			</xe:djTabPane>
-			<xe:djTabPane id="djDataSharing" title="Data Sharing">
+			<xe:djTabPane id="djDataSharing" title="Data Sharing" rendered="false">
 				<xc:ccDataSharing></xc:ccDataSharing>
 			</xe:djTabPane>
 			<xe:djTabPane id="djOrganization"

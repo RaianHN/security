@@ -27,22 +27,22 @@ viewScope.profileNames = profileNames;}]]></xp:this.beforePageLoad>
 									<xp:this.value><![CDATA[#{javascript:viewScope.profileNames}]]></xp:this.value>
 								</xp:selectItems>
 
+								
 								<xp:eventHandler event="onchange"
-									submit="true" refreshMode="complete" onStart="showWait()">
+									submit="true" refreshMode="complete">
 									<xp:this.action><![CDATA[#{javascript:viewScope.modulePermission = null;
 var profName = getComponent("moduleCombo").getValue();
-var moduleVisib = new bsuite.weber.jsonparsing.ProfileEdit();
-moduleVisib.getModulePermission(profName);
 
+var obj = new bsuite.jsonparsing.ProfileEdit();
+obj.getModulePermission(profName);
 var component = getComponent('panelPermission'); 
 var s = facesContext;
 var c1="/ccPermissions.xsp";
 // var c1="/cc_TestPage.xsp";
 var id="modulediv";
-bsuite.weber.loadcc.DynamicCC.removePreview(component);
-bsuite.weber.loadcc.DynamicCC.loadCC(s, component, c1, id);}]]></xp:this.action>
-								</xp:eventHandler>
-							</xp:comboBox>
+bsuite.loadcc.DynamicCC.removePreview(component);
+bsuite.loadcc.DynamicCC.loadCC(s, component, c1, id);}]]></xp:this.action>
+								</xp:eventHandler></xp:comboBox>
 						</xp:td>
 						<xp:td styleClass="debugButton">
 							<xp:button value="Save" id="button1"
@@ -97,8 +97,9 @@ bsuite.weber.loadcc.DynamicCC.loadCC(s, component, c1, id);}]]></xp:this.action>
 	</xp:table>
 
 
+		
 	<xp:br></xp:br>
-	<xp:br></xp:br>
+			<xp:br></xp:br>
 	<xe:tooltipDialog id="tooltipDialog13">
 		<xp:panel>
 			<xp:table>
@@ -126,7 +127,7 @@ bsuite.weber.loadcc.DynamicCC.loadCC(s, component, c1, id);}]]></xp:this.action>
 								<xp:this.script><![CDATA[XSP.closeTooltipDialog('#{id:tooltipDialog13}')]]></xp:this.script>
 
 								<xp:this.action><![CDATA[#{javascript:var profName = getComponent("inputText3").getValue();
-var dp = new bsuite.weber.configure.Deploy();
+var dp = new bsuite.configure.Deploy();
 dp.createProfileDoc(profName);}]]></xp:this.action>
 							</xp:eventHandler>
 						</xp:button>

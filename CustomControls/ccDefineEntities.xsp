@@ -25,12 +25,12 @@
 											submit="true" refreshMode="complete" id="eventHandler1">
 											<xp:this.action><![CDATA[#{javascript:var component = getComponent('loadCC');
 if(component.getChildren!=null){
-bsuite.weber.loadcc.DynamicCC.removePreview(component);
+bsuite.loadcc.DynamicCC.removePreview(component);
  }
 var s = facesContext;
 var c1="/ccAddModules.xsp"; 
 var id="modulediv";
-bsuite.weber.loadcc.DynamicCC.loadCC(s, component, c1, id);
+bsuite.loadcc.DynamicCC.loadCC(s, component, c1, id);
 }]]></xp:this.action>
 										</xp:eventHandler>
 									</xp:button>
@@ -45,12 +45,12 @@ bsuite.weber.loadcc.DynamicCC.loadCC(s, component, c1, id);
 											submit="true" refreshMode="complete">
 											<xp:this.action><![CDATA[#{javascript:var component = getComponent('loadCC'); 
 if(component.getChildren!=null){
-bsuite.weber.loadcc.DynamicCC.removePreview(component);
+bsuite.loadcc.DynamicCC.removePreview(component);
 }
 var s = facesContext;
 var c1="/ccAddFeatures.xsp"; 
 var id="modulefeaturesdiv";
-bsuite.weber.loadcc.DynamicCC.loadCC(s, component, c1, id);
+bsuite.loadcc.DynamicCC.loadCC(s, component, c1, id);
 }]]></xp:this.action>
 										</xp:eventHandler>
 									</xp:button>
@@ -66,12 +66,12 @@ bsuite.weber.loadcc.DynamicCC.loadCC(s, component, c1, id);
 											submit="true" refreshMode="complete" id="eventHandler2">
 											<xp:this.action><![CDATA[#{javascript:var component = getComponent('loadCC'); 
 if(component.getChildren!=null){
-bsuite.weber.loadcc.DynamicCC.removePreview(component);
+bsuite.loadcc.DynamicCC.removePreview(component);
 }
 var s = facesContext;
 var c1="/ccAddEntity.xsp"; 
 var id="entitydiv";
-bsuite.weber.loadcc.DynamicCC.loadCC(s, component, c1, id);
+bsuite.loadcc.DynamicCC.loadCC(s, component, c1, id);
 }]]></xp:this.action>
 										</xp:eventHandler>
 									</xp:button>
@@ -87,12 +87,12 @@ bsuite.weber.loadcc.DynamicCC.loadCC(s, component, c1, id);
 											submit="true" refreshMode="complete" id="eventHandler3">
 											<xp:this.action><![CDATA[#{javascript:var component = getComponent('loadCC'); 
 if(component.getChildren!=null){
-bsuite.weber.loadcc.DynamicCC.removePreview(component);
+bsuite.loadcc.DynamicCC.removePreview(component);
 }
 var s = facesContext;
 var c1="/ccAddRole.xsp"; 
 var id="Rolediv";
-bsuite.weber.loadcc.DynamicCC.loadCC(s, component, c1, id);
+bsuite.loadcc.DynamicCC.loadCC(s, component, c1, id);
 }]]></xp:this.action>
 										</xp:eventHandler>
 									</xp:button>
@@ -133,14 +133,14 @@ var x= @DbColumn(com,  "employeeprofile", 1);
 							style="background-color:rgb(192,192,192);width:100.0px">
 							<xp:eventHandler event="onclick"
 								submit="true" refreshMode="complete">
-								<xp:this.action><![CDATA[#{javascript:var deploy = new bsuite.weber.configure.Deploy();
+								<xp:this.action><![CDATA[#{javascript:var deploy = new bsuite.configure.Deploy();
 deploy.deploy();
 
 
 
 var user = getComponent("comboBox1").getValue();
 
-var cd = new bsuite.weber.configure.CreateDatabase();
+var cd = new bsuite.configure.CreateDatabase();
 cd.RegisterEmployee(user)
 
 

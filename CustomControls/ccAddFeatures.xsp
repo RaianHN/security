@@ -40,14 +40,14 @@
 				<xp:button id="button1" value="Create Features" style="background-color:rgb(192,192,192)">
 					<xp:eventHandler event="onclick" submit="true"
 						refreshMode="complete">
-						<xp:this.action><![CDATA[#{javascript:var defModule = new bsuite.weber.configure.DefineModule();
+						<xp:this.action><![CDATA[#{javascript:var defModule = new bsuite.configure.DefineModule();
 
 var moduleName = getComponent("moduleName").getValue();
 var features:java.util.Vector = getComponent("features").getValue();
 
 defModule.addFeatures(moduleName,features);
 var component = getComponent('loadCC'); 
-bsuite.weber.loadcc.DynamicCC.removePreview(component);
+bsuite.loadcc.DynamicCC.removePreview(component);
 }]]></xp:this.action>
 					</xp:eventHandler></xp:button></xp:td>
 			

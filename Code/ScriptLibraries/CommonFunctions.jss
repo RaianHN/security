@@ -69,7 +69,7 @@ function defineProfile(ProfileName){
 	doc.recycle();
 	*/
 	
-	var ob:bsuite.weber.jsonparsing.ProfileCreation=bsuite.weber.jsonparsing.ProfileCreation();
+	var ob:bsuite.jsonparsing.ProfileCreation=bsuite.jsonparsing.ProfileCreation();
 ob.createProfile(ProfileName);
 	
 }
@@ -265,7 +265,7 @@ function editCrud(profileName,entityName,value){
 
 function setPermission(profileName,entityName){
 	var arr = context.getSubmittedValue().split(",");
-	var entityCrud = new bsuite.weber.jsonparsing.ProfileEdit;
+	var entityCrud = new bsuite.jsonparsing.ProfileEdit;
 	println("setting field permission"+typeof(arr)+"submitted type"+typeof(context.getSubmittedValue()));
 	
 	entityCrud.saveFieldCrud(profileName, entityName, context.getSubmittedValue());
@@ -314,7 +314,7 @@ function setPermission(profileName,entityName){
 function setFeaturePermission(profileName,entityName){
 	
 	var arr = context.getSubmittedValue().split(",");
-	var entityCrud = new bsuite.weber.jsonparsing.ProfileEdit;
+	var entityCrud = new bsuite.jsonparsing.ProfileEdit;
 	entityCrud.saveFeatureCrud(profileName, entityName, context.getSubmittedValue());
 	/*
 	var securityDb:NotesDatabase = getDatabase("Security.nsf");
@@ -428,7 +428,7 @@ function setModulePermission(profileName){
 	var profileName = getComponent("moduleCombo").getValue();
 	println("profileName"+profileName);
 	var arr = context.getSubmittedValue().split(",");
-	var entityCrud = new bsuite.weber.jsonparsing.ProfileEdit;
+	var entityCrud = new bsuite.jsonparsing.ProfileEdit;
 	println("setting field permission"+typeof(arr)+"submitted type"+typeof(context.getSubmittedValue()));
 	
 	entityCrud.saveModulePerm(profileName,context.getSubmittedValue());
@@ -439,7 +439,7 @@ function setEntityPermission(){
 
 	println("profileName"+profileName);
 	var arr = context.getSubmittedValue().split(",");
-	var entityCrud = new bsuite.weber.jsonparsing.ProfileEdit;
+	var entityCrud = new bsuite.jsonparsing.ProfileEdit;
 	println("setting field permission"+typeof(arr)+"submitted type"+typeof(context.getSubmittedValue()));
 	
 	entityCrud.saveEntityPerm(profileName,context.getSubmittedValue());
@@ -449,7 +449,7 @@ function setFieldPermission(profileName,moduleName,entityName){
 
 
 	var arr = context.getSubmittedValue().split(",");
-	var fieldCrud = new bsuite.weber.jsonparsing.ProfileEdit;
+	var fieldCrud = new bsuite.jsonparsing.ProfileEdit;
 	println("setting field permission"+typeof(arr)+"submitted type"+typeof(context.getSubmittedValue()));
 	
 	fieldCrud.saveFieldPerm(profileName,context.getSubmittedValue());
@@ -462,7 +462,7 @@ function setFeaturePermission(){
 	println("profileName"+profileName);
 
 	var arr = context.getSubmittedValue().split(",");
-	var featureCrud = new bsuite.weber.jsonparsing.ProfileEdit;
+	var featureCrud = new bsuite.jsonparsing.ProfileEdit;
 	println("setting feature permission"+typeof(arr)+"submitted type"+typeof(context.getSubmittedValue()));
 	
 	//featureCrud.saveFeaturePerm(profileName,moduleName,entityName,context.getSubmittedValue());
@@ -492,7 +492,7 @@ function loadViewEntity(moduleName,entityName){
 	println("ModuleName ",moduleName);
 	
 	//In order to show the Delete button in the view
-	var entityDelete = new bsuite.weber.jsonparsing.ProfileEdit;
+	var entityDelete = new bsuite.jsonparsing.ProfileEdit;
 	var result=entityDelete.checkEntityDelete(moduleName,entityName);
 	if(result){
 		println("Result is true");
@@ -507,8 +507,8 @@ function loadViewEntity(moduleName,entityName){
 	var c1="/cc_EntityView.xsp"; 
 	var id="entityViewPanel";
 	
-	com.weberon.DynamicCC.removePreview(component);
-	com.weberon.DynamicCC.loadCC(s, component, c1, id);	
+	bsuite.weberon.DynamicCC.removePreview(component);
+	bsuite.weberon.DynamicCC.loadCC(s, component, c1, id);	
 	
 }
 
@@ -517,7 +517,7 @@ function loadReadEntity(moduleName){
 	var s = facesContext;
 	var c1="/ccReadEntity.xsp"; 
 	var id="readEntityPanel";
-	com.weberon.DynamicCC.loadCC(s, component, c1, id);	
+	bsuite.weberon.DynamicCC.loadCC(s, component, c1, id);	
 	
 }
 
@@ -554,8 +554,8 @@ function loadCreateEntity(moduleName,entityName){
 	viewScope.entityName = entityName;
 	println("viewsco"+viewScope.entityName);
 	println("modulename"+moduleName);
-	com.weberon.DynamicCC.removePreview(component);
-	com.weberon.DynamicCC.loadCC(s, component, c1, id);	
+	bsuite.weberon.DynamicCC.removePreview(component);
+	bsuite.weberon.DynamicCC.loadCC(s, component, c1, id);	
 	
 }
 
@@ -587,8 +587,8 @@ function loadViewEntity(moduleName,entityName){
 	var c1="/cc_EntityView.xsp"; 
 	var id="entityViewPanel";
 	
-	com.weberon.DynamicCC.removePreview(component);
-	com.weberon.DynamicCC.loadCC(s, component, c1, id);	
+	bsuite.weberon.DynamicCC.removePreview(component);
+	bsuite.weberon.DynamicCC.loadCC(s, component, c1, id);	
 	
 }
 */
@@ -608,8 +608,8 @@ function loadEditEntity(moduleName,entityName){
 	println("viewsco"+viewScope.entityName);
 	println("modulename"+moduleName);
 	println("Component ",component)
-	com.weberon.DynamicCC.removePreview(component);
-	com.weberon.DynamicCC.loadCC(s, component, c1, id);	
+	bsuite.weberon.DynamicCC.removePreview(component);
+	bsuite.weberon.DynamicCC.loadCC(s, component, c1, id);	
 	
 }
 
@@ -625,7 +625,7 @@ function loadTestControl(componentid,cc,ccid,moduleName,entityName){
 	if(component2==null){
 		viewScope.moduleName = moduleName;
 		viewScope.entityName = entityName;
-		com.weberon.DynamicCC.loadCC(s, component, c1, ccid);
+		bsuite.weberon.DynamicCC.loadCC(s, component, c1, ccid);
 	}
 }
 function getModuleNames(){
@@ -719,7 +719,7 @@ function getNumberOfModules(profileName){
 	println("in getn");
 	profileName = context.getSubmittedValue();
 	println("in getn"+profileName);
-	var moduleN = new bsuite.weber.jsonparsing.ProfileEdit().getNumberOfMOdules(profileName);
+	var moduleN = new bsuite.jsonparsing.ProfileEdit().getNumberOfMOdules(profileName);
 	getComponent("inputNModules").setValue(moduleN);
 }
 function getNumberOfFeatures(){
@@ -728,7 +728,7 @@ function getNumberOfFeatures(){
 	profileName = params[0];
 	moduleName = params[1];
 	println("in getn "+profileName+" "+moduleName);
-	var featuresN = new bsuite.weber.jsonparsing.ProfileEdit().getNumberOfFeatures(profileName,moduleName);
+	var featuresN = new bsuite.jsonparsing.ProfileEdit().getNumberOfFeatures(profileName,moduleName);
 	getComponent("inputNFeatures").setValue(featuresN);
 	println("in get features "+profileName+" "+moduleName+" "+featuresN);
 	
@@ -739,7 +739,7 @@ function getNumberOfEntities(profileName, moduleName){
 	profileName = params[0];
 	moduleName = params[1];
 	println("in getn "+profileName+" "+moduleName);
-	var entitiesN = new bsuite.weber.jsonparsing.ProfileEdit().getNumberOfEntities(profileName, moduleName);
+	var entitiesN = new bsuite.jsonparsing.ProfileEdit().getNumberOfEntities(profileName, moduleName);
 	getComponent("inputNEntities").setValue(entitiesN);
 	println("in get entities "+profileName+" "+moduleName+" "+entitiesN);
 }
@@ -750,7 +750,7 @@ function getNumberOfFields(profileName, moduleName, entityName){
 	moduleName = params[1];
 	entityName = params[2];
 	println("in getn "+profileName+" "+moduleName);
-	var fieldsN = new bsuite.weber.jsonparsing.ProfileEdit().getNumberOfFields(profileName, moduleName, entityName);
+	var fieldsN = new bsuite.jsonparsing.ProfileEdit().getNumberOfFields(profileName, moduleName, entityName);
 	getComponent("inputNFields").setValue(fieldsN);
 	
 }
@@ -761,7 +761,7 @@ function setAccessTypePermission(){
 var profileName="Admin";
 	println("profileName"+profileName);
 	var arr = context.getSubmittedValue().split(",");
-	var entityCrud = new bsuite.weber.jsonparsing.ProfileEdit;
+	var entityCrud = new bsuite.jsonparsing.ProfileEdit;
 	println("setting field permission"+typeof(arr)+"submitted type"+typeof(context.getSubmittedValue()));
 	
 	var securityDb:NotesDatabase = getDatabase("Security.nsf");
@@ -783,7 +783,7 @@ function setProfileNumbers(){
 		return ;
 	}
 	
-	var profileEdit = new bsuite.weber.jsonparsing.ProfileEdit();
+	var profileEdit = new bsuite.jsonparsing.ProfileEdit();
 	var strModuleN = profileEdit.getModuleN(profileName);
 	var strFeatureN = profileEdit.getFeatureN(profileName);
 	var strEntityN = profileEdit.getEntityN(profileName);
@@ -799,12 +799,12 @@ function setProfileNumbers(){
 	
 }
 function updateAddSchema(){
-	var schemaObj = new bsuite.weber.configure.Deploy();
+	var schemaObj = new bsuite.configure.Deploy();
 	schemaObj.updateAllProfiles();
 
 }
 
 function updateDeleteSchema(){
-	var profileObj = new bsuite.weber.jsonparsing.ProfileEdit();
+	var profileObj = new bsuite.jsonparsing.ProfileEdit();
 	profileObj.removeUpdate();
 }

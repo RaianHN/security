@@ -2,107 +2,107 @@
 <faces-config>
   <managed-bean>
     <managed-bean-name>user</managed-bean-name>
-    <managed-bean-class>bsuite.weber.backend.PageDataBean</managed-bean-class>
+    <managed-bean-class>bsuite.backend.PageDataBean</managed-bean-class>
     <managed-bean-scope>request</managed-bean-scope>
     <managed-property>
       <property-name>dataProviderClass</property-name>
-      <value>bsuite.weber.backend.nsf.UserPageDataProvider</value>
+      <value>bsuite.backend.nsf.UserPageDataProvider</value>
     </managed-property>
     <managed-property>
       <property-name>viewScopeVariable</property-name>
-      <value>bsuite.weber.backend.PageDataBean.userprovider</value>
+      <value>bsuite.backend.PageDataBean.userprovider</value>
     </managed-property>
   </managed-bean>
   <managed-bean>
     <managed-bean-name>activity</managed-bean-name>
-    <managed-bean-class>bsuite.weber.backend.PageDataBean</managed-bean-class>
+    <managed-bean-class>bsuite.backend.PageDataBean</managed-bean-class>
     <managed-bean-scope>request</managed-bean-scope>
     <managed-property>
       <property-name>dataProviderClass</property-name>
-      <value>bsuite.weber.backend.nsf.ActivityPageDataProvider</value>
+      <value>bsuite.backend.nsf.ActivityPageDataProvider</value>
     </managed-property>
     <managed-property>
       <property-name>viewScopeVariable</property-name>
-      <value>bsuite.weber.backend.PageDataBean.actprovider</value>
+      <value>bsuite.backend.PageDataBean.actprovider</value>
     </managed-property>
   </managed-bean>
   <managed-bean>
     <managed-bean-name>actions</managed-bean-name>
-    <managed-bean-class>bsuite.weber.backend.UserActionsBean
+    <managed-bean-class>bsuite.backend.UserActionsBean
 		</managed-bean-class>
     <managed-bean-scope>request</managed-bean-scope>
   </managed-bean>
   <managed-bean>
     <managed-bean-name>activiytaction</managed-bean-name>
-    <managed-bean-class>bsuite.weber.backend.ActivityActionsBean
+    <managed-bean-class>bsuite.backend.ActivityActionsBean
 		</managed-bean-class>
     <managed-bean-scope>request</managed-bean-scope>
   </managed-bean>
   <managed-bean>
     <managed-bean-name>uiuser</managed-bean-name>
-    <managed-bean-class>bsuite.weber.components.UICurrentUser</managed-bean-class>
+    <managed-bean-class>bsuite.components.UICurrentUser</managed-bean-class>
     <managed-bean-scope>request</managed-bean-scope>
   </managed-bean>
   <managed-bean>
     <managed-bean-name>uiactivity</managed-bean-name>
-    <managed-bean-class>bsuite.weber.components.UICurrentActivity</managed-bean-class>
+    <managed-bean-class>bsuite.components.UICurrentActivity</managed-bean-class>
     <managed-bean-scope>request</managed-bean-scope>
   </managed-bean>
   <managed-bean>
     <managed-bean-name>uientity</managed-bean-name>
-    <managed-bean-class>bsuite.weber.controller.UIEntity</managed-bean-class>
+    <managed-bean-class>bsuite.controller.UIEntity</managed-bean-class>
     <managed-bean-scope>request</managed-bean-scope>
   </managed-bean>
   <managed-bean>
     <managed-bean-name>DataList</managed-bean-name>
-    <managed-bean-class>bsuite.weber.controller.DataList</managed-bean-class>
+    <managed-bean-class>bsuite.controller.DataList</managed-bean-class>
     <managed-bean-scope>session</managed-bean-scope>
   </managed-bean>
   <managed-bean>
     <managed-bean-name>ActivityList</managed-bean-name>
-    <managed-bean-class>bsuite.weber.controller.ActivityList</managed-bean-class>
+    <managed-bean-class>bsuite.controller.ActivityList</managed-bean-class>
     <managed-bean-scope>session</managed-bean-scope>
   </managed-bean>
   <managed-bean>
     <managed-bean-name>jump</managed-bean-name>
-    <managed-bean-class>com.weberon.Jump</managed-bean-class>
+    <managed-bean-class>bsuite.weberon.Jump</managed-bean-class>
     <managed-bean-scope>request</managed-bean-scope>
   </managed-bean>
   <managed-bean>
     <managed-bean-name>employee</managed-bean-name>
-    <managed-bean-class>bsuite.weber.data.PageDataBean
+    <managed-bean-class>bsuite.data.PageDataBean
 		</managed-bean-class>
     <managed-bean-scope>request</managed-bean-scope>
     <managed-property>
       <property-name>dataProviderClass</property-name>
-      <value>bsuite.weber.data.NSFPageDataProvider
+      <value>bsuite.data.NSFPageDataProvider
 			</value>
     </managed-property>
   </managed-bean>
   <managed-bean>
     <managed-bean-name>pageaction</managed-bean-name>
-    <managed-bean-class>bsuite.weber.action.PageAction
+    <managed-bean-class>bsuite.action.PageAction
 		</managed-bean-class>
     <managed-bean-scope>request</managed-bean-scope>
   </managed-bean>
   <managed-bean>
     <managed-bean-name>role</managed-bean-name>
-    <managed-bean-class>bsuite.weber.security.Role</managed-bean-class>
+    <managed-bean-class>bsuite.security.Role</managed-bean-class>
     <managed-bean-scope>request</managed-bean-scope>
   </managed-bean>
   <managed-bean>
     <managed-bean-name>wrkspc</managed-bean-name>
-    <managed-bean-class>bsuite.weber.uicomponent.Workspace</managed-bean-class>
+    <managed-bean-class>bsuite.uicomponent.Workspace</managed-bean-class>
     <managed-bean-scope>request</managed-bean-scope>
   </managed-bean>
   <managed-bean>
     <managed-bean-name>profile</managed-bean-name>
-    <managed-bean-class>bsuite.weber.security.Profile</managed-bean-class>
+    <managed-bean-class>bsuite.security.Profile</managed-bean-class>
     <managed-bean-scope>request</managed-bean-scope>
   </managed-bean>
   <managed-bean>
     <managed-bean-name>security</managed-bean-name>
-    <managed-bean-class>bsuite.weber.security.Security</managed-bean-class>
+    <managed-bean-class>bsuite.security.Security</managed-bean-class>
     <managed-bean-scope>request</managed-bean-scope>
   </managed-bean>
   <!--AUTOGEN-START-BUILDER: Automatically generated by IBM Lotus Domino Designer. Do not modify.-->

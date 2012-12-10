@@ -26,7 +26,7 @@ viewScope.profileNames = profileNames;}]]></xp:this.beforePageLoad>
 					Module:<xp:br></xp:br><xp:comboBox id="comboBox3" binding="#{javascript:viewScope.moduleNam2}">
 						<xp:selectItem itemLabel="&lt;&lt;Select Module&gt;&gt;"></xp:selectItem><xp:selectItems id="selectItems2">
 							<xp:this.value><![CDATA[#{javascript:var profName = "Admin";
-var profile = new bsuite.weber.jsonparsing.ProfileEdit();
+var profile = new bsuite.jsonparsing.ProfileEdit();
 if(profName!=null){
 return profile.getModuleNames(profName);
 }
@@ -43,7 +43,7 @@ return profile.getModuleNames(profName);
 							<xp:this.action><![CDATA[#{javascript://viewScope.selProfile = getComponent("comboBox2").getValue();
 viewScope.selProfile = "Admin";
 viewScope.selModule = getComponent("comboBox3").getValue();
-var moduleVisib = new bsuite.weber.jsonparsing.ProfileEdit();
+var moduleVisib = new bsuite.jsonparsing.ProfileEdit();
 moduleVisib.getEntityPermission(viewScope.selProfile,viewScope.selModule);
 }]]></xp:this.action>
 						</xp:eventHandler>

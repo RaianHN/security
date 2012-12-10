@@ -11,7 +11,7 @@
 					<xp:label value="Module Name" id="label4"></xp:label>
 				</xp:td>
 				<xp:td>
-					<xp:comboBox id="ModuleName">
+					<xp:comboBox id="ModuleName" rendered="false">
 					<xp:selectItem itemLabel="&lt;&lt;Select ModuleName&gt;&gt;"></xp:selectItem>
 						<xp:selectItems>
 						
@@ -19,8 +19,10 @@
 
 //@DbColumn(database,"All Documents",1);
 //getEntities();
+
+
 var profName="Admin";
-var profile = new bsuite.weber.jsonparsing.ProfileEdit();
+var profile = new bsuite.jsonparsing.ProfileEdit();
 if(profName!=null){
 return profile.getModuleNames(profName);
 }}]]></xp:this.value>
@@ -38,7 +40,7 @@ return profile.getModuleNames(profName);
 						<xp:selectItems>
 							<xp:this.value><![CDATA[#{javascript:var profName="Admin";
 var moduleName=getComponent("ModuleName").getValue();
-var profile = new bsuite.weber.jsonparsing.ProfileEdit();
+var profile = new bsuite.jsonparsing.ProfileEdit();
 if(profName!=null && moduleName!=null && moduleName!="<<Select ModuleName>>"){
 println("profilename "+profName+" module"+moduleName)
 profile.getEntityNames(profName,moduleName);

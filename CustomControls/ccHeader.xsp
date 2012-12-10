@@ -327,11 +327,11 @@ var lnklst = getComponent("linklist");
 var lnk = getComponent(id+"link");
 if (viewScope.moveableToggle=="1"){
 	var moveableport = getComponent(id+"moveable");
-	com.weberon.DynamicCC1.removePortlet(con, moveableport);
+	bsuite.weberon.DynamicCC1.removePortlet(con, moveableport);
 }else if(viewScope.moveableToggle=="0"){
-	com.weberon.DynamicCC1.removePortlet(con, port);
+	bsuite.weberon.DynamicCC1.removePortlet(con, port);
 }
-com.weberon.DynamicCC1.removeLink(lnklst, lnk); 
+bsuite.weberon.DynamicCC1.removeLink(lnklst, lnk); 
 }]]></xp:this.action>
 							<xp:this.onComplete><![CDATA[XSP.partialRefreshGet("#{id:banner1}");
 ]]></xp:this.onComplete>

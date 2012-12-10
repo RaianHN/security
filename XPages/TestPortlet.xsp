@@ -13,7 +13,7 @@ viewScope.moveableToggle="1";
 if(r==null){
 println("r is null");
 }
-com.weberon.DynamicCC1.createPortlet(s, r,ccheader,'/TetPortlet.xsp','Home','Home');}]]></xp:this.action>
+bsuite.weberon.DynamicCC1.createPortlet(s, r,ccheader,'/TetPortlet.xsp','Home','Home');}]]></xp:this.action>
 	</xp:eventHandler>
 	<xp:panel id="mainpane"><xp:div id="container"></xp:div></xp:panel>
 	

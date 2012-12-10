@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xp:view xmlns:xp="http://www.ibm.com/xsp/core">
 
-	<xp:comboBox id="comboBox1" value="#{viewScope.entityName}">
-		<xp:selectItems>
-			<xp:this.value><![CDATA[#{javascript:var a:java.util.ArrayList=new java.util.ArrayList();
-a.add("1");
-a.add("2");
-return a;}]]></xp:this.value>
-		</xp:selectItems>
-	</xp:comboBox></xp:view>
+	<xp:button value="Label" id="button1">
+		<xp:eventHandler event="onclick" submit="true"
+			refreshMode="complete">
+			<xp:this.action><![CDATA[#{javascript:var obj = new bsuite.jsonparsing.ProfileEdit();}]]></xp:this.action>
+		</xp:eventHandler></xp:button>
+		<xp:text escape="true" id="computedField1"><xp:this.value><![CDATA[#{javascript:var tz = context.getTimeZone();
+var dt = @Now()
+var localdt:Date = I18n.convertDateFromServerTimeZone(dt,tz)
+//return localdt.toString();
+return I18n.getServerTimeZone();
+}]]></xp:this.value></xp:text></xp:view>

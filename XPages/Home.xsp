@@ -57,7 +57,7 @@ if (props != null && props != "")
 	var arr = props.split(",");
 	var con = getComponent(arr[2]);
 	if (con!=null){
-		com.weberon.DynamicCC1.setStyle(con, arr[0], arr[1], arr[3]);
+		bsuite.weberon.DynamicCC1.setStyle(con, arr[0], arr[1], arr[3]);
 		var arr1 = arr[2].split("moveable");
 		println("arr1:"+arr1[0]);
 	    sessionScope.put(arr1[0]+"position", "position: absolute;  left:" + arr[0] + "; top:" + arr[1]+ "; z-index:"+ arr[3]+";");
@@ -98,16 +98,16 @@ if (props != null && props != "")
 			if ((arr1[0] == "display: ") || (arr1[0] == "display:none"))
 			{
 				var arr2 = arr1[0].split(":");
-				com.weberon.DynamicCC1.setPosition(con, arr2[1], arr[1], arr[2]);
+				bsuite.weberon.DynamicCC1.setPosition(con, arr2[1], arr[1], arr[2]);
 			}
 			else 
 			{
-				com.weberon.DynamicCC1.setPosition(con, null, arr[1], arr[2]);
+				bsuite.weberon.DynamicCC1.setPosition(con, null, arr[1], arr[2]);
 			}
 		}
 		else 
 		{
-			com.weberon.DynamicCC1.setPosition(con, null, arr[1], arr[2]);
+			bsuite.weberon.DynamicCC1.setPosition(con, null, arr[1], arr[2]);
 		}
 	
 		
@@ -126,7 +126,7 @@ println("workspace "+list);
 
 
 if (!(list=="" || list==null)){
-	com.weberon.DynamicCC1.restore(list);
+	bsuite.weberon.DynamicCC1.restore(list);
 }
 
 
@@ -139,7 +139,7 @@ if (props != null && props != "")
 	var arr = props.split(",");
 	var con = getComponent(arr[2]);
 	if (con!=null){
-		com.weberon.DynamicCC1.setStyle(con, arr[0], arr[1], arr[3]);
+		bsuite.weberon.DynamicCC1.setStyle(con, arr[0], arr[1], arr[3]);
 	}
 
 	
@@ -171,9 +171,9 @@ if (props != null && props != "")
 var r = getComponent('container'); 
 var s = facesContext; 
 var ccheader="/ccHeader.xsp";
-com.weberon.DynamicCC1.createPortlet(s, r,ccheader,'/ccHome.xsp',"Home","Home");
+bsuite.weberon.DynamicCC1.createPortlet(s, r,ccheader,'/ccHome.xsp',"Home","Home");
  var l = getComponent('linklist');
- com.weberon.DynamicCC1.createLink(l, "Home", "Home"+"link");
+ bsuite.weberon.DynamicCC1.createLink(l, "Home", "Home"+"link");
 }else{
  	if(viewScope.moveableToggle=="1"){
  		var parent = getComponent('container');	
@@ -245,9 +245,9 @@ if(viewScope.choice=="company"){
 		var r = getComponent('container'); 
 		var s = facesContext; 
 		var ccheader="/ccHeader.xsp";
-		com.weberon.DynamicCC1.createPortlet(s, r,ccheader,'/ccViewCompany.xsp',"ViewCompany","ViewCompany");
+		bsuite.weberon.DynamicCC1.createPortlet(s, r,ccheader,'/ccViewCompany.xsp',"ViewCompany","ViewCompany");
 		 var l = getComponent('linklist');
-		 com.weberon.DynamicCC1.createLink(l, "ViewCompany", "ViewCompany"+"link");
+		 bsuite.weberon.DynamicCC1.createLink(l, "ViewCompany", "ViewCompany"+"link");
 		}else{
 		 	if(viewScope.moveableToggle=="1"){
 		 		var parent = getComponent('container');	
@@ -264,16 +264,16 @@ if(viewScope.choice=="company"){
 else if(viewScope.choice=="setup")
 {
 	
-	var contrl = new com.weberon.SetupValidator();
+	var contrl = new bsuite.weberon.SetupValidator();
 contrl.getSetupDoc();
 if (getComponent("ProfileWeb") == null)
 {
 var r = getComponent('container'); 
 var s = facesContext; 
 var ccheader="/ccHeader.xsp";
-com.weberon.DynamicCC1.createPortlet(s, r,ccheader,'/ccProfileWeb.xsp',"ProfileWeb","ProfileWeb");
+bsuite.weberon.DynamicCC1.createPortlet(s, r,ccheader,'/ccProfileWeb.xsp',"ProfileWeb","ProfileWeb");
  var l = getComponent('linklist');
- com.weberon.DynamicCC1.createLink(l, "ProfileWeb", "ProfileWeb"+"link");
+ bsuite.weberon.DynamicCC1.createLink(l, "ProfileWeb", "ProfileWeb"+"link");
 }else{
  	if(viewScope.moveableToggle=="1"){
  		var parent = getComponent('container');	
@@ -352,7 +352,7 @@ if(err==null || err==""){
 				<xp:eventHandler event="onclick" submit="true"
 					refreshMode="partial" refreshId="errorpanel">
 					<xp:this.action><![CDATA[#{javascript:getComponent("errormsg").setValue("");
-com.weberon.DynamicCC1.setPanelinvisible(getComponent("errorpanel"));}]]></xp:this.action>
+bsuite.weberon.DynamicCC1.setPanelinvisible(getComponent("errorpanel"));}]]></xp:this.action>
 				</xp:eventHandler>
 			</xp:image>
 		</xp:panel>
@@ -400,7 +400,7 @@ if (props != null && props != "")
 	var arr = props.split(",");
 	var con = getComponent("container");
 	//var grid = getComponent("container1");
-	com.weberon.DynamicCC1.setCompDojoType2(con, arr);
+	bsuite.weberon.DynamicCC1.setCompDojoType2(con, arr);
 	
 	var count = arr.length;
 	//var con = getComponent("container");
@@ -422,7 +422,7 @@ if (props != null && props != "")
 			var left = sarr[1].split(":")[1];
 			var top  = sarr[2].split(":")[1];
 				
-			com.weberon.DynamicCC1.setStyle(child, left, top, zindex.toString());
+			bsuite.weberon.DynamicCC1.setStyle(child, left, top, zindex.toString());
 			--zindex;
 			print("id:" + child.getId());
 			
@@ -450,14 +450,14 @@ if (props != null && props != "")
 			
 			if (!(position > 110))
 			{
-				com.weberon.DynamicCC1.setStyle(child, position+"px", position+"px", arr[1]);
+				bsuite.weberon.DynamicCC1.setStyle(child, position+"px", position+"px", arr[1]);
 				position  = position + 20 ;
 						
 			}
 			else if (position > 110)
 			{
 				position = 10;
-				com.weberon.DynamicCC1.setStyle(child, position+"px", position+"px", arr[1]);
+				bsuite.weberon.DynamicCC1.setStyle(child, position+"px", position+"px", arr[1]);
 				position = position + 20 ;
 						
 				
@@ -533,7 +533,7 @@ if (props != null && props != "")
 {
 	var arr = props.split(",");
 	var con = getComponent("container");
-	com.weberon.DynamicCC1.reorderInsideGrid(con, arr);
+	bsuite.weberon.DynamicCC1.reorderInsideGrid(con, arr);
 	getComponent("tomoveable").setValue("nothing");	
 }}]]></xp:this.action>
 	</xp:eventHandler>

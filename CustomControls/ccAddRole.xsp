@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xp:view xmlns:xp="http://www.ibm.com/xsp/core">
 
-	<xp:this.beforePageLoad><![CDATA[#{javascript:var defModule = new bsuite.weber.configure.DefineModule();
+	<xp:this.beforePageLoad><![CDATA[#{javascript:var defModule = new bsuite.configure.DefineModule();
 var roles:java.util.Vector = defModule.getRoles();
 viewScope.roles = roles;}]]></xp:this.beforePageLoad>
 	<xp:table>
@@ -28,7 +28,7 @@ viewScope.roles = roles;}]]></xp:this.beforePageLoad>
 				<xp:button value="Create Role" id="button1" style="background-color:rgb(192,192,192)">
 					<xp:eventHandler event="onclick" submit="true"
 						refreshMode="partial" refreshId="comboBox1">
-						<xp:this.action><![CDATA[#{javascript:var defModule = new bsuite.weber.configure.DefineModule();
+						<xp:this.action><![CDATA[#{javascript:var defModule = new bsuite.configure.DefineModule();
 var roleParent = getComponent("comboBox1").getValue();
 var roleName = getComponent("inputText2").getValue();
 defModule.addRole(roleName,roleParent);

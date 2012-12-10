@@ -18,7 +18,7 @@
 						refreshMode="partial" refreshId="updateTable"
 						onComplete="hideWait()" onStart="showWait()">
 						<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("comboBox1").getValue();
-var schemaObj = new bsuite.weber.configure.DefineModule();
+var schemaObj = new bsuite.configure.DefineModule();
 
 if(moduleName!=null){
 viewScope.Features = schemaObj.getFeatures(moduleName);
@@ -34,13 +34,13 @@ viewScope.Entities = schemaObj.getEntityNames(moduleName)
 			<xp:td><xp:button value="Update" id="button4" rendered="false">
 	<xp:eventHandler event="onclick" submit="true"
 		refreshMode="complete">
-		<xp:this.action><![CDATA[#{javascript:var schemaObj = new bsuite.weber.configure.Deploy();
+		<xp:this.action><![CDATA[#{javascript:var schemaObj = new bsuite.configure.Deploy();
 schemaObj.updateAllProfiles();}]]></xp:this.action>
 	</xp:eventHandler></xp:button>
 				<xp:button value="Test" id="button1" rendered="false">
 					<xp:eventHandler event="onclick" submit="true"
 						refreshMode="partial" refreshId="updateTable">
-						<xp:this.action><![CDATA[#{javascript:var profileObj = new bsuite.weber.jsonparsing.ProfileEdit();
+						<xp:this.action><![CDATA[#{javascript:var profileObj = new bsuite.jsonparsing.ProfileEdit();
 profileObj.removeUpdate();}]]></xp:this.action>
 					</xp:eventHandler></xp:button></xp:td>
 			<xp:td></xp:td>
@@ -83,7 +83,7 @@ return vals;
 					onError="showError()" refreshId="updateTable">
 					<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("comboBox1").getValue();
 var featureName1 = getComponent("listBox1").getValue();
-var schemaObj = new bsuite.weber.configure.DefineModule();
+var schemaObj = new bsuite.configure.DefineModule();
 var featureName:java.util.Vector = new java.util.Vector();
 featureName.add(featureName1);
 println("feature name"+featureName1);
@@ -93,7 +93,7 @@ schemaObj.removeFeature(moduleName,featureName1);
 }
 
 
-schemaObj = new bsuite.weber.configure.DefineModule();
+schemaObj = new bsuite.configure.DefineModule();
 if(moduleName!=null){
 viewScope.Features = schemaObj.getFeatures(moduleName);
 viewScope.Entities = schemaObj.getEntityNames(moduleName)
@@ -123,7 +123,7 @@ return vals;
 					onError="showError()" refreshId="updateTable">
 					<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("comboBox1").getValue();
 var entityName = getComponent("listBox2").getValue();
-var schemaObj = new bsuite.weber.configure.DefineModule();
+var schemaObj = new bsuite.configure.DefineModule();
 
 
 
@@ -160,7 +160,7 @@ return vals;
 						onStart="showWait()">
 						<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("comboBox1").getValue();
 var entityName = getComponent("comboBox2").getValue();
-var schemaObj = new bsuite.weber.configure.DefineModule();
+var schemaObj = new bsuite.configure.DefineModule();
 
 if(moduleName!=null){
 viewScope.Fields = schemaObj.getFields(moduleName,entityName);
@@ -188,14 +188,14 @@ return vals;
 					<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("comboBox1").getValue();
 var entityName = getComponent("comboBox2").getValue();
 var fieldName = getComponent("listBox3").getValue();
-var schemaObj = new bsuite.weber.configure.DefineModule();
+var schemaObj = new bsuite.configure.DefineModule();
 if(fieldName!=null){
 schemaObj.removeField(moduleName,entityName,fieldName)
 }
 
 
 
-var schemaObj = new bsuite.weber.configure.DefineModule();
+var schemaObj = new bsuite.configure.DefineModule();
 
 if(moduleName!=null){
 viewScope.Fields = schemaObj.getFields(moduleName,entityName);
@@ -215,7 +215,7 @@ updateDeleteSchema();}]]></xp:this.action>
 						onError="showError()">
 						<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("comboBox1").getValue();
 var featureName1 = getComponent("inputText1").getValue();
-var schemaObj = new bsuite.weber.configure.DefineModule();
+var schemaObj = new bsuite.configure.DefineModule();
 var featureName:java.util.Vector = new java.util.Vector();
 featureName.add(featureName1);
 
@@ -244,7 +244,7 @@ updateAddSchema();}]]></xp:this.action>
 						onError="showError()">
 						<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("comboBox1").getValue();
 var entityName = getComponent("inputText2").getValue();
-var schemaObj = new bsuite.weber.configure.DefineModule();
+var schemaObj = new bsuite.configure.DefineModule();
 
 
 
@@ -274,14 +274,14 @@ viewScope.Entities = schemaObj.getEntityNames(moduleName)
 						<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("comboBox1").getValue();
 var entityName = getComponent("comboBox2").getValue();
 var fieldName = getComponent("inputText3").getValue();
-var schemaObj = new bsuite.weber.configure.DefineModule();
+var schemaObj = new bsuite.configure.DefineModule();
 if(fieldName!=null){
 schemaObj.addField(moduleName,entityName,fieldName)
 }
 
 
 
-var schemaObj = new bsuite.weber.configure.DefineModule();
+var schemaObj = new bsuite.configure.DefineModule();
 
 if(moduleName!=null){
 viewScope.Fields = schemaObj.getFields(moduleName,entityName);

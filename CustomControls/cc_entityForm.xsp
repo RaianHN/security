@@ -69,7 +69,7 @@ if (viewScope.entityName == "Employee") {
    	println("docid s"+sessionScope.entityDocid);
     if (docid != null) {
     println(personName+profileName+role);
-        var cd = new bsuite.weber.configure.CreateDatabase();
+        var cd = new bsuite.configure.CreateDatabase();
         cd.createEmployee(personName, docid, profileName, role)
     }
 }
@@ -108,7 +108,7 @@ pageaction['delete'].execute("employee");
 return id;}'
 					onComplete="hideWait()" onStart="showWait()">
 					<xp:this.action><![CDATA[#{javascript:var component = getComponent('EntityPanel'+viewScope.moduleName);
-com.weberon.DynamicCC.removePreview(component);}]]></xp:this.action>
+bsuite.weberon.DynamicCC.removePreview(component);}]]></xp:this.action>
 				</xp:eventHandler></xp:button>
 			<xp:div id="div1" binding="#{wrkspc.centity}">
 

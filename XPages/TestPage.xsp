@@ -149,8 +149,8 @@ c.closeTab()}]]></xp:this.script>
 		style="background-color:rgb(192,192,192)">
 		<xp:eventHandler event="onclick" submit="true"
 			refreshMode="complete">
-			<xp:this.action><![CDATA[#{javascript:var val:bsuite.weber.configure.CreateDatabase=new bsuite.weber.configure.CreateDatabase();
-//bsuite.weber.configure.CreateDatabase.createDB("abc");
+			<xp:this.action><![CDATA[#{javascript:var val:bsuite.configure.CreateDatabase=new bsuite.configure.CreateDatabase();
+//bsuite.configure.CreateDatabase.createDB("abc");
 var db : NotesDatabase = val.createDB("abc");
 //val.createIndex(db);
 println("DB Name ",db.getFileName());
@@ -162,10 +162,10 @@ FullText.updateFTIndexIfContentChanged(db);
 		style="background-color:rgb(192,192,192)">
 		<xp:eventHandler event="onclick" submit="true"
 			refreshMode="complete">
-			<xp:this.action><![CDATA[#{javascript:var definemo=new bsuite.weber.configure.DefineModule();
+			<xp:this.action><![CDATA[#{javascript:var definemo=new bsuite.configure.DefineModule();
 var modules: java.util.Vector=definemo.getModules();
 
-var var2=new bsuite.weber.configure.CreateDatabase();
+var var2=new bsuite.configure.CreateDatabase();
 var2.createDatabases(modules);
 
 
@@ -192,7 +192,7 @@ var x= @DbColumn(com,  "($VIMPeople)", 1);
 		<xp:eventHandler event="onclick" submit="true"
 			refreshMode="complete">
 			<xp:this.action><![CDATA[#{javascript://Registering employee
-var var2=new bsuite.weber.configure.CreateDatabase();
+var var2=new bsuite.configure.CreateDatabase();
 var name=getComponent("comboBox1").getValue();
 var2.RegisterEmployee(name);}]]></xp:this.action>
 		</xp:eventHandler>
@@ -205,7 +205,7 @@ var2.RegisterEmployee(name);}]]></xp:this.action>
 		<xp:eventHandler event="onclick" submit="true"
 			refreshMode="complete">
 			<xp:this.action><![CDATA[#{javascript:var com=getComponent("div1");
-bsuite.weber.uicomponent.CreateTabTable.createTT(com);}]]></xp:this.action>
+bsuite.uicomponent.CreateTabTable.createTT(com);}]]></xp:this.action>
 		</xp:eventHandler>
 	</xp:button>
 	<xp:br></xp:br>

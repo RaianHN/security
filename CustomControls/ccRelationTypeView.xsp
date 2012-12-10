@@ -21,7 +21,7 @@
 				<xp:executeScript>
 					<xp:this.script><![CDATA[#{javascript:viewScope.put('relationdocid',"");
 var c = getComponent('formcontainer');
-bsuite.weber.tools.CompUtil.create(c,facesContext,"/ccRelationshipType.xsp");}]]></xp:this.script>
+bsuite.tools.CompUtil.create(c,facesContext,"/ccRelationshipType.xsp");}]]></xp:this.script>
 				</xp:executeScript>
 			</xp:this.action></xp:eventHandler></xp:button></xp:panel>
 	<xp:viewPanel value="#{relationtypes}" id="relationsPanel1"
@@ -47,7 +47,7 @@ bsuite.weber.tools.CompUtil.create(c,facesContext,"/ccRelationshipType.xsp");}]]
 						<xp:this.script><![CDATA[#{javascript:var doc=viewEntry.getDocument();
 viewScope.put('relationdocid',doc.getUniversalID());
 var x= getComponent('formcontainer');
-bsuite.weber.tools.CompUtil.create(x,facesContext,"/ccRelationshipType.xsp");}]]></xp:this.script>
+bsuite.tools.CompUtil.create(x,facesContext,"/ccRelationshipType.xsp");}]]></xp:this.script>
 					</xp:executeScript>
 				</xp:this.action></xp:eventHandler>
 		</xp:viewColumn>

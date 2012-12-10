@@ -63,7 +63,7 @@ if (viewScope.entityName == "Employee") {
    	println("docid s"+sessionScope.entityDocid);
     if (docid != null) {
     println(personName+profileName+role);
-        var cd = new bsuite.weber.configure.CreateDatabase();
+        var cd = new bsuite.configure.CreateDatabase();
         cd.createEmployee(personName, docid, profileName, role)
     }
 }
