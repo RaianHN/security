@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import javax.management.relation.Role;
+
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -24,17 +26,17 @@ import lotus.domino.View;
 
 public class Deploy {
 
-	public void createRoleDocs(){
+	public boolean createRoleDocs(){
 		
-			
+			System.out.println("in create role docs");
 			createRoleDocuments(Utility.getDatabase("Security.nsf"));
-		
+		return true;
 	}
-	public void createProfileDocs(){
+	public boolean createProfileDocs(){
 		
 			createProfileDocument(Utility.getDatabase("Security.nsf"), "Admin");
 			createProfileDocument(Utility.getDatabase("Security.nsf"), "Standard");
-	
+	return true;
 	}
 	public void testView(){
 		try {
@@ -46,19 +48,36 @@ public class Deploy {
 		}
 	}
 	public void createRoleDocuments(Database db) {
+		System.out.println("create role docs1");
 		DefineModule define = new DefineModule();
-		ArrayList<Role> roles = define.getRoleList();
-
-		for (Role role : roles) {
+		ArrayList<bsuite.configure.Role> roles = (ArrayList<bsuite.configure.Role>) define.getRoleList();
+		System.out.println("create role docs2");
+		View roleView=null;
+		try {
+			 roleView = Utility.getCurrentDatabase().getView("RolesView");
+		} catch (NotesException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		System.out.println("create role docs3");
+		for (bsuite.configure.Role role : roles) {
 			try {
-				Document roleDoc = db.createDocument();
-				roleDoc.replaceItemValue("Form", "Role");
-				roleDoc.replaceItemValue("role_name", role.getRoleName());
-				roleDoc.replaceItemValue("role_to", role.getRoleParent());
-				roleDoc.save();
+				if(roleView.getDocumentByKey(role.getRoleName())==null){
+					try {
+						Document roleDoc = db.createDocument();
+						roleDoc.replaceItemValue("Form", "Role");
+						roleDoc.replaceItemValue("role_name", role.getRoleName());
+						roleDoc.replaceItemValue("role_to", role.getRoleParent());
+						roleDoc.save();
+					} catch (NotesException e) {
+						e.printStackTrace();
+					}
+				}
 			} catch (NotesException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 
 		}
 	}
@@ -68,6 +87,7 @@ public class Deploy {
 		createProfileDocument(Utility.getDatabase("Security.nsf"), profileName);
 		
 	}
+	
 	
 	public void createProfileDocument(Database db, String profileName) {
 		// Creates the profile document in security.nsf
@@ -183,6 +203,132 @@ public class Deploy {
 		}
 		
 	}
+	public void updateModule(String moduleName){
+		ArrayList<Document> dc = getProfileDocs();//Get document collection of all profiles
+		Document doc = null;
+		for(int i=0;i<dc.size();i++){//For each profile document
+			doc = dc.get(i);
+			updateProfileDocument(doc, moduleName);
+		}
+		
+	}
+	
+	private void updateProfileDocument(Document doc, String moduleName) {
+		// Creates the profile document in security.nsf
+
+		// get all the modules defined in xmployee.nsf
+		// and the schema defined for each entity
+		// for each field and feature in entity set the permissions and add it
+		// to entity list of profile and finally add the modules in profile
+		// object
+		// save it as a document in security database, by replacing JsonString
+		// value
+
+		DefineModule def = new DefineModule();
+		ProfileJson pf = getJsonObject(doc);
+		//ProfileJson pf = new ProfileJson();
+		//ArrayList<bsuite.jsonparsing.Module> modules = new ArrayList<bsuite.jsonparsing.Module>();
+		ArrayList<bsuite.jsonparsing.Module> modules = pf.getModules();
+		
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectMapper mapper2 = new ObjectMapper();
+
+		String JsonString = "";
+		
+
+	//	for (String moduleName : moduleNames) {		//For each module set permission
+			System.out.println("modulenames"+moduleName);
+			System.out.println("modulenames1");
+			bsuite.jsonparsing.Module moduleNew = defineModulePermission(moduleName, "1");
+			System.out.println("modulenames211");
+
+			String JsonModule = def.getModuleJson(moduleName);
+			System.out.println("modulenames212 jsonModule "+JsonModule);
+
+			Module module=null;
+			try {
+				module = mapper.readValue(JsonModule, Module.class);
+			} catch (JsonParseException e1) {
+				e1.printStackTrace();
+			} catch (JsonMappingException e1) {
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			//Added for the module features
+			System.out.println("modulenames21234");
+
+			ArrayList<Feature>features = module.getFeatures();
+			System.out.println("modulenames212www ");
+
+			if(features!=null){				
+			ArrayList<bsuite.jsonparsing.Feature> featureList = new ArrayList<bsuite.jsonparsing.Feature>();//Create empty feature list for this module
+			for(Feature f:features){
+				bsuite.jsonparsing.Feature feature = defineFeaturePermission(f.getFeatureName(), "1");
+				featureList.add(feature);
+			}			
+			moduleNew.setFeatures(featureList);
+			}
+			
+			System.out.println("modulenames212jjj");
+
+			
+			
+			ArrayList<Entity> entities = module.getEntities();
+			if(entities!=null){
+				System.out.println("modulenames2");
+				ArrayList<bsuite.jsonparsing.Entity> entityList = new ArrayList<bsuite.jsonparsing.Entity>();//Create empty EntityList for this module
+				for(Entity e:entities){//For each entity set permission
+					bsuite.jsonparsing.Entity entity = defineEntityPermission(moduleName, e.getEntityName(), "1", "1", "1", "1","1");
+					ArrayList<Field> fields = e.getFields();
+					
+					ArrayList<bsuite.jsonparsing.Field> fieldList = new ArrayList<bsuite.jsonparsing.Field>();//create empty FieldList for this entity
+					for(Field f:fields){
+						bsuite.jsonparsing.Field field = defineFieldPermission(f.getFieldName(), "0", "1");
+						fieldList.add(field);
+					}	
+					System.out.println("modulenames2");
+					
+					entity.setEntityName(e.getEntityName());
+					entity.setFields(fieldList);					
+					entityList.add(entity);
+					System.out.println("modulenames3");
+				}
+				moduleNew.setEntities(entityList);
+				
+			}
+			modules.add(moduleNew);
+			System.out.println("modulenames4");
+			
+		//}
+		
+		pf.setModules(modules);
+		//pf.setProfName(profileName);
+		System.out.println("modulenames5");
+		try {
+			JsonString = mapper2.writeValueAsString(pf);
+			System.out.println("Profile Json"+JsonString);
+		} catch (JsonGenerationException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		try {
+			//Document doc = db.createDocument();
+			//doc.replaceItemValue("Form", "permissions");
+			//doc.replaceItemValue("prof_name", profileName);
+			doc.replaceItemValue("JsonString",JsonString );
+			doc.save();
+			
+		} catch (NotesException e) {
+			
+			e.printStackTrace();
+		}
+		
+	}
 
 	private bsuite.jsonparsing.Module defineModulePermission(String moduleName, String visibility) {
 		System.out.println("definemodulepermission");
@@ -234,10 +380,37 @@ public class Deploy {
 		cd.createDatabases(moduleNames);
 		
 	}
-	public void deploy(){
+	public boolean deploy(){
 		//createDatabases();//Create databases for modules
 		createRoleDocs();//Create role documents for the role hierarchy created in security.nsf
 		createProfileDocs();//Create the profile documents, standard and admin in Security.nsf
+		
+		return true;
+	}
+	//var cd = new bsuite.configure.CreateDatabase();
+	//cd.RegisterEmployee(user)
+	
+	public void deploy(String user){
+		//createDatabases();//Create databases for modules
+		System.out.println("before creating role docs");
+		createRoleDocs();
+		System.out.println("after creating role docs");
+		createProfileDocs();
+		
+		System.out.println("before creating user");
+		if(user!=null && !user.equals("")){
+			
+			//Create role documents for the role hierarchy created in security.nsf
+			//Create the profile documents, standard and admin in Security.nsf
+			
+			
+			CreateDatabase cd = new CreateDatabase();
+			cd.RegisterEmployee(user);
+			
+		}else{
+			System.out.println("Admin name not provided for deploying");
+		}
+		
 		
 	}
 	public ArrayList<Document> getProfileDocs(){
@@ -310,12 +483,18 @@ public class Deploy {
 		System.out.println("23..");
 		ArrayList<bsuite.jsonparsing.Feature> featureList = module1.getFeatures();
 		System.out.println("24..");
-		for(bsuite.jsonparsing.Feature feature:featureList){
-			if(feature.getFeatureName().equals(featureName)){
-				System.out.println("The feature "+featureName+" already exists");
-				return jsonObj;
+		if(featureList!=null){
+			for(bsuite.jsonparsing.Feature feature:featureList){
+				
+				if(feature.getFeatureName().equals(featureName)){
+					System.out.println("The feature "+featureName+" already exists");
+					return jsonObj;
+				}
 			}
+		}else{
+			featureList = new ArrayList<bsuite.jsonparsing.Feature>();
 		}
+		
 		System.out.println("25..");
 		bsuite.jsonparsing.Feature feature = defineFeaturePermission(featureName, "1");
 		System.out.println("26..");
@@ -346,17 +525,23 @@ public class Deploy {
 		System.out.println("23..");
 		ArrayList<bsuite.jsonparsing.Entity> entityList = module1.getEntities();
 		System.out.println("24..");
-		System.out.println("24.."+entityList.size()+" "+module1.getModuleName());
-		for(bsuite.jsonparsing.Entity entity:entityList){
-			System.out.println("entityName"+entity.getEntityName()+" "+entityName);
-			if(entity!=null && entity.getEntityName()!=null){
-				if(entity.getEntityName().equals(entityName)){
-					System.out.println("The entity "+entityName+" already exists");
-					return jsonObj;
+		
+		if(entityList!=null){
+			System.out.println("24.."+entityList.size()+" "+module1.getModuleName());
+			for(bsuite.jsonparsing.Entity entity:entityList){
+				System.out.println("entityName"+entity.getEntityName()+" "+entityName);
+				if(entity!=null && entity.getEntityName()!=null){
+					if(entity.getEntityName().equals(entityName)){
+						System.out.println("The entity "+entityName+" already exists");
+						return jsonObj;
+					}
 				}
+				
 			}
-			
+		}else{
+			entityList = new ArrayList<bsuite.jsonparsing.Entity>();
 		}
+		
 		System.out.println("25..");
 		bsuite.jsonparsing.Entity entity = defineEntityPermission(entityName, "1", "1", "1", "1","1");
 		System.out.println("26..");
@@ -434,6 +619,7 @@ public class Deploy {
 		entity1.setFields(fieldList);
 		System.out.println("added entity"+field.getFieldName()+" "+field.getVisible());
 		
+		/*
 		CreateDatabase cd = new CreateDatabase();
 		view = cd.getView(db, entityName);
 		try {
@@ -445,6 +631,7 @@ public class Deploy {
 			e.printStackTrace();
 		}
 		cd.createViewColumn(view,vColumn,fieldName,fieldName);
+		*/
 		return jsonObj;
 		
 		
@@ -488,41 +675,52 @@ public class Deploy {
 					 entities = df.getEntityNames(moduleName);
 					 view = null;
 					System.out.println("6..");
-					for(int k=0;k<features.size();k++){
-						featureName = features.get(k);
-						System.out.println("7..");
-						System.out.println("module: "+moduleName+" feature: "+featureName);
-						jsonObj = updateFeature(jsonObj,moduleName,featureName);	//update features
-						System.out.println("8..");
+					if(features==null){
+						System.out.println("There are no features for this module "+moduleName);
 					}
 					
 					
-					
-					for(int l=0;l<entities.size();l++){
-						System.out.println("9..");
-						entityName = entities.get(l);
-						System.out.println("--->"+entities+"<--");
-						System.out.println("module: "+moduleName+" entityName: "+entityName);
-						jsonObj = updateEntity(jsonObj, moduleName,entityName,db);
-						System.out.println("10..");
-						
-						fields = df.getFields(moduleName, entityName);
-						System.out.println("---F>"+fields+"<--");
-						for(int m=0;m<fields.size();m++){
-							fieldName = fields.get(m);
-							System.out.println("module: "+moduleName+" entityName: "+entityName+" FieldName"+fieldName);
-							jsonObj = updateField(jsonObj, moduleName, entityName, fieldName,db,m+1);
-							
-							
-							
+					if(features!=null){
+						for(int k=0;k<features.size();k++){
+							featureName = features.get(k);
+							System.out.println("7..");
+							System.out.println("module: "+moduleName+" feature: "+featureName);
+							jsonObj = updateFeature(jsonObj,moduleName,featureName);	//update features
+							System.out.println("8..");
 						}
-						doc.replaceItemValue("JsonString", mapper
-								.writeValueAsString(jsonObj));
-						doc.save();
-						jsonObj = getJsonObject(doc);
-						
-						
 					}
+					
+					
+					
+					if(entities!=null){
+						for(int l=0;l<entities.size();l++){
+							System.out.println("9..");
+							entityName = entities.get(l);
+							System.out.println("--->"+entities+"<--");
+							System.out.println("module: "+moduleName+" entityName: "+entityName);
+							jsonObj = updateEntity(jsonObj, moduleName,entityName,db);
+							System.out.println("10..");
+							
+							fields = df.getFields(moduleName, entityName);
+							System.out.println("---F>"+fields+"<--");
+							if(fields!=null){
+								for(int m=0;m<fields.size();m++){
+									fieldName = fields.get(m);
+									System.out.println("module: "+moduleName+" entityName: "+entityName+" FieldName"+fieldName);
+									jsonObj = updateField(jsonObj, moduleName, entityName, fieldName,db,m+1);
+								}
+								
+								doc.replaceItemValue("JsonString", mapper
+										.writeValueAsString(jsonObj));
+								doc.save();
+								jsonObj = getJsonObject(doc);	
+							}
+							
+							
+							
+						}	
+					}
+					
 					doc.replaceItemValue("JsonString", mapper
 							.writeValueAsString(jsonObj));
 					doc.save();

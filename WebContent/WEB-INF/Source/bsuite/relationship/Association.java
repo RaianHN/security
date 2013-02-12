@@ -11,6 +11,7 @@ import bsuite.utility.Utility;
 import lotus.domino.Database;
 import lotus.domino.Document;
 import lotus.domino.Name;
+import lotus.domino.NotesException;
 import lotus.domino.Session;
 import lotus.domino.View;
 
@@ -250,6 +251,22 @@ public class Association {
 		
 		return "";
 		
+	}
+	public String getAssociatedProfileName(String currentuser){
+		
+		try {
+			Document profiledoc = getAssociatedProfile(currentuser);
+			if(profiledoc!=null){
+				return profiledoc.getItemValueString("prof_name");
+			}else{
+				return "";
+			}
+			
+		} catch (NotesException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "";
 	}
 	
 

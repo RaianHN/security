@@ -4,19 +4,22 @@
 	<xp:table border="1" id="updateTable">
 
 		<xp:tr>
-			<xp:td align="left"><xp:label id="label5" style="font-weight:bold" value="Module Name: ">
+			<xp:td rendered="false"></xp:td>
+			<xp:td align="left">
+				<xp:label id="label5" style="font-weight:bold"
+					value="Module Name: ">
 				</xp:label>
 				<xp:comboBox id="comboBox1">
 					<xp:selectItem itemLabel="--Select Module--"
 						id="selectItem1">
 					</xp:selectItem>
 
-					<xp:selectItems>
+					<xp:selectItems id="selectItems1">
 						<xp:this.value><![CDATA[#{javascript:return @DbColumn("","Modules",1);}]]></xp:this.value>
 					</xp:selectItems>
 					<xp:eventHandler event="onchange" submit="true"
 						refreshMode="partial" refreshId="updateTable"
-						onComplete="hideWait()" onStart="showWait()">
+						onComplete="hideWait()" onStart="showWait()" id="eventHandler1">
 						<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("comboBox1").getValue();
 var schemaObj = new bsuite.configure.DefineModule();
 
@@ -31,21 +34,29 @@ viewScope.Entities = schemaObj.getEntityNames(moduleName)
 					</xp:eventHandler>
 				</xp:comboBox>
 			</xp:td>
-			<xp:td><xp:button value="Update" id="button4" rendered="false">
-	<xp:eventHandler event="onclick" submit="true"
-		refreshMode="complete">
-		<xp:this.action><![CDATA[#{javascript:var schemaObj = new bsuite.configure.Deploy();
+			<xp:td>
+				<xp:button value="Update" id="button4"
+					rendered="false">
+					<xp:eventHandler event="onclick" submit="true"
+						refreshMode="complete" id="eventHandler2">
+						<xp:this.action><![CDATA[#{javascript:var schemaObj = new bsuite.configure.Deploy();
 schemaObj.updateAllProfiles();}]]></xp:this.action>
-	</xp:eventHandler></xp:button>
+					</xp:eventHandler>
+				</xp:button>
 				<xp:button value="Test" id="button1" rendered="false">
 					<xp:eventHandler event="onclick" submit="true"
-						refreshMode="partial" refreshId="updateTable">
+						refreshMode="partial" refreshId="updateTable" id="eventHandler3">
 						<xp:this.action><![CDATA[#{javascript:var profileObj = new bsuite.jsonparsing.ProfileEdit();
 profileObj.removeUpdate();}]]></xp:this.action>
-					</xp:eventHandler></xp:button></xp:td>
+					</xp:eventHandler>
+				</xp:button>
+			</xp:td>
 			<xp:td></xp:td>
 		</xp:tr>
 		<xp:tr>
+			<xp:td rendered="false">
+				<xp:span style="font-weight:bold">Modules</xp:span>
+			</xp:td>
 			<xp:td align="left">
 				<xp:label value="Features" id="label1"
 					style="font-weight:bold">
@@ -63,25 +74,24 @@ profileObj.removeUpdate();}]]></xp:this.action>
 			</xp:td>
 		</xp:tr>
 		<xp:tr>
-			<xp:td valign="top">
-				<xp:listBox id="listBox1" style="height:200.0px;width:150.0px">
+			<xp:td valign="top" rendered="false">
+				<xp:listBox id="listBox4"
+					style="height:200.0px;width:150.0px" rendered="false">
 
 
 
-					<xp:selectItems>
-						<xp:this.value><![CDATA[#{javascript:var vals = viewScope.Features;
-if(vals!=null){
-return vals;
-}}]]></xp:this.value>
+					<xp:selectItems id="selectItems6">
+						<xp:this.value><![CDATA[#{javascript:return @DbColumn("","Modules",1);}]]></xp:this.value>
 					</xp:selectItems>
 				</xp:listBox>
 				<xp:br></xp:br>
-				
-				<xp:link escape="true" text="Remove Feature" id="link4">
-				<xp:eventHandler event="onclick" submit="true"
-					refreshMode="partial" onComplete="hideWait()" onStart="showWait()"
-					onError="showError()" refreshId="updateTable">
-					<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("comboBox1").getValue();
+				<xp:link escape="true" text="Remove Module"
+					id="link8">
+					<xp:eventHandler event="onclick" submit="true"
+						refreshMode="partial" onComplete="hideWait()" onStart="showWait()"
+						onError="showError()" refreshId="updateTable"
+						id="eventHandler12">
+						<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("comboBox1").getValue();
 var featureName1 = getComponent("listBox1").getValue();
 var schemaObj = new bsuite.configure.DefineModule();
 var featureName:java.util.Vector = new java.util.Vector();
@@ -101,27 +111,74 @@ viewScope.Entities = schemaObj.getEntityNames(moduleName)
 
 updateDeleteSchema();
 }]]></xp:this.action>
-				</xp:eventHandler>
+					</xp:eventHandler>
 
-				</xp:link></xp:td>
+				</xp:link>
+			</xp:td>
 			<xp:td valign="top">
-				<xp:listBox id="listBox2" style="height:200.0px;width:150.0px">
+				<xp:listBox id="listBox1"
+					style="height:200.0px;width:150.0px">
 
 
-					<xp:selectItems>
+
+					<xp:selectItems id="selectItems2">
+						<xp:this.value><![CDATA[#{javascript:var vals = viewScope.Features;
+if(vals!=null){
+return vals;
+}}]]></xp:this.value>
+					</xp:selectItems>
+				</xp:listBox>
+				<xp:br id="br1"></xp:br>
+
+				<xp:link escape="true" text="Remove Feature"
+					id="link4">
+					<xp:eventHandler event="onclick" submit="true"
+						refreshMode="partial" onComplete="hideWait()" onStart="showWait()"
+						onError="showError()" refreshId="updateTable" id="eventHandler4">
+						<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("comboBox1").getValue();
+var featureName1 = getComponent("listBox1").getValue();
+var schemaObj = new bsuite.configure.DefineModule();
+var featureName:java.util.Vector = new java.util.Vector();
+featureName.add(featureName1);
+println("feature name"+featureName1);
+if(featureName.size()!=0){
+
+schemaObj.removeFeature(moduleName,featureName1);
+}
+
+
+schemaObj = new bsuite.configure.DefineModule();
+if(moduleName!=null){
+viewScope.Features = schemaObj.getFeatures(moduleName);
+viewScope.Entities = schemaObj.getEntityNames(moduleName)
+}
+
+updateDeleteSchema();
+}]]></xp:this.action>
+					</xp:eventHandler>
+
+				</xp:link>
+			</xp:td>
+			<xp:td valign="top">
+				<xp:listBox id="listBox2"
+					style="height:200.0px;width:150.0px">
+
+
+					<xp:selectItems id="selectItems3">
 						<xp:this.value><![CDATA[#{javascript:var vals = viewScope.Entities;
 if(vals!=null){
 return vals;
 }}]]></xp:this.value>
 					</xp:selectItems>
 				</xp:listBox>
-				<xp:br></xp:br>
-				
-				<xp:link escape="true" text="Remove Entity" id="link5">
-				<xp:eventHandler event="onclick" submit="true"
-					refreshMode="partial" onComplete="hideWait()" onStart="showWait()"
-					onError="showError()" refreshId="updateTable">
-					<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("comboBox1").getValue();
+				<xp:br id="br2"></xp:br>
+
+				<xp:link escape="true" text="Remove Entity"
+					id="link5">
+					<xp:eventHandler event="onclick" submit="true"
+						refreshMode="partial" onComplete="hideWait()" onStart="showWait()"
+						onError="showError()" refreshId="updateTable" id="eventHandler5">
+						<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("comboBox1").getValue();
 var entityName = getComponent("listBox2").getValue();
 var schemaObj = new bsuite.configure.DefineModule();
 
@@ -139,16 +196,17 @@ viewScope.Entities = schemaObj.getEntityNames(moduleName)
 }
 
 updateDeleteSchema();}]]></xp:this.action>
-				</xp:eventHandler>
-				</xp:link></xp:td>
+					</xp:eventHandler>
+				</xp:link>
+			</xp:td>
 			<xp:td valign="top">
 				<xp:label value="Entity Name: " id="label4"
 					style="font-weight:bold">
 				</xp:label>
 				<xp:comboBox id="comboBox2">
-					<xp:selectItem itemLabel="--Select Entity--"></xp:selectItem>
+					<xp:selectItem itemLabel="--Select Entity--" id="selectItem2"></xp:selectItem>
 
-					<xp:selectItems>
+					<xp:selectItems id="selectItems4">
 						<xp:this.value><![CDATA[#{javascript:var vals = viewScope.Entities;
 if(vals!=null){
 return vals;
@@ -157,7 +215,7 @@ return vals;
 					<xp:eventHandler event="onchange" submit="true"
 						refreshMode="partial" refreshId="updateTable"
 						onComplete="hideWait()" onError="showError()"
-						onStart="showWait()">
+						onStart="showWait()" id="eventHandler6">
 						<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("comboBox1").getValue();
 var entityName = getComponent("comboBox2").getValue();
 var schemaObj = new bsuite.configure.DefineModule();
@@ -168,24 +226,24 @@ viewScope.Fields = schemaObj.getFields(moduleName,entityName);
 }]]></xp:this.action>
 					</xp:eventHandler>
 				</xp:comboBox>
-				<xp:br></xp:br>
+				<xp:br id="br3"></xp:br>
 				<xp:listBox id="listBox3"
 					style="height:200.0px;width:150.0px">
 
-					<xp:selectItems>
+					<xp:selectItems id="selectItems5">
 						<xp:this.value><![CDATA[#{javascript:var vals = viewScope.Fields;
 if(vals!=null){
 return vals;
 }}]]></xp:this.value>
 					</xp:selectItems>
 				</xp:listBox>
-				
-				<xp:br></xp:br>
+
+				<xp:br id="br4"></xp:br>
 				<xp:link escape="true" text="Remove Field" id="link6">
-				<xp:eventHandler event="onclick" submit="true"
-					refreshMode="partial" onComplete="hideWait()" onStart="showWait()"
-					onError="showError()" refreshId="updateTable">
-					<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("comboBox1").getValue();
+					<xp:eventHandler event="onclick" submit="true"
+						refreshMode="partial" onComplete="hideWait()" onStart="showWait()"
+						onError="showError()" refreshId="updateTable" id="eventHandler7">
+						<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("comboBox1").getValue();
 var entityName = getComponent("comboBox2").getValue();
 var fieldName = getComponent("listBox3").getValue();
 var schemaObj = new bsuite.configure.DefineModule();
@@ -202,17 +260,51 @@ viewScope.Fields = schemaObj.getFields(moduleName,entityName);
 }
 
 updateDeleteSchema();}]]></xp:this.action>
-				</xp:eventHandler>
-				</xp:link></xp:td>
+					</xp:eventHandler>
+				</xp:link>
+			</xp:td>
 		</xp:tr>
 		<xp:tr>
+			<xp:td valign="top" rendered="false">
+				<xp:inputText id="inputText4"></xp:inputText>
+				<xp:br></xp:br>
+				<xp:link escape="true" text="Add Module" id="link7">
+					<xp:eventHandler event="onclick" submit="true"
+						refreshMode="partial" refreshId="updateTable"
+						onComplete="hideWait()" onStart="showWait()" onError="showError()"
+						id="eventHandler11">
+						<xp:this.action><![CDATA[#{javascript:println("1");
+var moduleName = getComponent("inputText4").getValue();
+println("2");
+var schemaObj = new bsuite.configure.DefineModule();
+println("3");
+
+println("module name"+moduleName+"type of"+typeof(moduleName));
+if(moduleName!="" && moduleName!=null){
+println("4");
+schemaObj.addModules(moduleName);
+println("5");
+}
+
+
+updateAddSchema();
+
+
+var dep = new bsuite.configure.Deploy();
+if(moduleName!=null){
+dep.updateModule(moduleName);
+}
+}]]></xp:this.action>
+					</xp:eventHandler>
+				</xp:link>
+			</xp:td>
 			<xp:td valign="top">
 				<xp:inputText id="inputText1"></xp:inputText>
 				<xp:link escape="true" text="Add Feature" id="link1">
 					<xp:eventHandler event="onclick" submit="true"
 						refreshMode="partial" refreshId="updateTable"
 						onComplete="hideWait()" onStart="showWait()"
-						onError="showError()">
+						onError="showError()" id="eventHandler8">
 						<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("comboBox1").getValue();
 var featureName1 = getComponent("inputText1").getValue();
 var schemaObj = new bsuite.configure.DefineModule();
@@ -232,8 +324,9 @@ viewScope.Entities = schemaObj.getEntityNames(moduleName)
 }
 
 updateAddSchema();}]]></xp:this.action>
-					</xp:eventHandler></xp:link>
-				
+					</xp:eventHandler>
+				</xp:link>
+
 			</xp:td>
 			<xp:td valign="top">
 				<xp:inputText id="inputText2"></xp:inputText>
@@ -241,7 +334,7 @@ updateAddSchema();}]]></xp:this.action>
 					<xp:eventHandler event="onclick" submit="true"
 						refreshMode="partial" refreshId="updateTable"
 						onComplete="hideWait()" onStart="showWait()"
-						onError="showError()">
+						onError="showError()" id="eventHandler9">
 						<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("comboBox1").getValue();
 var entityName = getComponent("inputText2").getValue();
 var schemaObj = new bsuite.configure.DefineModule();
@@ -261,8 +354,9 @@ viewScope.Entities = schemaObj.getEntityNames(moduleName)
 
 
 //updateAddSchema();}]]></xp:this.action>
-					</xp:eventHandler></xp:link>
-				
+					</xp:eventHandler>
+				</xp:link>
+
 			</xp:td>
 			<xp:td valign="top">
 				<xp:inputText id="inputText3"></xp:inputText>
@@ -270,7 +364,7 @@ viewScope.Entities = schemaObj.getEntityNames(moduleName)
 					<xp:eventHandler event="onclick" submit="true"
 						refreshMode="partial" refreshId="updateTable"
 						onComplete="hideWait()" onStart="showWait()"
-						onError="showError()">
+						onError="showError()" id="eventHandler10">
 						<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("comboBox1").getValue();
 var entityName = getComponent("comboBox2").getValue();
 var fieldName = getComponent("inputText3").getValue();
@@ -289,17 +383,19 @@ viewScope.Fields = schemaObj.getFields(moduleName,entityName);
 
 
 updateAddSchema();}]]></xp:this.action>
-					</xp:eventHandler></xp:link>
-				
+					</xp:eventHandler>
+				</xp:link>
+
 			</xp:td>
 		</xp:tr>
 		<xp:tr>
+			<xp:td rendered="false"></xp:td>
 			<xp:td align="left">
-				
+
 			</xp:td>
 			<xp:td></xp:td>
 			<xp:td></xp:td>
 		</xp:tr>
 	</xp:table>
 
-	</xp:view>
+</xp:view>

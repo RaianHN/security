@@ -49,7 +49,9 @@ bsuite.loadcc.DynamicCC.loadCC(s, component, c1, id);}]]></xp:this.action>
 								style="background-color:rgb(192,192,192);color:rgb(0,0,0)">
 								<xp:eventHandler event="onclick"
 									submit="false">
-									<xp:this.script><![CDATA[savePermissions();]]></xp:this.script>
+									<xp:this.script><![CDATA[var id = "#{id:modulediv}";
+//alert("moduledive id"+id);
+savePermissions(id);]]></xp:this.script>
 
 
 

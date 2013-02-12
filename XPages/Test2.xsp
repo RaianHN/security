@@ -1,22 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xp:view xmlns:xp="http://www.ibm.com/xsp/core"
 	xmlns:xc="http://www.ibm.com/xsp/custom" dojoParseOnLoad="false">
-
-
-
-	<xc:viewPicker2 dialogID="view1" fieldId="viewScope.id"
-		onReturn="Set Scope Value" varName="viewScope.disp" addrefreshid="p1"
-		varDb="viewScope.mdb">
-	</xc:viewPicker2>
-	 <xp:panel id="p1">
-		<xp:inputText id="inputText2" value="#{viewScope.disp}"></xp:inputText>
-		<xp:inputText id="inputText1" value="#{viewScope.id}"></xp:inputText>
-		<xp:inputText id="inputText3" value="#{viewScope.mdb}"></xp:inputText>
-	</xp:panel>
-	<xp:scriptBlock id="scriptBlock1">
-	 	<xp:this.value><![CDATA[
 	
-var refreshpanelId = "#{id:p1}";
-]]></xp:this.value>
-	 </xp:scriptBlock>
-</xp:view>
+
+	<xp:br></xp:br>
+	<xp:button value="Create" id="button1"><xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+	<xp:this.action>
+		<xp:openPage name="/test.xsp" target="newDocument"></xp:openPage>
+	</xp:this.action></xp:eventHandler></xp:button>
+	
+	<xp:viewPanel rows="30" id="viewPanel1">
+		<xp:this.facets>
+			<xp:pager partialRefresh="true" layout="Previous Group Next"
+				xp:key="headerPager" id="pager1">
+			</xp:pager>
+		</xp:this.facets>
+		<xp:this.data>
+			<xp:dominoView var="view1" viewName="AllDocs"></xp:dominoView>
+		</xp:this.data>
+		<xp:viewColumn columnName="DocumentCreator" id="viewColumn1" displayAs="link" openDocAsReadonly="true">
+			<xp:viewColumnHeader value="DocCreator"
+				id="viewColumnHeader1">
+			</xp:viewColumnHeader>
+		</xp:viewColumn>
+	</xp:viewPanel></xp:view>

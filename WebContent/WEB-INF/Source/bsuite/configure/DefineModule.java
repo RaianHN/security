@@ -30,11 +30,17 @@ public class DefineModule{
 	}
 	
 	public void addModules(Vector<String> modules) {
+		System.out.println("inside add module");
 		for (String moduleName : modules) {
 			String moduleJson = createJsonString(moduleName);
 			createModuleDocument(moduleJson, moduleName);
 		}
 
+	}
+	public void addModules(String module) {
+		System.out.println("inside add module");
+		String moduleJson = createJsonString(module);
+			createModuleDocument(moduleJson, module);
 	}
 
 	/**
@@ -124,6 +130,54 @@ public class DefineModule{
 		}
 
 	}
+	
+	@SuppressWarnings("unchecked")
+	public void addFeatures(String moduleName, String featurename) {
+		try {
+
+			View modulesView = currentdb.getView("Modules");
+
+			Document moduleDoc = modulesView.getDocumentByKey(moduleName);
+
+			String jsonInput = moduleDoc.getItemValueString("JsonString");
+
+			ObjectMapper mapper = new ObjectMapper();
+			Module module = mapper.readValue(jsonInput, Module.class);
+
+			ArrayList<Feature> features = null;
+			if (module.getFeatures() == null) {
+				features = new ArrayList();
+			} else {
+				features = module.getFeatures();
+			}
+
+			// ArrayList<Feature> featureList = new ArrayList<Feature>();
+
+			
+				// Add features to the new entity
+				Feature feature = new Feature();
+				feature.setFeatureName(featurename);
+
+				features.add(feature);
+			
+			module.setFeatures(features);
+
+			moduleDoc.replaceItemValue("JsonString", mapper
+					.writeValueAsString(module));
+			moduleDoc.save();
+
+		} catch (NotesException e) {
+			e.printStackTrace();
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
 
 	@SuppressWarnings("unchecked")
 	public void addEntity(String moduleName, String entityName,

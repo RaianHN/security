@@ -188,6 +188,7 @@ public void createDatabases(Vector<String> modules) {
 	}
 	public void RegisterEmployee(String name){
 		try{
+			System.out.println("1");
 		Document persondoc=getPerson(name);
 		String personDocId=persondoc.getUniversalID();
 	System.out.println("UNID "+personDocId);
@@ -208,15 +209,17 @@ public void createDatabases(Vector<String> modules) {
 			String relationid = getRelationNameUnid("HAS_A");
 			String trg_data="Admin";
 			Database securityDb  = Utility.getDatabase("Security.nsf");
-			
+			System.out.println("2");
 			View profileview= securityDb.getView("ProfileView");
 			Document profiledoc = profileview.getDocumentByKey(trg_data);
 			String targetid=profiledoc.getUniversalID();
 			String srcunid=personDocId;
+			System.out.println("3");
 			//creating relationship between person and admin profile
 			createRelationship(srcunid,"admntool.nsf",src_data,securityDb.getFileName(),trg_data,targetid,relationid);
-			
+			System.out.println("4");
 			//Create Role Association with the Person
+			System.out.println("in role assoc"+name);
 			createRoleAssociation(name,"CEO" );
 			
 		}catch (Exception e) {
@@ -229,20 +232,28 @@ public void createDatabases(Vector<String> modules) {
 	public void createRoleAssociation(String username, String roleName){
 		
 		String src_data=username;
+		System.out.println("role1 username "+src_data);
 		Document persondoc=getPerson(username);
+		
 		try{	
 		
 		String personDocId=persondoc.getUniversalID();
+		System.out.println("role1 persondocid "+personDocId);
 		String relationid = getRelationNameUnid("HAS_ROLE");
+		System.out.println("role2 relationid "+relationid);
 		String rolename=roleName;
-		
+		System.out.println("role3 "+rolename);
 		Database securityDb  = Utility.getDatabase("Security.nsf");
 		View roleview=  securityDb.getView("RolesView");
+		System.out.println("role4 "+roleview.getName());
 		Document roledoc= roleview.getDocumentByKey(rolename);
 		String roleunid=roledoc.getUniversalID();
+		System.out.println("role5 "+roleunid);
+		System.out.println("role association details");
+		System.out.println(personDocId+" "+src_data+" "+securityDb.getFileName()+" "+rolename+" "+relationid);
 		createRelationship(personDocId,"admntool.nsf",src_data,securityDb.getFileName(),rolename,roleunid,relationid);
 		}catch (Exception e) {
-			
+			e.printStackTrace();
 		}
 	}
 	

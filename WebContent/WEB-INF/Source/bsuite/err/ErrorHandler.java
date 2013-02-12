@@ -25,6 +25,7 @@ public class ErrorHandler
 	public void createErrorDocument(Exception ex)
 	{
 	
+	
 		Database audb = Utility.getDatabase("bstaudit.nsf");
 		Document edoc = null;
 		setErrorLogFields(ex);

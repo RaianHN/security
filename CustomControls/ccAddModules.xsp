@@ -28,6 +28,7 @@ defModule.addModules(modules);
 var component = getComponent('loadCC'); 
 var dynacc = new bsuite.loadcc.DynamicCC();
 dynacc.removePreview(component);
+
 }]]></xp:this.action>
 					</xp:eventHandler></xp:button></xp:td>
 			

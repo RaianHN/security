@@ -239,19 +239,23 @@ function saveFeaturePermission(){
 }
 
 
-function saveModulePermissions(){
-	var profileName = getProfileName;
+function saveModulePermissions(id){
+	var profileName = getProfileName(id);
 	var modulePArray = new Array();
 	//view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:modulediv:moduleRepeatM:0:ccModuleP:repeatModules:0:tabVChk
 	//var strBaseId = "view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:";
-	var strBaseId = "view:_id1:_id2:MainTabContainer:djProfile:_id74:";
+	//view:_id1:_id2:MainTabContainer:djProfile:_id76:modulediv:moduleRepeatM:2:ccModuleP:repeatModules:0:tabVChk
+	
+	//var strBaseId = "view:_id1:_id2:MainTabContainer:djProfile:_id76:";
 	//view:_id1:_id2:MainTabContainer:djProfile:_id74:modulediv:moduleRepeatM:0:ccModuleP:repeatModules:0:tabVChk
 	//view:_id1:_id2:MainTabContainer:djProfile:_id74:modulediv:inputNModules
 	//Get the profile name	
+	var strBaseId = id;
+	
 	var nModulesStr = document.getElementById(strBaseId+"modulediv:inputNModules").value
 	//Get number of modules
 	var nModules = getModuleNumber(nModulesStr);
-	alert("nmodules"+nModules);
+	//alert("nmodules"+nModules);
 	var k=0;
 	var moduleName = "";
 	var modulePerm = null;
@@ -279,11 +283,12 @@ function saveModulePermissions(){
 }
 
 
-function saveFeaturePermissions(){
+function saveFeaturePermissions(id){
 	var profileName = getProfileName;
 	var featurePArray = new Array();
 	//var strBaseId = "view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:";
-	var strBaseId = "view:_id1:_id2:MainTabContainer:djProfile:_id74:";
+	//var strBaseId = "view:_id1:_id2:MainTabContainer:djProfile:_id76:";
+	var strBaseId = id;
 	var nModulesStr = document.getElementById(strBaseId+"modulediv:inputNModules").value
 	//Get number of modules
 	var nModules = getModuleNumber(nModulesStr);
@@ -294,7 +299,7 @@ function saveFeaturePermissions(){
 	var ftrs=0;
 	for(var m=0;m<nModules;m++){
 		moduleName = document.getElementById(strBaseId+"modulediv:moduleRepeatM:"+m+":ccModuleP:repeatModules:0:moduleM").innerHTML;
-		nFeatures = getFeatureNumber(moduleName);
+		nFeatures = getFeatureNumber(moduleName,strBaseId);
 		for(var f=0;f<nFeatures;f++){
 			featureName = document.getElementById(strBaseId+"modulediv:moduleRepeatM:"+m+":ccModuleP:repeatModules:0:repeatFeature:"+f+":featureName").innerHTML;
 			featurePerm = document.getElementById(strBaseId+"modulediv:moduleRepeatM:"+m+":ccModuleP:repeatModules:0:repeatFeature:"+f+":featureChk");
@@ -319,11 +324,12 @@ function saveFeaturePermissions(){
 }
 
 
-function saveEntityPermissions(){
+function saveEntityPermissions(id){
 	var profileName = getProfileName;
 	var entityPArray = new Array();
 	//var strBaseId = "view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:";
-	var strBaseId = "view:_id1:_id2:MainTabContainer:djProfile:_id74:";
+	//var strBaseId = "view:_id1:_id2:MainTabContainer:djProfile:_id76:";
+	var strBaseId = id;
 	var nModulesStr = document.getElementById(strBaseId+"modulediv:inputNModules").value
 	//Get number of modules
 	var nModules = getModuleNumber(nModulesStr);
@@ -342,7 +348,7 @@ view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:modulediv:moduleRepeatM:1:
 	*/
 	for(var m=0;m<nModules;m++){
 		moduleName = document.getElementById(strBaseId+"modulediv:moduleRepeatM:"+m+":ccModuleP:repeatModules:0:moduleM").innerHTML;
-		nEntities = getEntityNumber(moduleName);
+		nEntities = getEntityNumber(moduleName,strBaseId);
 		var temp="";
 		for(var e=0;e<nEntities;e++){
 			//view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:modulediv:moduleRepeatM:0:ccModuleP:repeatModules:0:repeatEntity:0:entityName
@@ -392,11 +398,12 @@ view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:modulediv:moduleRepeatM:1:
 	console.log("%o",entityPArray);		
 }
 
-function saveFieldPermissions(){
+function saveFieldPermissions(id){
 	var profileName = getProfileName;
 	var fieldPArray = new Array();
 	//var strBaseId = "view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:";
-	var strBaseId = "view:_id1:_id2:MainTabContainer:djProfile:_id74:";
+	//var strBaseId = "view:_id1:_id2:MainTabContainer:djProfile:_id76:";
+	var strBaseId = id;
 	var nModulesStr = document.getElementById(strBaseId+"modulediv:inputNModules").value
 	//Get number of modules
 	var nModules = getModuleNumber(nModulesStr);
@@ -415,11 +422,11 @@ view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:modulediv:moduleRepeatM:1:
 	*/
 	for(var m=0;m<nModules;m++){
 		moduleName = document.getElementById(strBaseId+"modulediv:moduleRepeatM:"+m+":ccModuleP:repeatModules:0:moduleM").innerHTML;
-		nEntities = getEntityNumber(moduleName);
+		nEntities = getEntityNumber(moduleName,strBaseId);
 		var temp="";
 		for(var e=0;e<nEntities;e++){
 			entityName = document.getElementById(strBaseId+"modulediv:moduleRepeatM:"+m+":ccModuleP:repeatModules:0:repeatEntity:"+e+":entityName").innerHTML;
-			nFields = getFieldNumber(moduleName,entityName);
+			nFields = getFieldNumber(moduleName,entityName,strBaseId);
 				var fieldName = "";
 				var fieldV = "";
 				var fieldU = "";
@@ -454,11 +461,13 @@ view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:modulediv:moduleRepeatM:1:
 }
 
 
-function savePermissions(){
-	saveModulePermissions();
-	saveFeaturePermissions();
-	saveEntityPermissions();
-	saveFieldPermissions();
+function savePermissions(id){
+	var newid = id.split("modulediv");
+	//alert(newid[0]);
+	saveModulePermissions(newid[0]);
+	saveFeaturePermissions(newid[0]);
+	saveEntityPermissions(newid[0]);
+	saveFieldPermissions(newid[0]);
 	
 }
 
@@ -473,15 +482,16 @@ function getModuleNumber(strValue){
 	}
 	return null;
 }
-function getProfileName(){
-	var strBaseId = "view:_id1:_id2:MainTabContainer:djProfile:_id74:";
+function getProfileName(id){
+	//var strBaseId = "view:_id1:_id2:MainTabContainer:djProfile:_id76:";
+	var strBaseId = id;
 	var x = document.getElementById(strBaseId+"moduleCombo").selectedIndex;
 	var y=document.getElementById(strBaseId+"moduleCombo").options;
 	return y[x].text;
 }
 
-function getFeatureNumber(moduleName){
-	var ele = document.getElementById("view:_id1:_id2:MainTabContainer:djProfile:_id74:modulediv:inputNFeatures");
+function getFeatureNumber(moduleName,id){
+	var ele = document.getElementById(id+"modulediv:inputNFeatures");
 	if(ele==null){
 		alert("no features found for"+moduleName);
 		return 0;
@@ -499,8 +509,9 @@ function getFeatureNumber(moduleName){
 	return 0;
 }
 
-function getEntityNumber(moduleName){
-	var ele = document.getElementById("view:_id1:_id2:MainTabContainer:djProfile:_id74:modulediv:inputNEntities");
+function getEntityNumber(moduleName,id){
+	//var ele = document.getElementById("view:_id1:_id2:MainTabContainer:djProfile:_id76:modulediv:inputNEntities");
+	var ele = document.getElementById(id+"modulediv:inputNEntities");
 	if(ele==null){
 		alert("no features found for"+moduleName);
 		return 0;
@@ -524,8 +535,10 @@ function getCheckedValue(ele){
 	
 }
 
-function getFieldNumber(moduleName,entityName){
-	var ele = document.getElementById("view:_id1:_id2:MainTabContainer:djProfile:_id74:modulediv:inputNFields");
+function getFieldNumber(moduleName,entityName,id){
+	//var ele = document.getElementById("view:_id1:_id2:MainTabContainer:djProfile:_id76:modulediv:inputNFields");
+	var ele = document.getElementById(id+"modulediv:inputNFields");
+	
 	if(ele==null){
 		alert("no features found for"+moduleName);
 		return 0;

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+
+
+	<xp:table border="1">
+		<xp:tr style="background-color:rgb(192,192,192)">
+			<xp:td>
+				<xp:label value="UserName" id="label1"
+					style="font-weight:bold">
+				</xp:label>
+
+			</xp:td>
+			<xp:td>
+
+
+				<xp:label value="Role" id="label3"
+					style="font-weight:bold">
+				</xp:label>
+			</xp:td>
+			<xp:td>
+				<xp:label value="Profile" id="label2"
+					style="font-weight:bold">
+				</xp:label>
+
+
+			</xp:td>
+		</xp:tr>
+		<xp:repeat id="repeat1" rows="30" var="user1">
+			<xp:this.value><![CDATA[${javascript:var path =database.getFilePath();
+var dbpath =  @LeftBack(path ,"/");
+//var db= dbpath+"/Security.nsf";
+var db=dbpath+"/admntool.nsf";
+var serv = @Word(@Implode(@DbName(),", "),", ", 1);
+var com = new Array(serv,db);
+var x= @DbColumn(com,  "employeeprofile", 1);
+@Explode(x,",;",true);}]]></xp:this.value>
+			<xp:tr>
+				<xp:td>
+					<xp:label value="#{javascript:user1}" id="label4">
+					</xp:label>
+				</xp:td>
+				<xp:td>
+					<xp:label id="label5">
+						<xp:this.value><![CDATA[#{javascript:var assoc = new bsuite.relationship.Association();
+if(assoc!=null){
+var rolen= assoc.getAssociatedRoleName(user1);
+println("rolen "+rolen+" type "+typeof(rolen));
+if(rolen!="" && rolen!=null){
+return rolen
+}else{
+return "--"
+}
+
+}}]]></xp:this.value>
+					</xp:label>
+				</xp:td>
+				<xp:td>
+					<xp:label id="label6">
+						<xp:this.value><![CDATA[#{javascript:var assoc = new bsuite.relationship.Association();
+if(assoc!=null){
+var rolen = assoc.getAssociatedProfileName(user1);
+
+if(rolen!="" && role!=null){
+return rolen
+}else{
+return "--"
+}
+}}]]></xp:this.value>
+					</xp:label>
+				</xp:td>
+			</xp:tr>
+		</xp:repeat>
+
+	</xp:table>
+</xp:view>

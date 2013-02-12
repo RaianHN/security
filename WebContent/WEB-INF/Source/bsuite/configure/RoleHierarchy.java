@@ -15,7 +15,7 @@ public class RoleHierarchy {
 
 }
 
-class Role {
+ class Role {
 	private String RoleName;
 	private String RoleParent;
 

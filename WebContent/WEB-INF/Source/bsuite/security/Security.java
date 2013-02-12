@@ -4,6 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import lotus.domino.Document;
+import lotus.domino.NotesException;
+
+import com.ibm.xsp.extlib.util.ExtLibUtil;
+import com.ibm.xsp.model.domino.wrapped.DominoDocument;
+
+import bsuite.relationship.Association;
 import bsuite.utility.*;
 
 
@@ -31,7 +38,17 @@ public class Security {
 	private  ArrayList<String> visibleFeatures; 
 	private  ArrayList<String> visibleFields; 
 	private  ArrayList<String> editableFields; 
+	private String myDocs;//Holds the search string based on role hierarchy and data sharing
 	
+	public String getMyDocs() {
+		
+		return role.getSearchString();
+	}
+
+	public void setMyDocs(String myDocs) {
+		this.myDocs = myDocs;
+	}
+
 	public String getProfileName() {
 		return profileName;
 	}
@@ -167,6 +184,45 @@ public class Security {
 		  }else{
 			  return true;
 		  }
+	}
+	public boolean isMyDoc(){
+		//Used in isEntityEditable and isEntityDeletable, to return true if the document belongs to current user
+		//get currentDocument variable 
+		DominoDocument domDoc = (DominoDocument)JSFUtil.getVariableValue("currentDocument");
+		 System.out.println("inside my doc");
+		Document doc = null;
+		if(domDoc!=null){
+			 doc = domDoc.getDocument();
+		}else{
+			 System.out.println("currentDocument is null ");
+			 return false;
+		}
+		
+		String currentUName = "";//current users name
+		Association as = new Association();
+		try {
+			 currentUName = ExtLibUtil.getCurrentSession().getEffectiveUserName();
+			 System.out.println("currentUName "+currentUName);
+		} catch (NotesException e1) {
+			e1.printStackTrace();
+		}
+		
+		String uName = "";//Document creators name
+		try {
+			if(doc.hasItem("DocumentCreator")){
+				uName = as.getFormattedName(doc.getItemValueString("DocumentCreator"), "canonical");
+				 System.out.println("doc Creator "+uName);
+			}
+		} catch (NotesException e) {
+			e.printStackTrace();
+		}
+		System.out.println("Comparing  "+currentUName+" "+uName);
+		if(currentUName.equals(uName)){//Compare 
+			return true;
+		}else{
+			return false;
+		}
+		
 	}
 
 }

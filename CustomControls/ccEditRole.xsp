@@ -30,7 +30,8 @@
 							</xp:viewColumnHeader>
 							<xp:eventHandler event="onclick"
 								submit="true" refreshMode="partial" onStart="showWait();"
-								onComplete="hideWait();" refreshId="ShowRoleDoc">
+								onComplete="hideWait();" refreshId="ShowRoleDoc"
+								id="eventHandler1">
 								<xp:this.action><![CDATA[#{javascript:var component = getComponent("ShowRoleDoc");
 bsuite.loadcc.DynamicCC.removePreview(component);
 var doc:NotesDocument=viewEntry.getDocument();
@@ -51,9 +52,47 @@ bsuite.loadcc.DynamicCC.loadCC(s, component, c1, id);}]]></xp:this.action>
 								id="viewColumnHeader2">
 							</xp:viewColumnHeader>
 						</xp:viewColumn>
-						
-						
-					</xp:viewPanel></xp:td>
+
+
+					</xp:viewPanel>
+				</xp:td>
 				<xp:td id="ShowRoleDoc" valign="top"></xp:td>
+				<xp:td valign="top">
+					<xp:table>
+						<xp:tr>
+							<xp:td>
+								<xp:button id="button3" value="Add New"
+									style="background-color:rgb(192,192,192);width:100.0px">
+									<xp:eventHandler event="onclick"
+										submit="true" refreshMode="complete" id="eventHandler3">
+										<xp:this.action><![CDATA[#{javascript:var component = getComponent('loadCCRole'); 
+if(component.getChildren!=null){
+bsuite.loadcc.DynamicCC.removePreview(component);
+}
+var s = facesContext;
+var c1="/ccAddRole2.xsp"; 
+var id="Rolediv";
+bsuite.loadcc.DynamicCC.loadCC(s, component, c1, id);
+}]]></xp:this.action>
+									</xp:eventHandler>
+								</xp:button></xp:td>
+							<xp:td id="loadCCRole"></xp:td>
+						</xp:tr>
+						<xp:tr>
+							<xp:td></xp:td>
+							<xp:td></xp:td>
+						</xp:tr>
+					</xp:table>
+				</xp:td>
 			</xp:tr>
-		</xp:table></xp:panel></xp:view>
+			<xp:tr>
+				<xp:td>
+					
+				</xp:td>
+				<xp:td></xp:td>
+				<xp:td></xp:td>
+			</xp:tr>
+		</xp:table>
+		
+	</xp:panel>
+</xp:view>

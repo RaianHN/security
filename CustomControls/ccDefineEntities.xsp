@@ -1,29 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xp:view xmlns:xp="http://www.ibm.com/xsp/core"
 	xmlns:xe="http://www.ibm.com/xsp/coreex">
-
 	
+
+
+
 	
 	<xe:djTabContainer id="djTabContainer1"
 		style="width:100%;height:682px;" tabStrip="true">
 
 		<xe:this.onClick><![CDATA[#{javascript:println("OnClick of Tab pane");}]]></xe:this.onClick>
+		
 		<xe:djTabPane id="djTabPane1" title="Configure">
 
 			<xe:this.onClick><![CDATA[#{javascript:println("OnLCuk of dojo tabpane 2");}]]></xe:this.onClick>
-			<xp:table>
-				<xp:tr>
-					<xp:td valign="top">
-						<xp:table>
-							<xp:tr>
-								<xp:td>1</xp:td>
-								<xp:td>
-									<xp:button value="Add Modules"
-										id="button2"
-										style="background-color:rgb(192,192,192);width:100.0px">
-										<xp:eventHandler event="onclick"
-											submit="true" refreshMode="complete" id="eventHandler1">
-											<xp:this.action><![CDATA[#{javascript:var component = getComponent('loadCC');
+
+
+
+		<xp:table>
+		<xp:tr>
+			<xp:td valign="top">
+				<xp:table>
+					<xp:tr>
+						<xp:td>1</xp:td>
+						<xp:td>
+							<xp:button value="Add Modules" id="button2" style="background-color:rgb(192,192,192);width:100.0px">
+								<xp:eventHandler event="onclick" submit="true" refreshMode="complete" id="eventHandler1">
+									<xp:this.action><![CDATA[#{javascript:var component = getComponent('loadCC');
 if(component.getChildren!=null){
 bsuite.loadcc.DynamicCC.removePreview(component);
  }
@@ -32,18 +35,16 @@ var c1="/ccAddModules.xsp";
 var id="modulediv";
 bsuite.loadcc.DynamicCC.loadCC(s, component, c1, id);
 }]]></xp:this.action>
-										</xp:eventHandler>
-									</xp:button>
-								</xp:td>
-							</xp:tr>
-							<xp:tr>
-								<xp:td>2</xp:td>
-								<xp:td>
-									<xp:button value="Add Features"
-										id="button4" style="background-color:rgb(192,192,192)">
-										<xp:eventHandler event="onclick"
-											submit="true" refreshMode="complete">
-											<xp:this.action><![CDATA[#{javascript:var component = getComponent('loadCC'); 
+								</xp:eventHandler>
+							</xp:button>
+						</xp:td>
+					</xp:tr>
+					<xp:tr>
+						<xp:td>2</xp:td>
+						<xp:td>
+							<xp:button value="Add Features" id="button4" style="background-color:rgb(192,192,192)">
+								<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+									<xp:this.action><![CDATA[#{javascript:var component = getComponent('loadCC'); 
 if(component.getChildren!=null){
 bsuite.loadcc.DynamicCC.removePreview(component);
 }
@@ -52,19 +53,16 @@ var c1="/ccAddFeatures.xsp";
 var id="modulefeaturesdiv";
 bsuite.loadcc.DynamicCC.loadCC(s, component, c1, id);
 }]]></xp:this.action>
-										</xp:eventHandler>
-									</xp:button>
-								</xp:td>
-							</xp:tr>
-							<xp:tr>
-								<xp:td>3</xp:td>
-								<xp:td>
-									<xp:button value="Add Entity"
-										id="button1"
-										style="background-color:rgb(192,192,192);width:100.0px">
-										<xp:eventHandler event="onclick"
-											submit="true" refreshMode="complete" id="eventHandler2">
-											<xp:this.action><![CDATA[#{javascript:var component = getComponent('loadCC'); 
+								</xp:eventHandler>
+							</xp:button>
+						</xp:td>
+					</xp:tr>
+					<xp:tr>
+						<xp:td>3</xp:td>
+						<xp:td>
+							<xp:button value="Add Entity" id="button1" style="background-color:rgb(192,192,192);width:100.0px">
+								<xp:eventHandler event="onclick" submit="true" refreshMode="complete" id="eventHandler2">
+									<xp:this.action><![CDATA[#{javascript:var component = getComponent('loadCC'); 
 if(component.getChildren!=null){
 bsuite.loadcc.DynamicCC.removePreview(component);
 }
@@ -73,19 +71,16 @@ var c1="/ccAddEntity.xsp";
 var id="entitydiv";
 bsuite.loadcc.DynamicCC.loadCC(s, component, c1, id);
 }]]></xp:this.action>
-										</xp:eventHandler>
-									</xp:button>
-								</xp:td>
-							</xp:tr>
-							<xp:tr>
-								<xp:td>4</xp:td>
-								<xp:td>
-									<xp:button id="button3"
-										value="Add Roles"
-										style="background-color:rgb(192,192,192);width:100.0px">
-										<xp:eventHandler event="onclick"
-											submit="true" refreshMode="complete" id="eventHandler3">
-											<xp:this.action><![CDATA[#{javascript:var component = getComponent('loadCC'); 
+								</xp:eventHandler>
+							</xp:button>
+						</xp:td>
+					</xp:tr>
+					<xp:tr>
+						<xp:td>4</xp:td>
+						<xp:td>
+							<xp:button id="button3" value="Add Roles" style="background-color:rgb(192,192,192);width:100.0px">
+								<xp:eventHandler event="onclick" submit="true" refreshMode="complete" id="eventHandler3">
+									<xp:this.action><![CDATA[#{javascript:var component = getComponent('loadCC'); 
 if(component.getChildren!=null){
 bsuite.loadcc.DynamicCC.removePreview(component);
 }
@@ -94,31 +89,33 @@ var c1="/ccAddRole.xsp";
 var id="Rolediv";
 bsuite.loadcc.DynamicCC.loadCC(s, component, c1, id);
 }]]></xp:this.action>
-										</xp:eventHandler>
-									</xp:button>
-								</xp:td>
-							</xp:tr>
+								</xp:eventHandler>
+							</xp:button>
+						</xp:td>
+					</xp:tr>
 
-						</xp:table>
-						<xp:br></xp:br>
+				</xp:table>
+				<xp:br></xp:br>
 
-						<xp:br></xp:br>
+				<xp:br></xp:br>
 
 
 
-						<xp:br></xp:br>
+				
+				<xp:br></xp:br>
 
-						<xp:br></xp:br>
+				<xp:br></xp:br>
 
-						<xp:br></xp:br>
-					</xp:td>
-					<xp:td rowspan="2" id="loadCC" valign="top"></xp:td>
-				</xp:tr>
-				<xp:tr>
-					<xp:td>
-						<xp:comboBox id="comboBox1">
-							<xp:selectItems>
-								<xp:this.value><![CDATA[#{javascript:var path =database.getFilePath();
+				<xp:br></xp:br>
+				<xp:label value="Select Admin" id="label1"></xp:label>
+			</xp:td>
+			<xp:td rowspan="2" id="loadCC" valign="top"></xp:td>
+		</xp:tr>
+		<xp:tr>
+			<xp:td>
+				<xp:comboBox id="comboBox1">
+					<xp:selectItems>
+						<xp:this.value><![CDATA[#{javascript:var path =database.getFilePath();
 var dbpath =  @LeftBack(path ,"/");
 //var db= dbpath+"/Security.nsf";
 var db=dbpath+"/admntool.nsf";
@@ -126,33 +123,128 @@ var serv = @Word(@Implode(@DbName(),", "),", ", 1);
 var com = new Array(serv,db);
 var x= @DbColumn(com,  "employeeprofile", 1);
 @Explode(x,",;",true);}]]></xp:this.value>
-							</xp:selectItems>
-						</xp:comboBox>
-						<xp:br></xp:br>
-						<xp:button value="Deploy" id="button5"
-							style="background-color:rgb(192,192,192);width:100.0px">
-							<xp:eventHandler event="onclick"
-								submit="true" refreshMode="complete">
-								<xp:this.action><![CDATA[#{javascript:var deploy = new bsuite.configure.Deploy();
-deploy.deploy();
+					</xp:selectItems>
+				</xp:comboBox>
+				<xp:br></xp:br>
+				<xp:button value="Deploy" id="button5" style="background-color:rgb(192,192,192);width:100.0px">
+					
+				<xp:eventHandler event="onclick" submit="true" refreshMode="complete">
+					<xp:this.action>
+						<xp:actionGroup>
 
 
+							<xp:this.condition><![CDATA[#{javascript:var deploy = new bsuite.configure.Deploy();
+return deploy.deploy();}]]></xp:this.condition>
 
-var user = getComponent("comboBox1").getValue();
-
+							<xp:executeScript>
+								<xp:this.script><![CDATA[#{javascript:
 var cd = new bsuite.configure.CreateDatabase();
-cd.RegisterEmployee(user)
+cd.RegisterEmployee(user);}]]></xp:this.script>
+							</xp:executeScript>
+						</xp:actionGroup>
+					</xp:this.action></xp:eventHandler></xp:button>
+			</xp:td>
 
-
+		</xp:tr>
+	</xp:table></xe:djTabPane><xe:djTabPane id="djTabPane2" title="Add New module">
+		<xp:table>
+		<xp:tr>
+			<xp:td valign="top">
+				<xp:table>
+					<xp:tr>
+						<xp:td>1</xp:td>
+						<xp:td>
+							<xp:button value="Add Module" id="button7" style="background-color:rgb(192,192,192);width:100.0px">
+								<xp:eventHandler event="onclick"
+									submit="true" refreshMode="complete" id="eventHandler4">
+									<xp:this.action><![CDATA[#{javascript:var component = getComponent('loadCC2');
+if(component.getChildren!=null){
+bsuite.loadcc.DynamicCC.removePreview(component);
+ }
+var s = facesContext;
+var c1="/ccAddModules.xsp"; 
+var id="modulediv";
+bsuite.loadcc.DynamicCC.loadCC(s, component, c1, id);
 }]]></xp:this.action>
-							</xp:eventHandler>
-						</xp:button>
-					</xp:td>
+								</xp:eventHandler>
+							</xp:button>
+						</xp:td>
+					</xp:tr>
+					<xp:tr>
+						<xp:td>2</xp:td>
+						<xp:td>
+							<xp:button value="Add Features" id="button8" style="background-color:rgb(192,192,192)">
+								<xp:eventHandler event="onclick"
+									submit="true" refreshMode="complete">
+									<xp:this.action><![CDATA[#{javascript:var component = getComponent('loadCC2'); 
+if(component.getChildren!=null){
+bsuite.loadcc.DynamicCC.removePreview(component);
+}
+var s = facesContext;
+var c1="/ccAddFeatures.xsp"; 
+var id="modulefeaturesdiv";
+bsuite.loadcc.DynamicCC.loadCC(s, component, c1, id);
+}]]></xp:this.action>
+								</xp:eventHandler>
+							</xp:button>
+						</xp:td>
+					</xp:tr>
+					<xp:tr>
+						<xp:td>3</xp:td>
+						<xp:td>
+							<xp:button value="Add Entity" id="button9" style="background-color:rgb(192,192,192);width:100.0px">
+								<xp:eventHandler event="onclick"
+									submit="true" refreshMode="complete" id="eventHandler5">
+									<xp:this.action><![CDATA[#{javascript:var component = getComponent('loadCC2'); 
+if(component.getChildren!=null){
+bsuite.loadcc.DynamicCC.removePreview(component);
+}
+var s = facesContext;
+var c1="/ccAddEntity.xsp"; 
+var id="entitydiv";
+bsuite.loadcc.DynamicCC.loadCC(s, component, c1, id);
+}]]></xp:this.action>
+								</xp:eventHandler>
+							</xp:button>
+						</xp:td>
+					</xp:tr>
+					
 
-				</xp:tr>
-			</xp:table>
+				</xp:table>
+				<xp:br></xp:br>
+				<xp:label value="Select Module To Save" id="label2"></xp:label>
+				<xp:br></xp:br>
+
+				<xp:comboBox id="comboAddM">
 
 
+						<xp:selectItems id="selectItems2">
+							<xp:this.value><![CDATA[#{javascript:return @DbColumn("","Modules",1);}]]></xp:this.value>
+						</xp:selectItems>
+
+					</xp:comboBox>
+				<xp:br></xp:br>
+				<xp:button value="Save" id="button11">
+						<xp:eventHandler event="onclick" submit="true"
+							refreshMode="complete">
+							<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("comboAddM").getValue();
+var dep = new bsuite.configure.Deploy();
+if(moduleName!=null){
+dep.updateModule(moduleName);
+}
+}]]></xp:this.action>
+						</xp:eventHandler>
+				</xp:button><xp:br></xp:br>
+
+
+
+				
+				</xp:td>
+			<xp:td id="loadCC2" valign="top"></xp:td>
+		</xp:tr>
+		
+	</xp:table>
 		</xe:djTabPane>
+		
 	</xe:djTabContainer>
 </xp:view>

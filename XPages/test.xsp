@@ -4,162 +4,41 @@
 	xmlns:xe="http://www.ibm.com/xsp/coreex"
 	xmlns:xc="http://www.ibm.com/xsp/custom">
 	<xp:this.data>
-		<xp:dominoView var="view2" databaseName="Demo2\user.nsf"
-			viewName="AllDocuments">
-		</xp:dominoView>
-		<xp:dominoView var="view1" databaseName="Demo2\activity.nsf"
-			viewName="AllDocs">
-		</xp:dominoView>
-		<xe:objectData var="objectData1"></xe:objectData>
+		<xp:dominoDocument var="document1" formName="testDoc"
+			computeWithForm="onload">
+		</xp:dominoDocument>
 	</xp:this.data>
 
-	<xp:this.resources>
-		<xp:dojoModule name="dojo.dnd.Source"></xp:dojoModule>
-		<xp:dojoModule name="dojo.dnd.Moveable"></xp:dojoModule>
-	</xp:this.resources>
-	<xp:this.beforePageLoad><![CDATA[#{javascript:var myList = new java.util.ArrayList();
-sessionScope.put("myList", myList);}]]></xp:this.beforePageLoad>
-	<xp:div id="container"></xp:div>
-	
 
-	<xp:table dojoType="dojo.dnd.Source" styleClass="LotusTable">
-		<xp:tr styleClass="dojoDndItem">
-
-			<xp:td>
-				<xp:inputText id="inputText2" defaultValue="bye"
-					value="#{requestScope.test2}">
-				</xp:inputText>
-			</xp:td>
-
-			<xp:td></xp:td>
-			<xp:td></xp:td>
-		</xp:tr>
-		<xp:tr styleClass="dojoDndItem">
-			<xp:td>
-				<xp:inputText id="inputText3" defaultValue="hi"
-					value="#{requestScope.test3}">
-				</xp:inputText>
-			</xp:td>
-
-			<xp:td></xp:td>
-			<xp:td></xp:td>
-		</xp:tr>
-		<xp:tr>
-			<xp:td></xp:td>
-			<xp:td></xp:td>
-			<xp:td></xp:td>
-		</xp:tr>
+	<xp:table>
 		<xp:tr>
 			<xp:td>
-	Search 
-	<xp:inputText id="inputText1" value="#{viewScope.quicksearch}">
-
-
-		
-	</xp:inputText></xp:td>
-			<xp:td><xp:button value="Search" id="button3">
+				<xp:label value="Body:" id="body_Label1" for="body1"></xp:label>
+			</xp:td>
+			<xp:td>
+				<xp:inputRichText value="#{document1.body}"
+					id="body1">
+				</xp:inputRichText>
+			</xp:td>
+		</xp:tr>
+		<xp:tr>
+			<xp:td>v:
+				<xp:text escape="true" id="computedField1"><xp:this.value><![CDATA[#{javascript:var se  = new testing.Test();
+return se.test();}]]></xp:this.value></xp:text></xp:td>
+			<xp:td>
+				<xp:button value="Submit" id="button1">
 					<xp:eventHandler event="onclick" submit="true"
-						refreshMode="partial" refreshId="dataTable1">
-						<xp:this.action><![CDATA[#{javascript:DataList.findbykey();}]]></xp:this.action>
-					</xp:eventHandler></xp:button>
-				</xp:td>
-			<xp:td></xp:td>
-		</xp:tr>
-		<xp:tr>
-			<xp:td></xp:td>
-			<xp:td></xp:td>
-			<xp:td></xp:td>
+						refreshMode="complete" immediate="false" save="true"
+						id="eventHandler1">
+					<xp:this.action>
+
+						<xp:actionGroup>
+							<xp:saveDocument var="document1"></xp:saveDocument>
+							<xp:openPage name="$$PreviousPage"></xp:openPage>
+						</xp:actionGroup>
+					</xp:this.action></xp:eventHandler>
+				</xp:button>
+			</xp:td>
 		</xp:tr>
 	</xp:table>
-	<xp:pager id="pager1" for="dataTable1" layout="Previous Group Next"
-		partialRefresh="true">
-	</xp:pager>
-	<xp:dataTable id="dataTable1" rows="10" var="datalist1"
-		value="#{DataList.datalist}" rowClasses="dndItem">
-		<xp:column id="coulmn2">
-			<xp:button value="+" id="button1">
-				<xp:this.rendered><![CDATA[#{javascript:var keyCode = datalist1.getUNID();
-var myArray = sessionScope.get("myList");
-
-if (!myArray.contains(keyCode)) {
-return true;
-}
-else {
-	return false;
-}}]]></xp:this.rendered>
-				<xp:eventHandler event="onclick" submit="true"
-					refreshMode="partial" refreshId="dataTable1">
-					<xp:this.action><![CDATA[#{javascript:// get the universalID of the document
-var keyCode =datalist1.getUNID();
-
-// Create an Array
-var myArray = sessionScope.get("myList");
-
-//If it's not already in the Array then add it.
-if (!myArray.contains(keyCode)) {
-myArray.add(keyCode);
-}
-
-
-}]]></xp:this.action>
-				</xp:eventHandler>
-			</xp:button>
-
-			<xp:button value="-" id="button2">
-				<xp:this.rendered><![CDATA[#{javascript:var keyCode = datalist1.getUNID();
-var myArray = sessionScope.get("myList");
-
-if (!myArray.contains(keyCode)) {
-	return false;
-}
-else {
-	return true;
-}}]]></xp:this.rendered>
-				<xp:eventHandler event="onclick" submit="true"
-					refreshMode="partial" refreshId="dataTable1">
-					<xp:this.action><![CDATA[#{javascript:var keyCode = datalist1.getUNID();
-var myArray = sessionScope.get("myList");
-
-myArray.remove(keyCode)
-
-
-//sessionScope.keys.push(rowData.getDocument().getUniversalID())
-
-}]]></xp:this.action>
-				</xp:eventHandler>
-			</xp:button>
-			<xp:td>
-				<xp:text id="computedField2"
-					value="#{datalist1.display_field}" escape="false">
-				</xp:text>
-			</xp:td>
-		</xp:column>
-		<xp:column id="column1">
-
-			<xp:td></xp:td>
-
-
-
-		</xp:column>
-		<xp:this.facets>
-
-			<xp:span xp:key="header">
-				Display
-
-				<xp:repeat id="repeat2" rows="30"
-					value="#{sessionScope.myList}" var="listData">
-
-					<xp:text escape="true" id="computedField1">
-						<xp:this.value><![CDATA[#{javascript:listData + " , "}]]></xp:this.value>
-					</xp:text>
-				</xp:repeat>
-
-			</xp:span>
-		</xp:this.facets>
-	</xp:dataTable>
-
-
-	<xc:ccContextControl databasename="Demo2/relation.nsf"
-		viewname="relationByTarget" selectionkey="3" >
-	</xc:ccContextControl>
-	<xc:ccContextual_UI></xc:ccContextual_UI></xp:view>
+	</xp:view>
