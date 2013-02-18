@@ -8,7 +8,25 @@ public class Module {
 	private String moduleName;
 	private ArrayList<Entity> entities;
 	private ArrayList<Feature> features;
+	private ArrayList<SchemaGroup> groups;
+	private ArrayList<Object> entFeat;//contains all the entities and features, used to mange group of actions
 	
+	public ArrayList<Object> getEntFeat() {
+		return entFeat;
+	}
+
+	public void setEntFeat(ArrayList<Object> entFeat) {
+		this.entFeat = entFeat;
+	}
+
+	public ArrayList<SchemaGroup> getGroups() {
+		return groups;
+	}
+
+	public void setGroups(ArrayList<SchemaGroup> groups) {
+		this.groups = groups;
+	}
+
 	public String getModuleName() {
 		return moduleName;
 	}

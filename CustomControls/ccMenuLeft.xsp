@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xe="http://www.ibm.com/xsp/coreex">
+	<xp:panel id="lotusMenu" styleClass="lotusMenu">
+		<xp:panel id="lotusBottomCorner"
+			styleClass="lotusBottomCorner">
+			<xp:panel styleClass="lotusInner" id="lotusInner">
+				<xp:tabbedPanel id="tabbedPanel1"
+					selectedTab="#{javascript:param.content}">
+
+
+					<xp:tabPanel label="Profiles"
+						selectedTabStyleClass="lotusSelected" id="viewProfile">
+					</xp:tabPanel>
+					<xp:tabPanel label="Roles" id="viewRoles"
+						selectedTabStyleClass="lotusSelected">
+					</xp:tabPanel>
+					<xp:tabPanel label="Organizational Settings"
+						id="viewOrg" selectedTabStyleClass="lotusSelected">
+					</xp:tabPanel>
+					<xp:tabPanel label="Configuration"
+						id="viewConfigure" selectedTabStyleClass="lotusSelected">
+					</xp:tabPanel>
+					<xp:tabPanel id="viewDefine"
+						label="Define Schema">
+					</xp:tabPanel>
+				</xp:tabbedPanel>
+			</xp:panel>
+		</xp:panel>
+	</xp:panel>
+	</xp:view>

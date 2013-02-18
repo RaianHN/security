@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+
+	<xp:panel id="lotusColLeft" styleClass="lotusColLeft">
+		<xp:callback facetName="left_column_content" id="callback1"></xp:callback>
+	</xp:panel>
+</xp:view>

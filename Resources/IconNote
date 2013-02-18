@@ -2,11 +2,11 @@
 <!DOCTYPE note SYSTEM 'xmlschemas/domino_8_5_3.dtd'>
 <note default='true' class='icon' xmlns='http://www.lotus.com/dxl' version='8.5'
  maintenanceversion='3.0' replicaid='65257AC30021844F'>
-<noteinfo noteid='122' unid='D3B61BC1B9A2B88665257A55002CB2FD' sequence='19'>
+<noteinfo noteid='122' unid='D3B61BC1B9A2B88665257A55002CB2FD' sequence='45'>
 <created><datetime>20120809T133814,05+0530</datetime></created>
-<modified><datetime>20130121T145952,29+0530</datetime></modified>
-<revised><datetime>20130121T145952,28+0530</datetime></revised>
-<lastaccessed><datetime>20130121T145952,29+0530</datetime></lastaccessed>
+<modified><datetime>20130214T154505,81+0530</datetime></modified>
+<revised><datetime>20130214T154505,80+0530</datetime></revised>
+<lastaccessed><datetime>20130214T154505,81+0530</datetime></lastaccessed>
 <addedtofile><datetime>20121127T122454,24+0530</datetime></addedtofile></noteinfo>
 <updatedby><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
 <wassignedby><name>CN=Jaya K Prakash/O=Weberon</name></wassignedby>
@@ -29,9 +29,9 @@ AAAAUEECICABAAD/////+A4DgA==
 <item name='$DefaultNavigator'><text>Folders</text></item>
 <item name='$Daos'><text>0</text></item>
 <item name='$DefaultXPage'><text>MainPage.xsp</text></item>
+<item name='$DBTheme'><text>oneui_v2_default.theme</text></item>
 <item name='$TITLE'><text>Security MVC Phase3
 </text></item>
 <item name='$Flags'><text>Jls!</text></item>
-<item name='$FlagsNoRefresh'><text>rv</text></item>
-<item name='$DBTheme'><text>bsuiteBlue.theme</text></item></note>
+<item name='$FlagsNoRefresh'><text>rv</text></item></note>
 

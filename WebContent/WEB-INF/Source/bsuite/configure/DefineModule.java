@@ -131,6 +131,91 @@ public class DefineModule{
 
 	}
 	
+	public boolean addFeatureGroup(String moduleName, String groupName){
+		//To add a new feature group for this module
+		try {
+
+			View modulesView = currentdb.getView("Modules");
+
+			Document moduleDoc = modulesView.getDocumentByKey(moduleName);
+
+			String jsonInput = moduleDoc.getItemValueString("JsonString");
+
+			ObjectMapper mapper = new ObjectMapper();
+			Module module = mapper.readValue(jsonInput, Module.class);
+			
+			module = ManageGroup.createGroup(module, groupName);
+
+			moduleDoc.replaceItemValue("JsonString", mapper
+					.writeValueAsString(module));
+			moduleDoc.save();
+
+		} catch (NotesException e) {
+			e.printStackTrace();
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return true;
+	}
+	
+	public boolean renameFeatureGroup(String moduleName, String groupName, String newName){
+		//To rename feature group for this module
+		try {
+
+			View modulesView = currentdb.getView("Modules");
+
+			Document moduleDoc = modulesView.getDocumentByKey(moduleName);
+
+			String jsonInput = moduleDoc.getItemValueString("JsonString");
+
+			ObjectMapper mapper = new ObjectMapper();
+			Module module = mapper.readValue(jsonInput, Module.class);
+			
+			SchemaGroup grp = null;
+			
+			ArrayList<SchemaGroup> grps = null;
+			if (module.getGroups() == null) {
+				return false;
+			} else {
+				grps = module.getGroups();
+			}
+
+			
+
+			for (SchemaGroup g : grps) {
+				
+				if (g.getGroupName().equals(groupName)) {
+					grp = g;
+				}
+			}
+			
+			
+			module = ManageGroup.renameGroup(module, grp, newName);
+
+			moduleDoc.replaceItemValue("JsonString", mapper
+					.writeValueAsString(module));
+			moduleDoc.save();
+
+		} catch (NotesException e) {
+			e.printStackTrace();
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return true;
+	}
+	
 	@SuppressWarnings("unchecked")
 	public void addFeatures(String moduleName, String featurename) {
 		try {

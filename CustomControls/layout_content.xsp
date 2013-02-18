@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core" xmlns:xc="http://www.ibm.com/xsp/custom"
+	xmlns:xe="http://www.ibm.com/xsp/coreex">
+
+	<xp:panel id="lotusContent" styleClass="lotusContent">
+
+		<xe:dynamicContent id="dync" defaultFacet="Home"
+			useHash="false">
+			<xe:this.facets>
+				<xc:home_page xp:key="Home" id="home_page"></xc:home_page>
+				
+			</xe:this.facets>
+		</xe:dynamicContent>
+
+	</xp:panel>
+</xp:view>

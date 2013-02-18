@@ -1,0 +1,20 @@
+<theme extends="oneui_basic">
+
+	<!-- Dojo specific  -->
+	<resource dojoTheme="true">
+		<content-type>text/css</content-type>
+		<href>/.ibmxspres/dojoroot/dijit/themes/tundra/tundra.css</href>
+	</resource>
+	<resource dojoTheme="true">
+		<content-type>text/css</content-type>
+		<href>/.ibmxspres/dojoroot/ibm/domino/widget/layout/css/domino-default.css</href>
+	</resource>
+	
+	<!-- One UI v2.0.1, Core  -->
+	<resource>
+		<content-type>text/css</content-type>
+		<href>/.ibmxspres/domino/oneuiv2/base/core.css</href>
+	</resource>
+	
+
+</theme>

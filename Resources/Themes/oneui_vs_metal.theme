@@ -1,0 +1,15 @@
+<theme extends="oneui_v2_core">
+	
+	<!-- One UI v2.0.1, Metal Theme -->	
+	<resource>
+		<content-type>text/css</content-type>
+		<href>/.ibmxspres/domino/oneuiv2/metalTheme/metalTheme.css</href>
+	</resource>
+		
+	<!-- Custom CSS for overrides or additional styles  -->
+	<resource>
+		<content-type>text/css</content-type>
+		<href>custom.css</href>
+	</resource>
+
+</theme>

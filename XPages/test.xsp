@@ -1,44 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xp:view xmlns:xp="http://www.ibm.com/xsp/core"
-	xmlns:eg="http://example.com/xsp/control"
-	xmlns:xe="http://www.ibm.com/xsp/coreex"
 	xmlns:xc="http://www.ibm.com/xsp/custom">
-	<xp:this.data>
-		<xp:dominoDocument var="document1" formName="testDoc"
-			computeWithForm="onload">
-		</xp:dominoDocument>
-	</xp:this.data>
 
 
-	<xp:table>
-		<xp:tr>
-			<xp:td>
-				<xp:label value="Body:" id="body_Label1" for="body1"></xp:label>
-			</xp:td>
-			<xp:td>
-				<xp:inputRichText value="#{document1.body}"
-					id="body1">
-				</xp:inputRichText>
-			</xp:td>
-		</xp:tr>
-		<xp:tr>
-			<xp:td>v:
-				<xp:text escape="true" id="computedField1"><xp:this.value><![CDATA[#{javascript:var se  = new testing.Test();
-return se.test();}]]></xp:this.value></xp:text></xp:td>
-			<xp:td>
-				<xp:button value="Submit" id="button1">
-					<xp:eventHandler event="onclick" submit="true"
-						refreshMode="complete" immediate="false" save="true"
-						id="eventHandler1">
-					<xp:this.action>
 
-						<xp:actionGroup>
-							<xp:saveDocument var="document1"></xp:saveDocument>
-							<xp:openPage name="$$PreviousPage"></xp:openPage>
-						</xp:actionGroup>
-					</xp:this.action></xp:eventHandler>
-				</xp:button>
-			</xp:td>
-		</xp:tr>
-	</xp:table>
-	</xp:view>
+
+
+	<xc:ccMenuLeft></xc:ccMenuLeft></xp:view>

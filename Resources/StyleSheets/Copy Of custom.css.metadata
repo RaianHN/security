@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257AC30021844F" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="8016" sequence="1" unid="F1E43F19008A939E65257B10003CAE91">
+<created><datetime>20130212T163248,49+0530</datetime></created>
+<modified><datetime>20130212T163248,55+0530</datetime></modified>
+<revised><datetime>20130212T163248,54+0530</datetime></revised>
+<lastaccessed><datetime>20130212T163248,55+0530</datetime></lastaccessed>
+<addedtofile><datetime>20130212T163248,55+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Muhammad Sabir/O=AAC</name><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
+<wassignedby><name>CN=Jaya K Prakash/O=Weberon</name></wassignedby>
+<item name="$Comment"><text>For custom CSS classes and overwrites of theme classes</text></item>
+<item name="$MimeType"><text>text/css</text></item>
+<item name="$Flags"><text>34C=Q</text></item>
+
+
+<item name="$FileNames" sign="true"><text>custom.css</text></item>
+<item name="$TITLE"><text>Copy Of custom.css</text></item></note>

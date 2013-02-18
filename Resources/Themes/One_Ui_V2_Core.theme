@@ -1,0 +1,29 @@
+<!--
+	The default theme contents use theme inheritance.
+
+	Application themes can extend an existing global theme using the
+	extends attribute.  Existing themes include the following options:
+
+	1. webstandard 2. oneui 3. notes
+-->
+<theme extends="OneUi_Basic"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="platform:/plugin/com.ibm.designer.domino.stylekits/schema/stylekit.xsd">
+	
+	
+	<!-- dojo specific -->
+	<resource dojoTheme="true">
+		<content-type>text/css</content-type>
+		<href>/.ibmxspres/dojoroot/dijit/themes/tundra/tundra.css</href>
+	</resource>
+	<resource dojoTheme="true">
+		<content-type>text/css</content-type>
+		<href>/.ibmxspres/dojoroot/ibm/domino/widget/layout/css/domino-default.css</href>
+	</resource>
+	
+	<resource>
+		<content-type>text/css</content-type>
+		<href>/.ibmxspres/domino/oneuiv2/base/core.css</href>
+	</resource>
+	
+	
+
+</theme>

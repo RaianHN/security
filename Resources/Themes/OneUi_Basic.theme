@@ -1,0 +1,911 @@
+<!--
+  A theme defines the global resources to include within a page, as well
+  as the property values to assign per XPage control.  
+  
+  A theme can inherit from another one, by specifying the
+  'extends' attribute on the main tag.  
+	<theme extends='[theme name]'>
+
+  When inheritance applies, you can specify the behavior at the
+  control level:
+  	<control override='true'>
+      When override='true', it means that all the property values
+      inherited should be ignored. When it is false, or not present,
+      then the new property values take precedence against the
+      inherited one. But when a property is not redefined, then the
+      inherited one is used.
+	  
+  Although circular references are not allowed, an Application based theme 
+  can extend a global theme with the same name.
+-->
+<theme>
+	
+	
+
+	<!-- 
+	TMG: The following xsp.css contains XSP Specific overrides and extensions to the above linked OneUI library.
+	-->
+	<resource>
+		<content-type>text/css</content-type>
+		<href>/.ibmxspres/global/theme/oneui/xsp.css</href>
+	</resource>
+	<resource rendered="#{javascript:(context.isDirectionLTR())}">
+		<content-type>text/css</content-type>
+		<href>/.ibmxspres/global/theme/oneui/xspLTR.css</href>
+	</resource>
+	<resource rendered="#{javascript:context.isDirectionRTL()}">
+		<content-type>text/css</content-type>
+		<href>/.ibmxspres/global/theme/oneui/xspRTL.css</href>
+	</resource>
+	
+	<!-- IE Specific -->
+	<resource rendered="#{javascript:context.getUserAgent().isIE(0,6)}">
+		<content-type>text/css</content-type>
+		<href>/.ibmxspres/global/theme/oneui/xspIE06.css</href>
+	</resource>
+	<resource rendered="#{javascript:context.getUserAgent().isIE(7,8)}">
+		<content-type>text/css</content-type>
+		<href>/.ibmxspres/global/theme/oneui/xspIE78.css</href>
+	</resource>
+	<resource rendered="#{javascript:(context.isDirectionRTL() &amp;&amp; context.getUserAgent().isIE())}">
+		<content-type>text/css</content-type>
+		<href>/.ibmxspres/global/theme/oneui/xspIERTL.css</href>
+	</resource>
+	
+	<!-- FireFox Specific -->
+	<resource rendered="#{javascript:context.getUserAgent().isFirefox()}">
+		<content-type>text/css</content-type>
+		<href>/.ibmxspres/global/theme/oneui/xspFF.css</href>
+	</resource>
+	
+	<!-- Safari Specific -->
+	<resource rendered="#{javascript:context.getUserAgent().isSafari()}">
+		<content-type>text/css</content-type>
+		<href>/.ibmxspres/global/theme/oneui/xspSF.css</href>
+	</resource>
+	
+	<!-- RCP Specific -->
+	<resource rendered="#{javascript:context.isRunningContext('Notes')}">
+		<content-type>text/css</content-type>
+		<href>/.ibmxspres/global/theme/oneui/xspRCP.css</href>
+	</resource>
+	
+	<!-- =======================================================================
+		Global controls
+	======================================================================= -->
+
+	<!-- View Root (Page Body) -->
+	<control>
+		<name>ViewRoot</name>
+		<property mode="concat">
+			<name>styleClass</name>
+			<value>xspView tundra</value> 
+		</property>
+	</control>
+
+	<!-- Form -->
+	<control>
+		<name>Form</name>
+		<property>
+			<name>styleClass</name>
+			<value>lotusForm</value> 
+		</property>
+	</control>
+	
+	<!-- =======================================================================
+		Ouput text based controls
+	======================================================================= -->
+	
+	<!-- Basic Text -->
+	<control>
+		<name>Text</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspText</value>
+		</property>
+	</control>
+
+	<!-- Computed field -->
+	<control>
+		<name>Text.ComputedField</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspTextComputedField</value>
+		</property>
+	</control>
+	
+	<!-- Label -->
+	<control>
+		<name>Text.Label</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspTextLabel</value>
+		</property>
+	</control>
+
+	<!-- View Title -->
+	<control>
+		<name>Text.ViewTitle</name>
+	 	<property>
+			<name>styleClass</name>
+			<value>xspTextViewTitle</value>
+		</property>
+	</control>
+	
+	<!-- =======================================================================
+		Input text based controls
+	======================================================================= -->
+
+	<!-- Basic Input Text -->
+	<control>
+		<name>InputField</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspInputField</value>
+		</property>
+	</control>
+	
+	<!-- Standard Edit Box -->
+	<control>
+		<name>InputField.EditBox</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspInputFieldEditBox</value>
+		</property>
+	</control>
+	
+	<!-- Password Edit Box -->
+	<control>
+		<name>InputField.Secret</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspInputFieldSecret</value>
+		</property>
+	</control>
+	
+	<!-- Date Time Picker -->
+	<control>
+		<name>InputField.DateTimePicker</name>
+		<property mode="concat">
+			<name>styleClass</name>
+			<value>xspInputFieldDateTimePicker</value>
+		</property>
+	</control>
+	
+	<!-- TextArea -->
+	<control>
+		<name>InputField.TextArea</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspInputFieldTextArea</value>
+		</property>
+	</control>
+
+	<!-- Rich Text -->
+	<control>
+		<name>InputField.RichText</name>
+		<property mode="concat">
+			<name>styleClass</name>
+			<value>domino-richtext xspInputFieldRichText</value>
+		</property>
+	</control>
+	
+	<!-- Hidden Field -->
+	<control>
+		<name>InputField.Hidden</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspInputFieldHidden</value>
+		</property>
+	</control>
+
+	<!-- File Upload -->
+	<control>
+		<name>InputField.FileUpload</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspInputFieldFileUpload</value>
+		</property>
+	</control>
+
+	<!-- =======================================================================
+		File Download
+	======================================================================= -->
+
+	<!-- File Download Table -->
+	<control>
+		<name>DataTable.FileDownload</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspDataTableFileDownload</value>
+		</property>
+		<property>
+			<name>typeStyleClass</name>
+			<value>xspDataTableFileDownloadType</value>
+		</property>
+		<property>
+			<name>sizeStyleClass</name>
+			<value>xspDataTableFileDownloadSize</value>
+		</property>
+		<property>
+			<name>nameStyleClass</name>
+			<value>xspDataTableFileDownloadName</value>
+		</property>
+		<property>
+			<name>createdStyleClass</name>
+			<value>xspDataTableFileDownloadCreated</value>
+		</property>
+		<property>
+			<name>modifiedStyleClass</name>
+			<value>xspDataTableFileDownloadModified</value>
+		</property>
+		<property>
+			<name>deleteStyleClass</name>
+			<value>xspDataTableFileDownloadDelete</value>
+		</property>
+		<property>
+            <name>captionStyleClass</name>
+            <value>xspDataTableFileDownloadCaption</value>
+        </property>
+	</control>
+
+	<!-- File Download Link -->
+	<control>
+		<name>Link.FileDownload</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspLinkFileDownload</value>
+		</property>
+	</control>
+
+	<!-- =======================================================================
+		Link controls
+	======================================================================= -->
+
+	<!-- Basic Link -->
+	<control>
+		<name>Link</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspLink</value>
+		</property>
+	</control>
+
+	<!-- =======================================================================
+		Button controls
+	======================================================================= -->
+	
+	<!-- Basic Button -->
+	<control>
+		<name>Button</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspButtonNative</value>
+		</property>
+	</control>
+	
+	<!-- Command Button -->
+	<control>
+		<name>Button.Command</name>
+		<property>
+			<name>styleClass</name>
+			<value>lotusFormButton</value>
+			<!-- default button falls back to Button.Command stylekitfamily -->
+			<!-- <value>xspButtonCommand</value> -->
+		</property>
+	</control>
+	
+	<!-- Submit Button -->
+	<control>
+		<name>Button.Submit</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspButtonSubmit</value>
+		</property>
+	</control>
+	
+	<!-- Cancel Button -->
+	<control>
+		<name>Button.Cancel</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspButtonCancel</value>
+		</property>
+	</control>
+
+	<!-- =======================================================================
+		CheckBox controls
+	======================================================================= -->
+
+	<!-- Basic CheckBox -->
+	<control>
+		<name>CheckBox</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspCheckBox</value>
+		</property>
+	</control>
+
+	<!-- =======================================================================
+		RadioButton controls
+	======================================================================= -->
+	
+	<!-- Basic RadioButton -->
+	<control>
+		<name>RadioButton</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspRadioButton</value>
+		</property>
+	</control>
+	
+	<!-- =======================================================================
+		ListBox controls
+	======================================================================= -->
+
+	<!-- Basic ListBox -->
+	<control>
+		<name>ListBox</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspListBox</value>
+		</property>
+	</control>
+	
+	<!-- =======================================================================
+		ComboBox controls
+	======================================================================= -->
+
+	<!-- Basic ComboBox -->
+	<control>
+		<name>ComboBox</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspComboBox</value>
+		</property>
+	</control>
+	
+	<!-- =======================================================================
+		Image controls
+	======================================================================= -->
+
+	<!-- Basic Image -->
+	<control>
+		<name>Image</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspImage</value>
+		</property>
+	</control>
+	
+	<!-- =======================================================================
+		Message controls
+	======================================================================= -->
+	
+	<!-- Basic Message -->
+	<control>
+		<name>Message</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspMessage</value>
+		</property>
+	</control>
+
+	<!-- Basic Messages -->
+	<control>
+		<name>Messages</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspMessages</value>
+		</property>
+	</control>
+	
+	<!-- =======================================================================
+		Panel controls
+	======================================================================= -->
+
+	<!-- Basic Panel -->
+	<!--
+	<control>
+		<name>Panel</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspPanel</value>
+		</property>
+	</control>
+	-->
+		
+	<!-- =======================================================================
+		Section controls
+	======================================================================= -->
+
+	<!-- Basic Section -->
+	<control>
+		<name>Section</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspSection</value>
+		</property>
+	</control>
+	
+	<!-- =======================================================================
+		DataTable controls
+		A table column has some virtual properties when dealing with themes:
+			startStyleClass: the style class to apply to the first column
+			middleStyleClass: the style class to apply to the column that are neither first or last
+			endStyleClass: the style class to apply to the last column
+		Those properties take priority over the styleClass when defined in a theme
+	======================================================================= -->
+
+	<!-- Basic DataTable -->
+	<control>
+		<name>DataTable</name>
+		<property>
+			<name>styleClass</name>
+			<value>lotusTable</value>
+		</property>
+		<property>
+			<name>unreadMarksClass</name>
+			<value>xspDataTableRowUnread</value>
+		</property>
+		<property>
+			<name>readMarksClass</name>
+			<value>xspDataTableRowRead</value>
+		</property>
+		<property>
+            <name>captionStyleClass</name>
+            <value>xspDataTableCaption</value>
+        </property>
+	</control>
+
+	<!-- Basic Table Column -->
+	<control>
+		<name>Column</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspColumn</value>
+		</property>
+	</control>
+	
+	<!-- =======================================================================
+		View controls
+	======================================================================= -->
+
+	<!-- ================== View Table ================================ -->
+	<!-- View DataTable -->
+	<control>
+		<name>DataTable.ViewPanel</name>
+		<property>
+			<name>viewStyleClass</name>
+			<value>xspDataTableViewPanel</value>
+		</property>
+		<property>
+			<name>dataTableStyleClass</name>
+			<value>xspDataTable</value>
+		</property>
+		<property>
+			<name>headerEndStyleClass</name>
+			<value>xspDataTableViewPanelHeaderEnd</value>
+		</property>
+		<property>
+			<name>headerStartStyleClass</name>
+			<value>xspDataTableViewPanelHeaderStart</value>
+		</property>
+		<property>
+			<name>footerStartStyleClass</name>
+			<value>xspDataTableViewPanelFooterStart</value>
+		</property>
+		<property>
+			<name>footerEndStyleClass</name>
+			<value>xspDataTableViewPanelFooterEnd</value>
+		</property>
+		<property>
+			<name>footerStyleClass</name>
+			<value>xspDataTableViewPanelFooterMiddle</value>
+		</property>
+		<property>
+			<name>headerStyleClass</name>
+			<value>xspDataTableViewPanelHeaderMiddle</value>
+		</property>
+		<property>
+			<name>unreadMarksClass</name>
+			<value>xspDataTableRowUnread</value>
+		</property>
+		<property>
+			<name>readMarksClass</name>
+			<value>xspDataTableRowRead</value>
+		</property>
+		<property>
+            <name>captionStyleClass</name>
+            <value>xspDataTableViewPanelCaption</value>
+        </property>
+	</control>
+
+	<!-- ================== View Column ================================ -->
+	
+	<!-- View Column -->
+	<control>
+		<name>Column.View</name>
+	 	<property>
+			<name>startStyleClass</name>
+			<value>xspColumnViewStart</value>
+		</property>
+		<property>
+			<name>middleStyleClass</name>
+			<value>xspColumnViewMiddle</value>
+		</property>
+		<property>
+			<name>endStyleClass</name>
+			<value>xspColumnViewEnd</value>
+		</property>
+		<property>
+			<name>numericStyleClass</name>
+			<value>xspColumnViewNumeric</value>
+		</property>
+		<property>
+			<name>viewCheckboxStyle</name>
+			<value>margin:0px 2px;height:12px;</value>
+		</property>
+	</control>
+
+	<!-- View Column text -->
+	<control>
+		<name>Text.ViewColumn</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspTextViewColumn</value>
+		</property>
+	</control>
+	
+	<!-- View Column computed text -->
+	<control>
+		<name>Text.ViewColumnComputed</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspTextViewColumnComputed</value>
+		</property>
+	</control>
+
+	<!-- View Column link -->
+	<control>
+		<name>Link.ViewColumn</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspLinkViewColumn</value>
+		</property>
+	</control>
+
+	<!-- View Column image -->
+	<control>
+		<name>Image.ViewColumn</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspImageViewColumn</value>
+		</property>
+	</control>
+
+	<!-- View Column checkbox -->
+	<control>
+		<name>CheckBox.ViewColumn</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspCheckBoxViewColumn</value>
+		</property>
+	</control>
+
+	<!-- ================== View Column Header ================================ -->
+
+	<!-- View Column Header -->
+	<control>
+		<name>Panel.ViewColumnHeader</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspPanelViewColumnHeader</value>
+		</property>
+	</control>
+	
+	<!-- View Column Header text -->
+    <control>
+		<name>Text.ViewColumnHeader</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspTableHead</value>
+		</property>
+		<property>
+			<name>style</name>
+			<value>white-space:nowrap;</value>
+		</property>
+		<property>
+			<name>checkboxStyle</name>
+			<value>margin:0px 2px;height:12px;</value>
+		</property>		
+    </control>
+
+	<!-- View Column Header link -->
+	<control>
+		<name>Link.ViewColumnHeader</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspLinkViewColumnHeader</value>
+		</property>
+	</control>
+
+	<!-- View Column Header checkbox -->
+	<control>
+		<name>CheckBox.ViewColumnHeader</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspCheckBoxViewColumnHeader</value>
+		</property>
+	</control>
+
+	<!-- View Column Header image -->
+	<control>
+		<name>Image.ViewColumnHeader</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspImageViewColumnHeader</value>
+		</property>
+	</control>
+
+	<!-- View Column Header icon image -->
+	<control>
+		<name>Image.ViewColumnHeaderIcon</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspImageViewColumnHeaderIcon</value>
+		</property>
+	</control>
+
+	<!-- View Column Header sort image -->
+	<control>
+		<name>Image.ViewColumnHeaderSort</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspImageViewColumnHeaderSort</value>
+		</property>
+	</control>
+	
+	<!-- =======================================================================
+		Tab panel controls
+		A tab has some virtual properties when dealing with themes:
+			startStyleClass: the style class to apply to the first tab
+			middleStyleClass: the style class to apply to the tab that are neither first or last
+			endStyleClass: the style class to apply to the tab column
+		Those properties take priority over the styleClass when defined in a theme
+	======================================================================= -->
+
+	<!-- Tabbed Panel -->
+	<control>
+		<name>TabbedPanel</name>
+		<property>
+			<name>styleClass</name>
+			<value>lotusTabs</value> 
+		</property>
+		<property>
+			<name>separatorStyleClass</name>
+			<value>xspTabbedPanelContentSeparator</value> 
+		</property>
+		<!--
+		<property>
+			<name>containerStyleClass</name>
+			<value>lotusTabContainer</value> 
+		</property>
+		-->
+		<property>
+			<name>outerStyleClass</name>
+			<value>xspTabbedPanelOuter</value> 
+		</property>
+	</control>
+
+	<!-- Tab -->
+	<control>
+		<name>Tab.TabbedPanel</name>
+		<!--  
+		<property>
+			<name>styleClass</name>
+			<value>xspTabTabbedPanel</value>
+		</property>
+		-->
+		<property>
+			<name>selectedTabStyleClass</name>
+			<value>lotusSelected</value> 
+		</property>
+		<property>
+			<name>unselectedTabStyleClass</name>
+			<value>xspUnselectedTab</value> 
+		</property>
+		<property>
+			<name>startTabStyleClass</name>
+			<value>xspStartTab</value> 
+		</property>
+		<property>
+			<name>middleTabStyleClass</name>
+			<value>xspMiddleTab</value> 
+		</property>
+		<property>
+			<name>endTabStyleClass</name>
+			<value>xspEndTab</value> 
+		</property>
+	</control>
+
+	<!-- ================== Pager / PagerControl ================================ -->
+
+	<!-- Pager -->
+	<control>
+		<name>Pager</name>
+		<property>
+			<name>outerStyleClass</name>
+			<value>xspPagerContainer</value>
+		</property>
+		<property>
+			<name>styleClass</name>
+			<value>xspPager</value>
+		</property>
+	</control>
+
+	<!-- PagerControl -->
+	<control>
+		<name>PagerControl.Pager</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspPagerNav</value>
+		</property>
+	</control>
+
+	<control>
+		<name>PagerControl.Pager.First</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspPagerNav xspFirst</value>
+		</property>
+	</control>
+
+	<control>
+		<name>PagerControl.Pager.Previous</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspPagerNav xspPrevious</value>
+		</property>
+	</control>
+
+	<control>
+		<name>PagerControl.Pager.Next</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspPagerNav xspNext</value>
+		</property>
+	</control>
+
+	<control>
+		<name>PagerControl.Pager.Last</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspPagerNav xspLast</value>
+		</property>
+	</control>
+
+	<control>
+		<name>PagerControl.Pager.Group</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspPagerNav xspGroup</value>
+		</property>
+		<property>
+			<name>currentStyleClass</name>
+			<value>xspCurrentItem</value>
+		</property>
+		<property>
+			<name>firstStyleClass</name>
+			<value>xspFirstItem</value>
+		</property>
+		<property>
+			<name>lastStyleClass</name>
+			<value>xspLastItem</value>
+		</property>
+	</control>
+
+	<control>
+		<name>PagerControl.Pager.Status</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspPagerNav xspStatus</value>
+		</property>
+	</control>
+
+	<control>
+		<name>PagerControl.Pager.Goto</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspPagerNav xspGoto</value>
+		</property>
+	</control>
+
+	<control>
+		<name>PagerControl.Pager.Separator</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspPagerNav xspSeparator</value>
+		</property>
+	</control>
+
+	<!-- =======================================================================
+		HTML passthrough controls
+	======================================================================= -->
+	
+	<!--
+	<control>
+		<name>HtmlDiv</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspHtmlDiv</value> 
+		</property>
+	</control>
+	
+	<control>
+		<name>HtmlBr</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspHtmlBr</value> 
+		</property>
+	</control>
+	
+	<control>
+		<name>HtmlP</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspHtmlP</value> 
+		</property>
+	</control>
+	
+	<control>
+		<name>HtmlSpan</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspHtmlSpan</value> 
+		</property>
+	</control>
+	
+	<control>
+		<name>HtmlTable</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspHtmlTable</value> 
+		</property>
+		<property>
+            <name>captionStyleClass</name>
+            <value>xspHtmlTableCaption</value>
+        </property>
+	</control>
+	
+	<control>
+		<name>HtmlTd</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspHtmlTd</value> 
+		</property>
+	</control>
+	
+	<control>
+		<name>HtmlTr</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspHtmlTr</value> 
+		</property>
+	</control>
+	-->
+	
+	<!-- =======================================================================
+		Misc
+	======================================================================= -->
+
+	<!-- Client Script tag -->
+	<control>
+		<name>Script</name>
+		<property>
+			<name>styleClass</name>
+			<value>xspScript</value> 
+		</property>
+	</control>
+
+</theme>

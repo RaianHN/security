@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xe="http://www.ibm.com/xsp/coreex"
+	xmlns:xc="http://www.ibm.com/xsp/custom">
+
+	<xp:span id="lotusSearch" styleClass="lotusSearch">
+
+		<xp:table id="lotusLayout" styleClass="lotusLayout">
+			<xp:tr>
+				<xp:td>
+					<xp:inputText id="searchInput"
+						styleClass="lotusText lotusInactive" title="Enter Keywords"
+						defaultValue="Enter Keywords" onfocus="this.value =''"
+						immediate="true">
+					</xp:inputText>
+				</xp:td>
+				<xp:td>
+					<xp:link escape="true" id="linkSearch">
+						<xp:image id="image1" url="/find.gif"></xp:image>
+						
+						</xp:link>
+				</xp:td>
+			</xp:tr>
+		</xp:table>
+		
+	</xp:span>	
+
+</xp:view>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257AC30021844F" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="8012" sequence="1" unid="B1DBB7DF42AC3E9165257B10003C9E4A">
+<created><datetime>20130212T163206,82+0530</datetime></created>
+<modified><datetime>20130212T163214,19+0530</datetime></modified>
+<revised><datetime>20130212T163214,18+0530</datetime></revised>
+<lastaccessed><datetime>20130212T163214,19+0530</datetime></lastaccessed>
+<addedtofile><datetime>20130212T163214,19+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Muhammad Sabir/O=AAC</name><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
+<wassignedby><name>CN=Jaya K Prakash/O=Weberon</name></wassignedby>
+<item name="$Comment"><text>Extends oneui_v2_core</text></item>
+<item name="$TITLE"><text>oneui_vs_metal.theme</text></item>
+<item name="$Flags"><text>34567Cg~`</text></item>
+
+
+<item name="$FileNames" sign="true"><text>oneui_vs_metal.theme</text></item>
+<item name="$CSSFiles"><textlist><text>/.ibmxspres/domino/oneuiv2/metalTheme/metalTheme.css</text><text>custom.css</text></textlist></item></note>
