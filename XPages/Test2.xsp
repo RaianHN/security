@@ -1,26 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xp:view xmlns:xp="http://www.ibm.com/xsp/core"
-	xmlns:xc="http://www.ibm.com/xsp/custom" dojoParseOnLoad="false">
-	
+	xmlns:xc="http://www.ibm.com/xsp/custom" dojoParseOnLoad="true"
+	xmlns:xe="http://www.ibm.com/xsp/coreex" dojoTheme="true"
+	dojoForm="true">
 
+
+
+
+
+
+	<xe:djTabContainer id="djTabContainer1" style="height:25.0px">
+
+		<xe:djTabPane id="djTabPane1">
+
+		</xe:djTabPane>
+		<xe:djTabPane id="djTabPane2">
+			<xp:eventHandler event="click" submit="false">
+				<xp:this.script><![CDATA[console.log("hello")]]></xp:this.script>
+			</xp:eventHandler>
+		</xe:djTabPane>
+		<xe:djTabPane id="djTabPane3">
+			<xe:this.onShow><![CDATA[console.log("hello1233")]]></xe:this.onShow>
+			<xe:this.onClick><![CDATA[console.log("hello22")]]></xe:this.onClick>
+			
+		</xe:djTabPane>
+	</xe:djTabContainer>
 	<xp:br></xp:br>
-	<xp:button value="Create" id="button1"><xp:eventHandler event="onclick" submit="true" refreshMode="complete">
-	<xp:this.action>
-		<xp:openPage name="/test.xsp" target="newDocument"></xp:openPage>
-	</xp:this.action></xp:eventHandler></xp:button>
-	
-	<xp:viewPanel rows="30" id="viewPanel1">
-		<xp:this.facets>
-			<xp:pager partialRefresh="true" layout="Previous Group Next"
-				xp:key="headerPager" id="pager1">
-			</xp:pager>
-		</xp:this.facets>
-		<xp:this.data>
-			<xp:dominoView var="view1" viewName="AllDocs"></xp:dominoView>
-		</xp:this.data>
-		<xp:viewColumn columnName="DocumentCreator" id="viewColumn1" displayAs="link" openDocAsReadonly="true">
-			<xp:viewColumnHeader value="DocCreator"
-				id="viewColumnHeader1">
-			</xp:viewColumnHeader>
-		</xp:viewColumn>
-	</xp:viewPanel></xp:view>
+	<xp:button value="Label" id="button1">
+		<xp:eventHandler event="onclick" submit="false">
+			<xp:this.script><![CDATA[console.log("hello")]]></xp:this.script>
+		</xp:eventHandler>
+	</xp:button>
+	<xp:eventHandler event="onClientLoad" submit="true"
+		refreshMode="norefresh">
+		<xp:this.action><![CDATA[#{javascript:var pane2 = getComponent("djTabPane1");
+var onShow = "console.log(\"hiiiiii\");";
+pane2.setOnShow(onShow);}]]></xp:this.action>
+	</xp:eventHandler>
+</xp:view>

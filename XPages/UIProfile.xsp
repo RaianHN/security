@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xe="http://www.ibm.com/xsp/coreex"
+	xmlns:xc="http://www.ibm.com/xsp/custom">
+	<xp:this.beforePageLoad><![CDATA[#{javascript:var profileNames = getProfiles();
+viewScope.profileNames = profileNames;
+
+var profName = "Authors";
+var profile = new bsuite.jsonparsing.ProfileEdit();
+if(profName!=null){
+viewScope.moduleNames =  profile.getModuleNames(profName);
+}}]]></xp:this.beforePageLoad>
+	<xp:this.resources>
+		<xp:script src="/CommonFunctions.jss" clientSide="false"></xp:script>
+		<xp:script src="/Copy Of CustomControlLib.js"
+			clientSide="true">
+		</xp:script>
+	</xp:this.resources>
+	<xc:ccDebugToolbar load="true" defaultCollapsed="false"
+		collapseTo="left">
+	</xc:ccDebugToolbar>
+	<xp:panel id="profilePanel">
+		<xp:comboBox id="profileCombo"
+			binding="#{javascript:viewScope.selProfile1}">
+			<xp:selectItem itemLabel="--Select Profile--"></xp:selectItem>
+			<xp:selectItems>
+				<xp:this.value><![CDATA[#{javascript:viewScope.profileNames}]]></xp:this.value>
+			</xp:selectItems>
+			<xp:eventHandler event="onchange" submit="true"
+				refreshMode="complete">
+				<xp:this.action><![CDATA[#{javascript:viewScope.modulePermission = null;
+viewScope.selProfile1 = getComponent("profileCombo").getValue();
+
+}]]></xp:this.action>
+			</xp:eventHandler>
+		</xp:comboBox>
+
+		&#160;
+		<xp:button value="Save" id="button1">
+			<xp:eventHandler event="onclick" submit="true"
+				refreshMode="complete">
+				<xp:this.action><![CDATA[#{javascript:'"'}]]></xp:this.action>
+			</xp:eventHandler>
+		</xp:button>
+	</xp:panel>
+	<xp:br></xp:br>
+
+	<xp:panel id="moduleTabs">
+
+
+		<xe:djTabContainer id="djTabContainer1"
+			style="height:25px;width:664.0px">
+
+
+			<xp:repeat id="repeat1" rows="30" var="varRepeat"
+				value="#{javascript:viewScope.moduleNames}">
+				<xe:djTabPane id="djTabPane1"
+					title="#{javascript:varRepeat}">
+
+
+
+
+
+
+
+
+					<xe:this.onShow><![CDATA[var eventId = "#{id:loadPermission}";
+
+var thisid = this.id.toString();
+var tempid = thisid.substr(0,thisid.indexOf(":repeat"));
+var tabTitleid = tempid+"_tablist_"+thisid;//Create id of tabpanel
+var moduleName = document.getElementById(tabTitleid).getElementsByTagName("span").item(0).innerHTML//get tab title
+console.log("modulename"+moduleName);
+
+
+var refId = thisid.substr(0,thisid.indexOf("djTab"))+"permissionPanel"//"view:_id1:permissionPanel"
+
+console.log("refreshid "+refId);
+
+XSP.executeOnServer(eventId, refId, "", moduleName);]]></xe:this.onShow>
+				</xe:djTabPane>
+
+
+
+
+
+
+			</xp:repeat>
+
+
+		</xe:djTabContainer>
+
+		<xp:panel id="permissionPanel">
+
+			<xc:ccUIPermissions id="ccUIPerm">
+
+
+			</xc:ccUIPermissions>
+		</xp:panel>
+
+	</xp:panel>
+
+	<xp:eventHandler id="loadPermission" event="onDojo"
+		action="#{javascript:loadProfile();}">
+
+	</xp:eventHandler>
+</xp:view>

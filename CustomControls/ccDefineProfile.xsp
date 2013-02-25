@@ -6,6 +6,9 @@
 
 	<xp:this.beforePageLoad><![CDATA[#{javascript:var profileNames = getProfiles();
 viewScope.profileNames = profileNames;}]]></xp:this.beforePageLoad>
+	<xp:this.resources>
+		<xp:script src="/CommonFunctions.jss" clientSide="false"></xp:script>
+	</xp:this.resources>
 	<xp:table style="width:100%">
 		<xp:tr>
 			<xp:td align="left">
@@ -27,7 +30,7 @@ viewScope.profileNames = profileNames;}]]></xp:this.beforePageLoad>
 									<xp:this.value><![CDATA[#{javascript:viewScope.profileNames}]]></xp:this.value>
 								</xp:selectItems>
 
-								
+
 								<xp:eventHandler event="onchange"
 									submit="true" refreshMode="complete">
 									<xp:this.action><![CDATA[#{javascript:viewScope.modulePermission = null;
@@ -42,11 +45,11 @@ var c1="/ccPermissions.xsp";
 var id="modulediv";
 bsuite.loadcc.DynamicCC.removePreview(component);
 bsuite.loadcc.DynamicCC.loadCC(s, component, c1, id);}]]></xp:this.action>
-								</xp:eventHandler></xp:comboBox>
+								</xp:eventHandler>
+							</xp:comboBox>
 						</xp:td>
 						<xp:td styleClass="debugButton">
-							<xp:button value="Save" id="button1"
-								style="background-color:rgb(192,192,192);color:rgb(0,0,0)">
+							<xp:button value="Save" id="button1">
 								<xp:eventHandler event="onclick"
 									submit="false">
 									<xp:this.script><![CDATA[var id = "#{id:modulediv}";
@@ -99,9 +102,9 @@ savePermissions(id);]]></xp:this.script>
 	</xp:table>
 
 
-		
+
 	<xp:br></xp:br>
-			<xp:br></xp:br>
+	<xp:br></xp:br>
 	<xe:tooltipDialog id="tooltipDialog13">
 		<xp:panel>
 			<xp:table>

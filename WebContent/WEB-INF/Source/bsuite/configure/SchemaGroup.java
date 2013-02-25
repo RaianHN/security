@@ -3,8 +3,9 @@ package bsuite.configure;
 import java.util.ArrayList;
 
 public class SchemaGroup {
+	//This class will be used in defining the schema of the profiles.
 	private String GroupName;
-	private ArrayList<Object> GroupEntries;//Can contain feature or entity
+	private ArrayList<String> GroupEntries;//Can contain feature or entity
 
 	public String getGroupName() {
 		return GroupName;
@@ -14,12 +15,15 @@ public class SchemaGroup {
 		GroupName = groupName;
 	}
 
-	public ArrayList<Object> getGroupEntries() {
+	public ArrayList<String> getGroupEntries() {
 		return GroupEntries;
 	}
 
-	public void setGroupEntries(ArrayList<Object> groupEntries) {
+	public void setGroupEntries(ArrayList<String> groupEntries) {
 		GroupEntries = groupEntries;
 	}
+
+
+	
 
 }

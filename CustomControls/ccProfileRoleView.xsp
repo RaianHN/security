@@ -60,7 +60,7 @@ return "--"
 if(assoc!=null){
 var rolen = assoc.getAssociatedProfileName(user1);
 
-if(rolen!="" && role!=null){
+if(rolen!="" && rolen!=null){
 return rolen
 }else{
 return "--"

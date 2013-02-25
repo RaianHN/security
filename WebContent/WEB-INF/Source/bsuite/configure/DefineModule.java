@@ -19,16 +19,14 @@ import lotus.domino.View;
 import lotus.domino.ViewEntry;
 import lotus.domino.ViewEntryCollection;
 
-
-
 @SuppressWarnings("unused")
-public class DefineModule{
+public class DefineModule {
 	Database currentdb;
-	
+
 	public DefineModule() {
 		currentdb = Utility.getCurrentDatabase();
 	}
-	
+
 	public void addModules(Vector<String> modules) {
 		System.out.println("inside add module");
 		for (String moduleName : modules) {
@@ -37,10 +35,11 @@ public class DefineModule{
 		}
 
 	}
+
 	public void addModules(String module) {
 		System.out.println("inside add module");
 		String moduleJson = createJsonString(module);
-			createModuleDocument(moduleJson, module);
+		createModuleDocument(moduleJson, module);
 	}
 
 	/**
@@ -74,7 +73,7 @@ public class DefineModule{
 		module.setModuleName(moduleName);
 
 		ObjectMapper mapper = new ObjectMapper();
-
+	
 		try {
 			return mapper.writeValueAsString(module);
 		} catch (Exception e) {
@@ -112,6 +111,9 @@ public class DefineModule{
 				feature.setFeatureName(s);
 
 				features.add(feature);
+
+				// Add to entFeat list also
+				ManageGroup.addEntFeat(module, "f:"+feature.getFeatureName());
 			}
 			module.setFeatures(features);
 
@@ -130,9 +132,9 @@ public class DefineModule{
 		}
 
 	}
-	
-	public boolean addFeatureGroup(String moduleName, String groupName){
-		//To add a new feature group for this module
+
+	public boolean addFeatureGroup(String moduleName, String groupName) {
+		// To add a new feature group for this module
 		try {
 
 			View modulesView = currentdb.getView("Modules");
@@ -143,7 +145,7 @@ public class DefineModule{
 
 			ObjectMapper mapper = new ObjectMapper();
 			Module module = mapper.readValue(jsonInput, Module.class);
-			
+
 			module = ManageGroup.createGroup(module, groupName);
 
 			moduleDoc.replaceItemValue("JsonString", mapper
@@ -159,13 +161,12 @@ public class DefineModule{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		
+
 		return true;
 	}
 	
-	public boolean renameFeatureGroup(String moduleName, String groupName, String newName){
-		//To rename feature group for this module
+	public boolean removeFeatureGroup(String moduleName, String groupName){
+		// To remove feature group for this module
 		try {
 
 			View modulesView = currentdb.getView("Modules");
@@ -176,9 +177,114 @@ public class DefineModule{
 
 			ObjectMapper mapper = new ObjectMapper();
 			Module module = mapper.readValue(jsonInput, Module.class);
-			
+
+			module = ManageGroup.deleteGroup(module, groupName);
+
+			moduleDoc.replaceItemValue("JsonString", mapper
+					.writeValueAsString(module));
+			moduleDoc.save();
+
+		} catch (NotesException e) {
+			e.printStackTrace();
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return true;
+		
+	}
+
+	public boolean addObjectToGrp(String moduleName, String groupName,
+			String type, String name) {
+		// Called from outside to add an entry into the group
+		// type is feature or entity
+		// name is the name of the feature or entity
+
+		try {
+
+			View modulesView = currentdb.getView("Modules");
+
+			Document moduleDoc = modulesView.getDocumentByKey(moduleName);
+
+			String jsonInput = moduleDoc.getItemValueString("JsonString");
+
+			ObjectMapper mapper = new ObjectMapper();
+			Module module = mapper.readValue(jsonInput, Module.class);
+
+			ArrayList<SchemaGroup> groupList = module.getGroups();
+			String entFea = null;
+
+			if (type.equals("f")) {
+				entFea = "f:"+getFeatureObj(module, name).getFeatureName();
+			} else if (type.equals("e")) {
+				
+				entFea = "e:"+getEntityObj(module, name).getEntityName();
+			}
+
+			if (entFea == null) {
+				return false;
+			}
+
+			if (groupList != null) {
+				SchemaGroup group = null;
+				for (SchemaGroup s : groupList) {
+					if (s.getGroupName().equals(groupName)) {
+						group = s;
+						break;
+					}
+					
+				}
+				addGroupEntry(module, group, entFea);
+			}
+
+			moduleDoc.replaceItemValue("JsonString", mapper
+					.writeValueAsString(module));
+			moduleDoc.save();
+
+		} catch (NotesException e) {
+			e.printStackTrace();
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return true;
+	}
+	private boolean addGroupEntry(Module module, SchemaGroup group, String entry){
+		ManageGroup.addObjToGrp(module, group,entry);
+		return true;
+	}
+
+	/*private boolean addGroupEntryFeature(Module module, SchemaGroup group, Feature feature) {
+		// To add entity or feature to this group
+		ManageGroup.addObjToGrp(module, group,"f:"+feature.getFeatureName());
+
+		return true;
+	}*/
+
+	public boolean renameFeatureGroup(String moduleName, String groupName,
+			String newName) {
+		// To rename feature group for this module
+		try {
+
+			View modulesView = currentdb.getView("Modules");
+
+			Document moduleDoc = modulesView.getDocumentByKey(moduleName);
+
+			String jsonInput = moduleDoc.getItemValueString("JsonString");
+
+			ObjectMapper mapper = new ObjectMapper();
+			Module module = mapper.readValue(jsonInput, Module.class);
+
 			SchemaGroup grp = null;
-			
+
 			ArrayList<SchemaGroup> grps = null;
 			if (module.getGroups() == null) {
 				return false;
@@ -186,16 +292,13 @@ public class DefineModule{
 				grps = module.getGroups();
 			}
 
-			
-
 			for (SchemaGroup g : grps) {
-				
+
 				if (g.getGroupName().equals(groupName)) {
 					grp = g;
 				}
 			}
-			
-			
+
 			module = ManageGroup.renameGroup(module, grp, newName);
 
 			moduleDoc.replaceItemValue("JsonString", mapper
@@ -211,11 +314,10 @@ public class DefineModule{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		
+
 		return true;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public void addFeatures(String moduleName, String featurename) {
 		try {
@@ -238,13 +340,15 @@ public class DefineModule{
 
 			// ArrayList<Feature> featureList = new ArrayList<Feature>();
 
-			
-				// Add features to the new entity
-				Feature feature = new Feature();
-				feature.setFeatureName(featurename);
+			// Add features to the new entity
+			Feature feature = new Feature();
+			feature.setFeatureName(featurename);
 
-				features.add(feature);
-			
+			features.add(feature);
+
+			// Add to entFeat list also
+			ManageGroup.addEntFeat(module, "f:"+feature.getFeatureName());
+
 			module.setFeatures(features);
 
 			moduleDoc.replaceItemValue("JsonString", mapper
@@ -262,7 +366,6 @@ public class DefineModule{
 		}
 
 	}
-
 
 	@SuppressWarnings("unchecked")
 	public void addEntity(String moduleName, String entityName,
@@ -302,6 +405,10 @@ public class DefineModule{
 			entity.setEntityName(entityName);
 			entity.setFields(fieldsList);
 			entities.add(entity);
+
+			// Add to entFeat list also
+			ManageGroup.addEntFeat(module, "e:"+entity.getEntityName());
+
 			module.setEntities(entities);
 
 			moduleDoc.replaceItemValue("JsonString", mapper
@@ -345,6 +452,10 @@ public class DefineModule{
 
 			entity.setEntityName(entityName);
 			entities.add(entity);
+
+			// Add to entFeat list also
+			ManageGroup.addEntFeat(module, "e:"+entity.getEntityName());
+
 			module.setEntities(entities);
 
 			moduleDoc.replaceItemValue("JsonString", mapper
@@ -368,7 +479,8 @@ public class DefineModule{
 			System.out.println("adding field1");
 			View modulesView = currentdb.getView("Modules");
 
-			 System.out.println("Document name"+modulesView.getDocumentByKey(moduleName));
+			System.out.println("Document name"
+					+ modulesView.getDocumentByKey(moduleName));
 			Document moduleDoc = modulesView.getDocumentByKey(moduleName);
 
 			String jsonInput = moduleDoc.getItemValueString("JsonString");
@@ -393,10 +505,10 @@ public class DefineModule{
 					}
 				}
 			}
-			
+
 			ArrayList<Field> fieldsList = entity.getFields();
 			System.out.println("adding field4");
-			if(fieldsList==null){
+			if (fieldsList == null) {
 				fieldsList = new ArrayList<Field>();
 			}
 			// Add fields to the new entity
@@ -672,6 +784,67 @@ public class DefineModule{
 		return null;
 	}
 
+	/**
+	 * This method is used to get the group names of the a given module, group
+	 * names will be returned from the schema definition
+	 * 
+	 * @param moduleName
+	 *@return Vector containing groupnames
+	 */
+	public Vector getGroupNames(String moduleName) {
+		String moduleJson = getModuleJson(moduleName);
+		ObjectMapper mapper = new ObjectMapper();
+		Module module = null;
+		try {
+			module = mapper.readValue(moduleJson, Module.class);
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		ArrayList<SchemaGroup> groupList = module.getGroups();
+
+		if (groupList != null) {
+			Vector groupNames = new Vector();
+			for (SchemaGroup s : groupList) {
+				groupNames.add(s.getGroupName());
+			}
+			return groupNames;
+		}
+
+		return null;
+	}
+
+	public ArrayList getGroupEntryNames(String moduleName, String groupName) {
+		String moduleJson = getModuleJson(moduleName);
+		ObjectMapper mapper = new ObjectMapper();
+		Module module = null;
+		try {
+			module = mapper.readValue(moduleJson, Module.class);
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		ArrayList<SchemaGroup> groups = module.getGroups();
+
+		if (groups == null)
+			return null;
+
+		for (SchemaGroup s : groups) {
+			if (s.getGroupName().equals(groupName)) {
+				return ManageGroup.getAllEntryNames(s);
+			}
+		}
+		return null;
+
+	}
+
 	@SuppressWarnings("unchecked")
 	public ArrayList getEntities(String moduleName) {
 		String moduleJson = getModuleJson(moduleName);
@@ -793,6 +966,7 @@ public class DefineModule{
 				// Add features to the new entity
 				if (f.getFeatureName().equals(featureName)) {
 					features.remove(f);
+					ManageGroup.removeEntFeat(module, "f:"+featureName, "ent");
 					break;
 				}
 			}
@@ -839,6 +1013,8 @@ public class DefineModule{
 			for (Entity e : entities) {
 				if (e.getEntityName().equals(entityName)) {
 					entities.remove(e);
+					ManageGroup.removeEntFeat(module, "e:"+e.getEntityName(),"ent");
+					
 					break;
 				}
 			}
@@ -893,11 +1069,11 @@ public class DefineModule{
 			ArrayList<Field> fieldsList = entity.getFields();
 
 			// Add fields to the new entity
-			if(fieldsList.size()==0){
+			if (fieldsList.size() == 0) {
 				return;
 			}
-			for(Field f:fieldsList){
-				if(f.getFieldName().equals(fieldName)){
+			for (Field f : fieldsList) {
+				if (f.getFieldName().equals(fieldName)) {
 					fieldsList.remove(f);
 					break;
 				}
@@ -918,7 +1094,67 @@ public class DefineModule{
 			e.printStackTrace();
 		}
 
+	}
 
+	private Entity getEntityObj(Module module, String entityName) {
+		// To get entity object of a given module and entity name, used in
+		// adding group entries
+		ArrayList<Entity> entities = null;
+
+		entities = module.getEntities();
+
+		Entity entity = null;
+		for (Entity e : entities) {
+			if (entities != null) {
+				if (e.getEntityName().equals(entityName)) {
+					return e;
+
+				}
+			}
+		}
+		return null;
+	}
+
+	private Feature getFeatureObj(Module module, String featureName) {
+		// To get feature object of a given module and entity name, used in
+		// adding group entries
+		ArrayList<Feature> features = null;
+		features = module.getFeatures();
+		if (features != null) {
+			for (Feature f : features) {
+				if (f.getFeatureName().equals(featureName)) {
+					return f;
+				}
+			}
+
+		}
+		return null;
+	}
+
+	public Vector<String> getEntFeatList(String moduleName) {
+		// To get the list of entFeat list
+		try {
+			View modulesView = currentdb.getView("Modules");
+
+			Document moduleDoc = modulesView.getDocumentByKey(moduleName);
+
+			String jsonInput = moduleDoc.getItemValueString("JsonString");
+
+			ObjectMapper mapper = new ObjectMapper();
+
+			Module module = mapper.readValue(jsonInput, Module.class);
+			
+			return ManageGroup.getEntFeatList(module);
+		} catch (NotesException e) {
+			e.printStackTrace();
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

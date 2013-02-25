@@ -1,31 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xp:view xmlns:xp="http://www.ibm.com/xsp/core"
 	xmlns:xe="http://www.ibm.com/xsp/coreex">
+	
 	<xp:panel id="lotusMenu" styleClass="lotusMenu">
 		<xp:panel id="lotusBottomCorner"
 			styleClass="lotusBottomCorner">
 			<xp:panel styleClass="lotusInner" id="lotusInner">
 				<xp:tabbedPanel id="tabbedPanel1"
-					selectedTab="#{javascript:param.content}">
+					selectedTab="#{javascript:viewScope.menuSelected}">
 
 
-					<xp:tabPanel label="Profiles"
-						selectedTabStyleClass="lotusSelected" id="viewProfile">
+					<xp:tabPanel label="Profiles" id="viewProfile"
+						selectedTabStyleClass="lotusSelected">
+						<xp:eventHandler event="onclick" submit="true"
+							refreshMode="partial" refreshId="lotusMain">
+							<xp:this.action><![CDATA[#{javascript:viewScope.menuSelected = "viewProfile";
+getComponent("dync").show("profile");}]]></xp:this.action>
+						</xp:eventHandler>
 					</xp:tabPanel>
+					
 					<xp:tabPanel label="Roles" id="viewRoles"
 						selectedTabStyleClass="lotusSelected">
+						<xp:eventHandler event="onclick" submit="true"
+							refreshMode="partial" refreshId="lotusMain">
+							<xp:this.action><![CDATA[#{javascript:viewScope.menuSelected = "viewRoles";
+getComponent("dync").show("role");
+
+}]]></xp:this.action>
+						</xp:eventHandler>
 					</xp:tabPanel>
 					<xp:tabPanel label="Organizational Settings"
 						id="viewOrg" selectedTabStyleClass="lotusSelected">
+						<xp:eventHandler event="onclick" submit="true"
+							refreshMode="partial" refreshId="lotusMain">
+							<xp:this.action><![CDATA[#{javascript:viewScope.menuSelected = "viewOrg";
+getComponent("dync").show("org")}]]></xp:this.action>
+						</xp:eventHandler>
 					</xp:tabPanel>
 					<xp:tabPanel label="Configuration"
 						id="viewConfigure" selectedTabStyleClass="lotusSelected">
+						<xp:eventHandler event="onclick" submit="true"
+							refreshMode="partial" refreshId="lotusMain">
+							<xp:this.action><![CDATA[#{javascript:viewScope.menuSelected = "viewConfigure";
+getComponent("dync").show("config");}]]></xp:this.action>
+						</xp:eventHandler>
 					</xp:tabPanel>
-					<xp:tabPanel id="viewDefine"
-						label="Define Schema">
+					<xp:tabPanel id="viewDefine" label="Define Schema"
+						selectedTabStyleClass="lotusSelected">
+						<xp:eventHandler event="onclick" submit="true"
+							refreshMode="partial" refreshId="lotusMain">
+							<xp:this.action><![CDATA[#{javascript:viewScope.menuSelected = "viewDefine";
+getComponent("dync").show("define")}]]></xp:this.action>
+						</xp:eventHandler>
 					</xp:tabPanel>
+					
 				</xp:tabbedPanel>
 			</xp:panel>
 		</xp:panel>
 	</xp:panel>
-	</xp:view>
+	<xp:eventHandler event="onClientLoad" submit="true"
+		refreshMode="norefresh">
+	</xp:eventHandler></xp:view>

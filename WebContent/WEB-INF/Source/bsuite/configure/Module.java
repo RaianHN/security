@@ -5,19 +5,15 @@ import java.util.ArrayList;
 
 public class Module {
 	
+	
+
 	private String moduleName;
 	private ArrayList<Entity> entities;
 	private ArrayList<Feature> features;
 	private ArrayList<SchemaGroup> groups;
-	private ArrayList<Object> entFeat;//contains all the entities and features, used to mange group of actions
+	private ArrayList<String> entFeat;//contains all the entities and features, used to mange group of actions
 	
-	public ArrayList<Object> getEntFeat() {
-		return entFeat;
-	}
-
-	public void setEntFeat(ArrayList<Object> entFeat) {
-		this.entFeat = entFeat;
-	}
+	
 
 	public ArrayList<SchemaGroup> getGroups() {
 		return groups;
@@ -51,6 +47,14 @@ public class Module {
 
 	public void setFeatures(ArrayList<Feature> features) {
 		this.features = features;
+	}
+	
+	public ArrayList<String> getEntFeat() {
+		return entFeat;
+	}
+
+	public void setEntFeat(ArrayList<String> entFeat) {
+		this.entFeat = entFeat;
 	}
 
 }

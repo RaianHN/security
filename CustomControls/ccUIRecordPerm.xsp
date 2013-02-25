@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+
+	
+	<xp:section id="section1" header="Record Permissions" type="box">
+		<xp:table>
+			<xp:tr>
+				<xp:td>
+					
+					<xp:label value="Record Type" id="label1"></xp:label>
+					</xp:td>
+				<xp:td>
+					<xp:comboBox id="comboBox1">
+						<xp:selectItem itemLabel="-Select Entity-"></xp:selectItem>
+
+
+						<xp:selectItems>
+							<xp:this.value><![CDATA[#{javascript:
+
+var profName = viewScope.profileName;
+var moduleName = viewScope.moduleName;
+var profile = new bsuite.jsonparsing.ProfileEdit();
+if(profName!=null&&moduleName!=null){
+//var entnames = profile.getEntityNames(profName,moduleName);
+//viewScope.entname = entnames;
+//return entnames;
+}}]]></xp:this.value>
+						</xp:selectItems>
+						<xp:eventHandler event="onclick" submit="true"
+							refreshMode="partial" refreshId="computedField1">
+						</xp:eventHandler>
+						<xp:eventHandler event="onchange" submit="true"
+							refreshMode="partial" refreshId="computedField1">
+							<xp:this.action><![CDATA[#{javascript:var sel = getComponent("comboBox1").getValue();
+getComponent("computedField1").setValue(sel)}]]></xp:this.action>
+						</xp:eventHandler></xp:comboBox></xp:td>
+			</xp:tr>
+			
+			
+		</xp:table>
+		<xp:br></xp:br>
+		
+		<xp:text escape="true" id="computedField1" value="#{javascript:viewScope.moduleName;}"></xp:text>
+		<xp:table>
+			<xp:tr>
+				<xp:td></xp:td>
+				<xp:td></xp:td>
+			</xp:tr>
+			<xp:repeat id="repeat1" rows="30" var="rowData">
+				<xp:this.value><![CDATA[#{javascript:return "";}]]></xp:this.value>
+				<xp:tr>
+					<xp:td>
+						<xp:label value="Label" id="label2"></xp:label>
+					</xp:td>
+					<xp:td>
+						<xp:checkBox id="checkBox1"></xp:checkBox>
+					</xp:td>
+				</xp:tr>
+			</xp:repeat>
+		</xp:table></xp:section></xp:view>

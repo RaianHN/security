@@ -1,6 +1,7 @@
 package bsuite.configure;
 
 import java.util.ArrayList;
+import java.util.Vector;
   /**
    * This class will be used in defining the schema by creating group and adding features and entities under that, and a group of actions can be controlled in
    * admin profile interface
@@ -8,13 +9,49 @@ import java.util.ArrayList;
   *@created Feb 13, 2013
  */
 public class ManageGroup {
-	public static Module addObjToGrp(Module module, String groupName, Object obj) {
+	public static Module addObjToGrp(Module module, SchemaGroup group, String str) {
 		//Used in adding feature or entities to groups in a particular module
+		
+		//1 Add obj to given group
+		//2 Remove obj from entFeat list of this module
+		
+		ArrayList<String> GroupEntries = null;
+		
+		if(group!=null){
+			GroupEntries = group.getGroupEntries();
+		}else{
+			return module; //If no group return;
+		}
+		
+		if(GroupEntries==null){
+			GroupEntries = new ArrayList<String>();
+		}
+		
+		GroupEntries.add(str);
+		group.setGroupEntries(GroupEntries);
+		
+		removeEntFeat(module, str,"grp");
+		
 		return module;
 	}
 
-	public static Module removeObjFrmGrp(Module module, String groupName, Object obj) {
+	public static Module removeObjFrmGrp(Module module, SchemaGroup group, String str) {
 		//Remove entity or feature from group
+		//Add the obj to entFeat list
+		
+		ArrayList<String> GroupEntries = null;
+		
+		if(group!=null){
+			GroupEntries = group.getGroupEntries();
+		}else{
+			return module; //If no group return;
+		}
+		
+		GroupEntries.remove(str);
+		group.setGroupEntries(GroupEntries);
+		
+		addEntFeat(module, str);
+		
 		return module;
 	}
 	
@@ -50,27 +87,123 @@ public class ManageGroup {
 		grp.setGroupName(newName);		
 		return module;
 	}
-	public static boolean deleteGroup(Module module, String groupName){
+	public static Module deleteGroup(Module module, String groupName){
+		ArrayList<SchemaGroup> groups = module.getGroups();
+		ArrayList<String> grpEntries=null;
 		
-		return true;
+		if(groups==null){
+			return module;
+		}
+		
+		for(SchemaGroup sg:groups){
+			if(sg!=null){
+				if(sg.getGroupName().equals(groupName)){
+					groups.remove(sg);
+					grpEntries = sg.getGroupEntries();
+					break;
+				}
+				
+			
+			}
+			
+		}
+		
+		ArrayList<String> entFeat = module.getEntFeat();
+		
+		if(entFeat!=null){
+			entFeat.addAll(grpEntries);
+			module.setGroups(groups);
+		}
+		
+		
+		
+		return module;
 	}
 	
-	public static Module addEntFeat(Module module, Object obj){
+	public static Module addEntFeat(Module module, String str){
 		//to add in entFeat list of the module when a new feature or entity is added
-		ArrayList<Object> list = null;
+		ArrayList<String> list = null;
 		if(module.getEntFeat()==null){
-			list = new ArrayList<Object>();
+			list = new ArrayList<String>();
 		}else{
 			list = module.getEntFeat();
 		}
-		list.add(obj);
+		list.add(str);
 		module.setEntFeat(list);		
 		return module;
 	}
-	public static boolean removeEntFeat(){
-		//to remove from entFeat list of the module when a new feature or entity is removed
-	
-		return true;
+	public static Module removeEntFeat(Module module, String str, String grp){
+		//to remove from entFeat list of the module when a new feature or entity is removed.
+		//If from group remove from entity list else if remove is called from removeEntity remove from entList and from group
+		ArrayList<String> list = null;
+		if(module.getEntFeat()==null){
+			return module;
+		}else{
+			list = module.getEntFeat();
+		}
+		if(grp.equals("grp")){
+			list.remove(str);
+		}
+		else{
+			if(!list.remove(str)){
+				removeEntFeatFromGrp(module,str);
+			}
+		}
+		
+		return module;
 	}
-	
+	@SuppressWarnings("null")
+	public static ArrayList<String> getAllEntryNames(SchemaGroup group){
+		//Returns the list of feature and entity names, if it is entity e: will be appended, if it is feature f: will be appended
+		ArrayList<String> list = group.getGroupEntries();
+		
+		
+		if(list==null){
+			return null;
+		}
+		
+		
+				
+		return list;
+		
+	}
+	public static Vector<String> getEntFeatList(Module module){
+		//Returns the list of all entity and features in entFeat list in module
+		
+		Vector<String>entryNames = new Vector<String>();
+		ArrayList<String> list = module.getEntFeat();
+		if(list==null){
+			return null;
+		}
+
+		for(Object o:list){
+			if(o instanceof Entity){
+				entryNames.add("e:"+((Entity) o).getEntityName());
+			}else if(o instanceof Feature){			
+				entryNames.add("f:"+((Feature) o).getFeatureName());
+			}
+		}
+				
+		return entryNames;
+	}
+	private static Module removeEntFeatFromGrp(Module module, String entFeat){
+		//Removes the entFeat from any groups if the entFeat is not found in entList when an entity or feature is removed from module
+		ArrayList<String> list = null;
+		ArrayList<SchemaGroup> grps = module.getGroups();
+		if(grps==null) return module;
+		
+		for(SchemaGroup sg:grps){
+			if(sg!=null){
+				list = sg.getGroupEntries();
+				if(list!=null){
+					if(list.remove(entFeat)){
+						return module;
+					}
+					
+				}
+			}
+		}
+		
+		return module;
+	}
 }

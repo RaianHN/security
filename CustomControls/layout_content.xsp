@@ -4,11 +4,17 @@
 
 	<xp:panel id="lotusContent" styleClass="lotusContent">
 
-		<xe:dynamicContent id="dync" defaultFacet="Home"
+		<xe:dynamicContent id="dync" defaultFacet="profile"
 			useHash="false">
+
 			<xe:this.facets>
-				<xc:home_page xp:key="Home" id="home_page"></xc:home_page>
-				
+
+				<xc:ccUIProfile xp:key="profile" id="profile_page"></xc:ccUIProfile>
+				<xc:ccUIRole xp:key="role" id="role_page"></xc:ccUIRole>
+				<xc:ccUIOrg xp:key="org" id="org_page"></xc:ccUIOrg>
+				<xc:ccUIConfig xp:key="config" id="config_page"></xc:ccUIConfig>
+				<xc:ccUIDefine xp:key="define" id="define_page"></xc:ccUIDefine>
+
 			</xe:this.facets>
 		</xe:dynamicContent>
 

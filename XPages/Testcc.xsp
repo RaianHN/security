@@ -13,4 +13,8 @@
 	
 	
 	
-	</xp:view>
+	<xp:button value="Label" id="button1">
+		<xp:eventHandler event="onclick" submit="true"
+			refreshMode="partial" refreshId="button1">
+			<xp:this.action><![CDATA[#{javascript:""}]]></xp:this.action>
+		</xp:eventHandler></xp:button></xp:view>

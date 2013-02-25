@@ -169,7 +169,7 @@ XSP.executeOnServer = function () {
 	// OPTIONAL - Value to submit in $$xspsubmitvalue. can be retrieved using context.getSubmittedValue()
 	var submitValue = (arguments[3]) ? arguments[3] : '';
 
-
+	//alert("event "+functionName+" svalue "+submitValue);
 	// Set the ID in $$xspsubmitid of the event handler to execute
 	dojo.query('[name="$$xspsubmitid"]')[0].value = functionName;
 	dojo.query('[name="$$xspsubmitvalue"]')[0].value = submitValue;

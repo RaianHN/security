@@ -7,8 +7,9 @@ function defineEntity(E_Name, E_List, E_Features){
 	doc.save();
 	doc.recycle();
 	//Changing the profile value for given new entity
-	var securityDb:NotesDatabase = getDatabase("Security.nsf");
-	var vie:NotesView = securityDb.getView("ProfileView");	
+	//var securityDb:NotesDatabase = getDatabase("Security.nsf");
+	
+	var vie:NotesView = database.getView("ProfileView");	
 
 	var profiledoc : NotesDocument= vie.getFirstDocument();
 	println("Profile Name passes ",profiledoc.getItemValueString("prof_name"));
@@ -41,8 +42,8 @@ function defineEmployeeEntity(E_Name, E_List, P_Fields,E_Features){
 
 
 function getProfiles(){
-	var securityDb:NotesDatabase = getDatabase("Security.nsf");
-	var vie:NotesView = securityDb.getView("ProfileView");
+	//var securityDb:NotesDatabase = getDatabase("Security.nsf");
+	var vie:NotesView = database.getView("ProfileView");
 	var doc:NotesDocument = vie.getFirstDocument();
 	var profileNames  = new java.util.Vector();
 	while(doc!=null){
@@ -51,6 +52,7 @@ function getProfiles(){
 	}
 	return profileNames;
 	doc.recycle();
+	
 }
 
 function defineProfile(ProfileName){
@@ -162,8 +164,8 @@ function getEntities(){
 }
 
 function getEntityCrud(profileName,entityName){
-	var securityDb:NotesDatabase = getDatabase("Security.nsf");
-	var vie:NotesView = securityDb.getView("ProfileView");
+	//var securityDb:NotesDatabase = getDatabase("Security.nsf");
+	var vie:NotesView = database.getView("ProfileView");
 	var doc:NotesDocument = vie.getDocumentByKey(profileName);
 	var entCrud = doc.getItemValue("E_Crud");
 	for(x in entCrud){
@@ -176,8 +178,8 @@ function getEntityCrud(profileName,entityName){
 
 function getFieldVisibility(profileName,entityName){
 	
-	var securityDb:NotesDatabase = getDatabase("Security.nsf");
-var vie:NotesView = securityDb.getView("ProfileView");
+	//var securityDb:NotesDatabase = getDatabase("Security.nsf");
+var vie:NotesView = database.getView("ProfileView");
 var doc:NotesDocument = vie.getDocumentByKey(profileName);
 var fields : String=doc.getItemValue("f_choice");
 //return fields;
@@ -205,8 +207,8 @@ return vect;
 
 function getFeaturesVisibility(profileName,entityName){
 	
-	var securityDb:NotesDatabase = getDatabase("Security.nsf");
-var vie:NotesView = securityDb.getView("ProfileView");
+//	var securityDb:NotesDatabase = getDatabase("Security.nsf");
+var vie:NotesView = database.getView("ProfileView");
 var doc:NotesDocument = vie.getDocumentByKey(profileName);
 var features=doc.getItemValue("features");
 //return features;
@@ -225,8 +227,8 @@ for(x in features){
 
 function editCrud(profileName,entityName,value){
 	println("crud value"+value);
-	var securityDb:NotesDatabase = getDatabase("Security.nsf");
-	var vie:NotesView = securityDb.getView("ProfileView");
+	//var securityDb:NotesDatabase = getDatabase("Security.nsf");
+	var vie:NotesView = database.getView("ProfileView");
 	var doc:NotesDocument = vie.getDocumentByKey(profileName);
 	var entCrud = doc.getItemValue("E_Crud");
 	println(entCrud);
@@ -407,8 +409,8 @@ function getRelationNameUnid(relationName){
 
 function createProfileResponse(entityName){
 	var profiles = getProfiles();
-	var securityDb:NotesDatabase = getDatabase("Security.nsf");
-	var vie:NotesView = securityDb.getView("ProfileView");
+	//var securityDb:NotesDatabase = getDatabase("Security.nsf");
+	var vie:NotesView = database.getView("ProfileView");
 	
 	for(x in profiles){
 		var docProf:NotesDocument = vie.getDocumentByKey(x);
@@ -765,7 +767,7 @@ var profileName="Admin";
 	println("setting field permission"+typeof(arr)+"submitted type"+typeof(context.getSubmittedValue()));
 	
 	var securityDb:NotesDatabase = getDatabase("Security.nsf");
-	var vie:NotesView = securityDb.getView("ProfileView");
+	var vie:NotesView = database.getView("ProfileView");
 	var doc:NotesDocument = vie.getFirstDocument();
 	
 	while(doc!=null){
@@ -807,4 +809,11 @@ function updateAddSchema(){
 function updateDeleteSchema(){
 	var profileObj = new bsuite.jsonparsing.ProfileEdit();
 	profileObj.removeUpdate();
+}
+function loadProfile(){
+	println("in loadProfile");	
+	var profileName = getComponent("profileCombo").getValue();
+	viewScope.profileName = profileName;
+	viewScope.moduleName = context.getSubmittedValue();
+	println("submitted value "+context.getSubmittedValue());
 }

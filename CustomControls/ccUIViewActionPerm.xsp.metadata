@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257AC30021844F" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="8356" sequence="44" unid="5C61E5C3F176079A65257B16004ADEE7">
+<created><datetime>20130218T190747,27+0530</datetime></created>
+<modified><datetime>20130220T100216,69+0530</datetime></modified>
+<revised><datetime>20130220T100216,68+0530</datetime></revised>
+<lastaccessed><datetime>20130220T100216,69+0530</datetime></lastaccessed>
+<addedtofile><datetime>20130218T190747,28+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
+<wassignedby><name>CN=Jaya K Prakash/O=Weberon</name></wassignedby>
+<item name="$Flags"><text>gC~4;</text></item>
+<item name="$TITLE"><text>ccUIViewActionPerm.xsp</text></item>
+
+<item name="$DesignerVersion"><text>8.5</text></item>
+
+
+
+
+
+
+<item name="$FileNames" sign="true"><text>ccUIViewActionPerm.xsp</text></item>
+
+</note>
