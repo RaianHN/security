@@ -13,7 +13,7 @@ public class GroupPermission {
 	
 	private String name;
 	private String visible;
-	private ArrayList<Object> entries;//Can contain feature or entity
+	private ArrayList<GroupEntry> entries;//Can contain feature or entity
 	
 	public String getName() {
 		return name;
@@ -27,12 +27,13 @@ public class GroupPermission {
 	public void setVisible(String visible) {
 		this.visible = visible;
 	}
-	public ArrayList<Object> getEntries() {
+	public ArrayList<GroupEntry> getEntries() {
 		return entries;
 	}
-	public void setEntries(ArrayList<Object> entries) {
+	public void setEntries(ArrayList<GroupEntry> entries) {
 		this.entries = entries;
 	}
+
 	
 	
 }

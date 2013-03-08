@@ -2,7 +2,7 @@
 <xp:view xmlns:xp="http://www.ibm.com/xsp/core"
 	xmlns:xc="http://www.ibm.com/xsp/custom">
 
-	<xp:this.beforePageLoad><![CDATA[#{javascript:var profName = "Authors";
+	<xp:this.beforePageLoad><![CDATA[#{javascript:var profName = "Admin";
 var profile = new bsuite.jsonparsing.ProfileEdit();
 if(profName!=null){
 viewScope.moduleNames =  profile.getModuleNames(profName);
@@ -215,4 +215,6 @@ schemaObj.addObjectToGrp(moduleName,groupName,type,name);}]]></xp:this.action>
 			<xp:td></xp:td>
 			<xp:td></xp:td>
 		</xp:tr>
-	</xp:table></xp:view>
+	</xp:table>
+	<xp:br></xp:br>
+	</xp:view>

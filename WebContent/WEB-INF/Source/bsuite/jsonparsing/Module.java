@@ -8,7 +8,7 @@ public class Module {
 	private String tabvis;
 	private ArrayList<Entity> entities;
 	private ArrayList<Feature> features;
-	
+	private ArrayList<GroupPermission> groups;
 	
 	
 	public ArrayList<Entity> getEntities() {
@@ -39,6 +39,13 @@ public class Module {
 	public void setFeatures(ArrayList<Feature> features) {
 		this.features = features;
 	}
+	public ArrayList<GroupPermission> getGroups() {
+		return groups;
+	}
+	public void setGroups(ArrayList<GroupPermission> groups) {
+		this.groups = groups;
+	}
+	
 	
 	
 }

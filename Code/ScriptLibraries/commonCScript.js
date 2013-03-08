@@ -242,14 +242,7 @@ function saveFeaturePermission(){
 function saveModulePermissions(id){
 	var profileName = getProfileName(id);
 	var modulePArray = new Array();
-	//view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:modulediv:moduleRepeatM:0:ccModuleP:repeatModules:0:tabVChk
-	//var strBaseId = "view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:";
-	//view:_id1:_id2:MainTabContainer:djProfile:_id76:modulediv:moduleRepeatM:2:ccModuleP:repeatModules:0:tabVChk
 	
-	//var strBaseId = "view:_id1:_id2:MainTabContainer:djProfile:_id76:";
-	//view:_id1:_id2:MainTabContainer:djProfile:_id74:modulediv:moduleRepeatM:0:ccModuleP:repeatModules:0:tabVChk
-	//view:_id1:_id2:MainTabContainer:djProfile:_id74:modulediv:inputNModules
-	//Get the profile name	
 	var strBaseId = id;
 	
 	var nModulesStr = document.getElementById(strBaseId+"modulediv:inputNModules").value
@@ -327,8 +320,8 @@ function saveFeaturePermissions(id){
 function saveEntityPermissions(id){
 	var profileName = getProfileName;
 	var entityPArray = new Array();
-	//var strBaseId = "view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:";
-	//var strBaseId = "view:_id1:_id2:MainTabContainer:djProfile:_id76:";
+
+	
 	var strBaseId = id;
 	var nModulesStr = document.getElementById(strBaseId+"modulediv:inputNModules").value
 	//Get number of modules
@@ -338,14 +331,7 @@ function saveEntityPermissions(id){
 	var entityName = "";
 	var entityPerm = null;
 	var ets=0;
-	/*
-	 * Ids
-	view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:modulediv:moduleRepeatM:1:ccModuleP:repeatModules:0:repeatEntity:1:entityName
-view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:modulediv:moduleRepeatM:1:ccModuleP:repeatModules:0:repeatEntity:1:createChk
-view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:modulediv:moduleRepeatM:1:ccModuleP:repeatModules:0:repeatEntity:1:readChk
-view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:modulediv:moduleRepeatM:1:ccModuleP:repeatModules:0:repeatEntity:1:updateChk
-view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:modulediv:moduleRepeatM:1:ccModuleP:repeatModules:0:repeatEntity:1:deleteChk
-	*/
+
 	for(var m=0;m<nModules;m++){
 		moduleName = document.getElementById(strBaseId+"modulediv:moduleRepeatM:"+m+":ccModuleP:repeatModules:0:moduleM").innerHTML;
 		nEntities = getEntityNumber(moduleName,strBaseId);
@@ -397,6 +383,63 @@ view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:modulediv:moduleRepeatM:1:
 			,entityPArray);
 	console.log("%o",entityPArray);		
 }
+
+function saveGroupPermissions(id){
+	var profileName = getProfileName;
+	var groupPArray = new Array();
+
+	
+
+	//view:_id1:_id205:dync:profile_page:ccPerm:ccViewPerm:ccViewAction:repeat1:0:checkBox2
+	//view:_id1:_id205:dync:profile_page:ccPerm:ccViewPerm:ccViewAction:repeat1:1:checkBox2
+	//view:_id1:_id205:dync:profile_page:ccPerm:ccViewPerm:ccViewAction:repeat1:2:checkBox2
+	
+	//view:_id1:_id205:dync:profile_page:ccPerm:ccViewPerm:ccViewAction:repeat1:0:computedField2
+	//view:_id1:_id205:dync:profile_page:ccPerm:ccViewPerm:ccViewAction:repeat1:1:computedField2
+	//view:_id1:_id205:dync:profile_page:ccPerm:inputNGroups
+	var strBaseId = id;
+	var nGroupStr = document.getElementById(strBaseId+"ccPerm:inputNGroups").value
+	//Get number of modules
+	//var nGroups = getGroupNumber(nGroupStr);
+	var nGroups = nGroupStr;
+	var groupV;
+	var moduleName="";
+	var groupName = "";
+	var groupPerm = null;
+	var grs=0;
+
+
+		moduleName = document.getElementById(id+"ccPerm:moduleName").value;
+		
+		var temp="";
+		for(var e=0;e<nGroups;e++){
+		
+			groupName = document.getElementById(strBaseId+"ccPerm:ccViewPerm:ccViewAction:repeat1:"+e+":computedField2").innerHTML;
+			//groupName = document.getElementById(strBaseId+"modulediv:moduleRepeatM:"+m+":ccModuleP:repeatModules:0:repeatEntity:"+e+":entityName").innerHTML;
+			//groupV = document.getElementById(strBaseId+"modulediv:moduleRepeatM:"+m+":ccModuleP:repeatModules:0:repeatEntity:"+e+":createChk");
+			groupV = document.getElementById(strBaseId+"ccPerm:ccViewPerm:ccViewAction:repeat1:"+e+":checkBox2");
+		
+					
+					 if (groupV.checked) {
+					        temp = groupName + ":"+"1";
+					    } else {
+					        temp = groupName + ":"+"0";
+					    }
+					    
+					   
+					
+					
+                	 groupPArray[grs++] = moduleName+":"+temp;
+               
+			
+		}
+	
+	XSP.executeOnServer('view:_id1:eventGroupPerm', "", 
+			""
+			,groupPArray);
+	console.log("%o",groupPArray);		
+}
+
 
 function saveFieldPermissions(id){
 	var profileName = getProfileName;
@@ -460,6 +503,80 @@ view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:modulediv:moduleRepeatM:1:
 	console.log("%o",fieldPArray);		
 }
 
+function saveGroupActionPerm(id){
+	var profileName = getProfileName;
+	var actionPArray = new Array();
+
+	var strBaseId = id;
+	
+	//Get number of modules
+
+	var nGroups = 0;
+	var nActions = 0;
+	
+	var groupName = "";
+	var moduleName = "";
+	var ets=0;
+
+	moduleName = document.getElementById(id+"ccPerm:moduleName").value;
+	
+		nGroups = document.getElementById(strBaseId+"ccPerm:inputNGroups").value
+		var temp="";
+		for(var e=0;e<nGroups;e++){
+			groupName = document.getElementById(strBaseId+"ccPerm:ccViewPerm:ccViewAction:repeat1:"+e+":computedField2").innerHTML;
+			nActions = getActionNumber(moduleName,groupName,strBaseId);
+				var actionName = "";
+				var actionV = "";
+				
+				for(f=0;f<nActions;f++){
+					//
+					//view:_id1:_id205:dync:profile_page:ccPerm:ccViewPerm:ccViewAction:repeat1:0:repeat2:0:computedField3
+					//view:_id1:_id205:dync:profile_page:ccPerm:ccViewPerm:ccViewAction:repeat1:0:repeat2:1:computedField3
+					actionName = document.getElementById(strBaseId+"ccPerm:ccViewPerm:ccViewAction:repeat1:"+e+":repeat2:"+f+":computedField3").innerHTML;
+					actionV = document.getElementById(strBaseId+"ccPerm:ccViewPerm:ccViewAction:repeat1:"+e+":repeat2:"+f+":checkBox3");
+					
+			
+				
+				
+					 	if (actionV.checked) {
+					        temp = groupName+":"+actionName + ":"+"1";
+					    } else {
+					        temp =groupName+":"+actionName + ":"+"0";
+					    }
+					    
+					   
+
+                	 actionPArray[ets++] = moduleName+":"+temp;
+				}
+			
+		}
+	
+	XSP.executeOnServer('view:_id1:eventGroupActionPerm', "",
+			{onComplete: function() { hideWait()}, onStart:function(){showWait()}}
+			,actionPArray);
+	console.log("%o", actionPArray);		
+		
+}
+
+
+function getActionNumber(moduleName,groupName,strBaseId){
+	var ele = document.getElementById(strBaseId+"ccPerm:inputNActions");
+	if(ele==null){
+		alert("no view actions found for"+moduleName);
+		return 0;
+	}
+	var eArray = new Array();
+	var entities = new Array();
+	eArray = ele.value.split(",");
+	
+	for(var i=0;i<eArray.length;i++){
+		entities = eArray[i].split(":");
+		if(entities[0]==moduleName+"+"+groupName){
+			return entities[1];
+		}
+	}
+	return 0;
+}
 
 function savePermissions(id){
 	var newid = id.split("modulediv");
@@ -487,6 +604,22 @@ function getProfileName(id){
 	var strBaseId = id;
 	var x = document.getElementById(strBaseId+"moduleCombo").selectedIndex;
 	var y=document.getElementById(strBaseId+"moduleCombo").options;
+	return y[x].text;
+}
+
+function getProfileNameUI(id){
+	//view:_id1:_id205:dync:profile_page:_id206:moduleCombo
+	//view:_id1:_id205:dync:profile_page:_id206:button1
+	
+	var strBaseId = id;
+	var x = document.getElementById(strBaseId+"moduleCombo").selectedIndex;
+	var y=document.getElementById(strBaseId+"moduleCombo").options;
+	return y[x].text;
+}
+function getSelectedValue(element){
+	//Returns the value selected in the checkbox
+	var x = element.selectedIndex;
+	var y = element.options;
 	return y[x].text;
 }
 
@@ -529,7 +662,9 @@ function getEntityNumber(moduleName,id){
 	}
 	return 0;
 }
- 
+
+
+
 
 function getCheckedValue(ele){
 	
@@ -556,4 +691,135 @@ function getFieldNumber(moduleName,entityName,id){
 	return 0;
 }
 
+function savePermissionsUI(id){
+	//New function to save the permissions
+	//var newid = id.split("buttonSaveProfile");
+	var newid = id.split("ccPerm");
+	
+	//saveModulePermissionsUI(newid[0]);
+	//saveGroupPermissions(newid[0]);
+	//saveGroupActionPerm(newid[0]);
+	//saveEntityPermissionsUI(newid[0]);
+	saveFieldPermissionsUI(newid[0]);
+	
+}
+
+function saveModulePermissionsUI(id){
+
+	//view:_id1:_id205:dync:profile_page:ccPerm:moduleName
+	//view:_id1:_id205:dync:profile_page:ccPerm:checkBox1
+	//view:_id1:_id205:dync:profile_page:_id206:moduleCombo
+	//view:_id1:_id205:dync:profile_page:saveProfile:moduleCombo
+	//view:_id1:_id205:dync:profile_page:ccPerm:ccModuleP:checkBox2
+	
+	var moduleText = document.getElementById(id+"ccPerm:moduleName");
+	var moduleName = moduleText.value;
+	
+	var profileName = getProfileNameUI(id+"saveProfile:");
+	var modulePArray = new Array();
+	
+	var strBaseId = id;
+	
+	if(moduleName==null || moduleName==""){
+		alert("Module name is null");
+		return;
+	}
+	
+	
+	
+	var modulePerm = null;
+	
+		modulePerm = document.getElementById(strBaseId+"ccPerm:ccModuleP:checkBoxM1");
+	
+
+	if(modulePerm==null){
+		alert("Error: module permission not found")
+		return;
+	}
+		//modulePerm = document.getElementById(strBaseId+"ccPerm:checkBox1");
+		
+		 if (modulePerm != null) {
+             if (modulePerm.checked) {
+            	 modulePArray[0] = moduleName + ":" + "1";
+            	// alert("moduleName modulePerm "+moduleName+" "+1);
+             } else {
+            	 modulePArray[0] = moduleName + ":" + "0";
+            	 //alert("moduleName modulePerm "+moduleName+" "+0);
+          }
+		 
+		
+	}
+	XSP.executeOnServer('view:_id1:eventModulePerm', "", 
+			""
+			
+			,modulePArray);
+	console.log("%o",modulePArray);	
+}
+
+function saveGroupPermissionsUI(id){
+	
+}
+
+function saveEntityPermissionsUI(id){
+	
+}
+
+function saveFieldPermissionsUI(id){
+	var profileName = getProfileName;
+	var fieldPArray = new Array();
+	var strBaseId = id;
+	//Get number of modules
+	//view:_id1:_id205:dync:profile_page:ccPerm:ccFieldPerm:inputNFields
+	var moduleName="";
+	var entityName = "";
+	var nFields = 0;
+	var ets=0;
+
+	
+		var moduleText = document.getElementById(id+"ccPerm:moduleName");
+		var moduleName = moduleText.value;
+		
+		var entityEle = document.getElementById(strBaseId+"ccPerm:ccFieldPerm:frecordType");
+		var entityName = getSelectedValue(entityEle);
+		
+		var fieldsNele = document.getElementById(strBaseId+"ccPerm:ccFieldPerm:inputNFields");
+		if(fieldsNele==null){
+			return;
+		}
+		nFields = fieldsNele.value
+		
+		
+		
+		var temp="";
+					
+			
+				var fieldName = "";
+				var fieldV = "";
+				var fieldU = "";
+				for(f=0;f<nFields;f++){
+					fieldName = document.getElementById(strBaseId+"ccPerm:ccFieldPerm:repeatField:"+f+":label5").innerHTML;
+					fieldV = document.getElementById(strBaseId+"ccPerm:ccFieldPerm:repeatField:"+f+":checkBox4");
+					fieldU = document.getElementById(strBaseId+"ccPerm:ccFieldPerm:repeatField:"+f+":fieldUChk");
+			
+					 	if (fieldV.checked) {
+					        temp = entityName+":"+fieldName + ":"+"1";
+					    } else {
+					        temp =entityName+":"+fieldName + ":"+"0";
+					    }
+					    
+					    if (fieldU.checked) {
+					        temp = temp  + "0";
+					    } else {
+					        temp = temp + "1";
+					    }
+
+                	 fieldPArray[ets++] = moduleName+":"+temp;
+				}
+			
+			
+	XSP.executeOnServer('view:_id1:eventFieldPerm', "",
+			{onComplete: function() { hideWait()}, onStart:function(){showWait()}}
+			,fieldPArray);
+	console.log("%o",fieldPArray);		
+}
 

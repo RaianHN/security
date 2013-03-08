@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xp:view xmlns:xp="http://www.ibm.com/xsp/core">
-
-	
-	<xp:section id="section1" header="Record Permissions" type="box">
+	<xp:section id="section1" header="Object Permissions"
+		initClosed="true">
 		<xp:table>
 			<xp:tr>
 				<xp:td>
-					
-					<xp:label value="Record Type" id="label1"></xp:label>
-					</xp:td>
+
+					<xp:label value="Object Type" id="label1"></xp:label>
+				</xp:td>
 				<xp:td>
 					<xp:comboBox id="comboBox1">
 						<xp:selectItem itemLabel="-Select Entity-"></xp:selectItem>
@@ -18,43 +17,116 @@
 							<xp:this.value><![CDATA[#{javascript:
 
 var profName = viewScope.profileName;
+
 var moduleName = viewScope.moduleName;
+
 var profile = new bsuite.jsonparsing.ProfileEdit();
+
 if(profName!=null&&moduleName!=null){
-//var entnames = profile.getEntityNames(profName,moduleName);
+
+//var entnames:java.util.Vector = profile.getEntityNames(profName,moduleName);
 //viewScope.entname = entnames;
 //return entnames;
-}}]]></xp:this.value>
+
+var moduleVisib = new bsuite.jsonparsing.ProfileEdit();
+
+var entityPermission = moduleVisib.getEntityNames(profName,moduleName);
+println("entityPermission "+entityPermission)
+if(entityPermission!=null){
+
+return entityPermission;
+
+}
+}
+
+}]]></xp:this.value>
 						</xp:selectItems>
-						<xp:eventHandler event="onclick" submit="true"
-							refreshMode="partial" refreshId="computedField1">
-						</xp:eventHandler>
+
 						<xp:eventHandler event="onchange" submit="true"
-							refreshMode="partial" refreshId="computedField1">
-							<xp:this.action><![CDATA[#{javascript:var sel = getComponent("comboBox1").getValue();
-getComponent("computedField1").setValue(sel)}]]></xp:this.action>
-						</xp:eventHandler></xp:comboBox></xp:td>
+							refreshMode="partial" refreshId="panelEntP">
+						</xp:eventHandler>
+					</xp:comboBox>
+				</xp:td>
 			</xp:tr>
-			
-			
+
+
 		</xp:table>
-		<xp:br></xp:br>
-		
-		<xp:text escape="true" id="computedField1" value="#{javascript:viewScope.moduleName;}"></xp:text>
-		<xp:table>
-			<xp:tr>
-				<xp:td></xp:td>
-				<xp:td></xp:td>
-			</xp:tr>
-			<xp:repeat id="repeat1" rows="30" var="rowData">
-				<xp:this.value><![CDATA[#{javascript:return "";}]]></xp:this.value>
-				<xp:tr>
-					<xp:td>
-						<xp:label value="Label" id="label2"></xp:label>
+
+		<xp:panel id="panelEntP">
+
+
+			<xp:table id="tableEntityPermission"
+				style="width:300.0px">
+
+				<xp:this.rendered><![CDATA[#{javascript:var selEnt = getComponent("comboBox1").getValue();
+if(selEnt!=null){
+	if(selEnt!="-Select Entity-"){
+	return true;
+	}else{
+	return false;
+	}
+}
+}]]></xp:this.rendered>
+				<xp:tr styleClass="ptable">
+					<xp:td style="ptable">
+						<xp:label value="Visible" id="label2"></xp:label>
 					</xp:td>
 					<xp:td>
 						<xp:checkBox id="checkBox1"></xp:checkBox>
 					</xp:td>
 				</xp:tr>
-			</xp:repeat>
-		</xp:table></xp:section></xp:view>
+				<xp:tr>
+					<xp:td style="padding-left:10.0px">
+						<xp:label value="Edit" id="label3"></xp:label>
+					</xp:td>
+					<xp:td>
+						<xp:checkBox id="checkBox2"></xp:checkBox>
+					</xp:td>
+				</xp:tr>
+				<xp:tr>
+					<xp:td style="padding-left:10.0px">
+						<xp:label value="Delete" id="label4"></xp:label>
+					</xp:td>
+					<xp:td>
+						<xp:checkBox id="checkBox3"></xp:checkBox>
+					</xp:td>
+				</xp:tr>
+				<xp:repeat id="repeat1" rows="30" var="varEPerm">
+					<xp:this.value><![CDATA[#{javascript:var profileName = viewScope.profileName;
+var moduleName = viewScope.moduleName;
+var entityName = getComponent("comboBox1").getValue();
+
+
+var moduleVisib = new bsuite.jsonparsing.ProfileEdit();
+if(profileName!=null && moduleName!=null && entityName!=null){
+var entityPermission = moduleVisib.getEntityActionPermission(profileName,moduleName,entityName);
+if(entityPermission!=null){
+return entityPermission;
+}
+}
+}]]></xp:this.value>
+					<xp:tr>
+						<xp:td style="padding-left:10.0px">
+							<xp:label id="label5">
+								<xp:this.value><![CDATA[#{javascript:@Left(varEPerm,":")}]]></xp:this.value>
+							</xp:label>
+						</xp:td>
+						<xp:td>
+							<xp:checkBox id="checkBox4">
+								<xp:this.defaultChecked><![CDATA[#{javascript:var val = @Right(varEPerm,":");
+if(val.charAt(0)=="1"){
+return true;
+}
+else{
+return false;
+}}]]></xp:this.defaultChecked>
+							</xp:checkBox>
+						</xp:td>
+					</xp:tr>
+				</xp:repeat>
+			</xp:table>
+		</xp:panel>
+
+
+	</xp:section>
+</xp:view>

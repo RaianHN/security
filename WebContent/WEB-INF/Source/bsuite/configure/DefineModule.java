@@ -367,6 +367,8 @@ public class DefineModule {
 
 	}
 
+	
+	
 	@SuppressWarnings("unchecked")
 	public void addEntity(String moduleName, String entityName,
 			Vector<String> fields) {
@@ -533,6 +535,63 @@ public class DefineModule {
 
 	}
 
+	public void addEntityAction(String moduleName, String entityName, String actionName) {
+
+		try {
+			View modulesView = currentdb.getView("Modules");
+
+			
+			Document moduleDoc = modulesView.getDocumentByKey(moduleName);
+
+			String jsonInput = moduleDoc.getItemValueString("JsonString");
+
+			ObjectMapper mapper = new ObjectMapper();
+
+			Module module = mapper.readValue(jsonInput, Module.class);
+			ArrayList<Entity> entities = null;
+			if (module.getEntities() == null) {
+				entities = new ArrayList();
+			} else {
+				entities = module.getEntities();
+			}
+			Entity entity = null;
+			for (Entity e : entities) {
+				if (entities != null) {
+					if (e.getEntityName().equals(entityName)) {
+						entity = e;
+						break;
+					}
+				}
+			}
+
+			ArrayList<EntityAction> actionList = entity.getActions();
+			
+			if (actionList == null) {
+				actionList = new ArrayList<EntityAction>();
+			}
+			// Add actions to the new entity
+			EntityAction action  = new EntityAction();
+			action.setActionName(actionName);
+			actionList.add(action);
+			
+			
+			entity.setActions(actionList);
+
+			moduleDoc.replaceItemValue("JsonString", mapper
+					.writeValueAsString(module));
+			moduleDoc.save();
+		} catch (NotesException e) {
+			e.printStackTrace();
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
 	@SuppressWarnings("unchecked")
 	public Vector getModules() {
 		System.out.println("inside get modules");
@@ -940,6 +999,43 @@ public class DefineModule {
 
 		return null;
 	}
+	
+	public Vector<String> getEntityActions(String moduleName, String entityName){
+		
+		String moduleJson = getModuleJson(moduleName);
+		ObjectMapper mapper = new ObjectMapper();
+		Module module = null;
+		try {
+			module = mapper.readValue(moduleJson, Module.class);
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		ArrayList<Entity> entityList = module.getEntities();
+		Entity entity = null;
+
+		if (entityList != null) {
+			Vector<String> entityNames = new Vector<String>();
+			for (Entity e : entityList) {
+				if (e.getEntityName().equals(entityName)) {
+					entity = e;
+				}
+			}
+		}
+		
+		ArrayList<EntityAction> actionList = entity.getActions();
+		if(actionList!=null){
+			Vector<String> actionNames = new Vector<String>();
+			for(EntityAction ea:actionList){
+				actionNames.add(ea.getActionName());
+			}
+			return actionNames;
+		}
+		return null;
+	}
 
 	public void removeFeature(String moduleName, String featureName) {
 		try {
@@ -1157,4 +1253,13 @@ public class DefineModule {
 		return null;
 	}
 
+	public void removeModule(String moduleName) {		
+			try {
+				View modulesView = currentdb.getView("Modules");
+				Document moduleDoc = modulesView.getDocumentByKey(moduleName);
+				moduleDoc.remove(true);
+			} catch (NotesException e) {
+				e.printStackTrace();
+			}			
+	}
 }

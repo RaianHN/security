@@ -1,4 +1,200 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xp:view xmlns:xp="http://www.ibm.com/xsp/core">
 
+	<xp:section id="sectionFieldPerm" header="Field Permissions" initClosed="true">
+		<xp:table>
+			<xp:tr>
+				<xp:td>
+
+					<xp:label value="Record Type" id="label4"></xp:label>
+				</xp:td>
+				<xp:td>
+					<xp:comboBox id="frecordType">
+						<xp:selectItem itemLabel="-Select Entity-"></xp:selectItem>
+
+
+						<xp:selectItems>
+							<xp:this.value><![CDATA[#{javascript:
+
+var profName = viewScope.profileName;
+
+var moduleName = viewScope.moduleName;
+
+var profile = new bsuite.jsonparsing.ProfileEdit();
+
+if(profName!=null&&moduleName!=null){
+
+//var entnames:java.util.Vector = profile.getEntityNames(profName,moduleName);
+//viewScope.entname = entnames;
+//return entnames;
+
+var moduleVisib = new bsuite.jsonparsing.ProfileEdit();
+
+var entityPermission = moduleVisib.getEntityNames(profName,moduleName);
+println("entityPermission "+entityPermission)
+if(entityPermission!=null){
+
+return entityPermission;
+
+}
+}
+
+}]]></xp:this.value>
+						</xp:selectItems>
+
+						<xp:eventHandler event="onchange" submit="true"
+							refreshMode="partial" refreshId="panelFieldP">
+						</xp:eventHandler>
+					</xp:comboBox>
+				</xp:td>
+			</xp:tr>
+
+		</xp:table>
+		<xp:table style="width:300.0px" loaded="false">
+
+
+
+
+
+			<xp:tr styleClass="ptable">
+				<xp:td>
+					<xp:label value="Field" id="label1"
+						style="font-weight:bold">
+					</xp:label>
+				</xp:td>
+				<xp:td>
+					<xp:label id="label2" value="Visible"
+						style="font-weight:bold">
+					</xp:label>
+				</xp:td>
+				<xp:td>
+					<xp:label value="Update" id="label3"
+						style="font-weight:bold">
+					</xp:label>
+				</xp:td>
+			</xp:tr>
+			<xp:repeat id="repeat1" rows="30" var="varFields">
+				<xp:this.value><![CDATA[#{javascript:var profileName = viewScope.profileName;
+var moduleName = viewScope.moduleName;
+var entityName = getComponent("frecordType").getValue();
+
+
+var moduleVisib = new bsuite.jsonparsing.ProfileEdit();
+if(profileName!=null && moduleName!=null && entityName!=null){
+try{
+
+var fieldPermission = moduleVisib.getFieldPermission(profileName,moduleName,entityName);
+if(fieldPermission!=null){
+return fieldPermission;
+}
+}
+catch(e){
+return null;
+}
+
+}
+
+
+}]]></xp:this.value>
+				<xp:tr>
+					<xp:td>
+
+						1
+					</xp:td>
+					<xp:td>
+
+					</xp:td>
+					<xp:td>
+
+					</xp:td>
+				</xp:tr>
+
+			</xp:repeat>
+		</xp:table>
+
+
+		<xp:panel id="panelFieldP">
+
+
+			<xp:table id="tableFieldPermission" style="width:300.0px">
+
+				<xp:this.rendered><![CDATA[#{javascript:var selEnt = getComponent("frecordType").getValue();
+if(selEnt!=null){
+	if(selEnt!="-Select Entity-"){
+	return true;
+	}else{
+	return false;
+	}
+}
+}]]></xp:this.rendered>
+
+				<xp:tr styleClass="ptable">
+					<xp:td>
+						<xp:label value="Field" id="label6">
+						</xp:label>
+					</xp:td>
+					<xp:td>
+						<xp:label id="label7" value="Visible">
+						</xp:label>
+					</xp:td>
+					<xp:td>
+						<xp:label value="Update" id="label8">
+						</xp:label>
+					</xp:td>
+				</xp:tr>
+
+				<xp:repeat id="repeatField" rows="30" var="varFields">
+					<xp:this.value><![CDATA[#{javascript:var profileName = viewScope.profileName;
+var moduleName = viewScope.moduleName;
+var entityName = getComponent("frecordType").getValue();
+
+
+var moduleVisib = new bsuite.jsonparsing.ProfileEdit();
+if(profileName!=null && moduleName!=null && entityName!=null){
+try{
+
+var fieldPermission = moduleVisib.getFieldPermission(profileName,moduleName,entityName);
+if(fieldPermission!=null){
+return fieldPermission;
+}
+}
+catch(e){
+return null;
+}
+
+}}]]></xp:this.value>
+					<xp:tr>
+						<xp:td style="padding-left:10.0px">
+							<xp:label id="label5">
+								<xp:this.value><![CDATA[#{javascript:@Left(varFields,":")}]]></xp:this.value>
+							</xp:label>
+						</xp:td>
+						<xp:td>
+							<xp:checkBox id="checkBox4">
+								<xp:this.defaultChecked><![CDATA[#{javascript:var val = @Right(varFields,":");
+if(val.charAt(0)=="1"){
+return true;
+}
+else{
+return false;
+}}]]></xp:this.defaultChecked>
+							</xp:checkBox>
+						</xp:td>
+						<xp:td>
+							<xp:checkBox id="fieldUChk">
+								<xp:this.defaultChecked><![CDATA[#{javascript:var val = @Right(varFields,":");
+if(val.charAt(1)=="0"){
+return true;
+}
+else{
+return false;
+}}]]></xp:this.defaultChecked>
+							</xp:checkBox>
+						</xp:td>
+					</xp:tr>
+				</xp:repeat>
+				<xp:inputHidden id="inputNFields" value="#{viewScope.fieldN}"></xp:inputHidden>
+			</xp:table>
+		</xp:panel>
+	</xp:section>
 </xp:view>

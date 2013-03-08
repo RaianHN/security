@@ -225,6 +225,15 @@ public class Profile{
 		}
 		return null;
 	}
+	private GroupPermission getViewAction(String moduleName, String viewActionName){
+		Module module = getModule(moduleName);
+		for(GroupPermission gp:module.getGroups()){
+			if(gp.getName().equals(viewActionName)){
+				return gp;
+			}
+		}
+		return null;
+	}
 
 	public ArrayList<String> getVisibleFieldsNames(String moduleName,
 			String entityName) {
@@ -408,6 +417,16 @@ public class Profile{
 			return false;
 		}
 		
+	}
+
+	public boolean isViewActionVisible(String moduleName, String groupName) {
+		GroupPermission gp = getViewAction(moduleName, groupName);
+		if(gp==null)return false;
+		if(gp.getVisible().equals("1")){
+			return true;
+		}else{
+		return false;
+		}
 	}
 
 

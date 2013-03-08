@@ -1,40 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
-	xmlns:xe="http://www.ibm.com/xsp/coreex"
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core" xmlns:xe="http://www.ibm.com/xsp/coreex"
 	xmlns:xc="http://www.ibm.com/xsp/custom" dojoTheme="true"
 	dojoParseOnLoad="true">
 
-	<xp:panel id="profilePanel">
-		<xp:comboBox id="comboBox1"></xp:comboBox>
-		&#160;
-		<xp:button value="Save" id="button1"></xp:button>
-	</xp:panel>
+
+	<xc:ccDefineProfile id="saveProfile"></xc:ccDefineProfile>
 	<xp:br></xp:br>
-	
+
 	<xp:panel id="moduleTabs">
 
 
-		<xe:djTabContainer id="djTabContainer1"
-			styleClass="lotusTabContainer">
+		<xp:this.rendered><![CDATA[#{javascript:var profname = viewScope.selectedProfile;
+dBar.info("profName"+profname);
+if (profname=="--Select Profile--" || profname==null || profname == undefined){
+dBar.info("equal");
+return false;
+}else{
+dBar.info("not equal");
+return true;
+}}]]></xp:this.rendered>
+		<xe:djTabContainer id="djTabContainer1" styleClass="lotusTabContainer">
 
 
 			<xp:repeat id="repeat1" rows="30" var="varRepeat">
-				<xe:djTabPane id="djTabPane1"
-					title="#{javascript:varRepeat}" styleClass="lotusTabs">
-					<xc:ccUIViewActionPerm>
-						
-						
-					</xc:ccUIViewActionPerm>
+				<xe:djTabPane id="djTabPane1" styleClass="lotusTabs">
 
 
+
+					<xe:this.title><![CDATA[#{javascript:@Left(varRepeat,":");}]]></xe:this.title>
+					<xe:this.onShow><![CDATA[var eventId = "#{id:loadPermission}";
+
+
+var thisid = this.id.toString();
+var tempid = thisid.substr(0,thisid.indexOf(":repeat"));
+var tabTitleid = tempid+"_tablist_"+thisid;//Create id of tabpanel
+var moduleName = document.getElementById(tabTitleid).getElementsByTagName("span").item(0).innerHTML//get tab title
+
+console.log("modulename "+moduleName);
+
+
+
+var refId = thisid.substr(0,thisid.indexOf("djTab"))+"tabContent"//"view:_id1:permissionPanel"
+
+console.log("refreshid "+refId);
+
+XSP.executeOnServer(eventId, refId, {onComplete: function() { hideWait()}, onStart:function(){showWait()}}, moduleName);
+]]></xe:this.onShow>
 				</xe:djTabPane>
 				<xp:br></xp:br>
 
 
-				<xp:this.value><![CDATA[#{javascript:var x = new Array("test1","test2","test3","test1","test2","test3");
-viewScope.x = x;
-
-return x;}]]></xp:this.value>
+				<xp:this.value><![CDATA[#{javascript:var moduleP:java.util.Vector = viewScope.modulePermission;
+if(moduleP!=null){
+return moduleP;
+}}]]></xp:this.value>
 
 
 			</xp:repeat>
@@ -45,14 +64,22 @@ return x;}]]></xp:this.value>
 
 
 	</xp:panel>
-	<xp:table>
-		<xp:tr>
-			<xp:td></xp:td>
-			<xp:td>1</xp:td>
-		</xp:tr>
-		<xp:tr>
-			<xp:td></xp:td>
-			<xp:td>2</xp:td>
-		</xp:tr>
-	<xp:tr><xp:td></xp:td><xp:td>3</xp:td></xp:tr><xp:tr><xp:td></xp:td><xp:td>4</xp:td></xp:tr><xp:tr><xp:td></xp:td><xp:td>5</xp:td></xp:tr><xp:tr><xp:td></xp:td><xp:td>6</xp:td></xp:tr><xp:tr><xp:td></xp:td><xp:td>7</xp:td></xp:tr><xp:tr><xp:td></xp:td><xp:td>8</xp:td></xp:tr><xp:tr><xp:td></xp:td><xp:td>9</xp:td></xp:tr><xp:tr><xp:td></xp:td><xp:td>10</xp:td></xp:tr><xp:tr><xp:td></xp:td><xp:td>2</xp:td></xp:tr><xp:tr><xp:td></xp:td><xp:td>222</xp:td></xp:tr><xp:tr><xp:td></xp:td><xp:td>5</xp:td></xp:tr><xp:tr><xp:td></xp:td><xp:td>98</xp:td></xp:tr><xp:tr><xp:td></xp:td><xp:td>7</xp:td></xp:tr><xp:tr><xp:td></xp:td><xp:td>1</xp:td></xp:tr></xp:table><xp:br></xp:br>
+	<xp:panel id="tabContent" styleClass="lotusTabContent">
+
+		<xc:ccUIPermissions id="ccPerm">
+			<xc:this.rendered><![CDATA[#{javascript:var profname = viewScope.selectedProfile;
+if (profname=="--Select Profile--" || profname==null || profname == undefined){
+return false;
+}else{
+return true;
+}}]]></xc:this.rendered>
+		</xc:ccUIPermissions>
+
+
+
+	</xp:panel>
+	<xp:eventHandler id="loadPermission" event="onDojo"
+		action="#{javascript:loadProfile();}">
+
+	</xp:eventHandler>
 </xp:view>

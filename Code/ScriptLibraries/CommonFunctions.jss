@@ -446,10 +446,35 @@ function setEntityPermission(){
 	
 	entityCrud.saveEntityPerm(profileName,context.getSubmittedValue());
 }
+
+function setVieawActionPermisssion(){
+	var profileName  = getComponent("moduleCombo").getValue();
+	var arr = context.getSubmittedValue().split(",");
+	var entityCrud = new bsuite.jsonparsing.ProfileEdit;
+	println("setting field permission"+typeof(arr)+"submitted type"+typeof(context.getSubmittedValue()));
+	
+	println("arr "+arr);
+	println("profile name"+profileName);
+	println("submitted value"+context.getSubmittedValue());
+	entityCrud.saveGroupPerm(profileName,context.getSubmittedValue());
+	
+}
+
+function setGroupActionPermission(){
+	var profileName  = getComponent("moduleCombo").getValue();
+	var arr = context.getSubmittedValue().split(",");
+	var entityCrud = new bsuite.jsonparsing.ProfileEdit;
+	println("setting field permission"+typeof(arr)+"submitted type"+typeof(context.getSubmittedValue()));
+	
+	println("arr "+arr);
+	println("profile name"+profileName);
+	println("submitted value"+context.getSubmittedValue());
+	entityCrud.saveGroupActionPerm(profileName,context.getSubmittedValue());
+	
+}
+
 function setFieldPermission(profileName,moduleName,entityName){
 	var profileName = getComponent("moduleCombo").getValue();
-
-
 	var arr = context.getSubmittedValue().split(",");
 	var fieldCrud = new bsuite.jsonparsing.ProfileEdit;
 	println("setting field permission"+typeof(arr)+"submitted type"+typeof(context.getSubmittedValue()));
@@ -811,9 +836,69 @@ function updateDeleteSchema(){
 	profileObj.removeUpdate();
 }
 function loadProfile(){
+	
 	println("in loadProfile");	
-	var profileName = getComponent("profileCombo").getValue();
+	var profileName = getComponent("moduleCombo").getValue();
 	viewScope.profileName = profileName;
-	viewScope.moduleName = context.getSubmittedValue();
+	var moduleName = context.getSubmittedValue();
+	viewScope.moduleName = moduleName;
+	
 	println("submitted value "+context.getSubmittedValue());
+	
+	if(moduleName == null || profileName == null){
+		return;
+		}
+	println("in loadProfile 1");
+	var profileObj = new bsuite.jsonparsing.ProfileEdit();
+	var perm = profileObj.getModulePermission(profileName,moduleName);
+	
+	println("in loadProfile 2");
+	
+	
+	var val = @Right(perm,":");
+
+	println("in loadProfile 3");
+	
+	if(val.charAt(0)=="1"){
+
+		viewScope.modulePerm = true;
+	}
+	else{
+
+		viewScope.modulePerm = false;
+	}
+	
+	println("in loadProfile 4");
+	var strGroupN = profileObj.getNumberOfGroups(profileName, moduleName);
+	println("in loadProfile 5");
+	var strActionN = profileObj.getActionN(profileName, moduleName);
+	println("in loadProfile 6");
+	
+	
+
+	var component = getComponent("tabContent"); 
+	var s = facesContext;
+	var c1="/ccUIPermissions.xsp"; 
+	var id="ccPerm";
+	bsuite.weberon.DynamicCC.removePreview(component);
+	bsuite.weberon.DynamicCC.loadCC(s, component, c1, id);	
+	
+	getComponent("moduleName").setValue(moduleName);
+	getComponent("inputNGroups").setValue(strGroupN);
+	getComponent("inputNActions").setValue(strActionN);
+	
+}
+
+function setFieldNumber(strHiddenFId){
+	var profileName = viewScope.profileName;
+	var moduleName = viewScope.moduleName;
+	var entityName = getComponent("").getValue();
+	
+	if(prfileName=null || mdouleName=null || mdouleName =null){
+		return ;
+	}
+	
+	var profileObj = new bsuite.jsonparsing.ProfileEdit();
+	var fieldN = profileObj.getFieldN(prfileName,mdouleName,mdouleName)
+	
 }

@@ -8,6 +8,7 @@ public boolean test(){
 	System.out.println("eeb"+System.getProperty("java.io.tmpdir"));
 	
 	Security se = new Security();
-	return se.isMyDoc();
+	//return se.isMyDoc();
+	return false;
 }
 }

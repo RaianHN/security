@@ -6,7 +6,7 @@ public class Entity {
 	private String entityName;
 	
 	private ArrayList<Field> fields;
-	private ArrayList<Feature> features;
+	private ArrayList<EntityAction> actions;
 	
 	public ArrayList<Field> getFields() {
 		return fields;
@@ -14,11 +14,12 @@ public class Entity {
 	public void setFields(ArrayList<Field> fields) {
 		this.fields = fields;
 	}
-	public ArrayList<Feature> getFeatures() {
-		return features;
+	
+	public ArrayList<EntityAction> getActions() {
+		return actions;
 	}
-	public void setFeatures(ArrayList<Feature> features) {
-		this.features = features;
+	public void setActions(ArrayList<EntityAction> actions) {
+		this.actions = actions;
 	}
 	public String getEntityName() {
 		return entityName;

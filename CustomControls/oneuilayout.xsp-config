@@ -5,9 +5,9 @@
     <default-prefix>xc</default-prefix>
   </faces-config-extension>
   <composite-component>
-    <component-type>ccUIFieldPerm</component-type>
-    <composite-name>ccUIFieldPerm</composite-name>
-    <composite-file>/ccUIFieldPerm.xsp</composite-file>
+    <component-type>oneuilayout</component-type>
+    <composite-name>oneuilayout</composite-name>
+    <composite-file>/oneuilayout.xsp</composite-file>
     <composite-extension>
       <designer-extension>
         <in-palette>true</in-palette>

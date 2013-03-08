@@ -3,11 +3,18 @@
 	xmlns:xc="http://www.ibm.com/xsp/custom">
 
 	
-	<xp:checkBox text="Visible" id="checkBox1" rendered="false"></xp:checkBox>
+	
+	
+	<xc:ccUIModulePermission id="ccModuleP"></xc:ccUIModulePermission>
 	<xp:br></xp:br>
 	<xc:ccUIViewActionPerm  id="ccViewPerm">
 	</xc:ccUIViewActionPerm>
 	<xp:br></xp:br>
-	<xc:ccUIRecordPerm
-		 id="ccRecordPerm">
-	</xc:ccUIRecordPerm></xp:view>
+	<xc:ccUIRecordPerm id="ccRecordPerm"></xc:ccUIRecordPerm>
+	<xp:br></xp:br>
+	<xc:ccUIFieldPerm id="ccFieldPerm"></xc:ccUIFieldPerm>
+	<xp:inputHidden id="moduleName"></xp:inputHidden>
+		<xp:inputHidden id="inputNGroups"></xp:inputHidden>
+		<xp:inputHidden id="inputNActions"></xp:inputHidden>
+		
+	</xp:view>

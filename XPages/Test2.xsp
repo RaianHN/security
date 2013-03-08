@@ -27,10 +27,12 @@
 	</xe:djTabContainer>
 	<xp:br></xp:br>
 	<xp:button value="Label" id="button1">
-		<xp:eventHandler event="onclick" submit="false">
-			<xp:this.script><![CDATA[console.log("hello")]]></xp:this.script>
-		</xp:eventHandler>
-	</xp:button>
+		
+	<xp:eventHandler event="onclick" submit="true"
+		refreshMode="complete">
+		<xp:this.action><![CDATA[#{javascript:var profedit = new bsuite.jsonparsing.ProfileEdit();
+profedit.removeModule("GroupingModule");}]]></xp:this.action>
+	</xp:eventHandler></xp:button>
 	<xp:eventHandler event="onClientLoad" submit="true"
 		refreshMode="norefresh">
 		<xp:this.action><![CDATA[#{javascript:var pane2 = getComponent("djTabPane1");

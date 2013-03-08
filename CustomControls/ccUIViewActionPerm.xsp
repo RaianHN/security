@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xc="http://www.ibm.com/xsp/custom">
 
-	
-	<xp:section id="section1" header="View Action Permissions" type="box">
-		<xp:text escape="true" id="computedField1"
-			value="#{javascript:viewScope.moduleName;}">
-		</xp:text></xp:section></xp:view>
+
+	<xp:section id="section1" header="Feature Permissions"
+		initClosed="true">
+		<xc:ccUIViewActions id="ccViewAction"></xc:ccUIViewActions>
+	</xp:section>
+</xp:view>

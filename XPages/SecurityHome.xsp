@@ -11,6 +11,11 @@
 		<xp:script src="/baseactions.jss" clientSide="false"></xp:script>
 
 
+		<xp:script src="/Copy Of CustomControlLib.js"
+			clientSide="true">
+		</xp:script>
+		<xp:styleSheet href="/custom.css"></xp:styleSheet>
+		<xp:script src="/commonCScript.js" clientSide="true"></xp:script>
 	</xp:this.resources>
 
 
@@ -75,7 +80,30 @@
 
 
 
+<xp:eventHandler id="eventModulePerm" event="onDojo">
+		<xp:this.action><![CDATA[#{javascript:println("calling event");
+setModulePermission(viewScope.selProfile1);
+println("calling event");}]]></xp:this.action>
 
+	</xp:eventHandler>
 
+	<xp:eventHandler id="eventGroupPerm" event="onDojo">
+		<xp:this.action><![CDATA[#{javascript:println("calling event");
+setVieawActionPermisssion();
+println("calling event");}]]></xp:this.action>
+
+	</xp:eventHandler>
+	<xp:eventHandler id="eventGroupActionPerm" event="onDojo">
+		<xp:this.action><![CDATA[#{javascript:println("calling event");
+setGroupActionPermission();
+println("calling event");}]]></xp:this.action>
+
+	</xp:eventHandler>
+	<xp:eventHandler id="eventFieldPerm" event="onDojo">
+		<xp:this.action><![CDATA[#{javascript:println("calling event");
+setFieldPermission();
+println("calling event");}]]></xp:this.action>
+		
+	</xp:eventHandler>
 </xp:view>
 

@@ -11,13 +11,11 @@ import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
+import bsuite.jsonparsing.GroupEntry;
 import bsuite.jsonparsing.ProfileJson;
 import bsuite.utility.Utility;
 
 import bsuite.utility.Utility;
-
-
-
 
 import lotus.domino.Database;
 import lotus.domino.Document;
@@ -26,35 +24,39 @@ import lotus.domino.View;
 
 public class Deploy {
 
-	public boolean createRoleDocs(){
-		
-			System.out.println("in create role docs");
-			createRoleDocuments(Utility.getDatabase("Security.nsf"));
+	public boolean createRoleDocs() {
+
+		System.out.println("in create role docs");
+		createRoleDocuments(Utility.getDatabase("Security.nsf"));
 		return true;
 	}
-	public boolean createProfileDocs(){
-		
-			createProfileDocument(Utility.getDatabase("Security.nsf"), "Admin");
-			createProfileDocument(Utility.getDatabase("Security.nsf"), "Standard");
-	return true;
+
+	public boolean createProfileDocs() {
+
+		createProfileDocument(Utility.getDatabase("Security.nsf"), "Admin");
+		createProfileDocument(Utility.getDatabase("Security.nsf"), "Standard");
+		return true;
 	}
-	public void testView(){
+
+	public void testView() {
 		try {
 			Utility.getCurrentDatabase().createView("Test View");
-			
+
 		} catch (NotesException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+
 	public void createRoleDocuments(Database db) {
 		System.out.println("create role docs1");
 		DefineModule define = new DefineModule();
-		ArrayList<bsuite.configure.Role> roles = (ArrayList<bsuite.configure.Role>) define.getRoleList();
+		ArrayList<bsuite.configure.Role> roles = (ArrayList<bsuite.configure.Role>) define
+				.getRoleList();
 		System.out.println("create role docs2");
-		View roleView=null;
+		View roleView = null;
 		try {
-			 roleView = Utility.getCurrentDatabase().getView("RolesView");
+			roleView = Utility.getCurrentDatabase().getView("RolesView");
 		} catch (NotesException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -62,12 +64,14 @@ public class Deploy {
 		System.out.println("create role docs3");
 		for (bsuite.configure.Role role : roles) {
 			try {
-				if(roleView.getDocumentByKey(role.getRoleName())==null){
+				if (roleView.getDocumentByKey(role.getRoleName()) == null) {
 					try {
 						Document roleDoc = db.createDocument();
 						roleDoc.replaceItemValue("Form", "Role");
-						roleDoc.replaceItemValue("role_name", role.getRoleName());
-						roleDoc.replaceItemValue("role_to", role.getRoleParent());
+						roleDoc.replaceItemValue("role_name", role
+								.getRoleName());
+						roleDoc.replaceItemValue("role_to", role
+								.getRoleParent());
 						roleDoc.save();
 					} catch (NotesException e) {
 						e.printStackTrace();
@@ -77,18 +81,16 @@ public class Deploy {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
 
 		}
 	}
 
 	@SuppressWarnings("unchecked")
-	public void createProfileDoc(String profileName) throws NotesException{
+	public void createProfileDoc(String profileName) throws NotesException {
 		createProfileDocument(Utility.getDatabase("Security.nsf"), profileName);
-		
+
 	}
-	
-	
+
 	public void createProfileDocument(Database db, String profileName) {
 		// Creates the profile document in security.nsf
 
@@ -108,18 +110,19 @@ public class Deploy {
 		ObjectMapper mapper2 = new ObjectMapper();
 
 		String JsonString = "";
-		
 
-		for (String moduleName : moduleNames) {		//For each module set permission
-			System.out.println("modulenames"+moduleName);
+		for (String moduleName : moduleNames) { // For each module set
+												// permission
+			System.out.println("modulenames" + moduleName);
 			System.out.println("modulenames1");
-			bsuite.jsonparsing.Module moduleNew = defineModulePermission(moduleName, "1");
+			bsuite.jsonparsing.Module moduleNew = defineModulePermission(
+					moduleName, "1");
 			System.out.println("modulenames211");
 
 			String JsonModule = def.getModuleJson(moduleName);
-			System.out.println("modulenames212 jsonModule "+JsonModule);
+			System.out.println("modulenames212 jsonModule " + JsonModule);
 
-			Module module=null;
+			Module module = null;
 			try {
 				module = mapper.readValue(JsonModule, Module.class);
 			} catch (JsonParseException e1) {
@@ -129,59 +132,77 @@ public class Deploy {
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
-			//Added for the module features
+			// Added for the module features
 			System.out.println("modulenames21234");
 
-			ArrayList<Feature>features = module.getFeatures();
+			ArrayList<Feature> features = module.getFeatures();
 			System.out.println("modulenames212www ");
 
-			if(features!=null){				
-			ArrayList<bsuite.jsonparsing.Feature> featureList = new ArrayList<bsuite.jsonparsing.Feature>();//Create empty feature list for this module
-			for(Feature f:features){
-				bsuite.jsonparsing.Feature feature = defineFeaturePermission(f.getFeatureName(), "1");
-				featureList.add(feature);
-			}			
-			moduleNew.setFeatures(featureList);
+			if (features != null) {
+				ArrayList<bsuite.jsonparsing.Feature> featureList = new ArrayList<bsuite.jsonparsing.Feature>();// Create
+																												// empty
+																												// feature
+																												// list
+																												// for
+																												// this
+																												// module
+				for (Feature f : features) {
+					bsuite.jsonparsing.Feature feature = defineFeaturePermission(
+							f.getFeatureName(), "1");
+					featureList.add(feature);
+				}
+				moduleNew.setFeatures(featureList);
 			}
-			
+
 			System.out.println("modulenames212jjj");
 
-			
-			
 			ArrayList<Entity> entities = module.getEntities();
-			if(entities!=null){
+			if (entities != null) {
 				System.out.println("modulenames2");
-				ArrayList<bsuite.jsonparsing.Entity> entityList = new ArrayList<bsuite.jsonparsing.Entity>();//Create empty EntityList for this module
-				for(Entity e:entities){//For each entity set permission
-					bsuite.jsonparsing.Entity entity = defineEntityPermission(moduleName, e.getEntityName(), "1", "1", "1", "1","1");
+				ArrayList<bsuite.jsonparsing.Entity> entityList = new ArrayList<bsuite.jsonparsing.Entity>();// Create
+																												// empty
+																												// EntityList
+																												// for
+																												// this
+																												// module
+				for (Entity e : entities) {// For each entity set permission
+					bsuite.jsonparsing.Entity entity = defineEntityPermission(
+							moduleName, e.getEntityName(), "1", "1", "1", "1",
+							"1");
 					ArrayList<Field> fields = e.getFields();
-					
-					ArrayList<bsuite.jsonparsing.Field> fieldList = new ArrayList<bsuite.jsonparsing.Field>();//create empty FieldList for this entity
-					for(Field f:fields){
-						bsuite.jsonparsing.Field field = defineFieldPermission(f.getFieldName(), "0", "1");
+
+					ArrayList<bsuite.jsonparsing.Field> fieldList = new ArrayList<bsuite.jsonparsing.Field>();// create
+																												// empty
+																												// FieldList
+																												// for
+																												// this
+																												// entity
+					for (Field f : fields) {
+						bsuite.jsonparsing.Field field = defineFieldPermission(
+								f.getFieldName(), "0", "1");
 						fieldList.add(field);
-					}	
+					}
 					System.out.println("modulenames2");
-					
+
 					entity.setEntityName(e.getEntityName());
-					entity.setFields(fieldList);					
+					entity.setFields(fieldList);
 					entityList.add(entity);
 					System.out.println("modulenames3");
 				}
 				moduleNew.setEntities(entityList);
-				
+
 			}
 			modules.add(moduleNew);
 			System.out.println("modulenames4");
-			
+
 		}
-		
+
 		pf.setModules(modules);
 		pf.setProfName(profileName);
 		System.out.println("modulenames5");
 		try {
 			JsonString = mapper2.writeValueAsString(pf);
-			System.out.println("Profile Json"+JsonString);
+			System.out.println("Profile Json" + JsonString);
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
@@ -194,25 +215,27 @@ public class Deploy {
 			Document doc = db.createDocument();
 			doc.replaceItemValue("Form", "permissions");
 			doc.replaceItemValue("prof_name", profileName);
-			doc.replaceItemValue("JsonString",JsonString );
+			doc.replaceItemValue("JsonString", JsonString);
 			doc.save();
-			
+
 		} catch (NotesException e) {
-			
+
 			e.printStackTrace();
 		}
-		
+
 	}
-	public void updateModule(String moduleName){
-		ArrayList<Document> dc = getProfileDocs();//Get document collection of all profiles
+
+	public void updateModule(String moduleName) {
+		ArrayList<Document> dc = getProfileDocs();// Get document collection of
+													// all profiles
 		Document doc = null;
-		for(int i=0;i<dc.size();i++){//For each profile document
+		for (int i = 0; i < dc.size(); i++) {// For each profile document
 			doc = dc.get(i);
 			updateProfileDocument(doc, moduleName);
 		}
-		
+
 	}
-	
+
 	private void updateProfileDocument(Document doc, String moduleName) {
 		// Creates the profile document in security.nsf
 
@@ -226,88 +249,129 @@ public class Deploy {
 
 		DefineModule def = new DefineModule();
 		ProfileJson pf = getJsonObject(doc);
-		//ProfileJson pf = new ProfileJson();
-		//ArrayList<bsuite.jsonparsing.Module> modules = new ArrayList<bsuite.jsonparsing.Module>();
+
 		ArrayList<bsuite.jsonparsing.Module> modules = pf.getModules();
-		
+
 		ObjectMapper mapper = new ObjectMapper();
 		ObjectMapper mapper2 = new ObjectMapper();
 
 		String JsonString = "";
-		
 
-	//	for (String moduleName : moduleNames) {		//For each module set permission
-			System.out.println("modulenames"+moduleName);
-			System.out.println("modulenames1");
-			bsuite.jsonparsing.Module moduleNew = defineModulePermission(moduleName, "1");
-			System.out.println("modulenames211");
+		bsuite.jsonparsing.Module moduleNew = defineModulePermission(
+				moduleName, "1");// Default make the module visible after adding
+									// it
 
-			String JsonModule = def.getModuleJson(moduleName);
-			System.out.println("modulenames212 jsonModule "+JsonModule);
+		String JsonModule = def.getModuleJson(moduleName);
 
-			Module module=null;
-			try {
-				module = mapper.readValue(JsonModule, Module.class);
-			} catch (JsonParseException e1) {
-				e1.printStackTrace();
-			} catch (JsonMappingException e1) {
-				e1.printStackTrace();
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-			//Added for the module features
-			System.out.println("modulenames21234");
+		Module module = null;
+		try {
+			module = mapper.readValue(JsonModule, Module.class);
+		} catch (JsonParseException e1) {
+			e1.printStackTrace();
+		} catch (JsonMappingException e1) {
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		// Added for the module features
+		System.out.println("modulenames21234");
 
-			ArrayList<Feature>features = module.getFeatures();
-			System.out.println("modulenames212www ");
+		ArrayList<Feature> features = module.getFeatures();
+		System.out.println("modulenames212www ");
 
-			if(features!=null){				
-			ArrayList<bsuite.jsonparsing.Feature> featureList = new ArrayList<bsuite.jsonparsing.Feature>();//Create empty feature list for this module
-			for(Feature f:features){
-				bsuite.jsonparsing.Feature feature = defineFeaturePermission(f.getFeatureName(), "1");
+		if (features != null) {
+			ArrayList<bsuite.jsonparsing.Feature> featureList = new ArrayList<bsuite.jsonparsing.Feature>();// Create
+																											// empty
+																											// feature
+																											// list
+																											// for
+																											// this
+																											// module
+			for (Feature f : features) {
+				bsuite.jsonparsing.Feature feature = defineFeaturePermission(f
+						.getFeatureName(), "1");
 				featureList.add(feature);
-			}			
+			}
 			moduleNew.setFeatures(featureList);
-			}
-			
-			System.out.println("modulenames212jjj");
+		}
 
-			
-			
-			ArrayList<Entity> entities = module.getEntities();
-			if(entities!=null){
-				System.out.println("modulenames2");
-				ArrayList<bsuite.jsonparsing.Entity> entityList = new ArrayList<bsuite.jsonparsing.Entity>();//Create empty EntityList for this module
-				for(Entity e:entities){//For each entity set permission
-					bsuite.jsonparsing.Entity entity = defineEntityPermission(moduleName, e.getEntityName(), "1", "1", "1", "1","1");
-					ArrayList<Field> fields = e.getFields();
-					
-					ArrayList<bsuite.jsonparsing.Field> fieldList = new ArrayList<bsuite.jsonparsing.Field>();//create empty FieldList for this entity
-					for(Field f:fields){
-						bsuite.jsonparsing.Field field = defineFieldPermission(f.getFieldName(), "0", "1");
-						fieldList.add(field);
-					}	
-					System.out.println("modulenames2");
-					
-					entity.setEntityName(e.getEntityName());
-					entity.setFields(fieldList);					
-					entityList.add(entity);
-					System.out.println("modulenames3");
+		ArrayList<Entity> entities = module.getEntities();
+		if (entities != null) {
+			System.out.println("modulenames2");
+			ArrayList<bsuite.jsonparsing.Entity> entityList = new ArrayList<bsuite.jsonparsing.Entity>();// Create
+																											// empty
+																											// EntityList
+																											// for
+																											// this
+																											// module
+			for (Entity e : entities) {// For each entity set permission
+				bsuite.jsonparsing.Entity entity = defineEntityPermission(
+						moduleName, e.getEntityName(), "1", "1", "1", "1", "1");
+				ArrayList<Field> fields = e.getFields();
+
+				ArrayList<bsuite.jsonparsing.Field> fieldList = new ArrayList<bsuite.jsonparsing.Field>();// create
+																											// empty
+																											// FieldList
+																											// for
+																											// this
+																											// entity
+				for (Field f : fields) {
+					bsuite.jsonparsing.Field field = defineFieldPermission(f
+							.getFieldName(), "0", "1");
+					fieldList.add(field);
 				}
-				moduleNew.setEntities(entityList);
-				
+				System.out.println("modulenames2");
+
+				entity.setEntityName(e.getEntityName());
+				entity.setFields(fieldList);
+				entityList.add(entity);
+				System.out.println("modulenames3");
 			}
-			modules.add(moduleNew);
-			System.out.println("modulenames4");
-			
-		//}
-		
+			moduleNew.setEntities(entityList);
+
+		}
+
+		ArrayList<SchemaGroup> groups = module.getGroups();
+
+		if (groups != null) {
+			ArrayList<bsuite.jsonparsing.GroupPermission> groupPermissions = new ArrayList<bsuite.jsonparsing.GroupPermission>();// Create
+																																	// empty
+																																	// grouppermissions
+																																	// for
+																																	// this
+																																	// module
+			for (SchemaGroup sg : groups) {
+				bsuite.jsonparsing.GroupPermission groupPerm = defineGroupPermission(
+						sg.getGroupName(), "1");
+				ArrayList<String> groupentries = sg.getGroupEntries();
+				ArrayList<bsuite.jsonparsing.GroupEntry> groupEntries = new ArrayList<bsuite.jsonparsing.GroupEntry>();
+				for (String group : groupentries) {
+					bsuite.jsonparsing.GroupEntry groupentry = null;
+					if (group.substring(0, 1).equals("e")) {
+						groupentry = defineGroupEntryPermission(group
+								.substring(2), "e", "1");
+					} else {
+						groupentry = defineGroupEntryPermission(group
+								.substring(2), "f", "1");
+					}
+					groupEntries.add(groupentry);
+				}
+				groupPerm.setEntries(groupEntries);
+				groupPermissions.add(groupPerm);
+			}
+			moduleNew.setGroups(groupPermissions);
+		}
+
+		modules.add(moduleNew);
+
+		// }
+
 		pf.setModules(modules);
-		//pf.setProfName(profileName);
+		// pf.setProfName(profileName);
 		System.out.println("modulenames5");
 		try {
 			JsonString = mapper2.writeValueAsString(pf);
-			System.out.println("Profile Json"+JsonString);
+			System.out.println("Profile Json" + JsonString);
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
@@ -317,28 +381,32 @@ public class Deploy {
 		}
 
 		try {
-			//Document doc = db.createDocument();
-			//doc.replaceItemValue("Form", "permissions");
-			//doc.replaceItemValue("prof_name", profileName);
-			doc.replaceItemValue("JsonString",JsonString );
+			// Document doc = db.createDocument();
+			// doc.replaceItemValue("Form", "permissions");
+			// doc.replaceItemValue("prof_name", profileName);
+			doc.replaceItemValue("JsonString", JsonString);
 			doc.save();
-			
+
 		} catch (NotesException e) {
-			
+
 			e.printStackTrace();
 		}
-		
+
 	}
 
-	private bsuite.jsonparsing.Module defineModulePermission(String moduleName, String visibility) {
+	private bsuite.jsonparsing.Module defineModulePermission(String moduleName,
+			String visibility) {
 		System.out.println("definemodulepermission");
 		bsuite.jsonparsing.Module module = new bsuite.jsonparsing.Module();
 		module.setModuleName(moduleName);
-		module.setTabvis(visibility);		
+		module.setTabvis(visibility);
 		return module;
-		
+
 	}
-	private bsuite.jsonparsing.Entity defineEntityPermission(String moduleName, String entityName, String c, String r, String u, String d,String access ){
+
+	private bsuite.jsonparsing.Entity defineEntityPermission(String moduleName,
+			String entityName, String c, String r, String u, String d,
+			String access) {
 		bsuite.jsonparsing.Entity entity = new bsuite.jsonparsing.Entity();
 		entity.setCreate(c);
 		entity.setRead(r);
@@ -347,7 +415,9 @@ public class Deploy {
 		entity.setAccessType(access);
 		return entity;
 	}
-	private bsuite.jsonparsing.Entity defineEntityPermission( String entityName, String c, String r, String u, String d,String access ){
+
+	private bsuite.jsonparsing.Entity defineEntityPermission(String entityName,
+			String c, String r, String u, String d, String access) {
 		bsuite.jsonparsing.Entity entity = new bsuite.jsonparsing.Entity();
 		entity.setEntityName(entityName);
 		entity.setCreate(c);
@@ -357,63 +427,96 @@ public class Deploy {
 		entity.setAccessType(access);
 		return entity;
 	}
-	private bsuite.jsonparsing.Feature defineFeaturePermission(String featureName,String visible){
+
+	private bsuite.jsonparsing.Feature defineFeaturePermission(
+			String featureName, String visible) {
 		bsuite.jsonparsing.Feature feature = new bsuite.jsonparsing.Feature();
 		feature.setFeatureName(featureName);
-		feature.setVisible(visible);		
+		feature.setVisible(visible);
 		return feature;
 	}
-	
-	private bsuite.jsonparsing.Field defineFieldPermission(String fieldName, String readOnly, String visible){
+
+	private bsuite.jsonparsing.GroupPermission defineGroupPermission(
+			String groupName, String visible) {
+		bsuite.jsonparsing.GroupPermission gp = new bsuite.jsonparsing.GroupPermission();
+		gp.setName(groupName);
+		gp.setVisible(visible);
+		return gp;
+	}
+
+	private bsuite.jsonparsing.GroupEntry defineGroupEntryPermission(
+			String entryName, String entryType, String visible) {
+		bsuite.jsonparsing.GroupEntry ge = new bsuite.jsonparsing.GroupEntry();
+		ge.setName(entryName);
+		ge.setType(entryType);
+		ge.setVisible(visible);
+		return ge;
+	}
+
+	private bsuite.jsonparsing.Field defineFieldPermission(String fieldName,
+			String readOnly, String visible) {
 		bsuite.jsonparsing.Field field = new bsuite.jsonparsing.Field();
 		field.setFieldName(fieldName);
 		field.setReadonly(readOnly);
 		field.setVisible(visible);
 		return field;
-		
+
 	}
 
-	public void createDatabases(){
+	private bsuite.jsonparsing.EntityAction defineEntityActionPerm(
+			String actionName, String visible) {
+		bsuite.jsonparsing.EntityAction action = new bsuite.jsonparsing.EntityAction();
+		action.setActionName(actionName);
+		action.setVisible(visible);
+		return action;
+
+	}
+
+	public void createDatabases() {
 		DefineModule def = new DefineModule();
 		Vector<String> moduleNames = def.getModules();
 		CreateDatabase cd = new CreateDatabase();
 		cd.createDatabases(moduleNames);
-		
+
 	}
-	public boolean deploy(){
-		//createDatabases();//Create databases for modules
-		createRoleDocs();//Create role documents for the role hierarchy created in security.nsf
-		createProfileDocs();//Create the profile documents, standard and admin in Security.nsf
-		
+
+	public boolean deploy() {
+		// createDatabases();//Create databases for modules
+		createRoleDocs();// Create role documents for the role hierarchy created
+							// in security.nsf
+		createProfileDocs();// Create the profile documents, standard and admin
+							// in Security.nsf
+
 		return true;
 	}
-	//var cd = new bsuite.configure.CreateDatabase();
-	//cd.RegisterEmployee(user)
-	
-	public void deploy(String user){
-		//createDatabases();//Create databases for modules
+
+	// var cd = new bsuite.configure.CreateDatabase();
+	// cd.RegisterEmployee(user)
+
+	public void deploy(String user) {
+		// createDatabases();//Create databases for modules
 		System.out.println("before creating role docs");
 		createRoleDocs();
 		System.out.println("after creating role docs");
 		createProfileDocs();
-		
+
 		System.out.println("before creating user");
-		if(user!=null && !user.equals("")){
-			
-			//Create role documents for the role hierarchy created in security.nsf
-			//Create the profile documents, standard and admin in Security.nsf
-			
-			
+		if (user != null && !user.equals("")) {
+
+			// Create role documents for the role hierarchy created in
+			// security.nsf
+			// Create the profile documents, standard and admin in Security.nsf
+
 			CreateDatabase cd = new CreateDatabase();
 			cd.RegisterEmployee(user);
-			
-		}else{
+
+		} else {
 			System.out.println("Admin name not provided for deploying");
 		}
-		
-		
+
 	}
-	public ArrayList<Document> getProfileDocs(){
+
+	public ArrayList<Document> getProfileDocs() {
 		Database db = null;
 		View view = null;
 		ArrayList<Document> dc = new ArrayList<Document>();
@@ -422,9 +525,9 @@ public class Deploy {
 			db = Utility.getDatabase("Security.nsf");
 			view = db.getView("ProfileView");
 			doc = view.getFirstDocument();
-			while(doc!=null){
+			while (doc != null) {
 				dc.add(doc);
-				doc = view.getNextDocument(doc);			
+				doc = view.getNextDocument(doc);
 			}
 		} catch (NotesException e) {
 			e.printStackTrace();
@@ -432,18 +535,18 @@ public class Deploy {
 		return dc;
 	}
 
-	private ProfileJson getJsonObject(Document profDoc){
-		if(profDoc==null){
+	private ProfileJson getJsonObject(Document profDoc) {
+		if (profDoc == null) {
 			return null;
 		}
 		ObjectMapper mapper = new ObjectMapper();
-		String jsonString="";
+		String jsonString = "";
 		try {
 			jsonString = profDoc.getItemValueString("JsonString");
 		} catch (NotesException e) {
 			e.printStackTrace();
 		}
-		
+
 		try {
 			return mapper.readValue(jsonString, ProfileJson.class);
 		} catch (JsonParseException e) {
@@ -453,71 +556,78 @@ public class Deploy {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	
+
 		return null;
-	
+
 	}
-	
-	private ProfileJson updateModule(ProfileJson jsonObj,Module module){
-		
+
+	private ProfileJson updateModule(ProfileJson jsonObj, Module module) {
+
 		return null;
 	}
-	private ProfileJson updateFeature(ProfileJson jsonObj,String moduleName, String featureName){
+
+	private ProfileJson updateFeature(ProfileJson jsonObj, String moduleName,
+			String featureName) {
 		System.out.println("21..");
 		ArrayList<bsuite.jsonparsing.Module> modules = jsonObj.getModules();
 		System.out.println("22..");
 		bsuite.jsonparsing.Module module1 = null;
-		if(modules.size()==0){
+		if (modules.size() == 0) {
 			return jsonObj;
 		}
-		
-		for(bsuite.jsonparsing.Module module:modules){
-			
-			if(module.getModuleName().equals(moduleName)){
-				
-				System.out.println("Modulename: "+module.getModuleName());
+
+		for (bsuite.jsonparsing.Module module : modules) {
+
+			if (module.getModuleName().equals(moduleName)) {
+
+				System.out.println("Modulename: " + module.getModuleName());
 				module1 = module;
 				break;
 			}
 		}
 		System.out.println("23..");
-		ArrayList<bsuite.jsonparsing.Feature> featureList = module1.getFeatures();
+		ArrayList<bsuite.jsonparsing.Feature> featureList = module1
+				.getFeatures();
 		System.out.println("24..");
-		if(featureList!=null){
-			for(bsuite.jsonparsing.Feature feature:featureList){
-				
-				if(feature.getFeatureName().equals(featureName)){
-					System.out.println("The feature "+featureName+" already exists");
+		if (featureList != null) {
+			for (bsuite.jsonparsing.Feature feature : featureList) {
+
+				if (feature.getFeatureName().equals(featureName)) {
+					System.out.println("The feature " + featureName
+							+ " already exists");
 					return jsonObj;
 				}
 			}
-		}else{
+		} else {
 			featureList = new ArrayList<bsuite.jsonparsing.Feature>();
 		}
-		
+
 		System.out.println("25..");
-		bsuite.jsonparsing.Feature feature = defineFeaturePermission(featureName, "1");
+		bsuite.jsonparsing.Feature feature = defineFeaturePermission(
+				featureName, "1");
 		System.out.println("26..");
 		featureList.add(feature);
 		module1.setFeatures(featureList);
-		
+
 		return jsonObj;
 	}
-	private ProfileJson updateEntity(ProfileJson jsonObj,String moduleName, String entityName, Database db){
+
+	private ProfileJson updateEntity(ProfileJson jsonObj, String moduleName,
+			String entityName, Database db) {
 		System.out.println("21..");
-		 View view = null;
+		View view = null;
 		ArrayList<bsuite.jsonparsing.Module> modules = jsonObj.getModules();
 		System.out.println("22..");
 		bsuite.jsonparsing.Module module1 = null;
-		if(modules.size()==0){
+		if (modules.size() == 0) {
 			return jsonObj;
 		}
-		
-		for(bsuite.jsonparsing.Module module:modules){
-			
-			if(module.getModuleName().equals(moduleName)){
-				
-				System.out.println("Modulename: "+module.getModuleName());
+
+		for (bsuite.jsonparsing.Module module : modules) {
+
+			if (module.getModuleName().equals(moduleName)) {
+
+				System.out.println("Modulename: " + module.getModuleName());
 				module1 = module;
 				break;
 			}
@@ -525,57 +635,65 @@ public class Deploy {
 		System.out.println("23..");
 		ArrayList<bsuite.jsonparsing.Entity> entityList = module1.getEntities();
 		System.out.println("24..");
-		
-		if(entityList!=null){
-			System.out.println("24.."+entityList.size()+" "+module1.getModuleName());
-			for(bsuite.jsonparsing.Entity entity:entityList){
-				System.out.println("entityName"+entity.getEntityName()+" "+entityName);
-				if(entity!=null && entity.getEntityName()!=null){
-					if(entity.getEntityName().equals(entityName)){
-						System.out.println("The entity "+entityName+" already exists");
+
+		if (entityList != null) {
+			System.out.println("24.." + entityList.size() + " "
+					+ module1.getModuleName());
+			for (bsuite.jsonparsing.Entity entity : entityList) {
+				System.out.println("entityName" + entity.getEntityName() + " "
+						+ entityName);
+				if (entity != null && entity.getEntityName() != null) {
+					if (entity.getEntityName().equals(entityName)) {
+						System.out.println("The entity " + entityName
+								+ " already exists");
 						return jsonObj;
 					}
 				}
-				
+
 			}
-		}else{
+		} else {
 			entityList = new ArrayList<bsuite.jsonparsing.Entity>();
 		}
-		
+
 		System.out.println("25..");
-		bsuite.jsonparsing.Entity entity = defineEntityPermission(entityName, "1", "1", "1", "1","1");
+		bsuite.jsonparsing.Entity entity = defineEntityPermission(entityName,
+				"1", "1", "1", "1", "1");
 		System.out.println("26..");
 		entityList.add(entity);
 		module1.setEntities(entityList);
-		System.out.println("added entity"+entity.getEntityName()+" "+entity.getCreate());
-		//Create the view here after adding new entity for the existing fields
-		
-		String selFormula="SELECT Form=\""+entity.getEntityName()+"\"";
-	
-		CreateDatabase cd = new CreateDatabase();
-	
-		view = cd.createView(db,entity.getEntityName(), selFormula);
-		System.out.println("after create view call");
+		System.out.println("added entity" + entity.getEntityName() + " "
+				+ entity.getCreate());
+		// Create the view here after adding new entity for the existing fields
+
+		/*
+		 * String selFormula="SELECT Form=\""+entity.getEntityName()+"\"";
+		 * 
+		 * CreateDatabase cd = new CreateDatabase();
+		 * 
+		 * view = cd.createView(db,entity.getEntityName(), selFormula);
+		 * System.out.println("after create view call");
+		 */
+
 		return jsonObj;
-		
-		
+
 	}
-	
-	private ProfileJson updateField(ProfileJson jsonObj,String moduleName, String entityName, String fieldName, Database db, int vColumn){
+
+	private ProfileJson updateField(ProfileJson jsonObj, String moduleName,
+			String entityName, String fieldName, Database db, int vColumn) {
 		System.out.println("21..");
 		View view = null;
 		ArrayList<bsuite.jsonparsing.Module> modules = jsonObj.getModules();
 		System.out.println("22..");
 		bsuite.jsonparsing.Module module1 = null;
-		if(modules.size()==0){
+		if (modules.size() == 0) {
 			return jsonObj;
 		}
-		
-		for(bsuite.jsonparsing.Module module:modules){
-			
-			if(module.getModuleName().equals(moduleName)){
-				
-				System.out.println("Modulename: "+module.getModuleName());
+
+		for (bsuite.jsonparsing.Module module : modules) {
+
+			if (module.getModuleName().equals(moduleName)) {
+
+				System.out.println("Modulename: " + module.getModuleName());
 				module1 = module;
 				break;
 			}
@@ -584,60 +702,119 @@ public class Deploy {
 		System.out.println("23..");
 		ArrayList<bsuite.jsonparsing.Entity> entityList = module1.getEntities();
 		System.out.println("24..");
-		System.out.println("24.."+entityList.size()+" "+module1.getModuleName());
-		for(bsuite.jsonparsing.Entity entity:entityList){
-			System.out.println("entityName"+entity.getEntityName()+" "+entityName);
-			if(entity!=null && entity.getEntityName()!=null){
-				if(entity.getEntityName().equals(entityName)){
+		System.out.println("24.." + entityList.size() + " "
+				+ module1.getModuleName());
+		for (bsuite.jsonparsing.Entity entity : entityList) {
+			System.out.println("entityName" + entity.getEntityName() + " "
+					+ entityName);
+			if (entity != null && entity.getEntityName() != null) {
+				if (entity.getEntityName().equals(entityName)) {
 					entity1 = entity;
 					break;
 				}
 			}
-			
+
 		}
 		System.out.println("25..");
-		//com.bsuite.jsonparsing.Entity entity = defineEntityPermission(entityName, "1", "1", "1", "1","1");
+		// com.bsuite.jsonparsing.Entity entity =
+		// defineEntityPermission(entityName, "1", "1", "1", "1","1");
 		ArrayList<bsuite.jsonparsing.Field> fieldList = null;
-		if(entity1.getFields()==null){
+		if (entity1.getFields() == null) {
 			fieldList = new ArrayList<bsuite.jsonparsing.Field>();
-		}else{
-		 fieldList= entity1.getFields();
+		} else {
+			fieldList = entity1.getFields();
 		}
-		for(bsuite.jsonparsing.Field field:fieldList){
-			if(field!=null && field.getFieldName()!=null){
-				if(field.getFieldName().equals(fieldName)){
-					System.out.println("The Field "+fieldName+" already exists");	
+		for (bsuite.jsonparsing.Field field : fieldList) {
+			if (field != null && field.getFieldName() != null) {
+				if (field.getFieldName().equals(fieldName)) {
+					System.out.println("The Field " + fieldName
+							+ " already exists");
 					return jsonObj;
 				}
 			}
 		}
-		
-		
-		bsuite.jsonparsing.Field field = defineFieldPermission(fieldName, "0", "1");
+
+		bsuite.jsonparsing.Field field = defineFieldPermission(fieldName, "0",
+				"1");
 		System.out.println("26..");
 		fieldList.add(field);
 		entity1.setFields(fieldList);
-		System.out.println("added entity"+field.getFieldName()+" "+field.getVisible());
-		
+		System.out.println("added entity" + field.getFieldName() + " "
+				+ field.getVisible());
+
 		/*
-		CreateDatabase cd = new CreateDatabase();
-		view = cd.getView(db, entityName);
-		try {
-			if(view.getColumnNames().contains(fieldName)){
-				return jsonObj;
-			}
-		} catch (NotesException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		cd.createViewColumn(view,vColumn,fieldName,fieldName);
-		*/
+		 * CreateDatabase cd = new CreateDatabase(); view = cd.getView(db,
+		 * entityName); try { if(view.getColumnNames().contains(fieldName)){
+		 * return jsonObj; } } catch (NotesException e) { // TODO Auto-generated
+		 * catch block e.printStackTrace(); }
+		 * cd.createViewColumn(view,vColumn,fieldName,fieldName);
+		 */
 		return jsonObj;
-		
-		
+
 	}
-	
-	
+
+	private ProfileJson updateEntityAction(ProfileJson jsonObj,
+			String moduleName, String entityName, String entityAction) {
+
+		ArrayList<bsuite.jsonparsing.Module> modules = jsonObj.getModules();
+		System.out.println("22..");
+		bsuite.jsonparsing.Module module1 = null;
+		if (modules.size() == 0) {
+			return jsonObj;
+		}
+
+		for (bsuite.jsonparsing.Module module : modules) {
+
+			if (module.getModuleName().equals(moduleName)) {
+
+				System.out.println("Modulename: " + module.getModuleName());
+				module1 = module;
+				break;
+			}
+		}
+		bsuite.jsonparsing.Entity entity1 = null;
+		System.out.println("23..");
+		ArrayList<bsuite.jsonparsing.Entity> entityList = module1.getEntities();
+		System.out.println("24..");
+		System.out.println("24.." + entityList.size() + " "
+				+ module1.getModuleName());
+		for (bsuite.jsonparsing.Entity entity : entityList) {
+			System.out.println("entityName" + entity.getEntityName() + " "
+					+ entityName);
+			if (entity != null && entity.getEntityName() != null) {
+				if (entity.getEntityName().equals(entityName)) {
+					entity1 = entity;
+					break;
+				}
+			}
+
+		}
+
+		ArrayList<bsuite.jsonparsing.EntityAction> actionList = null;
+		if (entity1.getActions() == null) {
+			actionList = new ArrayList<bsuite.jsonparsing.EntityAction>();
+		} else {
+			actionList = entity1.getActions();
+		}
+		for (bsuite.jsonparsing.EntityAction ea : actionList) {
+			if (ea != null && ea.getActionName() != null) {
+				if (ea.getActionName().equals(entityAction)) {
+					return jsonObj;
+				}
+
+			}
+		}
+
+		bsuite.jsonparsing.EntityAction action = defineEntityActionPerm(
+				entityAction, "1");
+
+		actionList.add(action);
+		entity1.setActions(actionList);
+
+		return jsonObj;
+
+	}
+
 	public void updateAllProfiles() throws NotesException, JsonGenerationException, JsonMappingException, IOException{
 		System.out.println("1..");
 		ArrayList<Document> dc = getProfileDocs();//Get document collection of all profiles
@@ -656,10 +833,16 @@ public class Deploy {
 		Vector<String> features = null;
 		Vector<String> entities = null;
 		Vector<String> fields = null;
+		Vector<String> actions = null;
+		Vector<String> groups = null;
+		ArrayList groupActions = null;
+		
+		
 		ProfileJson jsonObj =null; 
 		View view = null;
 		String entityName = "";
 		String fieldName = "";
+		String groupName = "";
 		ObjectMapper mapper = new ObjectMapper();
 		for(int i=0;i<dc.size();i++){//For each profile document
 			try {
@@ -673,6 +856,7 @@ public class Deploy {
 					db = Utility.getDatabase(moduleName+".nsf");
 					features = df.getFeatures(moduleName); //for the features defined in each module
 					 entities = df.getEntityNames(moduleName);
+					 groups = df.getGroupNames(moduleName);
 					 view = null;
 					System.out.println("6..");
 					if(features==null){
@@ -691,6 +875,33 @@ public class Deploy {
 					}
 					
 					
+					if(groups!=null){
+						System.out.println("groups "+groups);
+						for(int g=0;g<groups.size();g++){
+							
+							groupName = groups.get(g);
+							System.out.println("update group "+groupName);
+							jsonObj = updateGroup(jsonObj,moduleName,groupName);
+							
+							groupActions = df.getGroupEntryNames(moduleName, groupName);
+							System.out.println("group actions "+groupActions);
+							if(groupActions!=null){
+								for(int ga=0;ga<groupActions.size();ga++){
+									
+									if (((String) groupActions.get(ga)).substring(0, 1).equals("e")) {
+										
+										jsonObj = updateGroupAction(jsonObj,moduleName,groupName,((String) groupActions.get(ga)).substring(2),"e");
+										
+									} else {
+										jsonObj = updateGroupAction(jsonObj,moduleName,groupName,((String) groupActions.get(ga)).substring(2),"f");
+									}
+									
+								}
+							}
+						}
+					}
+					
+					
 					
 					if(entities!=null){
 						for(int l=0;l<entities.size();l++){
@@ -702,6 +913,15 @@ public class Deploy {
 							System.out.println("10..");
 							
 							fields = df.getFields(moduleName, entityName);
+							actions = df.getEntityActions(moduleName, entityName);
+							
+							if(actions!=null){
+								for(int n=0;n<actions.size();n++){
+									jsonObj = updateEntityAction(jsonObj, moduleName, entityName, actions.get(n));
+								}
+							}
+							
+							
 							System.out.println("---F>"+fields+"<--");
 							if(fields!=null){
 								for(int m=0;m<fields.size();m++){
@@ -721,6 +941,8 @@ public class Deploy {
 						}	
 					}
 					
+					
+					
 					doc.replaceItemValue("JsonString", mapper
 							.writeValueAsString(jsonObj));
 					doc.save();
@@ -732,7 +954,98 @@ public class Deploy {
 			}
 		}
 	}
-	
-	
-	
+
+	private ProfileJson updateGroupAction(ProfileJson jsonObj,
+			String moduleName, String groupName, String actionName, String entryType) {
+		System.out.println("updating group action"+moduleName+" groupName"+groupName+" "+actionName+" "+entryType);
+		ArrayList<bsuite.jsonparsing.Module> modules = jsonObj.getModules();
+		bsuite.jsonparsing.Module module1 = null;
+		if (modules.size() == 0) {
+			return jsonObj;
+		}
+
+		for (bsuite.jsonparsing.Module module : modules) {
+
+			if (module.getModuleName().equals(moduleName)) {
+
+				module1 = module;
+				break;
+			}
+		}
+		bsuite.jsonparsing.GroupPermission group1 = null;
+
+		ArrayList<bsuite.jsonparsing.GroupPermission> groupList = module1.getGroups();
+		
+		for(bsuite.jsonparsing.GroupPermission groupP : groupList){
+			if(groupP!=null && groupP.getName()!=null){
+				if(groupP.getName().equals(groupName)){
+					group1 = groupP;
+					break;
+				}
+				
+			}
+		}
+		ArrayList<bsuite.jsonparsing.GroupEntry> actionList = null;
+		if(group1.getEntries()==null){
+			actionList = new ArrayList<bsuite.jsonparsing.GroupEntry>();
+		}else{
+			actionList = group1.getEntries();
+		}
+		
+		for(bsuite.jsonparsing.GroupEntry ge: actionList){
+			if(ge!=null && ge.getName()!=null){
+				if(ge.getName().equals(actionName)){
+					return jsonObj;
+				}
+			}
+		}
+		bsuite.jsonparsing.GroupEntry entry = defineGroupEntryPermission(actionName, entryType, "1");
+
+		
+
+		actionList.add(entry);
+		group1.setEntries(actionList);
+
+		return jsonObj;
+	}
+
+	private ProfileJson updateGroup(ProfileJson jsonObj, String moduleName,
+			String groupName) {
+		
+		ArrayList<bsuite.jsonparsing.Module> modules = jsonObj.getModules();
+		
+		bsuite.jsonparsing.Module module1 = null;
+		if (modules.size() == 0) {
+			return jsonObj;
+		}
+
+		for (bsuite.jsonparsing.Module module : modules) {
+
+			if (module.getModuleName().equals(moduleName)) {
+
+				module1 = module;
+				break;
+			}
+		}
+		ArrayList<bsuite.jsonparsing.GroupPermission> groupList = module1.getGroups();
+		if(groupList!=null){
+			for(bsuite.jsonparsing.GroupPermission group:groupList){
+				if(group!=null && group.getName()!=null){
+					if(group.getName().equals(groupName)){
+						return jsonObj;
+					}
+				}
+			}
+		}else{
+			groupList = new ArrayList<bsuite.jsonparsing.GroupPermission>();
+		}
+		bsuite.jsonparsing.GroupPermission groupP = defineGroupPermission(groupName, "1");
+		groupList.add(groupP);
+		module1.setGroups(groupList);
+		
+		return jsonObj;
+		
+		
+	}
+
 }

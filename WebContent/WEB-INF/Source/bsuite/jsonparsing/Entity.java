@@ -12,11 +12,11 @@ public class Entity{
 	private String update;
 	private String delete;
 	private ArrayList<Field> fields;
+	private ArrayList<EntityAction>actions;
 	
 	private String accessType;
 	//Added for fields and features perms
-	//private ArrayList<FieldPerm> fieldPerm;
-	//private ArrayList<FeaturePerm> featurePerm;
+
 	
 	
 	public String getAccessType() {
@@ -77,23 +77,17 @@ public class Entity{
 		this.fields = fields;
 	}
 
-
-
-/*	public ArrayList<FieldPerm> getFieldPerm() {
-		return fieldPerm;
+	public ArrayList<EntityAction> getActions() {
+		return actions;
 	}
 
-	public void setFieldPerm(ArrayList<FieldPerm> fieldPerm) {
-		this.fieldPerm = fieldPerm;
+	public void setActions(ArrayList<EntityAction> actions) {
+		this.actions = actions;
 	}
 
-	public ArrayList<FeaturePerm> getFeaturePerm() {
-		return featurePerm;
-	}
 
-	public void setFeaturePerm(ArrayList<FeaturePerm> featurePerm) {
-		this.featurePerm = featurePerm;
-	}*/
+
+
 
 
 

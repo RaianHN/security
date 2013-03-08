@@ -8,28 +8,28 @@ import org.codehaus.jackson.map.ObjectMapper;
 public class EntitySchema {
 	
 	@SuppressWarnings("unchecked")
-	public static void createEntity(String eName,Vector fieldNames,Vector featureNames){
+	public static void createEntity(String eName,Vector fieldNames,Vector actionNames){
 		
 	Entity entity=new Entity();	
 	Field field=new Field();
-	Feature feature=new Feature();
+	EntityAction action=new EntityAction();
 	
 	ArrayList flds = new ArrayList(); 
-	ArrayList ftrs = new ArrayList();
+	ArrayList actions = new ArrayList();
 	  
 	for(int i=0;i<fieldNames.size();i++){		  
 		  field.setFieldName((String)fieldNames.get(i));
 		  flds.add(field);
 	  }
 	 
-	  for(int i=0;i<featureNames.size();i++){		  
-		  feature.setFeatureName((String)featureNames.get(i));
-		  ftrs.add(feature);
+	  for(int i=0;i<actionNames.size();i++){		  
+		  action.setActionName((String)actionNames.get(i));
+		  actions.add(action);
 	  }
 	//to set the entityname
 	  entity.setEntityName(eName);
 	  entity.setFields(flds);
-	 // entity.setFeatures(ftrs);
+	 entity.setActions(actions);
 	  
 	  ObjectMapper mapper=new ObjectMapper();
 	  String val="";

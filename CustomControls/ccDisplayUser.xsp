@@ -24,7 +24,7 @@
 		<xe:this.summaryColumn>
 			<xe:viewSummaryColumn columnTitle="Name">
 			</xe:viewSummaryColumn>
-		</xe:this.summaryColumn>
+		</xe:this.summaryColumn><!--
 		<xe:this.data>
 			<xp:dominoView databaseName="Demo2\user.nsf"
 				viewName="AllDocuments" var="userview"
@@ -58,6 +58,6 @@ uiuser.resetUI(c, facesContext,"/ccUser.xsp");}]]></xp:this.script>
 								xp:key="pagerTopRight" partialRefresh="true" partialExecute="true">
 							</xp:pager>
 		</xp:this.facets>
-	</xe:dataView>
+	--></xe:dataView>
 
 </xp:view>

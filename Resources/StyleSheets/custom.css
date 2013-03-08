@@ -53,3 +53,8 @@ input{
   font-size : 12px;
   background-color : #efefef;
 }
+.ptable{
+	
+	background-color:rgb(192,192,192);
+	border-color:rgb(128,128,128);
+}

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257AC30021844F" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="8266" sequence="7" unid="2CA3FFA7E726AD9565257B16003B6F33">
+<created><datetime>20130218T161910,91+0530</datetime></created>
+<modified><datetime>20130218T165214,88+0530</datetime></modified>
+<revised><datetime>20130218T165214,87+0530</datetime></revised>
+<lastaccessed><datetime>20130218T165214,88+0530</datetime></lastaccessed>
+<addedtofile><datetime>20130218T161910,95+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Muhammad Sabir/O=AAC</name><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
+<wassignedby><name>CN=Jaya K Prakash/O=Weberon</name></wassignedby>
+<item name="$Flags"><text>34567Cg~`</text></item>
+<item name="$TITLE" sign="true"><text>oneui_basic.theme</text></item>
+<item name="$DesignerVersion"><text>8.5.3</text></item>
+
+
+<item name="$FileNames" sign="true"><text>oneui_basic.theme</text></item>
+<item name="$CSSFiles"><textlist><text>/.ibmxspres/global/theme/oneui/xsp.css</text><text>/.ibmxspres/global/theme/oneui/xspLTR.css</text><text>/.ibmxspres/global/theme/oneui/xspRTL.css</text><text>/.ibmxspres/global/theme/oneui/xspIE06.css</text><text>/.ibmxspres/global/theme/oneui/xspIE78.css</text><text>/.ibmxspres/global/theme/oneui/xspIERTL.css</text><text>/.ibmxspres/global/theme/oneui/xspFF.css</text><text>/.ibmxspres/global/theme/oneui/xspSF.css</text><text>/.ibmxspres/global/theme/oneui/xspRCP.css</text></textlist></item></note>

@@ -394,7 +394,30 @@ updateAddSchema();}]]></xp:this.action>
 
 			</xp:td>
 			<xp:td></xp:td>
-			<xp:td></xp:td>
+			<xp:td><xp:inputText id="inputText5"></xp:inputText>
+				<xp:link escape="true" text="Add Entity Action"
+					id="link9">
+					<xp:eventHandler event="onclick" submit="true"
+						refreshMode="partial" refreshId="updateTable"
+						onComplete="hideWait()" onStart="showWait()" onError="showError()"
+						id="eventHandler13">
+						<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("comboBox1").getValue();
+var entityName = getComponent("comboBox2").getValue();
+var actionName = getComponent("inputText5").getValue();
+var schemaObj = new bsuite.configure.DefineModule();
+if(actionName!=null){
+schemaObj.addEntityAction(moduleName,entityName,actionName)
+
+}
+
+
+
+
+
+
+updateAddSchema();}]]></xp:this.action>
+					</xp:eventHandler>
+				</xp:link></xp:td>
 		</xp:tr>
 	</xp:table>
 

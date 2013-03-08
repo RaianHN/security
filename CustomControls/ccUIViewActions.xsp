@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+	<xp:table style="width:300px">
+
+		<xp:repeat id="repeat1" rows="30" var="repeat1">
+			<xp:this.value><![CDATA[#{javascript:var profileName = viewScope.selectedProfile;
+var moduleName = viewScope.moduleName;
+
+var moduleVisib = new bsuite.jsonparsing.ProfileEdit();
+if(moduleName == null || profileName == null){
+return;
+}
+var result = moduleVisib.getGroupPermission(profileName,moduleName);
+var result1:java.util.Vector = viewScope.groupPerm;
+if(result1!=null){
+//dBar.info("result"+result);
+return result1; 
+
+
+}}]]></xp:this.value>
+			<xp:tr styleClass="ptable">
+				<xp:td>
+					<xp:text escape="true" id="computedField2">
+						<xp:this.value><![CDATA[#{javascript:@Left(repeat1,":")}]]></xp:this.value>
+					</xp:text>
+				</xp:td>
+				<xp:td>
+					<xp:checkBox id="checkBox2">
+						<xp:this.defaultChecked><![CDATA[#{javascript:var val = @Right(repeat1,":");
+if(val.charAt(0)=="1"){
+return true;
+}}]]></xp:this.defaultChecked>
+					</xp:checkBox>
+				</xp:td>
+			</xp:tr>
+
+			<xp:repeat id="repeat2" rows="30" var="repeat2">
+				<xp:this.value><![CDATA[#{javascript:var selectedGroup = @Left(repeat1,":")
+var profileName = viewScope.selectedProfile;
+var moduleName = viewScope.moduleName;
+
+var moduleVisib = new bsuite.jsonparsing.ProfileEdit();
+if(moduleName == null || profileName == null || selectedGroup==null){
+return;
+}
+var result = moduleVisib.getGroupEntryPermission(profileName,moduleName,selectedGroup);
+var result1:java.util.Vector = viewScope.groupEntryPerm;
+if(result1!=null){
+return result1; 
+
+}}]]></xp:this.value>
+				<xp:tr>
+					<xp:td style="padding-left:10.0px">
+						<xp:text escape="true" id="computedField3">
+							<xp:this.value><![CDATA[#{javascript:@Left(repeat2,":")
+}]]></xp:this.value>
+						</xp:text>
+					</xp:td>
+					<xp:td>
+						<xp:checkBox id="checkBox3">
+							<xp:this.defaultChecked><![CDATA[#{javascript:var val = @Right(repeat2,":");
+if(val.charAt(0)=="1"){
+return true;
+}}]]></xp:this.defaultChecked>
+						</xp:checkBox>
+					</xp:td>
+				</xp:tr>
+			</xp:repeat>
+			
+		</xp:repeat>
+
+	</xp:table>
+</xp:view>
+
