@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xp:view xmlns:xp="http://www.ibm.com/xsp/core">
 
-	<xp:button value="Label" id="button1">
-		<xp:eventHandler event="onclick" submit="true"
-			refreshMode="complete">
-			<xp:this.action><![CDATA[#{javascript:var test = new testing.Test();
-test.test();}]]></xp:this.action>
-		</xp:eventHandler></xp:button></xp:view>
+	
+	</xp:view>

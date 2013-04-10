@@ -2,6 +2,7 @@
 
 
 <xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+	
 	<xp:table style="width:300px">
 
 		<xp:repeat id="repeat1" rows="30" var="repeat1">
@@ -70,7 +71,40 @@ return true;
 			</xp:repeat>
 			
 		</xp:repeat>
+		<xp:repeat id="repeatF" rows="30" var="singleF">
 
+			<xp:this.value><![CDATA[#{javascript:var profileName = viewScope.selectedProfile;
+var moduleName = viewScope.moduleName;
+
+var moduleVisib = new bsuite.jsonparsing.ProfileEdit();
+if(moduleName == null || profileName == null){
+return;
+}
+var result = moduleVisib.getSingleFeaturePerm(profileName,moduleName);
+var result1:java.util.Vector = viewScope.singleFPerm;
+if(result1!=null){
+//dBar.info("result"+result);
+return result1; 
+
+
+}}]]></xp:this.value>
+
+			<xp:tr styleClass="ftable">
+				<xp:td>
+					<xp:text escape="true" id="computedField1">
+						<xp:this.value><![CDATA[#{javascript:@Left(singleF,":")}]]></xp:this.value>
+					</xp:text>
+				</xp:td>
+				<xp:td>
+					<xp:checkBox id="checkBox1">
+						<xp:this.defaultChecked><![CDATA[#{javascript:var val = @Right(singleF,":");
+if(val.charAt(0)=="1"){
+return true;
+}}]]></xp:this.defaultChecked>
+					</xp:checkBox>
+				</xp:td>
+			</xp:tr>
+		</xp:repeat>
 	</xp:table>
 </xp:view>
 

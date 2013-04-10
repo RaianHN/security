@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+
+	Property File:&#160;
+	<xp:this.resources>
+		<xp:bundle var="strings" src="/string.properties"></xp:bundle>
+	</xp:this.resources>
+	<xp:comboBox id="comboBoxFile"
+		value="#{sessionScope.PropertyFile}">
+		<xp:selectItems>
+			<xp:this.value>
+				<![CDATA[#{javascript:
+               importPackage(ch.hasselba.xpages.localization);
+               ch.hasselba.xpages.localization.DesignElements().getPropertFileList();
+            }]]>
+			</xp:this.value>
+		</xp:selectItems>
+	</xp:comboBox>
+	&#160; &#160;
+	<xp:button value="Load" id="buttonLoadFile">
+		<xp:eventHandler event="onclick" submit="true"
+			refreshMode="complete">
+			<xp:this.action>
+				<![CDATA[#{javascript:
+                  importPackage(ch.hasselba.xpages.localization);
+                  var bean = facesContext.getApplication().getVariableResolver()
+                     .resolveVariable(facesContext, "strings");
+                  bean.loadFile(sessionScope.get("PropertyFile") )}]]>
+			</xp:this.action>
+		</xp:eventHandler>
+	</xp:button>
+	<hr />
+	<xp:label id="labelSelecteFile">
+		<xp:this.value>
+			<![CDATA[#{javascript:sessionScope.get("PropertyFile")}]]>
+		</xp:this.value>
+	</xp:label>
+	<xp:br />
+	<xp:br />
+	<xp:repeat id="repeat1" rows="9999" var="lMap"
+		value="#{locale.locales}">
+		<xp:label value="#{lMap.name}" id="labelMapName" />
+		<xp:inputText id="inputTextValue" value="#{lMap.value}" />
+		<xp:br />
+	</xp:repeat>
+	
+</xp:view>

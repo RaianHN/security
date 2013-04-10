@@ -72,10 +72,19 @@ if(selEnt!=null){
 						<xp:label value="Visible" id="label2"></xp:label>
 					</xp:td>
 					<xp:td>
-						<xp:checkBox id="checkBox1"></xp:checkBox>
+						<xp:checkBox id="checkBox1">
+							<xp:this.defaultChecked><![CDATA[#{javascript:var varEPermit = viewScope.entityPermission
+var val = @Right(varEPermit,":");
+if(val.charAt(1)=="1"){
+return true;
+}
+else{
+return false;
+}}]]></xp:this.defaultChecked>
+						</xp:checkBox>
 					</xp:td>
 				</xp:tr>
-				<xp:tr>
+				<xp:tr loaded="false">
 					<xp:td style="padding-left:10.0px">
 						<xp:label value="Edit" id="label3"></xp:label>
 					</xp:td>
@@ -83,7 +92,7 @@ if(selEnt!=null){
 						<xp:checkBox id="checkBox2"></xp:checkBox>
 					</xp:td>
 				</xp:tr>
-				<xp:tr>
+				<xp:tr loaded="false">
 					<xp:td style="padding-left:10.0px">
 						<xp:label value="Delete" id="label4"></xp:label>
 					</xp:td>
@@ -125,6 +134,7 @@ return false;
 					</xp:tr>
 				</xp:repeat>
 			</xp:table>
+			<xp:inputHidden id="inputNEActions" value="#{viewScope.entityAN}"></xp:inputHidden>
 		</xp:panel>
 
 

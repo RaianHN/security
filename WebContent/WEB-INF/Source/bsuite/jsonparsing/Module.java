@@ -11,6 +11,7 @@ public class Module {
 	private ArrayList<GroupPermission> groups;
 	
 	
+	
 	public ArrayList<Entity> getEntities() {
 		return entities;
 	}
@@ -45,6 +46,7 @@ public class Module {
 	public void setGroups(ArrayList<GroupPermission> groups) {
 		this.groups = groups;
 	}
+	
 	
 	
 	

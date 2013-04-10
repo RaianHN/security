@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+<xp:table id="tableFieldPermission" style="width:300.0px">
+
+				<xp:this.rendered><![CDATA[#{javascript:var selEnt = getComponent("frecordType").getValue();
+if(selEnt!=null){
+	if(selEnt!="-Select Entity-"){
+	return true;
+	}else{
+	return false;
+	}
+}
+}]]></xp:this.rendered>
+
+				<xp:tr styleClass="ptable">
+					<xp:td>
+						<xp:label value="Field" id="label6"></xp:label>
+					</xp:td>
+					<xp:td>
+						<xp:label id="label7" value="Visible">
+						</xp:label>
+					</xp:td>
+					<xp:td>
+						<xp:label value="Update" id="label8"></xp:label>
+					</xp:td>
+				</xp:tr>
+
+				<xp:repeat id="repeatField" rows="30" var="varFields">
+					<xp:this.value><![CDATA[#{javascript:var profileName = viewScope.profileName;
+var moduleName = viewScope.moduleName;
+var entityName = getComponent("frecordType").getValue();
+
+
+
+if(profileName!=null && moduleName!=null && entityName!=null){
+
+println("getting field permissions"+profileName+" "+moduleName+" "+entityName);
+var moduleVisib = new bsuite.jsonparsing.ProfileEdit();
+var fieldPermission = moduleVisib.getFieldPermission(profileName,moduleName,entityName);
+if(fieldPermission!=null){
+return fieldPermission;
+}
+
+
+}}]]></xp:this.value>
+					<xp:tr>
+						<xp:td style="padding-left:10.0px">
+							<xp:label id="label5">
+								<xp:this.value><![CDATA[#{javascript:@Left(varFields,":")}]]></xp:this.value>
+							</xp:label>
+						</xp:td>
+						<xp:td>
+							<xp:checkBox id="checkBox4">
+								<xp:this.defaultChecked><![CDATA[#{javascript:var val = @Right(varFields,":");
+if(val.charAt(0)=="1"){
+return true;
+}
+else{
+return false;
+}}]]></xp:this.defaultChecked>
+							</xp:checkBox>
+						</xp:td>
+						<xp:td>
+							<xp:checkBox id="fieldUChk">
+								<xp:this.defaultChecked><![CDATA[#{javascript:var val = @Right(varFields,":");
+if(val.charAt(1)=="0"){
+return true;
+}
+else{
+return false;
+}}]]></xp:this.defaultChecked>
+							</xp:checkBox>
+						</xp:td>
+					</xp:tr>
+				</xp:repeat>
+				<xp:inputHidden id="inputNFields"
+					value="#{viewScope.fieldN}">
+				</xp:inputHidden>
+			</xp:table>
+</xp:view>

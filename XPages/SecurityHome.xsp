@@ -24,7 +24,7 @@
 
 
 
-	<xc:ccDebugToolbar load="true" defaultCollapsed="false"
+	<xc:ccDebugToolbar load="false" defaultCollapsed="false"
 		collapseTo="left">
 	</xc:ccDebugToolbar>
 	<xp:div id="lotusFrame" styleClass="lotusFrame">
@@ -104,6 +104,17 @@ println("calling event");}]]></xp:this.action>
 setFieldPermission();
 println("calling event");}]]></xp:this.action>
 		
+	</xp:eventHandler>
+	<xp:eventHandler id="eventEntityActionPerm" event="onDojo">
+		<xp:this.action><![CDATA[#{javascript:println("calling event");
+setEntityActionPermission();
+println("calling event");}]]></xp:this.action>
+		
+	</xp:eventHandler>
+	<xp:eventHandler id="eventFeaturePerm" event="onDojo">
+		<xp:this.action><![CDATA[#{javascript:println("calling event");
+setFeaturePermission();
+println("calling event");}]]></xp:this.action>
 	</xp:eventHandler>
 </xp:view>
 

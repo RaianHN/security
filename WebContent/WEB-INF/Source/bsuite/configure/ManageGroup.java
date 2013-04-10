@@ -2,6 +2,8 @@ package bsuite.configure;
 
 import java.util.ArrayList;
 import java.util.Vector;
+
+import bsuite.jsonparsing.GroupEntry;
   /**
    * This class will be used in defining the schema by creating group and adding features and entities under that, and a group of actions can be controlled in
    * admin profile interface
@@ -111,7 +113,9 @@ public class ManageGroup {
 		ArrayList<String> entFeat = module.getEntFeat();
 		
 		if(entFeat!=null){
+			if(grpEntries!=null){
 			entFeat.addAll(grpEntries);
+			}
 			module.setGroups(groups);
 		}
 		

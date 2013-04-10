@@ -507,8 +507,8 @@ public class Deploy {
 			// security.nsf
 			// Create the profile documents, standard and admin in Security.nsf
 
-			CreateDatabase cd = new CreateDatabase();
-			cd.RegisterEmployee(user);
+			//CreateDatabase cd = new CreateDatabase();
+			//cd.RegisterEmployee(user);
 
 		} else {
 			System.out.println("Admin name not provided for deploying");

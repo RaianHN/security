@@ -447,6 +447,17 @@ function setEntityPermission(){
 	entityCrud.saveEntityPerm(profileName,context.getSubmittedValue());
 }
 
+function setEntityActionPermission(){
+	var profileName = getComponent("moduleCombo").getValue();
+
+	println("profileName"+profileName);
+	var arr = context.getSubmittedValue().split(",");
+	var entityCrud = new bsuite.jsonparsing.ProfileEdit;
+	println("setting field permission"+typeof(arr)+"submitted type"+typeof(context.getSubmittedValue()));
+	
+	entityCrud.saveEntityActionPerm(profileName,context.getSubmittedValue());
+}
+
 function setVieawActionPermisssion(){
 	var profileName  = getComponent("moduleCombo").getValue();
 	var arr = context.getSubmittedValue().split(",");

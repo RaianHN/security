@@ -136,10 +136,11 @@ var x= @DbColumn(com,  "employeeprofile", 1);
 							<xp:this.condition><![CDATA[#{javascript:var deploy = new bsuite.configure.Deploy();
 return deploy.deploy();}]]></xp:this.condition>
 
+
 							<xp:executeScript>
 								<xp:this.script><![CDATA[#{javascript:
-var cd = new bsuite.configure.CreateDatabase();
-cd.RegisterEmployee(user);}]]></xp:this.script>
+//var cd = new bsuite.configure.CreateDatabase();
+//cd.RegisterEmployee(user);}]]></xp:this.script>
 							</xp:executeScript>
 						</xp:actionGroup>
 					</xp:this.action></xp:eventHandler></xp:button>
@@ -147,7 +148,7 @@ cd.RegisterEmployee(user);}]]></xp:this.script>
 
 		</xp:tr>
 	</xp:table></xe:djTabPane><xe:djTabPane id="djTabPane2" title="Add New module">
-		<xp:table>
+		<xp:table id="tableLoad">
 		<xp:tr>
 			<xp:td valign="top">
 				<xp:table>
@@ -239,7 +240,23 @@ dep.updateModule(moduleName);
 
 
 				
-				</xp:td>
+				<xp:br></xp:br>
+				<xp:button value="Upload Module Schema" id="btnUpload">
+					<xp:eventHandler event="onmouseover"
+						submit="false">
+						<xp:this.script><![CDATA[XSP.openTooltipDialog('#{id:tooltipUpload}','#{id:btnUpload}')]]></xp:this.script>
+					</xp:eventHandler>
+					<xp:eventHandler event="onclick" submit="true"
+						refreshMode="partial" refreshId="tableLoad">
+						<xp:this.action><![CDATA[#{javascript:var component = getComponent('loadCC2');
+if(component.getChildren!=null){
+bsuite.loadcc.DynamicCC.removePreview(component);
+ }
+var s = facesContext;
+var c1="/ccUploadSchema.xsp"; 
+var id="uploadschema";
+bsuite.loadcc.DynamicCC.loadCC(s, component, c1, id);}]]></xp:this.action>
+					</xp:eventHandler></xp:button></xp:td>
 			<xp:td id="loadCC2" valign="top"></xp:td>
 		</xp:tr>
 		
@@ -247,4 +264,6 @@ dep.updateModule(moduleName);
 		</xe:djTabPane>
 		
 	</xe:djTabContainer>
-</xp:view>
+	<xe:tooltipDialog id="tooltipUpload">
+		<xp:text escape="true" id="computedField1"><xp:this.value><![CDATA[#{javascript:"Use this button to upload the schema of a module if you already have the schema"}]]></xp:this.value></xp:text>
+	</xe:tooltipDialog></xp:view>

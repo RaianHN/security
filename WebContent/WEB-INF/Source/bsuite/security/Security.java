@@ -149,7 +149,7 @@ public class Security {
 		}
 	}
 	
-	public boolean isViewActionVisible(String groupName){
+	public boolean isMenuVisible(String groupName){
 		return profile.isViewActionVisible(module,groupName);
 	}
 
@@ -163,21 +163,21 @@ public class Security {
 		}
 	}
 
-	public boolean isEntityCreatable(String entityName) {
+	public boolean isObjectCreatable(String entityName) {
 		return profile.isEntityCreate(module, entityName);
 
 	}
 
-	public boolean isEntityReadable(String entityName) {
+	public boolean isObjectReadable(String entityName) {
 		return profile.isEntityRead(module, entityName);
 	}
 
-	public boolean isEntityEditable(String entityName) {
+	public boolean isObjectEditable(String entityName) {
 		
 		return profile.isEntityUpdate(module, entityName) || isMyDoc();
 	}
 
-	public boolean isEntityDeletable(String entityName) {
+	public boolean isObjectDeletable(String entityName) {
 		return profile.isEntityDelete(module, entityName) || isMyDoc();
 	}
 
@@ -234,6 +234,9 @@ public class Security {
 			return false;
 		}
 		
+	}
+	public boolean isObjectActionVisible(String objectName, String actionName){
+		return profile.isEntityActionVisible(module, objectName, actionName);
 	}
 
 }

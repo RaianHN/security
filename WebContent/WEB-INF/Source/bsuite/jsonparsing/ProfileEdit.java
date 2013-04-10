@@ -428,6 +428,7 @@ public class ProfileEdit {
 								+ e.getRead() + e.getUpdate() + e.getDelete()
 								+ e.getAccessType());
 				if(e.getActions()!=null){
+					viewScope.put("entityAN", Integer.toString(e.getActions().size()));
 					for(EntityAction ea:e.getActions()){
 						if(ea!=null){
 							entitySecurity.add(ea.getActionName()+ ":" +ea.getVisible());
@@ -445,6 +446,8 @@ public class ProfileEdit {
 
 		
 		viewScope.put("entityActionPerm", entitySecurity);
+		
+		
 		return entitySecurity;
 
 	}
@@ -602,6 +605,101 @@ public class ProfileEdit {
 		}
 		// System.out.println("inside save 8");
 
+	}
+	
+	public void saveEntityActionPerm(String profileName, String vals){
+		String[] arr = vals.split(",");
+		String[] arrs = null;
+		String[] arrV = null;
+		Document profDoc = getProfileDoc(getSecurityDatabase(), profileName);
+		String jsonString = "";
+		try {
+			jsonString = profDoc.getItemValueString("JsonString");
+		} catch (NotesException e) {
+			e.printStackTrace();
+		}
+		ProfileJson profile = getJsonProfileObj(jsonString);
+		Module module = null;
+		Entity ent = null;
+		String moduleName = "";
+		String entityName = "";
+		String entityPerm = "";
+		String actionName = "";
+		String actionVisib = "";
+
+		arrV = arr[0].split(":");
+		moduleName = arrV[0];
+		entityName = arrV[1];
+		entityPerm = arrV[2];
+		
+		
+		for (Module mod : profile.getModules()) {
+			if (mod.getModuleName().equals(moduleName)) {
+				module = mod;
+				break;
+			}
+
+		}
+		
+		
+		for (Entity entity : module.getEntities()) {
+	
+			if (entityName.equals(entity.getEntityName())) {
+				ent = entity;
+				break;
+			}
+		}
+		
+		
+		for (int x = 0; x < arr.length; x++) {
+			arrs = arr[x].split(":");
+
+			
+			actionName = arrs[3];
+			actionVisib = arrs[4];
+
+			
+		
+			String[] entitySecurity;
+			String eSec = "";
+
+			if(ent!=null){
+				if(ent.getActions()!=null){
+					for(EntityAction ea:ent.getActions()){
+						if(ea!=null){
+							if(ea.getActionName().equals(actionName)){
+								ea.setVisible(actionVisib);
+								break;
+							}
+						}
+					}
+				}
+			}
+				
+			
+		}
+		ent.setRead(entityPerm);
+		
+		
+
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonString2 = "";
+		try {
+			jsonString2 = mapper.writeValueAsString(profile);
+		} catch (JsonGenerationException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		try {
+			profDoc.replaceItemValue("JsonString", jsonString2);
+			profDoc.save();
+		} catch (NotesException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -877,7 +975,10 @@ public class ProfileEdit {
 		String groupName = "";
 		String groupActionName = "";
 		String actionSec = "";
-		for (int i = 1; i < arr.length; i++) {
+		
+		Feature feat = null;
+		ArrayList<Feature> features = null;
+		for (int i = 0; i < arr.length; i++) {
 			arrs = arr[i].split(":");
 			moduleName = arrs[0];
 			groupName = arrs[1];
@@ -890,7 +991,7 @@ public class ProfileEdit {
 
 			}
 			GroupPermission group = null;
-			
+			features = module.getFeatures();
 			for (GroupPermission g : module.getGroups()) {
 				if (g.getName().equals(groupName)) {
 					group = g;
@@ -907,7 +1008,10 @@ public class ProfileEdit {
 				if (groupActionName.equals(ge.getName())) {
 
 					ge.setVisible(Character.toString(actionSec.charAt(0)));
-					
+					if(ge.getType().equals("f")){
+						feat = saveGroupFeature(features,ge.getName());
+						feat.setVisible(Character.toString(actionSec.charAt(0)));
+					}
 					
 				}
 			}
@@ -936,6 +1040,20 @@ public class ProfileEdit {
 		}
 		// System.out.println("inside save 8");
 
+	}
+	private Feature saveGroupFeature(ArrayList<Feature> features, String featureName){
+		
+		if(features==null ||featureName==null){
+			 return null;
+		}
+		for(Feature feature:features){
+			if(feature!=null){
+				if(feature.getFeatureName().equals(featureName)){
+					return feature;
+				}
+			}
+		}
+		return null;
 	}
 	/*
 	 * public void saveFeaturePerm(String profileName, String moduleName,String
@@ -1337,6 +1455,25 @@ public class ProfileEdit {
 
 		return "0";
 		
+	}
+	
+	private ArrayList<String> getGroupNames(Module module){
+		ArrayList<String> groupNames = new ArrayList<String>();
+		
+		if(module==null){
+			return null;
+		}
+		ArrayList<GroupPermission> groups = module.getGroups();
+		if (groups != null) {
+			for(GroupPermission gp:groups){
+				if(gp!=null){
+					groupNames.add(gp.getName());
+				}
+			}
+			
+			
+		}
+		return groupNames;
 	}
 	public int getNumberOfFields(String profileName, String moduleName,
 			String entityName) {
@@ -2033,6 +2170,156 @@ public class ProfileEdit {
 		}
 		return setGroupViewScopeCrud(getJsonProfileObj(jsonString),moduleName);
 	}
+	
+	/**
+	 *This method will be used in getting the feature permissions which is not categorized into gruops or menu items, i.e single features which is seen in the view
+	 *
+	 *@param profileName
+	 *@param moduleName
+	 *@return
+	 */
+	public Vector<String> getSingleFeaturePerm(String profileName, String moduleName){
+		Document profDoc = getProfileDoc(getSecurityDatabase(), profileName);
+	
+		
+		Module module = null;
+		
+		String jsonString = "";
+		try {
+			jsonString = profDoc.getItemValueString("JsonString");
+		} catch (NotesException e) {
+			e.printStackTrace();
+		}
+		ProfileJson profile = getJsonProfileObj(jsonString);
+		
+		for (Module mod : profile.getModules()) {
+			if (mod.getModuleName().equals(moduleName)) {
+				module = mod;
+				break;
+			}
+
+		}
+		
+		ArrayList<String> groupNames = getGroupNames(module);
+		ArrayList<String> groupFeatureNames = getFeatureNames(groupNames,module);
+		ArrayList<String> otherFeatureNames=getOtherFeatures(groupFeatureNames,module);
+		return getFeaturePerm(module.getFeatures(),otherFeatureNames);
+		
+	}
+	
+	private Vector<String> getFeaturePerm(ArrayList<Feature> features, ArrayList<String> otherFeatureNames){
+		Vector<String> featurePerm = new Vector<String>();
+		
+		if(features==null || otherFeatureNames==null){
+			return null;
+		}
+		for(String featureN:otherFeatureNames){
+			if(featureN!=null){
+				for(Feature f:features){
+					if(f!=null){
+						if(f.getFeatureName().equals(featureN)){
+							featurePerm.add(f.getFeatureName() + ":"
+									+ f.getVisible());
+						}
+						
+					}
+				}
+			}
+			
+		}
+		Map viewScope = SessionContext.getViewScope();
+		viewScope.put("singleFPerm", featurePerm);
+		viewScope.put("singleFN", featurePerm.size());
+		return featurePerm;
+		
+		
+	}
+	private ArrayList<String> getOtherFeatures(ArrayList<String> groupFeatureNames,Module module){
+		if(module==null){
+			return null;
+		}
+		ArrayList<String> allFeatureNames = getAllFtNames(module);
+		if(groupFeatureNames!=null){
+			allFeatureNames.removeAll(groupFeatureNames);
+		}
+		 
+		 return allFeatureNames;
+		
+		
+	}
+	private ArrayList<String> getAllFtNames(Module module){
+		ArrayList<Feature> features = module.getFeatures();
+		ArrayList<String> featureNames = new ArrayList<String>();
+		if(features==null){
+			return null;
+		}
+		for(Feature feat:features){
+			if(feat!=null){
+				featureNames.add(feat.getFeatureName());
+			}
+		}
+		return featureNames;
+		
+		
+		
+	}
+	
+	private ArrayList<String> getFeatureNames(ArrayList<String> groupNames, Module module){
+		ArrayList<String> featureNames = new ArrayList<String>();
+		ArrayList<String> featuresInGroup = null;
+		if(groupNames==null){
+			return null;
+		}
+		ArrayList<GroupPermission> groups = module.getGroups();
+		if(groups==null){
+			return null;
+		}
+		
+		for(String g:groupNames){
+			if(g!=null){
+				featuresInGroup = getFeaturesInGroup(g,groups);
+				if(featuresInGroup!=null){
+					featureNames.addAll(getFeaturesInGroup(g,groups));
+				}
+				
+			}
+		}
+		return featureNames;
+		
+	}
+	private ArrayList<String> getFeaturesInGroup(String groupName,ArrayList<GroupPermission> groups ){
+		ArrayList<String> features = new ArrayList<String>();
+		GroupPermission group = null;
+		if(groupName!=null && groups==null){
+			return null;
+		}
+		
+		
+			for(GroupPermission gp:groups){
+				if(gp!=null){
+					if(gp.getName().equals(groupName)){
+						group = gp;
+					}
+				}
+			}
+		
+			if(group.getEntries()==null){
+				return null;
+			}
+			
+			for(GroupEntry ge:group.getEntries()){
+				if(ge!=null){
+					features.add(ge.getName());
+				}
+			}
+			
+			return features;
+			
+		
+		
+	}
+	
+	
 	private Vector<String> setGroupViewScopeCrud(ProfileJson profile,String moduleName) {
 		Vector<String> groupSecurity = new Vector<String>();
 		Module module = null;
@@ -2046,7 +2333,7 @@ public class ProfileEdit {
 
 		if(module.getGroups()!=null){
 			for(GroupPermission gp : module.getGroups()){
-				if(gp!=null){
+				if(gp!=null && gp.getEntries()!=null){
 					groupSecurity.add(gp.getName()+":"+gp.getVisible());
 				}
 			}
@@ -2105,4 +2392,6 @@ public class ProfileEdit {
 		}
 
 	}
+	
+	
 }

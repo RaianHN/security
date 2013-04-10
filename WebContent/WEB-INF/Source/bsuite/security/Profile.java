@@ -225,6 +225,23 @@ public class Profile{
 		}
 		return null;
 	}
+	private EntityAction getEntityAction(Entity entity, String actionName){
+		if(entity==null ){
+			return null;
+		}
+		ArrayList<EntityAction> eactions = entity.getActions();
+		if(eactions==null){
+			return null;
+		}
+		for(EntityAction ea:eactions){
+			if(ea!=null){
+				if(ea.getActionName().equals(actionName)){
+					return ea;
+				}
+			}
+		}
+		return null;
+	}
 	private GroupPermission getViewAction(String moduleName, String viewActionName){
 		Module module = getModule(moduleName);
 		for(GroupPermission gp:module.getGroups()){
@@ -426,6 +443,18 @@ public class Profile{
 			return true;
 		}else{
 		return false;
+		}
+	}
+	
+	public boolean isEntityActionVisible(String moduleName, String entityName,String actionName){
+		EntityAction ea = getEntityAction(getEntity(moduleName, entityName), actionName);
+		if(ea==null){
+			return true;
+		}
+		if(ea.getVisible().equals("1")){
+			return true;
+		}else{
+			return false;
 		}
 	}
 

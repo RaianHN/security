@@ -17,4 +17,6 @@
 		<xp:inputHidden id="inputNGroups"></xp:inputHidden>
 		<xp:inputHidden id="inputNActions"></xp:inputHidden>
 		
-	</xp:view>
+		<xp:inputHidden id="singleFN" value="#{viewScope.singleFN}"></xp:inputHidden>
+
+</xp:view>

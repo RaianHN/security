@@ -48,6 +48,10 @@ public class DefineModule {
 	 *            document in the current database
 	 */
 	private void createModuleDocument(String moduleJson, String moduleName) {
+		if(isDuplicateModule(moduleName)){
+			System.out.println("duplicate module "+moduleName+"hence not added");
+			return;
+		}
 
 		try {
 			Document doc = Utility.getCurrentDatabase().createDocument();
@@ -1261,5 +1265,64 @@ public class DefineModule {
 			} catch (NotesException e) {
 				e.printStackTrace();
 			}			
+	}
+	public boolean validateModuleJson(String moduleJson){
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			Module module = mapper.readValue(moduleJson, Module.class);
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+			return false;
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+			return false;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	public boolean uploadModuleSchema(String moduleJson){
+		ObjectMapper mapper = new ObjectMapper();
+		Module module;
+		try {
+			module = mapper.readValue(moduleJson, Module.class);
+			String moduleName = module.getModuleName();
+			createModuleDocument(moduleJson, moduleName);
+			Deploy dep = new bsuite.configure.Deploy();
+			if(moduleName!=null){
+			dep.updateModule(moduleName);
+			try {
+				dep.updateAllProfiles();
+			} catch (NotesException e) {
+				e.printStackTrace();
+			}
+			}
+		} catch (JsonParseException e) {
+			
+			e.printStackTrace();
+			return false;
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+			return false;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	public boolean isDuplicateModule(String moduleName){
+		View modulesView;
+		try {
+			modulesView = currentdb.getView("Modules");
+			Document moduleDoc = modulesView.getDocumentByKey(moduleName);
+			if(moduleDoc!=null){
+				return true;
+			}
+		} catch (NotesException e) {
+			e.printStackTrace();
+		}
+		return false;
+		
 	}
 }

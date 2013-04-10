@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+
+	<xp:inputTextarea id="inputUploadSchema"
+		style="width:178.0px;height:184.0px">
+	</xp:inputTextarea>
+	<xp:br></xp:br>
+	<xp:button value="Upload" id="button1">
+		<xp:eventHandler event="onclick" submit="true"
+			refreshMode="partial" refreshId="computedField1">
+			<xp:this.action><![CDATA[#{javascript:viewScope.err = null;
+var defModule = new bsuite.configure.DefineModule();
+var moduleSchema = getComponent("inputUploadSchema").getValue();
+var valid = defModule.validateModuleJson(moduleSchema);
+if(!valid){
+viewScope.err = "Please check the json schema, there is an error in the structure goto http://json.parser.online.fr/ and paste your schema to validate"
+}else{
+defModule.uploadModuleSchema(moduleSchema);
+viewScope.err = "Successfully uploaded"
+}
+}]]></xp:this.action>
+		</xp:eventHandler></xp:button>
+	<xp:text escape="true" id="computedField1" value="#{viewScope.err}"></xp:text></xp:view>
