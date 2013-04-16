@@ -4,6 +4,9 @@
 	dojoParseOnLoad="true">
 
 
+	<xp:this.beforePageLoad><![CDATA[#{javascript:viewScope.remove("moduleName")
+viewScope.remove("selectedProfile");
+}]]></xp:this.beforePageLoad>
 	<xc:ccDefineProfile id="saveProfile"></xc:ccDefineProfile>
 	<xp:br></xp:br>
 
@@ -82,4 +85,5 @@ return true;
 		action="#{javascript:loadProfile();}">
 
 	</xp:eventHandler>
-</xp:view>
+	<xp:eventHandler event="onClientLoad" submit="true"
+		refreshMode="norefresh"></xp:eventHandler></xp:view>

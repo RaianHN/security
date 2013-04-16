@@ -1,4 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xp:view xmlns:xp="http://www.ibm.com/xsp/core">define
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xc="http://www.ibm.com/xsp/custom"
+	xmlns:xe="http://www.ibm.com/xsp/coreex">
+	<xe:djTabContainer id="djTabContainer1"
+		style="width:100%;height:682px;">
+		<xe:djTabPane id="djTabPane2" title="Schema">
+			<xc:ccUpdateModule></xc:ccUpdateModule>
+		</xe:djTabPane>
+		<xe:djTabPane id="djTabPane1" title="Feature Grouping">
+		<xc:ccGroupDefine></xc:ccGroupDefine>
+	
+		</xe:djTabPane>
+	</xe:djTabContainer>
+	<xp:br></xp:br>
+	
 
 </xp:view>

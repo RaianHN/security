@@ -25,7 +25,7 @@
 
 			</xp:td>
 		</xp:tr>
-		<xp:repeat id="repeat1" rows="30" var="user1">
+		<xp:repeat id="repeat1" var="user1">
 			<xp:this.value><![CDATA[${javascript:var path =database.getFilePath();
 var dbpath =  @LeftBack(path ,"/");
 //var db= dbpath+"/Security.nsf";

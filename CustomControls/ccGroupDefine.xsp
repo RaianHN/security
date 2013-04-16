@@ -2,13 +2,17 @@
 <xp:view xmlns:xp="http://www.ibm.com/xsp/core"
 	xmlns:xc="http://www.ibm.com/xsp/custom">
 
+	
+	
+	
 	<xp:this.beforePageLoad><![CDATA[#{javascript:var profName = "Admin";
 var profile = new bsuite.jsonparsing.ProfileEdit();
 if(profName!=null){
 viewScope.moduleNames =  profile.getModuleNames(profName);
+viewScope.moduleName = "-Select Module-";
+viewScope.selectedGroup = "-Select Group-";
+
 }}]]></xp:this.beforePageLoad>
-	<xc:ccDebugToolbar load="true" defaultCollapsed="false" collapseTo="left">
-	</xc:ccDebugToolbar>
 	<xp:br></xp:br>
 	
 
@@ -19,20 +23,28 @@ viewScope.moduleNames =  profile.getModuleNames(profName);
 						<xp:this.value><![CDATA[#{javascript:viewScope.moduleNames}]]></xp:this.value>
 					</xp:selectItems>
 					<xp:eventHandler event="onchange" submit="true"
-						refreshMode="complete">
+						refreshMode="partial" refreshId="mainDiv">
 						<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("comboBox1").getValue();
 var schemaObj = new bsuite.configure.DefineModule();
 
 if(moduleName!=null){
+viewScope.moduleName = moduleName;
 viewScope.Features = schemaObj.getFeatures(moduleName);
 viewScope.Entities = schemaObj.getEntityNames(moduleName);
 viewScope.groupNames = schemaObj.getGroupNames(moduleName);
 viewScope.entFeatList = schemaObj.getEntFeatList(moduleName);
 
 }}]]></xp:this.action>
-					</xp:eventHandler></xp:comboBox><xp:div align="right">
+					</xp:eventHandler></xp:comboBox>
+	<xp:br></xp:br>
+	<xp:div id="mainDiv">
+	<xp:div align="left">
 		<xp:table>
-			<xp:tr>
+			<xp:this.rendered><![CDATA[#{javascript:if(viewScope.moduleName=="-Select Module-"){
+return false;
+}else{
+return true;
+}}]]></xp:this.rendered><xp:tr>
 				<xp:td>Features</xp:td>
 				<xp:td>Entities</xp:td>
 				<xp:td>Groups</xp:td>
@@ -85,70 +97,87 @@ return vals;
 						<xp:selectItems>
 							<xp:this.value><![CDATA[#{javascript:viewScope.groupEntries}]]></xp:this.value>
 						</xp:selectItems>
-					</xp:listBox></xp:td>
+					</xp:listBox>
+				</xp:td>
 			</xp:tr>
-		</xp:table></xp:div>
+		</xp:table>
+	</xp:div>
 	<xp:br></xp:br>
-	<xp:table>
-		<xp:tr>
-			<xp:td>
-				
-			</xp:td>
-			<xp:td>
-				<xp:inputText id="inputText1"></xp:inputText>
-			</xp:td>
-			<xp:td>
-				<xp:comboBox id="comboBox2">
-					<xp:selectItem itemLabel="-Select Group-"></xp:selectItem>
-					<xp:selectItems>
-						<xp:this.value><![CDATA[#{javascript:viewScope.groupNames}]]></xp:this.value>
-					</xp:selectItems>
-					<xp:eventHandler event="onchange" submit="true"
-						refreshMode="partial" refreshId="listBox5">
-						<xp:this.action><![CDATA[#{javascript:var selectedGroup = getComponent("comboBox2").getValue();
-viewScope.selectedGroup = selectedGroup;
-var moduleName = getComponent("comboBox1").getValue();
-var schemaObj = new bsuite.configure.DefineModule();
+	<xp:div>
+		<xp:this.rendered><![CDATA[#{javascript:if(viewScope.moduleName=="-Select Module-"){
+return false;
+}else{
+return true;
+}}]]></xp:this.rendered>
+		<xp:table>
+			<xp:tr>
 
-viewScope.groupEntries = schemaObj.getGroupEntryNames(moduleName,selectedGroup);
-}]]></xp:this.action>
-					</xp:eventHandler></xp:comboBox></xp:td>
-		</xp:tr>
-		<xp:tr>
-			<xp:td></xp:td>
-			<xp:td>
-				<xp:button value="Create Group" id="button1">
-					<xp:eventHandler event="onclick" submit="true"
-						refreshMode="complete">
-						<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("comboBox1").getValue();
+				<xp:td>
+					<xp:inputText id="inputText1"></xp:inputText>
+				</xp:td>
+				<xp:td>
+					<xp:button value="Create Group" id="button1">
+						<xp:eventHandler event="onclick" submit="true"
+							refreshMode="partial" refreshId="mainDiv">
+							<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("comboBox1").getValue();
 var groupName = getComponent("inputText1").getValue();
 var schemaObj = new bsuite.configure.DefineModule();
 
 
 if(groupName!="" && groupName!=null){
 schemaObj.addFeatureGroup(moduleName,groupName);
+viewScope.groupNames = schemaObj.getGroupNames(moduleName);
 }
 
 
 }]]></xp:this.action>
-					</xp:eventHandler></xp:button>
-			</xp:td>
-			<xp:td></xp:td>
-		</xp:tr>
-	</xp:table>
-	<xp:br></xp:br>
-	<xp:br></xp:br>
-	<xp:table id="groupEditTable">
-		<xp:tr>
-			<xp:td>
-				<xp:inputText id="inputText2" defaultValue="#{javascript:return viewScope.selectedGroup;}">
-				</xp:inputText>
-			</xp:td>
-			<xp:td>
-				<xp:button value="Edit Group" id="button3">
-					<xp:eventHandler event="onclick" submit="true"
-						refreshMode="complete">
-						<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("comboBox1").getValue();
+						</xp:eventHandler>
+					</xp:button>
+				</xp:td>
+			</xp:tr>
+
+		</xp:table>
+		<xp:br></xp:br>
+		<xp:comboBox id="comboBox2">
+			<xp:selectItem itemLabel="-Select Group-"></xp:selectItem>
+			<xp:selectItems>
+				<xp:this.value><![CDATA[#{javascript:viewScope.groupNames}]]></xp:this.value>
+			</xp:selectItems>
+			<xp:eventHandler event="onchange" submit="true"
+				refreshMode="partial" refreshId="mainDiv">
+				<xp:this.action><![CDATA[#{javascript:var selectedGroup = getComponent("comboBox2").getValue();
+viewScope.selectedGroup = selectedGroup;
+var moduleName = getComponent("comboBox1").getValue();
+var schemaObj = new bsuite.configure.DefineModule();
+
+viewScope.groupEntries = schemaObj.getGroupEntryNames(moduleName,selectedGroup);
+}]]></xp:this.action>
+			</xp:eventHandler>
+		</xp:comboBox>
+		<xp:table id="groupEditTable">
+			
+			<xp:tr>
+				<xp:td>
+
+				</xp:td>
+				<xp:td></xp:td>
+				<xp:td></xp:td>
+			</xp:tr>
+			<xp:tr>
+
+				<xp:td>
+					<xp:inputText id="inputText2"><xp:this.defaultValue><![CDATA[#{javascript:var val = viewScope.selectedGroup
+if(val!="-Select Group-"){
+return val;
+}else{
+return "";
+}}]]></xp:this.defaultValue></xp:inputText>
+				</xp:td>
+				<xp:td>
+					<xp:button value="Edit Group" id="button3">
+						<xp:eventHandler event="onclick" submit="true"
+							refreshMode="partial" refreshId="mainDiv" id="eventHandler1">
+							<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("comboBox1").getValue();
 var groupName = getComponent("inputText1").getValue();
 var newName = getComponent("inputText2").getValue();
 var schemaObj = new bsuite.configure.DefineModule();
@@ -156,42 +185,50 @@ var schemaObj = new bsuite.configure.DefineModule();
 
 if(groupName!="" && groupName!=null){
 schemaObj.renameFeatureGroup(moduleName,groupName,newName);
+viewScope.groupNames = schemaObj.getGroupNames(moduleName);
 }}]]></xp:this.action>
-					</xp:eventHandler></xp:button>
-			</xp:td>
-			<xp:td>
-				<xp:button value="Delete Group" id="button4">
-					<xp:eventHandler event="onclick" submit="true"
-						refreshMode="complete">
-						<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("comboBox1").getValue();
+						</xp:eventHandler>
+					</xp:button>
+				</xp:td>
+				<xp:td>
+					<xp:button value="Delete Group" id="button4">
+						<xp:eventHandler event="onclick" submit="true"
+							refreshMode="partial" refreshId="mainDiv" id="eventHandler2">
+							<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("comboBox1").getValue();
 var groupName = getComponent("comboBox2").getValue();
 var schemaObj = new bsuite.configure.DefineModule();
 
 
 if(groupName!="" && groupName!=null){
 schemaObj.removeFeatureGroup(moduleName,groupName);
+viewScope.groupNames = schemaObj.getGroupNames(moduleName);
 }}]]></xp:this.action>
-					</xp:eventHandler></xp:button></xp:td>
-		</xp:tr>
-		<xp:tr>
-			<xp:td>
-				<xp:listBox id="listBox1">
+						</xp:eventHandler>
+					</xp:button>
+				</xp:td>
+			</xp:tr>
+			<xp:tr>
+				<xp:td>
+					<xp:listBox id="listBox1" loaded="false">
 
-					<xp:selectItems id="selectItems2">
-						<xp:this.value><![CDATA[#{javascript:viewScope.groupEntries}]]></xp:this.value>
-					</xp:selectItems>
-				</xp:listBox>
-			</xp:td>
-			<xp:td></xp:td>
-			<xp:td></xp:td>
-		</xp:tr>
-		<xp:tr>
-			<xp:td>
-				<xp:inputText id="inputText3"></xp:inputText>
-				<xp:button value="Add Entry" id="button2">
-					<xp:eventHandler event="onclick" submit="true"
-						refreshMode="complete">
-						<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("comboBox1").getValue();
+						<xp:selectItems id="selectItems2">
+							<xp:this.value><![CDATA[#{javascript:viewScope.groupEntries}]]></xp:this.value>
+						</xp:selectItems>
+					</xp:listBox>
+				</xp:td>
+				<xp:td></xp:td>
+				<xp:td></xp:td>
+			</xp:tr>
+			<xp:tr>
+				<xp:td>
+					<xp:inputText id="inputText3"></xp:inputText>
+
+				</xp:td>
+				<xp:td>
+					<xp:button value="Add Entry" id="button2">
+						<xp:eventHandler event="onclick" submit="true"
+							refreshMode="partial" refreshId="mainDiv" id="eventHandler3">
+							<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("comboBox1").getValue();
 var groupName = getComponent("comboBox2").getValue();
 var entryName = getComponent("inputText3").getValue();
 var index = entryName.indexOf(":");
@@ -209,12 +246,15 @@ dBar.debug("name "+name);
 
 var schemaObj = new bsuite.configure.DefineModule();
 
-schemaObj.addObjectToGrp(moduleName,groupName,type,name);}]]></xp:this.action>
-					</xp:eventHandler></xp:button>
-			</xp:td>
-			<xp:td></xp:td>
-			<xp:td></xp:td>
-		</xp:tr>
-	</xp:table>
+schemaObj.addObjectToGrp(moduleName,groupName,type,name);
+viewScope.groupEntries = schemaObj.getGroupEntryNames(moduleName,selectedGroup);}]]></xp:this.action>
+						</xp:eventHandler>
+					</xp:button>
+				</xp:td>
+				<xp:td></xp:td>
+			</xp:tr>
+		</xp:table>
+	</xp:div>
 	<xp:br></xp:br>
+	</xp:div>
 	</xp:view>

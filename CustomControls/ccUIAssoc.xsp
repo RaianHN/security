@@ -2,4 +2,4 @@
 <xp:view xmlns:xp="http://www.ibm.com/xsp/core"
 	xmlns:xc="http://www.ibm.com/xsp/custom">
 
-	<xc:cc_ShowDataSharing></xc:cc_ShowDataSharing></xp:view>
+	<xc:associateUser></xc:associateUser></xp:view>

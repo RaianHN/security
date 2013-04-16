@@ -24,7 +24,7 @@
 
 
 
-	<xc:ccDebugToolbar load="false" defaultCollapsed="false"
+	<xc:ccDebugToolbar load="true" defaultCollapsed="false"
 		collapseTo="left">
 	</xc:ccDebugToolbar>
 	<xp:div id="lotusFrame" styleClass="lotusFrame">

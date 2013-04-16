@@ -13,7 +13,8 @@
 					<xp:tabPanel label="Profiles" id="viewProfile"
 						selectedTabStyleClass="lotusSelected">
 						<xp:eventHandler event="onclick" submit="true"
-							refreshMode="partial" refreshId="lotusMain">
+							refreshMode="partial" refreshId="lotusMain" onStart="showWait();"
+							onComplete="hideWait();" onError="showError();">
 							<xp:this.action><![CDATA[#{javascript:viewScope.menuSelected = "viewProfile";
 getComponent("dync").show("profile");}]]></xp:this.action>
 						</xp:eventHandler>
@@ -22,7 +23,8 @@ getComponent("dync").show("profile");}]]></xp:this.action>
 					<xp:tabPanel label="Roles" id="viewRoles"
 						selectedTabStyleClass="lotusSelected">
 						<xp:eventHandler event="onclick" submit="true"
-							refreshMode="partial" refreshId="lotusMain">
+							refreshMode="partial" refreshId="lotusMain" onStart="showWait();"
+							onComplete="hideWait();" onError="showError();">
 							<xp:this.action><![CDATA[#{javascript:viewScope.menuSelected = "viewRoles";
 getComponent("dync").show("role");
 
@@ -30,9 +32,11 @@ getComponent("dync").show("role");
 						</xp:eventHandler>
 					</xp:tabPanel>
 					<xp:tabPanel label="Organizational Settings"
-						id="viewOrg" selectedTabStyleClass="lotusSelected">
+						id="viewOrg" selectedTabStyleClass="lotusSelected"
+						loaded="false">
 						<xp:eventHandler event="onclick" submit="true"
-							refreshMode="partial" refreshId="lotusMain">
+							refreshMode="partial" refreshId="lotusMain" onStart="showWait();"
+							onComplete="hideWait();" onError="showError();">
 							<xp:this.action><![CDATA[#{javascript:viewScope.menuSelected = "viewOrg";
 getComponent("dync").show("org")}]]></xp:this.action>
 						</xp:eventHandler>
@@ -40,7 +44,8 @@ getComponent("dync").show("org")}]]></xp:this.action>
 					<xp:tabPanel label="Configuration"
 						id="viewConfigure" selectedTabStyleClass="lotusSelected">
 						<xp:eventHandler event="onclick" submit="true"
-							refreshMode="partial" refreshId="lotusMain">
+							refreshMode="partial" refreshId="lotusMain" onStart="showWait();"
+							onComplete="hideWait();" onError="showError();">
 							<xp:this.action><![CDATA[#{javascript:viewScope.menuSelected = "viewConfigure";
 getComponent("dync").show("config");}]]></xp:this.action>
 						</xp:eventHandler>
@@ -48,9 +53,19 @@ getComponent("dync").show("config");}]]></xp:this.action>
 					<xp:tabPanel id="viewDefine" label="Define Schema"
 						selectedTabStyleClass="lotusSelected">
 						<xp:eventHandler event="onclick" submit="true"
-							refreshMode="partial" refreshId="lotusMain">
+							refreshMode="partial" refreshId="lotusMain" onStart="showWait();"
+							onComplete="hideWait();" onError="showError();">
 							<xp:this.action><![CDATA[#{javascript:viewScope.menuSelected = "viewDefine";
 getComponent("dync").show("define")}]]></xp:this.action>
+						</xp:eventHandler>
+					</xp:tabPanel>
+					<xp:tabPanel id="viewAssoUser" label="Associate Users"
+						selectedTabStyleClass="lotusSelected">
+						<xp:eventHandler event="onclick" submit="true"
+							refreshMode="partial" refreshId="lotusMain" onStart="showWait();"
+							onComplete="hideWait();" onError="showError();">
+							<xp:this.action><![CDATA[#{javascript:viewScope.menuSelected = "viewAssoUser";
+getComponent("dync").show("associate")}]]></xp:this.action>
 						</xp:eventHandler>
 					</xp:tabPanel>
 					
