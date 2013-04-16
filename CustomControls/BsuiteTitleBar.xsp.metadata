@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257A11002504D0" version="8.5" xmlns="http://www.lotus.com/dxl">
-<noteinfo noteid="187e" sequence="6" unid="EEA7C957A82D8E5065257A150037EF66">
-<created><datetime>20120606T154057,66+0530</datetime></created>
-<modified><datetime>20120606T154149,52+0530</datetime></modified>
-<revised><datetime>20120606T154149,51+0530</datetime></revised>
-<lastaccessed><datetime>20120606T154149,52+0530</datetime></lastaccessed>
-<addedtofile><datetime>20120606T154057,67+0530</datetime></addedtofile></noteinfo>
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257B4F001E0F81" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="236" sequence="8" unid="8569922AFE05997965257B4F001E4230">
+<created><datetime>20130416T110030,24+0530</datetime></created>
+<modified><datetime>20130416T110511,49+0530</datetime></modified>
+<revised><datetime>20130416T110511,48+0530</datetime></revised>
+<lastaccessed><datetime>20130416T110511,49+0530</datetime></lastaccessed>
+<addedtofile><datetime>20130416T110030,25+0530</datetime></addedtofile></noteinfo>
 <updatedby><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
 <wassignedby><name>CN=Jaya K Prakash/O=Weberon</name></wassignedby>
 <item name="$TITLE"><text>BsuiteTitleBar.xsp</text></item>
@@ -14,8 +14,8 @@
 <item name="$FileNames" sign="true"><text>BsuiteTitleBar.xsp</text></item>
 
 
-<item name="$DesignerVersion"><text>8.5.1</text></item>
 
+<item name="$DesignerVersion"><text>8.5.1</text></item>
 
 
 

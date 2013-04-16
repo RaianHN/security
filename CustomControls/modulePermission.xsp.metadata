@@ -1,15 +1,17 @@
-<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257A1A004C4EAD" version="8.5" xmlns="http://www.lotus.com/dxl">
-<noteinfo noteid="1546" sequence="157" unid="9B855DA95750958565257A1C00370AB5">
-<created><datetime>20120613T153112,21+0530</datetime></created>
-<modified><datetime>20120614T125755,10+0530</datetime></modified>
-<revised><datetime>20120614T125755,09+0530</datetime></revised>
-<lastaccessed><datetime>20120614T125755,10+0530</datetime></lastaccessed>
-<addedtofile><datetime>20120613T153112,22+0530</datetime></addedtofile></noteinfo>
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257B4F001E0F81" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="3b6" sequence="6" unid="31037130324BD18565257B4F001E5FA5">
+<created><datetime>20130416T110145,65+0530</datetime></created>
+<modified><datetime>20130416T110207,37+0530</datetime></modified>
+<revised><datetime>20130416T110207,36+0530</datetime></revised>
+<lastaccessed><datetime>20130416T110207,37+0530</datetime></lastaccessed>
+<addedtofile><datetime>20130416T110145,66+0530</datetime></addedtofile></noteinfo>
 <updatedby><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
 <wassignedby><name>CN=Jaya K Prakash/O=Weberon</name></wassignedby>
-<item name="$Flags"><text>gC~4;</text></item>
 <item name="$TITLE"><text>modulePermission.xsp</text></item>
+<item name="$Flags"><text>gC~4;</text></item>
 
+
+<item name="$FileNames" sign="true"><text>modulePermission.xsp</text></item>
 
 
 <item name="$DesignerVersion"><text>8.5.2</text></item>
@@ -19,5 +21,4 @@
 
 
 
-
-<item name="$FileNames" sign="true"><text>modulePermission.xsp</text></item></note>
+</note>

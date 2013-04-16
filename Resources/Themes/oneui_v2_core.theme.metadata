@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257AC30021844F" version="8.5" xmlns="http://www.lotus.com/dxl">
-<noteinfo noteid="800a" sequence="7" unid="26659F4C47B5EC2765257B10003C9E48">
-<created><datetime>20130212T163206,80+0530</datetime></created>
-<modified><datetime>20130216T170607,80+0530</datetime></modified>
-<revised><datetime>20130216T170607,79+0530</datetime></revised>
-<lastaccessed><datetime>20130216T170607,80+0530</datetime></lastaccessed>
-<addedtofile><datetime>20130212T163209,19+0530</datetime></addedtofile></noteinfo>
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257B4F001E0F81" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="6c2" sequence="1" unid="118D599FBA4652B165257B4F001EED78">
+<created><datetime>20130416T110748,72+0530</datetime></created>
+<modified><datetime>20130416T110750,88+0530</datetime></modified>
+<revised><datetime>20130416T110750,87+0530</datetime></revised>
+<lastaccessed><datetime>20130416T110750,88+0530</datetime></lastaccessed>
+<addedtofile><datetime>20130416T110750,88+0530</datetime></addedtofile></noteinfo>
 <updatedby><name>CN=Muhammad Sabir/O=AAC</name><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
 <wassignedby><name>CN=Jaya K Prakash/O=Weberon</name></wassignedby>
 <item name="$Comment"><text>This theme references the core classes for One UI v2</text></item>

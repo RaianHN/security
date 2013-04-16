@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257AC30021844F" version="8.5" xmlns="http://www.lotus.com/dxl">
-<noteinfo noteid="76a6" sequence="1" unid="A1A8DAC7E6D27B5765257B1000282FB0">
-<created><datetime>20130212T124856,48+0530</datetime></created>
-<modified><datetime>20130212T125123,11+0530</datetime></modified>
-<revised><datetime>20130212T125123,10+0530</datetime></revised>
-<lastaccessed><datetime>20130212T125123,11+0530</datetime></lastaccessed>
-<addedtofile><datetime>20130212T125123,11+0530</datetime></addedtofile></noteinfo>
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257B4F001E0F81" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="582" sequence="1" unid="BFF41170141F2DED65257B4F001ECC3E">
+<created><datetime>20130416T110623,66+0530</datetime></created>
+<modified><datetime>20130416T110639,10+0530</datetime></modified>
+<revised><datetime>20130416T110639,09+0530</datetime></revised>
+<lastaccessed><datetime>20130416T110639,10+0530</datetime></lastaccessed>
+<addedtofile><datetime>20130416T110639,10+0530</datetime></addedtofile></noteinfo>
 <updatedby><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
 <wassignedby><name>CN=Jaya K Prakash/O=Weberon</name></wassignedby>
 <item name="$TITLE"><text>Logo Bsuite.gif.metadata.orig</text></item>

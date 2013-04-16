@@ -1,23 +1,22 @@
-<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257AC30021844F" version="8.5" xmlns="http://www.lotus.com/dxl">
-<noteinfo noteid="6fea" sequence="55" unid="70D3C6C8FC097DA465257AEF003A37DD">
-<created><datetime>20130110T160553,89+0530</datetime></created>
-<modified><datetime>20130129T194820,00+0530</datetime></modified>
-<revised><datetime>20130129T194819,99+0530</datetime></revised>
-<lastaccessed><datetime>20130129T194820,00+0530</datetime></lastaccessed>
-<addedtofile><datetime>20130110T160553,92+0530</datetime></addedtofile></noteinfo>
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257B4F001E0F81" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="316" sequence="6" unid="A5CC18594C54FAC665257B4F001E5278">
+<created><datetime>20130416T110111,92+0530</datetime></created>
+<modified><datetime>20130416T110204,89+0530</datetime></modified>
+<revised><datetime>20130416T110204,88+0530</datetime></revised>
+<lastaccessed><datetime>20130416T110204,89+0530</datetime></lastaccessed>
+<addedtofile><datetime>20130416T110111,93+0530</datetime></addedtofile></noteinfo>
 <updatedby><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
 <wassignedby><name>CN=Jaya K Prakash/O=Weberon</name></wassignedby>
-<item name="$Flags"><text>gC~4;</text></item>
 <item name="$TITLE"><text>ccProfileRoleView.xsp</text></item>
-<item name="$Comment" sign="true"><text>This shows the role and profile the user is associate dto</text></item>
-
-
-
-
-
+<item name="$Flags"><text>gC~4;</text></item>
 
 
 <item name="$FileNames" sign="true"><text>ccProfileRoleView.xsp</text></item>
+
+
 <item name="$DesignerVersion"><text>8.5</text></item>
+
+
+
 
 </note>

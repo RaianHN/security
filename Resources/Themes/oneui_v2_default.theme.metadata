@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257AC30021844F" version="8.5" xmlns="http://www.lotus.com/dxl">
-<noteinfo noteid="77f2" sequence="7" unid="D12FFAF1FD1A020765257B100037D374">
-<created><datetime>20130212T153946,12+0530</datetime></created>
-<modified><datetime>20130216T170559,75+0530</datetime></modified>
-<revised><datetime>20130216T170559,74+0530</datetime></revised>
-<lastaccessed><datetime>20130216T170559,75+0530</datetime></lastaccessed>
-<addedtofile><datetime>20130212T153946,13+0530</datetime></addedtofile></noteinfo>
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257B4F001E0F81" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="6c6" sequence="1" unid="D6E856227D1AA87965257B4F001EED79">
+<created><datetime>20130416T110748,73+0530</datetime></created>
+<modified><datetime>20130416T110751,07+0530</datetime></modified>
+<revised><datetime>20130416T110751,06+0530</datetime></revised>
+<lastaccessed><datetime>20130416T110751,07+0530</datetime></lastaccessed>
+<addedtofile><datetime>20130416T110751,07+0530</datetime></addedtofile></noteinfo>
 <updatedby><name>CN=Muhammad Sabir/O=AAC</name><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
 <wassignedby><name>CN=Jaya K Prakash/O=Weberon</name></wassignedby>
 <item name="$Comment"><text>This extends the one_ui_v2_core and implements the default styles</text></item>
