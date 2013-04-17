@@ -842,6 +842,14 @@ function updateAddSchema(){
 
 }
 
+function updateProfileDoc(profileName){
+	if(profileName!=null || profileName!=""){
+		var schemaObj = new bsuite.configure.Deploy();
+		schemaObj.updateProfileDoc(profileName);
+	}
+	
+}
+
 function updateDeleteSchema(){
 	var profileObj = new bsuite.jsonparsing.ProfileEdit();
 	profileObj.removeUpdate();

@@ -143,7 +143,8 @@ savePermissionsUI(id);]]></xp:this.script>
 
 								<xp:this.action><![CDATA[#{javascript:var profName = getComponent("inputText3").getValue();
 var dp = new bsuite.configure.Deploy();
-dp.createProfileDoc(profName);}]]></xp:this.action>
+dp.createProfileDoc(profName);
+dp.updateProfileDoc(profName);}]]></xp:this.action>
 							</xp:eventHandler>
 						</xp:button>
 						&#160;

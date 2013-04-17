@@ -70,13 +70,15 @@ return moduleP;
 	<xp:panel id="tabContent" styleClass="lotusTabContent">
 
 		<xc:ccUIPermissions id="ccPerm">
-			<xc:this.rendered><![CDATA[#{javascript:var profname = viewScope.selectedProfile;
+
+		<xc:this.rendered><![CDATA[#{javascript:/*
+var profname = viewScope.selectedProfile;
 if (profname=="--Select Profile--" || profname==null || profname == undefined){
 return false;
 }else{
 return true;
-}}]]></xc:this.rendered>
-		</xc:ccUIPermissions>
+}
+*/}]]></xc:this.rendered></xc:ccUIPermissions>
 
 
 

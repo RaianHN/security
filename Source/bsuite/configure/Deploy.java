@@ -824,6 +824,152 @@ public class Deploy {
 
 	}
 
+	/**
+	 *[This method is used to update the given profile document once a new profile document is created.]
+	 *@return
+	 */
+	public boolean updateProfileDoc(String profileName)throws NotesException, JsonGenerationException, JsonMappingException, IOException{
+		System.out.println("1..");
+		ArrayList<Document> dc = getProfileDocs();//Get document collection of all profiles
+		System.out.println("2..");
+		Document doc = null;
+		String moduleName = null;
+		String featureName = null;
+		DefineModule df = new DefineModule();
+		
+		ProfileEdit pf = new ProfileEdit();
+		CreateDatabase cd = new CreateDatabase();
+		Database db = null;
+		
+		Vector<String> modules = df.getModules();//Get the list of module name from the schema
+		System.out.println("3..");
+		Vector<String> features = null;
+		Vector<String> entities = null;
+		Vector<String> fields = null;
+		Vector<String> actions = null;
+		Vector<String> groups = null;
+		ArrayList groupActions = null;
+		
+		
+		ProfileJson jsonObj =null; 
+		View view = null;
+		String entityName = "";
+		String fieldName = "";
+		String groupName = "";
+		ObjectMapper mapper = new ObjectMapper();
+		ProfileEdit pe = new ProfileEdit();
+		
+		//for(int i=0;i<dc.size();i++){//For each profile document
+			try {
+				doc = pe.getProfileDoc(Utility.getCurrentDatabase(), profileName);
+				System.out.println("4..");
+				jsonObj = getJsonObject(doc);//Get the json object of profile
+				System.out.println("5..");
+				for(int j=0;j<modules.size();j++){//For each module in the schema
+					moduleName = modules.get(j);
+					//db = pf.getDatabase(moduleName+".nsf");
+					db = Utility.getDatabase(moduleName+".nsf");
+					features = df.getFeatures(moduleName); //for the features defined in each module
+					 entities = df.getEntityNames(moduleName);
+					 groups = df.getGroupNames(moduleName);
+					 view = null;
+					System.out.println("6..");
+					if(features==null){
+						System.out.println("There are no features for this module "+moduleName);
+					}
+					
+					
+					if(features!=null){
+						for(int k=0;k<features.size();k++){
+							featureName = features.get(k);
+							System.out.println("7..");
+							System.out.println("module: "+moduleName+" feature: "+featureName);
+							jsonObj = updateFeature(jsonObj,moduleName,featureName);	//update features
+							System.out.println("8..");
+						}
+					}
+					
+					
+					if(groups!=null){
+						System.out.println("groups "+groups);
+						for(int g=0;g<groups.size();g++){
+							
+							groupName = groups.get(g);
+							System.out.println("update group "+groupName);
+							jsonObj = updateGroup(jsonObj,moduleName,groupName);
+							
+							groupActions = df.getGroupEntryNames(moduleName, groupName);
+							System.out.println("group actions "+groupActions);
+							if(groupActions!=null){
+								for(int ga=0;ga<groupActions.size();ga++){
+									
+									if (((String) groupActions.get(ga)).substring(0, 1).equals("e")) {
+										
+										jsonObj = updateGroupAction(jsonObj,moduleName,groupName,((String) groupActions.get(ga)).substring(2),"e");
+										
+									} else {
+										jsonObj = updateGroupAction(jsonObj,moduleName,groupName,((String) groupActions.get(ga)).substring(2),"f");
+									}
+									
+								}
+							}
+						}
+					}
+					
+					
+					
+					if(entities!=null){
+						for(int l=0;l<entities.size();l++){
+							System.out.println("9..");
+							entityName = entities.get(l);
+							System.out.println("--->"+entities+"<--");
+							System.out.println("module: "+moduleName+" entityName: "+entityName);
+							jsonObj = updateEntity(jsonObj, moduleName,entityName,db);
+							System.out.println("10..");
+							
+							fields = df.getFields(moduleName, entityName);
+							actions = df.getEntityActions(moduleName, entityName);
+							
+							if(actions!=null){
+								for(int n=0;n<actions.size();n++){
+									jsonObj = updateEntityAction(jsonObj, moduleName, entityName, actions.get(n));
+								}
+							}
+							
+							
+							System.out.println("---F>"+fields+"<--");
+							if(fields!=null){
+								for(int m=0;m<fields.size();m++){
+									fieldName = fields.get(m);
+									System.out.println("module: "+moduleName+" entityName: "+entityName+" FieldName"+fieldName);
+									jsonObj = updateField(jsonObj, moduleName, entityName, fieldName,db,m+1);
+								}
+								
+								doc.replaceItemValue("JsonString", mapper
+										.writeValueAsString(jsonObj));
+								doc.save();
+								jsonObj = getJsonObject(doc);	
+							}
+							
+							
+							
+						}	
+					}
+					
+					
+					
+					doc.replaceItemValue("JsonString", mapper
+							.writeValueAsString(jsonObj));
+					doc.save();
+					
+				}
+				
+			} catch (NotesException e) {
+				e.printStackTrace();
+			}
+		//}	
+		return true;
+	}
 	public void updateAllProfiles() throws NotesException, JsonGenerationException, JsonMappingException, IOException{
 		System.out.println("1..");
 		ArrayList<Document> dc = getProfileDocs();//Get document collection of all profiles

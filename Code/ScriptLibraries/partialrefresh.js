@@ -21,3 +21,5 @@
   oldPartialRefreshPost.apply( XSP, argsArray );
  };
 })();
+
+XSP.submitLatency = 60000;

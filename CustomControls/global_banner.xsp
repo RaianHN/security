@@ -15,7 +15,12 @@
 		<xp:tabPanel id="userName" startTabStyleClass="lotusFirst">
 			<xp:this.label><![CDATA[#{javascript:@Name("[CN]",session.getEffectiveUserName())}]]></xp:this.label>
 		</xp:tabPanel>
-		<xp:tabPanel label="Log Out" id="logout"></xp:tabPanel>
+		<xp:tabPanel label="Log Out" id="logout">
+
+			<xp:this.href><![CDATA[#{javascript:var dburl = database.getFileName();
+var url = "./"+dburl+"?logout&redirectTo="+database.getFilePath();
+return url;}]]></xp:this.href>
+		</xp:tabPanel>
 	</xp:tabbedPanel>
 	
 </xp:view>
