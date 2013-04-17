@@ -188,9 +188,10 @@ bsuite.loadcc.DynamicCC.loadCC(s, component, c1, id);
 								<xp:td>2</xp:td>
 								<xp:td>
 									<xp:button value="Add Features"
-										id="button8" style="background-color:rgb(192,192,192);width:100.0px">
+										id="button8"
+										style="background-color:rgb(192,192,192);width:100.0px">
 										<xp:eventHandler event="onclick"
-											submit="true" refreshMode="complete">
+											submit="true" refreshMode="complete" id="eventHandler7">
 											<xp:this.action><![CDATA[#{javascript:var component = getComponent('loadCC2'); 
 if(component.getChildren!=null){
 bsuite.loadcc.DynamicCC.removePreview(component);
@@ -228,54 +229,18 @@ bsuite.loadcc.DynamicCC.loadCC(s, component, c1, id);
 
 
 						</xp:table>
-						<xp:br></xp:br>
-						<xp:label value="Select Module To Save"
-							id="label2">
-						</xp:label>
-						<xp:br></xp:br>
-
-						<xp:comboBox id="comboAddM">
-
-
-							<xp:selectItems id="selectItems2">
-								<xp:this.value><![CDATA[#{javascript:return @DbColumn("","Modules",1);}]]></xp:this.value>
-							</xp:selectItems>
-
-						</xp:comboBox>
-						<xp:br></xp:br>
-						<xp:button value="Save" id="button11">
-							<xp:eventHandler event="onclick"
-								submit="true" refreshMode="complete">
-								<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("comboAddM").getValue();
-var dep = new bsuite.configure.Deploy();
-if(moduleName!=null){
-dep.updateModule(moduleName);
-}
-}]]></xp:this.action>
-							</xp:eventHandler>
-						</xp:button>
-						<xp:button value="Delete Module" id="button6">
-							<xp:eventHandler event="onclick"
-								submit="true" refreshMode="norefresh">
-								<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("comboAddM").getValue();
-viewScope.selModule = moduleName;}]]></xp:this.action>
-								<xp:this.onComplete><![CDATA[XSP.openDialog("#{id:dialogConfirm}");]]></xp:this.onComplete>
-							</xp:eventHandler>
-						</xp:button>
-						<xp:text escape="true" id="computedField2"
-							value="#{javascript:viewScope.errsms}">
-						</xp:text>
-						<xp:br></xp:br>
+						<xp:br id="br1"></xp:br>
+						
+						<xp:br id="br4"></xp:br>
 
 
 
 
-						<xp:br></xp:br>
 						<xp:button value="Upload Module Schema"
 							id="btnUpload">
 
 							<xp:eventHandler event="onclick"
-								submit="true" refreshMode="partial" refreshId="tableLoad">
+								submit="true" refreshMode="partial" refreshId="tableLoad" id="eventHandler10">
 								<xp:this.action><![CDATA[#{javascript:var component = getComponent('loadCC2');
 if(component.getChildren!=null){
 bsuite.loadcc.DynamicCC.removePreview(component);
@@ -290,6 +255,46 @@ bsuite.loadcc.DynamicCC.loadCC(s, component, c1, id);}]]></xp:this.action>
 					<xp:td id="loadCC2" valign="top"></xp:td>
 				</xp:tr>
 
+				<xp:tr>
+					<xp:td>
+						<xp:label value="Select Module To Save"
+							id="label2">
+						</xp:label>
+						<xp:br></xp:br>
+						<xp:comboBox id="comboAddM">
+
+
+							<xp:selectItems id="selectItems2">
+								<xp:this.value><![CDATA[#{javascript:return @DbColumn("","Modules",1);}]]></xp:this.value>
+							</xp:selectItems>
+
+						</xp:comboBox><xp:br></xp:br>
+						<xp:button value="Save Module" id="button11">
+							<xp:eventHandler event="onclick"
+								submit="true" refreshMode="complete" id="eventHandler8">
+								<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("comboAddM").getValue();
+var dep = new bsuite.configure.Deploy();
+if(moduleName!=null){
+dep.updateModule(moduleName);
+}
+}]]></xp:this.action>
+							</xp:eventHandler>
+						</xp:button>
+						<xp:button value="Delete Module" id="button6">
+							<xp:eventHandler event="onclick"
+								submit="true" refreshMode="norefresh" id="eventHandler9">
+								<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("comboAddM").getValue();
+viewScope.selModule = moduleName;}]]></xp:this.action>
+								<xp:this.onComplete><![CDATA[XSP.openDialog("#{id:dialogConfirm}");]]></xp:this.onComplete>
+							</xp:eventHandler>
+						</xp:button></xp:td>
+					<xp:td>
+						<xp:br></xp:br>
+						<xp:br></xp:br>
+						<xp:text escape="true" id="computedField2"
+							value="#{javascript:viewScope.errsms}">
+						</xp:text></xp:td>
+				</xp:tr>
 			</xp:table>
 		</xe:djTabPane>
 

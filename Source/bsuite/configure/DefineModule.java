@@ -435,6 +435,67 @@ public class DefineModule {
 		}
 
 	}
+	@SuppressWarnings("unchecked")
+	public void addEntity(String moduleName, String entityName,
+			String field) {
+
+		try {
+
+			View modulesView = currentdb.getView("Modules");
+
+			// System.out.println("Document name"+modulesView.getDocumentByKey(moduleName));
+			Document moduleDoc = modulesView.getDocumentByKey(moduleName);
+
+			String jsonInput = moduleDoc.getItemValueString("JsonString");
+
+			ObjectMapper mapper = new ObjectMapper();
+
+			Module module = mapper.readValue(jsonInput, Module.class);
+
+			ArrayList<Entity> entities = null;
+			if (module.getEntities() == null) {
+				entities = new ArrayList();
+			} else {
+				entities = module.getEntities();
+			}
+
+			Entity entity = new Entity();
+
+			ArrayList<Field> fieldsList = new ArrayList<Field>();
+
+			if(!field.equals("") || field!=null){
+				
+					// Add fields to the new entity
+					Field field1 = new Field();
+					field1.setFieldName(field);
+					fieldsList.add(field1);
+					
+			}
+			
+
+			entity.setEntityName(entityName);
+			entity.setFields(fieldsList);
+			entities.add(entity);
+
+			// Add to entFeat list also
+			ManageGroup.addEntFeat(module, "e:" + entity.getEntityName());
+
+			module.setEntities(entities);
+
+			moduleDoc.replaceItemValue("JsonString", mapper
+					.writeValueAsString(module));
+			moduleDoc.save();
+		} catch (NotesException e) {
+			e.printStackTrace();
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
 
 	public void addEntity(String moduleName, String entityName) {
 

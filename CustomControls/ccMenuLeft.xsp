@@ -50,8 +50,8 @@ getComponent("dync").show("org")}]]></xp:this.action>
 getComponent("dync").show("config");}]]></xp:this.action>
 						</xp:eventHandler>
 					</xp:tabPanel>
-					<xp:tabPanel id="viewDefine" label="Define Schema"
-						selectedTabStyleClass="lotusSelected">
+					<xp:tabPanel id="viewDefine"
+						label="Schema Definition" selectedTabStyleClass="lotusSelected">
 						<xp:eventHandler event="onclick" submit="true"
 							refreshMode="partial" refreshId="lotusMain" onStart="showWait();"
 							onComplete="hideWait();" onError="showError();">
