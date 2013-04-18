@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
-	xmlns:xe="http://www.ibm.com/xsp/coreex"
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core" xmlns:xe="http://www.ibm.com/xsp/coreex"
 	xmlns:xc="http://www.ibm.com/xsp/custom" styleClass="lotusui"
 	pageTitle="Bsuite Home" dojoTheme="true" dojoParseOnLoad="true">
 	<xp:this.resources>
@@ -11,8 +10,7 @@
 		<xp:script src="/baseactions.jss" clientSide="false"></xp:script>
 
 
-		<xp:script src="/Copy Of CustomControlLib.js"
-			clientSide="true">
+		<xp:script src="/Copy Of CustomControlLib.js" clientSide="true">
 		</xp:script>
 		<xp:styleSheet href="/custom.css"></xp:styleSheet>
 		<xp:script src="/commonCScript.js" clientSide="true"></xp:script>
@@ -80,7 +78,7 @@
 
 
 
-<xp:eventHandler id="eventModulePerm" event="onDojo">
+	<xp:eventHandler id="eventModulePerm" event="onDojo">
 		<xp:this.action><![CDATA[#{javascript:println("calling event");
 setModulePermission(viewScope.selProfile1);
 println("calling event");}]]></xp:this.action>
@@ -103,13 +101,13 @@ println("calling event");}]]></xp:this.action>
 		<xp:this.action><![CDATA[#{javascript:println("calling event");
 setFieldPermission();
 println("calling event");}]]></xp:this.action>
-		
+
 	</xp:eventHandler>
 	<xp:eventHandler id="eventEntityActionPerm" event="onDojo">
 		<xp:this.action><![CDATA[#{javascript:println("calling event");
 setEntityActionPermission();
 println("calling event");}]]></xp:this.action>
-		
+
 	</xp:eventHandler>
 	<xp:eventHandler id="eventFeaturePerm" event="onDojo">
 		<xp:this.action><![CDATA[#{javascript:println("calling event");
