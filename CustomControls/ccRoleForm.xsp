@@ -4,12 +4,8 @@
 	<xp:this.data>
 		<xp:dominoDocument var="document1" action="editDocument"
 			documentId="#{javascript:sessionScope.roleDocumentId}">
-			<xp:this.databaseName><![CDATA[#{javascript:  	var serv=@Subset(@DbName(),1);
-	var dbpath=@LeftBack(@Subset(@DbName(),-1),"/")
-	var custdb=dbpath+"\\"+"Security.nsf";
-	var dbname = new Array(serv,custdb);
-    var db: NotesDatabase = session.getDatabase(serv, custdb);
-    return db;}]]></xp:this.databaseName>
+			<xp:this.databaseName><![CDATA[#{javascript:  
+    return database;}]]></xp:this.databaseName>
 		</xp:dominoDocument>
 	</xp:this.data>
 	<xp:panel>

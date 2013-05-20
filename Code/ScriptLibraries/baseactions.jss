@@ -164,9 +164,7 @@ function s_delete(){
 function getfavdb(){
 	var db = @Word(@Implode(@DbName(), ";"), ";", 2);
 	var dbpath = @LeftBack(db,12);
-	var fdb = dbpath + "favorite.nsf";
-	var serv = @Word(@Implode(@DbName(), ";"), ";", 1);
-	var favdb:NotesDatabase=session.getDatabase(serv,fdb);
+	var favdb:NotesDatabase=com.bsuite.utility.Utility.getDatabase("Favorites");
 	if(favdb.isOpen()){
 		viewScope.errsms="";
 		viewScope.errval="false";
@@ -244,7 +242,7 @@ var currentdb=session.getCurrentDatabase();
 var serv=currentdb.getServer();
 var dbpath=currentdb.getFilePath();
 var pathname=@LeftBack(dbpath,12);
-var tadb : NotesDatabase=session.getDatabase(serv, pathname + "employee.nsf");
+var tadb : NotesDatabase=com.bsuite.utility.Utility.getDatabase("Employees");
 println(tadb);
 println(pathname);
 

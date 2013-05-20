@@ -68,7 +68,14 @@ profile.getEntityNames(profName,moduleName);
 						<xp:selectItems id="selectItems1">
 							<xp:this.value><![CDATA[#{javascript:var path =database.getFilePath();
 var dbpath =  @LeftBack(path ,"/");
-var db= dbpath+"/Security.nsf";
+var db = null;
+if(dbpath=="" || dbpath==null){
+db = "Security.nsf";
+}else{
+db=dbpath+"/Security.nsf";
+}
+
+
 var serv = @Word(@Implode(@DbName(),", "),", ", 1);
 var com = new Array(serv,db);
 @DbColumn(com,"RolesView",1);}]]></xp:this.value>
@@ -92,7 +99,14 @@ var com = new Array(serv,db);
 						<xp:selectItems id="selectItems2">
 							<xp:this.value><![CDATA[#{javascript:var path =database.getFilePath();
 var dbpath =  @LeftBack(path ,"/");
-var db= dbpath+"/Security.nsf";
+var db = null;
+if(dbpath=="" || dbpath==null){
+db = "Security.nsf";
+}else{
+db=dbpath+"/Security.nsf";
+}
+
+
 var serv = @Word(@Implode(@DbName(),", "),", ", 1);
 var com = new Array(serv,db);
 @DbColumn(com,"RolesView",1);}]]></xp:this.value>
@@ -132,7 +146,7 @@ var com = new Array(serv,db);
 						style="background-color:rgb(192,192,192)">
 						<xp:eventHandler event="onclick" submit="true"
 							refreshMode="complete" id="eventHandler1">
-							<xp:this.action><![CDATA[#{javascript:var securityDb:NotesDatabase = getDatabase("Security.nsf");
+							<xp:this.action><![CDATA[#{javascript:var securityDb:NotesDatabase = database;
 println("security database"+securityDb.getFileName());
 println("inside dbprofile");
 var modulename=getComponent("ModuleName").getValue();

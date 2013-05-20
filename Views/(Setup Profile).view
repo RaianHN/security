@@ -2,19 +2,14 @@
 <!DOCTYPE note SYSTEM 'xmlschemas/domino_8_5_3.dtd'>
 <note class='view' xmlns='http://www.lotus.com/dxl' version='8.5' maintenanceversion='3.0'
  replicaid='65257B4F001E0F81'>
-<noteinfo noteid='176' unid='0D8C0FC6EE40EFF365257B4F001E1E12' sequence='1'>
+<noteinfo noteid='176' unid='0D8C0FC6EE40EFF365257B4F001E1E12' sequence='9'>
 <created><datetime>20130416T105857,78+0530</datetime></created>
-<modified><datetime>20130416T105857,80+0530</datetime></modified>
-<revised><datetime>20130416T105857,79+0530</datetime></revised>
-<lastaccessed><datetime>20130416T105857,80+0530</datetime></lastaccessed>
+<modified><datetime>20130520T173634,41+0530</datetime></modified>
+<revised><datetime>20130520T173634,40+0530</datetime></revised>
+<lastaccessed><datetime>20130520T173634,41+0530</datetime></lastaccessed>
 <addedtofile><datetime>20130416T105857,80+0530</datetime></addedtofile></noteinfo>
-<updatedby><name>CN=B M Shruthi/O=Weberon</name><name>CN=Sanjay K Kumar/O=Weberon</name><name
->CN=INB81/O=Development</name><name>CN=INB82/O=Development</name><name>CN=Admin BSUITE/O=Development</name><name
->CN=INB82/O=Development</name><name>CN=Admin BSUITE/O=Development</name><name
->CN=INB82/O=Development</name><name>CN=Admin BSUITE/O=Development</name><name
->CN=INB82/O=Development</name><name>CN=Admin BSUITE/O=Development</name><name
->CN=Tenzing Sangmo/O=Weberon</name><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
-<wassignedby><name>CN=Tenzing Sangmo/O=Weberon</name></wassignedby>
+<updatedby><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
+<wassignedby><name>CN=Jaya K Prakash/O=Weberon</name></wassignedby>
 <item name='$FormatNote' summary='true' sign='true'>
 <rawitemdata type='4'>
 AQB7/GqqhqEVlfZFfwBPbiWI

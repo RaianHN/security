@@ -7,7 +7,6 @@ function defineEntity(E_Name, E_List, E_Features){
 	doc.save();
 	doc.recycle();
 	//Changing the profile value for given new entity
-	//var securityDb:NotesDatabase = getDatabase("Security.nsf");
 	
 	var vie:NotesView = database.getView("ProfileView");	
 
@@ -42,7 +41,6 @@ function defineEmployeeEntity(E_Name, E_List, P_Fields,E_Features){
 
 
 function getProfiles(){
-	//var securityDb:NotesDatabase = getDatabase("Security.nsf");
 	var vie:NotesView = database.getView("ProfileView");
 	var doc:NotesDocument = vie.getFirstDocument();
 	var profileNames  = new java.util.Vector();
@@ -57,7 +55,6 @@ function getProfiles(){
 
 function defineProfile(ProfileName){
 	/*
-	var securityDb:NotesDatabase = getDatabase("Security.nsf");
 	println("security database"+securityDb.getFileName());
 	println("inside dbprofile");
 	var doc :NotesDocument = securityDb.createDocument();
@@ -164,7 +161,6 @@ function getEntities(){
 }
 
 function getEntityCrud(profileName,entityName){
-	//var securityDb:NotesDatabase = getDatabase("Security.nsf");
 	var vie:NotesView = database.getView("ProfileView");
 	var doc:NotesDocument = vie.getDocumentByKey(profileName);
 	var entCrud = doc.getItemValue("E_Crud");
@@ -178,7 +174,6 @@ function getEntityCrud(profileName,entityName){
 
 function getFieldVisibility(profileName,entityName){
 	
-	//var securityDb:NotesDatabase = getDatabase("Security.nsf");
 var vie:NotesView = database.getView("ProfileView");
 var doc:NotesDocument = vie.getDocumentByKey(profileName);
 var fields : String=doc.getItemValue("f_choice");
@@ -207,7 +202,6 @@ return vect;
 
 function getFeaturesVisibility(profileName,entityName){
 	
-//	var securityDb:NotesDatabase = getDatabase("Security.nsf");
 var vie:NotesView = database.getView("ProfileView");
 var doc:NotesDocument = vie.getDocumentByKey(profileName);
 var features=doc.getItemValue("features");
@@ -227,7 +221,6 @@ for(x in features){
 
 function editCrud(profileName,entityName,value){
 	println("crud value"+value);
-	//var securityDb:NotesDatabase = getDatabase("Security.nsf");
 	var vie:NotesView = database.getView("ProfileView");
 	var doc:NotesDocument = vie.getDocumentByKey(profileName);
 	var entCrud = doc.getItemValue("E_Crud");
@@ -272,7 +265,6 @@ function setPermission(profileName,entityName){
 	
 	entityCrud.saveFieldCrud(profileName, entityName, context.getSubmittedValue());
 	/*
-	var securityDb:NotesDatabase = getDatabase("Security.nsf");
 	var vie:NotesView = securityDb.getView("ProfileView");
 	var doc:NotesDocument = vie.getDocumentByKey(profileName);
 	var vect = new java.util.Vector();
@@ -319,7 +311,6 @@ function setFeaturePermission(profileName,entityName){
 	var entityCrud = new bsuite.jsonparsing.ProfileEdit;
 	entityCrud.saveFeatureCrud(profileName, entityName, context.getSubmittedValue());
 	/*
-	var securityDb:NotesDatabase = getDatabase("Security.nsf");
 	var vie:NotesView = securityDb.getView("ProfileView");
 	var doc:NotesDocument = vie.getDocumentByKey(profileName);
 	var vect = new java.util.Vector();
@@ -360,7 +351,8 @@ function setFeaturePermission(profileName,entityName){
 }
 
 function createEmployee(personDocid,fieldval){
-	var securityDb:NotesDatabase = getDatabase("Employee.nsf");
+	
+	var securityDb:NotesDatabase = com.bsuite.utility.Utility.getDatabase("Employees");
 	var docEmployee:NotesDocument = securityDb.createDocument();
 	var db:NotesDatabase = session.getDatabase("","names.nsf");
 	var personDoc:NotesDocument = db.getDocumentByID(personDocid);
@@ -386,7 +378,8 @@ function createEmployee(personDocid,fieldval){
 }
 
 function createRelationship(srcunid,sourcedb,src_data,targetdb,trg_data,targetid,relationid){
-	var reladb:NotesDatabase = getDatabase("relation.nsf");
+	
+	var reladb:NotesDatabase = com.bsuite.utility.Utility.getDatabase("Relation");
 	var docrel:NotesDocument=reladb.createDocument();
 	docrel.replaceItemValue("form","association");
 	docrel.replaceItemValue("sourceid", srcunid);
@@ -401,7 +394,7 @@ function createRelationship(srcunid,sourcedb,src_data,targetdb,trg_data,targetid
 }
 
 function getRelationNameUnid(relationName){
-	var relationDb:NotesDatabase = getDatabase("Relation.nsf");
+	var relationDb:NotesDatabase = com.bsuite.utility.Utility.getDatabase("Relation");
 		var relview=relationDb.getView("CategoryRelation")
 		var reldoc:NotesDocument= relview.getDocumentByKey(relationName);
 		return reldoc.getUniversalID();
@@ -409,7 +402,6 @@ function getRelationNameUnid(relationName){
 
 function createProfileResponse(entityName){
 	var profiles = getProfiles();
-	//var securityDb:NotesDatabase = getDatabase("Security.nsf");
 	var vie:NotesView = database.getView("ProfileView");
 	
 	for(x in profiles){
@@ -802,7 +794,7 @@ var profileName="Admin";
 	var entityCrud = new bsuite.jsonparsing.ProfileEdit;
 	println("setting field permission"+typeof(arr)+"submitted type"+typeof(context.getSubmittedValue()));
 	
-	var securityDb:NotesDatabase = getDatabase("Security.nsf");
+	var securityDb:NotesDatabase = database;
 	var vie:NotesView = database.getView("ProfileView");
 	var doc:NotesDocument = vie.getFirstDocument();
 	

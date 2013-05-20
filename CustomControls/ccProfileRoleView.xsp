@@ -28,8 +28,14 @@
 		<xp:repeat id="repeat1" var="user1">
 			<xp:this.value><![CDATA[${javascript:var path =database.getFilePath();
 var dbpath =  @LeftBack(path ,"/");
-//var db= dbpath+"/Security.nsf";
-var db=dbpath+"/admntool.nsf";
+
+var db = null;
+if(dbpath=="" || dbpath==null){
+db = "admntool.nsf";
+}else{
+db=dbpath+"/admntool.nsf";
+}
+
 var serv = @Word(@Implode(@DbName(),", "),", ", 1);
 var com = new Array(serv,db);
 var x= @DbColumn(com,  "employeeprofile", 1);

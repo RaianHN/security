@@ -15,11 +15,8 @@
 						<xp:this.data>
 							<xp:dominoView var="view1"
 								viewName="RolesView">
-								<xp:this.databaseName><![CDATA[#{javascript:  	var serv=@Subset(@DbName(),1);
-	var dbpath=@LeftBack(@Subset(@DbName(),-1),"/")
-	var custdb=dbpath+"\\"+"Security.nsf";
-	var dbname = new Array(serv,custdb);
-    var db: NotesDatabase = session.getDatabase(serv, custdb);
+								<xp:this.databaseName><![CDATA[#{javascript:  
+    var db: NotesDatabase = database;
     return db;}]]></xp:this.databaseName>
 							</xp:dominoView>
 						</xp:this.data>
