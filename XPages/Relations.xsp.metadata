@@ -1,18 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257A11001D5079" version="8.5" xmlns="http://www.lotus.com/dxl">
-<noteinfo noteid="202" sequence="10" unid="81687163824D942E652579070022E42A">
-<created><datetime>20110910T115106,34+0530</datetime></created>
-<modified><datetime>20120602T105012,84+0530</datetime></modified>
-<revised><datetime>20111010T111855,84+0530</datetime></revised>
-<lastaccessed><datetime>20120602T105012,84+0530</datetime></lastaccessed>
-<addedtofile><datetime>20120602T105012,84+0530</datetime></addedtofile></noteinfo>
-<updatedby><name>CN=Test User1/O=Development</name><name>CN=Admin BSUITE/O=Development</name></updatedby>
-<item name="$Flags"><text>gC~4K</text></item>
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257B8D0032F272" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="1ce" sequence="5" unid="D4CD0B1E0AC4C28C65257B4F001E3407">
+<created><datetime>20130416T105953,99+0530</datetime></created>
+<modified><datetime>20130617T144845,15+0530</datetime></modified>
+<revised><datetime>20130617T144845,14+0530</datetime></revised>
+<lastaccessed><datetime>20130617T144845,15+0530</datetime></lastaccessed>
+<addedtofile><datetime>20130617T144752,79+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
+<wassignedby><name>CN=Jaya K Prakash/O=Weberon</name></wassignedby>
 <item name="$TITLE"><text>Relations.xsp</text></item>
-
+<item name="$Flags"><text>gC~4K</text></item>
 
 
 <item name="$FileNames" sign="true"><text>Relations.xsp</text></item>
 <item name="$DesignerVersion"><text>8.5</text></item>
+
 
 
 

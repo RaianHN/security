@@ -54,7 +54,7 @@ if(sessionScope.get('Beanid')=="user"){
 	
 	user.reset();
 	sessionScope.put('Beanid',"user");
-	bsuite.weber.tools.CompUtil.create(c,facesContext,"/ccUser.xsp");
+	bsuite.tools.CompUtil.create(c,facesContext,"/ccUser.xsp");
 }
 
 }]]></xp:this.script>
@@ -74,7 +74,7 @@ if(sessionScope.get('Beanid')=="activity"){
 		
 	activity.reset();
 	sessionScope.put('Beanid',"activity");
-	bsuite.weber.tools.CompUtil.create(c,facesContext,"/ccActivity.xsp");
+	bsuite.tools.CompUtil.create(c,facesContext,"/ccActivity.xsp");
 }}]]></xp:this.script>
 		</xp:executeScript>
 	</xp:this.action></xp:eventHandler></xp:button></xp:panel>

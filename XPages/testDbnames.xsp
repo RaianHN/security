@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+	<xp:br></xp:br>
+
+	
+	<xp:button value="Label" id="button1">
+		<xp:eventHandler event="onclick" submit="true"
+			refreshMode="complete">
+			<xp:this.action><![CDATA[#{javascript:var db:NotesDatabase = bsuite.utility.Utility.getDatabase("Security.nsf");
+var db2:NotesDatabase = bsuite.utility.Utility.getDatabase("admntool.nsf");
+println(db.getFileName());
+println(db2.getFileName());
+}]]></xp:this.action>
+		</xp:eventHandler></xp:button></xp:view>

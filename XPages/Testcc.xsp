@@ -4,85 +4,17 @@
 	xmlns:xe="http://www.ibm.com/xsp/coreex">
 
 
-	<xp:this.resources>
+	
 
-
-		<xp:script
-			src="http://ajax.googleapis.com/ajax/libs/dojo/1.6.0/dojo/dojo.xd.js"
-			clientSide="true" type="text/javascript">
-		</xp:script>
-		<xp:styleSheet href="/custom.css"></xp:styleSheet>
-		<xp:dojoModule name="dojo.dnd.Moveable"></xp:dojoModule>
-		<xp:dojoModule name="dojo.dnd.Mover"></xp:dojoModule>
-		<xp:dojoModule name="dojox.gfx"></xp:dojoModule>
-		<xp:dojoModule name="dojox.gfx.utils"></xp:dojoModule>
-		<xp:script src="/vectorui.js" clientSide="true"></xp:script>
-		<xp:script src="/vnodegraph.js" clientSide="true"></xp:script>
-		<xp:dojoModule name="dojo.NodeList-traverse"></xp:dojoModule>
-
-		<xp:dojoModule name="dojo.NodeList-manipulate"></xp:dojoModule>
-	</xp:this.resources>
-
-	<!--  <xp:panel id="controls">
-
-		<div id="logo">Znode</div>
-		<div id="save" class="btn">Save</div>
-		<div id="open" class="btn">Open</div>
-		<div id="clear" class="btn">Clear All</div>
-		<div id="help" class="btn">Help</div>
-		<div id="saveForm">
-			<form id="nameForm">
-				Name :
-				<input type="text" name="filename" id="filename"
-					spellcheck="false" />
-			</form>
-		</div>
-
-	</xp:panel>-->
-	<xp:br></xp:br>
-	<xp:br></xp:br>
-	<xp:br></xp:br>
-	<xp:table>
 	
 	
-		<xp:tr>
-			<xp:td>
-				<xp:button value="Label" id="button1">
-					<xp:eventHandler event="onclick" submit="true"
-						refreshMode="partial" refreshId="container">
-						<xp:this.action>
-							<xp:executeScript>
-								<xp:this.script><![CDATA[#{javascript:uientity.createEntity(getComponent("container"));
-}]]></xp:this.script>
-							</xp:executeScript>
-						</xp:this.action></xp:eventHandler>
-				</xp:button>
-			</xp:td>
-			<xp:td>
-				<xp:button value="new" id="button2"></xp:button></xp:td>
-		</xp:tr>
-		<xp:tr>
-			<xp:td>
-
-			<xp:button value="Line" id="button3">
-				<xp:eventHandler event="onclick" submit="false">
-					<xp:this.script><![CDATA[addline();]]></xp:this.script>
-				</xp:eventHandler></xp:button></xp:td>
-			<xp:td>
-				<xp:button value="Circle" id="button4">
-					<xp:eventHandler event="onclick" submit="false">
-						<xp:this.script><![CDATA[addcircle();]]></xp:this.script>
-					</xp:eventHandler></xp:button></xp:td>
-		</xp:tr>
-	</xp:table>
-	<xp:panel id="container"
-					style="height:500.0px;width:100%">
-					<xp:eventHandler id="eventHandler1"
-						event="ondblclick" refreshMode="partial" refreshId="incontainer">
-						<xp:this.action><![CDATA[#{javascript:uientity.createEntity(getComponent("incontainer"));}]]></xp:this.action>
-					</xp:eventHandler>
-					<xp:div id ="incontainer" >
-					<xp:div id="new1" binding="#{uientity.entity}"></xp:div></xp:div>
-				</xp:panel>
-	<xp:span></xp:span>
-</xp:view>
+	
+	
+	
+	
+	
+	<xp:button value="Label" id="button1">
+		<xp:eventHandler event="onclick" submit="true"
+			refreshMode="partial" refreshId="button1">
+			<xp:this.action><![CDATA[#{javascript:""}]]></xp:this.action>
+		</xp:eventHandler></xp:button></xp:view>

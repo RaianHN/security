@@ -1,22 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xp:view xmlns:xp="http://www.ibm.com/xsp/core"
-	xmlns:xc="http://www.ibm.com/xsp/custom" dojoParseOnLoad="false">
+	xmlns:xc="http://www.ibm.com/xsp/custom" dojoParseOnLoad="true"
+	xmlns:xe="http://www.ibm.com/xsp/coreex" dojoTheme="true"
+	dojoForm="true">
 
 
 
-	<xc:viewPicker2 dialogID="view1" fieldId="viewScope.id"
-		onReturn="Set Scope Value" varName="viewScope.disp" addrefreshid="p1"
-		varDb="viewScope.mdb">
-	</xc:viewPicker2>
-	 <xp:panel id="p1">
-		<xp:inputText id="inputText2" value="#{viewScope.disp}"></xp:inputText>
-		<xp:inputText id="inputText1" value="#{viewScope.id}"></xp:inputText>
-		<xp:inputText id="inputText3" value="#{viewScope.mdb}"></xp:inputText>
-	</xp:panel>
-	<xp:scriptBlock id="scriptBlock1">
-	 	<xp:this.value><![CDATA[
-	
-var refreshpanelId = "#{id:p1}";
-]]></xp:this.value>
-	 </xp:scriptBlock>
+
+
+
+	<xe:djTabContainer id="djTabContainer1" style="height:25.0px">
+
+		<xe:djTabPane id="djTabPane1">
+
+		</xe:djTabPane>
+		<xe:djTabPane id="djTabPane2">
+			<xp:eventHandler event="click" submit="false">
+				<xp:this.script><![CDATA[console.log("hello")]]></xp:this.script>
+			</xp:eventHandler>
+		</xe:djTabPane>
+		<xe:djTabPane id="djTabPane3">
+			<xe:this.onShow><![CDATA[console.log("hello1233")]]></xe:this.onShow>
+			<xe:this.onClick><![CDATA[console.log("hello22")]]></xe:this.onClick>
+			
+		</xe:djTabPane>
+	</xe:djTabContainer>
+	<xp:br></xp:br>
+	<xp:button value="Label" id="button1">
+		
+	<xp:eventHandler event="onclick" submit="true"
+		refreshMode="complete">
+		<xp:this.action><![CDATA[#{javascript:var profedit = new bsuite.jsonparsing.ProfileEdit();
+profedit.removeModule("GroupingModule");}]]></xp:this.action>
+	</xp:eventHandler></xp:button>
+	<xp:eventHandler event="onClientLoad" submit="true"
+		refreshMode="norefresh">
+		<xp:this.action><![CDATA[#{javascript:var pane2 = getComponent("djTabPane1");
+var onShow = "console.log(\"hiiiiii\");";
+pane2.setOnShow(onShow);}]]></xp:this.action>
+	</xp:eventHandler>
 </xp:view>
