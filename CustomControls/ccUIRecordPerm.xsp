@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+	<xp:section id="section1" header="Object Permissions"
+		initClosed="true">
+		<xp:table>
+			<xp:tr>
+				<xp:td>
+
+					<xp:label value="Object Type" id="label1"></xp:label>
+				</xp:td>
+				<xp:td>
+					<xp:comboBox id="comboBox1">
+						<xp:selectItem itemLabel="-Select Entity-"></xp:selectItem>
+
+
+						<xp:selectItems>
+							<xp:this.value><![CDATA[#{javascript:
+
+var profName = viewScope.profileName;
+
+var moduleName = viewScope.moduleName;
+
+var profile = new bsuite.jsonparsing.ProfileEdit();
+
+if(profName!=null&&moduleName!=null){
+
+//var entnames:java.util.Vector = profile.getEntityNames(profName,moduleName);
+//viewScope.entname = entnames;
+//return entnames;
+
+var moduleVisib = new bsuite.jsonparsing.ProfileEdit();
+
+var entityPermission = moduleVisib.getEntityNames(profName,moduleName);
+println("entityPermission "+entityPermission)
+if(entityPermission!=null){
+
+return entityPermission;
+
+}
+}
+
+}]]></xp:this.value>
+						</xp:selectItems>
+
+						<xp:eventHandler event="onchange" submit="true"
+							refreshMode="partial" refreshId="panelEntP">
+						</xp:eventHandler>
+					</xp:comboBox>
+				</xp:td>
+			</xp:tr>
+
+
+		</xp:table>
+
+		<xp:panel id="panelEntP">
+
+
+			<xp:table id="tableEntityPermission"
+				style="width:300.0px">
+
+				<xp:this.rendered><![CDATA[#{javascript:var selEnt = getComponent("comboBox1").getValue();
+if(selEnt!=null){
+	if(selEnt!="-Select Entity-"){
+	return true;
+	}else{
+	return false;
+	}
+}
+}]]></xp:this.rendered>
+				<xp:tr styleClass="ptable">
+					<xp:td style="ptable">
+						<xp:label value="Visible" id="label2"></xp:label>
+					</xp:td>
+					<xp:td>
+						<xp:checkBox id="checkBox1">
+							<xp:this.defaultChecked><![CDATA[#{javascript:var varEPermit = viewScope.entityPermission
+var val = @Right(varEPermit,":");
+if(val.charAt(1)=="1"){
+return true;
+}
+else{
+return false;
+}}]]></xp:this.defaultChecked>
+						</xp:checkBox>
+					</xp:td>
+				</xp:tr>
+				<xp:tr loaded="false">
+					<xp:td style="padding-left:10.0px">
+						<xp:label value="Edit" id="label3"></xp:label>
+					</xp:td>
+					<xp:td>
+						<xp:checkBox id="checkBox2"></xp:checkBox>
+					</xp:td>
+				</xp:tr>
+				<xp:tr loaded="false">
+					<xp:td style="padding-left:10.0px">
+						<xp:label value="Delete" id="label4"></xp:label>
+					</xp:td>
+					<xp:td>
+						<xp:checkBox id="checkBox3"></xp:checkBox>
+					</xp:td>
+				</xp:tr>
+				<xp:repeat id="repeat1" rows="30" var="varEPerm">
+					<xp:this.value><![CDATA[#{javascript:var profileName = viewScope.profileName;
+var moduleName = viewScope.moduleName;
+var entityName = getComponent("comboBox1").getValue();
+
+
+var moduleVisib = new bsuite.jsonparsing.ProfileEdit();
+if(profileName!=null && moduleName!=null && entityName!=null){
+var entityPermission = moduleVisib.getEntityActionPermission(profileName,moduleName,entityName);
+if(entityPermission!=null){
+return entityPermission;
+}
+}
+}]]></xp:this.value>
+					<xp:tr>
+						<xp:td style="padding-left:10.0px">
+							<xp:label id="label5">
+								<xp:this.value><![CDATA[#{javascript:@Left(varEPerm,":")}]]></xp:this.value>
+							</xp:label>
+						</xp:td>
+						<xp:td>
+							<xp:checkBox id="checkBox4">
+								<xp:this.defaultChecked><![CDATA[#{javascript:var val = @Right(varEPerm,":");
+if(val.charAt(0)=="1"){
+return true;
+}
+else{
+return false;
+}}]]></xp:this.defaultChecked>
+							</xp:checkBox>
+						</xp:td>
+					</xp:tr>
+				</xp:repeat>
+			</xp:table>
+			<xp:inputHidden id="inputNEActions" value="#{viewScope.entityAN}"></xp:inputHidden>
+		</xp:panel>
+
+
+	</xp:section>
+</xp:view>

@@ -199,7 +199,7 @@ return lookup}]]></xp:this.value>
 				<xp:link escape="true" id="link1">
 					&#160;
 					<xp:this.text><![CDATA[#{javascript:if(sessionScope.Beanid =="user"){
-var x=bsuite.weber.controller.ContextController ;
+var x=bsuite.controller.ContextController ;
 print("getting manager");
 x.getAssociatedTrgString("MANAGER_TO");
 }}]]></xp:this.text>
@@ -273,7 +273,7 @@ return lookup}]]></xp:this.value>
 				<xp:repeat id="repeat2" rows="30" var="list">
 					<xp:this.value><![CDATA[#{javascript:if(sessionScope.Beanid =="user"){
 	print("getting reportees");
-var x=bsuite.weber.controller.ContextController ;
+var x=bsuite.controller.ContextController ;
 var y:java.util.Array= x.getAssociatedSrcVector("MANAGER_TO");
 if(y.size()==0){print("vector got is zero"); return new java.util.Vector().add("x");
 }

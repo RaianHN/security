@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+
+	<xp:label id="label1"></xp:label>
+	<xp:table>
+		<xp:tr>
+			<xp:td>
+				<xp:label value="ModuleName" id="label2"></xp:label></xp:td>
+			<xp:td>
+				<xp:inputTextarea id="inputTextarea1"
+					multipleSeparator=",">
+				</xp:inputTextarea>
+
+
+			</xp:td>
+			
+		</xp:tr>
+		<xp:tr>
+			<xp:td></xp:td>
+			<xp:td>
+				<xp:button value="Create Modules" id="button1" style="background-color:rgb(192,192,192)">
+					<xp:eventHandler event="onclick" submit="true"
+						refreshMode="complete">
+						<xp:this.action><![CDATA[#{javascript:var defModule = new bsuite.configure.DefineModule();
+var modules:java.util.Vector = getComponent("inputTextarea1").getValue();
+
+defModule.addModules(modules);
+var component = getComponent('loadCC'); 
+var dynacc = new bsuite.loadcc.DynamicCC();
+dynacc.removePreview(component);
+
+}]]></xp:this.action>
+					</xp:eventHandler></xp:button></xp:td>
+			
+		</xp:tr>
+	</xp:table>
+	</xp:view>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+	<xp:table>
+		<xp:tr>
+			<xp:td>
+				<xp:label value="Select Module: " id="label1"></xp:label>
+			</xp:td>
+			<xp:td>
+
+
+				<xp:comboBox id="moduleName">
+					<xp:selectItems>
+						<xp:this.value><![CDATA[#{javascript:return @DbColumn("","Modules",1);}]]></xp:this.value>
+					</xp:selectItems>
+				</xp:comboBox>
+
+
+
+
+
+			</xp:td>
+			
+		</xp:tr>
+		
+		
+		<xp:tr>
+			<xp:td>
+				<xp:label value="List of Features" id="label4"></xp:label>
+			</xp:td>
+			<xp:td>
+				<xp:inputTextarea id="features"
+					multipleSeparator=",">
+				</xp:inputTextarea>
+			</xp:td>
+			
+		</xp:tr>
+		<xp:tr>
+			<xp:td></xp:td>
+			<xp:td>
+				<xp:button id="button1" value="Create Features" style="background-color:rgb(192,192,192)">
+					<xp:eventHandler event="onclick" submit="true"
+						refreshMode="complete">
+						<xp:this.action><![CDATA[#{javascript:var defModule = new bsuite.configure.DefineModule();
+
+var moduleName = getComponent("moduleName").getValue();
+var features:java.util.Vector = getComponent("features").getValue();
+
+defModule.addFeatures(moduleName,features);
+var component = getComponent('loadCC'); 
+bsuite.loadcc.DynamicCC.removePreview(component);
+}]]></xp:this.action>
+					</xp:eventHandler></xp:button></xp:td>
+			
+		</xp:tr>
+	</xp:table>
+</xp:view>

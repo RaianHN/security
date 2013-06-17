@@ -1,0 +1,624 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+
+
+	<xp:this.resources>
+		<xp:script src="/CommonFunctions.jss" clientSide="false"></xp:script>
+		<xp:script src="/Copy Of CustomControlLib.js"
+			clientSide="true">
+		</xp:script>
+	</xp:this.resources>
+	<xp:this.beforePageLoad><![CDATA[#{javascript:var profileNames = getProfiles();
+
+viewScope.profileNames = profileNames;}]]></xp:this.beforePageLoad>
+Module Permissions<xp:table>
+		<xp:tr>
+			<xp:td><xp:table id="table1">
+		<xp:tr>
+			<xp:td><xp:span style="font-weight:bold">Profile:&#160;</xp:span><xp:br></xp:br>
+				<xp:comboBox id="moduleCombo"
+					binding="#{javascript:viewScope.selProfile1}">
+					<xp:selectItem itemLabel="--Select Profile--"></xp:selectItem>
+					<xp:selectItems>
+						<xp:this.value><![CDATA[#{javascript:viewScope.profileNames}]]></xp:this.value>
+					</xp:selectItems>
+					<xp:eventHandler event="onchange" submit="true"
+						refreshMode="complete">
+						<xp:this.action><![CDATA[#{javascript:viewScope.modulePermission = null;
+var profName = getComponent("moduleCombo").getValue();
+
+//var moduleVisib = new bsuite.jsonparsing.ProfileEdit();
+//moduleVisib.getModulePermission(profName);
+}]]></xp:this.action>
+					</xp:eventHandler>
+				</xp:comboBox></xp:td>
+			<xp:td>
+				<xp:br></xp:br>
+				</xp:td>
+			<xp:td>
+				</xp:td>
+		</xp:tr>
+		<xp:tr>
+			<xp:td>
+				<xp:span style="font-weight:bold">Module Name</xp:span>
+			</xp:td>
+			<xp:td>
+				<xp:span style="font-weight:bold">Tab Visible</xp:span>
+			</xp:td>
+			<xp:td>
+				
+			</xp:td>
+		</xp:tr>
+		<xp:repeat id="repeat1" rows="30" var="rowData">
+			<xp:this.value><![CDATA[#{javascript:var moduleP:java.util.Vector = viewScope.modulePermission;
+if(moduleP!=null){
+return moduleP;
+}
+}]]></xp:this.value>
+			<xp:tr>
+				<xp:td>
+					<xp:inputText id="inputText1">
+						<xp:this.value><![CDATA[#{javascript:@Left(rowData,":");}]]></xp:this.value>
+					</xp:inputText>
+				</xp:td>
+				<xp:td>
+					<xp:checkBox id="checkBox8" text="Visible">
+						<xp:this.defaultChecked><![CDATA[#{javascript:var val = @Right(rowData,":");
+if(val.charAt(0)=="1"){
+return true;
+}
+}]]></xp:this.defaultChecked>
+					</xp:checkBox>
+					</xp:td>
+			</xp:tr>
+		</xp:repeat>
+
+	</xp:table></xp:td>
+		</xp:tr>
+		<xp:tr>
+			<xp:td><xp:button value="Save" id="button2" style="background-color:rgb(192,192,192);width:100.0px">
+					<xp:eventHandler event="onclick" submit="false"
+						id="eventHandler1">
+						<xp:this.script><![CDATA[var table = document.getElementById('#{id:table1}');
+
+var i = 0;
+var result = new Array();
+//alert("table rolws"+table.rows.length);
+for (i = 2; i < table.rows.length; i++) {
+
+    var moduleName = table.rows[i].cells[0].firstChild.innerHTML;
+    var checkvals1 = table.rows[i].cells[1].firstChild.firstChild.checked;//visibility
+   //alert("temp"+moduleName);
+    
+    var temp;
+    if (checkvals1 == true) {
+        temp = moduleName + ":"+"1";
+    } else {
+        temp = moduleName + ":"+"0";
+    }
+     
+    result[i]=temp;
+    //alert("temp"+temp);
+}
+
+XSP.executeOnServer('view:_id1:eventModulePerm', "", "", result);]]></xp:this.script>
+					</xp:eventHandler>
+</xp:button></xp:td>
+		</xp:tr>
+	</xp:table>
+	
+	
+	
+	
+	
+
+	<xp:br></xp:br>
+	<xp:br></xp:br>
+	<xp:br></xp:br>
+	
+	
+	Entity Permissions<xp:table>
+		<xp:tr>
+			<xp:td><xp:table id="table2">
+		<xp:tr>
+			<xp:td><xp:span style="font-weight:bold">Profile:&#160;</xp:span>
+				<xp:br></xp:br>
+				<xp:comboBox id="entityCombo1"
+					binding="#{javascript:viewScope.profNam2}">
+					<xp:selectItem itemLabel="--Select Profile--"></xp:selectItem>
+					<xp:selectItems>
+						<xp:this.value><![CDATA[#{javascript:viewScope.profileNames}]]></xp:this.value>
+					</xp:selectItems>
+				</xp:comboBox></xp:td>
+			<xp:td><xp:span style="font-weight:bold">Module:</xp:span><xp:br></xp:br>
+				<xp:comboBox id="entityCombo2"
+					binding="#{javascript:viewScope.moduleNam2}">
+					<xp:selectItem itemLabel="--Select Module--"></xp:selectItem>
+					<xp:selectItems>
+						<xp:this.value><![CDATA[#{javascript:var profName = "Admin";
+var profile = new bsuite.jsonparsing.ProfileEdit();
+if(profName!=null){
+return profile.getModuleNames(profName);
+}
+}]]></xp:this.value>
+					</xp:selectItems>
+					<xp:eventHandler event="onchange" submit="true"
+						refreshMode="partial" refreshId="table2">
+						<xp:this.action><![CDATA[#{javascript:viewScope.selProfile = getComponent("entityCombo1").getValue();
+viewScope.selModule = getComponent("entityCombo2").getValue();
+var moduleVisib = new bsuite.jsonparsing.ProfileEdit();
+moduleVisib.getEntityPermission(viewScope.selProfile,viewScope.selModule);}]]></xp:this.action>
+					</xp:eventHandler>
+				</xp:comboBox></xp:td>
+			<xp:td>
+				<xp:br></xp:br>
+				</xp:td>
+			<xp:td></xp:td>
+			<xp:td></xp:td>
+			<xp:td></xp:td>
+		</xp:tr>
+		<xp:tr>
+			<xp:td style="font-weight:bold">Entity Name</xp:td>
+			<xp:td style="font-weight:bold">Create</xp:td>
+			<xp:td style="font-weight:bold">Read</xp:td>
+			<xp:td style="font-weight:bold">Update</xp:td>
+			<xp:td><xp:span style="font-weight:bold">Delete</xp:span></xp:td>
+			<xp:td>
+				
+			</xp:td>
+		</xp:tr>
+
+		<xp:repeat id="repeat2" rows="30" var="rowData">
+			<xp:this.value><![CDATA[#{javascript:var entityP:java.util.Vector = viewScope.entityPerm;
+if(entityP!=null){
+return entityP;
+}}]]></xp:this.value>
+			<xp:tr>
+				<xp:td>
+					<xp:inputText id="inputText2">
+						<xp:this.value><![CDATA[#{javascript:@Left(rowData,":");}]]></xp:this.value>
+					</xp:inputText>
+				</xp:td>
+				<xp:td>
+					<xp:checkBox text="Create" id="checkBox1">
+
+						<xp:this.defaultChecked><![CDATA[#{javascript:var val = @Right(rowData,":");
+if(val.charAt(0)=="1"){
+return true;
+}
+else{
+return false;
+}}]]></xp:this.defaultChecked>
+					</xp:checkBox>
+				</xp:td>
+				<xp:td>
+					<xp:checkBox text="Read" id="checkBox2">
+
+						<xp:this.defaultChecked><![CDATA[#{javascript:var val = @Right(rowData,":");
+if(val.charAt(1)=="1"){
+return true;
+}
+else{
+return false;
+}}]]></xp:this.defaultChecked>
+					</xp:checkBox>
+				</xp:td>
+				<xp:td>
+					<xp:checkBox text="Update" id="checkBox3">
+
+						<xp:this.defaultChecked><![CDATA[#{javascript:var val = @Right(rowData,":");
+if(val.charAt(2)=="1"){
+return true;
+}
+else{
+return false;
+}}]]></xp:this.defaultChecked>
+					</xp:checkBox>
+				</xp:td>
+				<xp:td>
+					<xp:checkBox text="Delete" id="checkBox4">
+
+						<xp:this.defaultChecked><![CDATA[#{javascript:var val = @Right(rowData,":");
+if(val.charAt(3)=="1"){
+return true;
+}
+else{
+return false;
+}}]]></xp:this.defaultChecked>
+					</xp:checkBox>
+				</xp:td>
+				<xp:td>
+					
+				</xp:td>
+			</xp:tr>
+		</xp:repeat>
+
+	</xp:table></xp:td>
+		</xp:tr>
+		<xp:tr>
+			<xp:td><xp:button value="Save" id="button4" style="background-color:rgb(192,192,192);width:100.0px">
+					<xp:eventHandler event="onclick" submit="false" id="eventHandler2">
+						<xp:this.script><![CDATA[var table = document.getElementById('#{id:table2}');
+
+var i = 0;
+var result = new Array();
+//alert("table rolws"+table.rows.length);
+for (i = 2; i < table.rows.length; i++) {
+
+    var entityName = table.rows[i].cells[0].firstChild.innerHTML;
+    var checkvals1 = table.rows[i].cells[1].firstChild.firstChild.checked;//visibility
+    var checkvals2 = table.rows[i].cells[2].firstChild.firstChild.checked;
+    var checkvals3 = table.rows[i].cells[3].firstChild.firstChild.checked;
+    var checkvals4 = table.rows[i].cells[4].firstChild.firstChild.checked;
+      
+    //alert("temp"+entityName);
+    
+    var temp;
+    if (checkvals1 == true) {
+        temp = entityName + ":"+"1";
+    } else {
+        temp = entityName + ":"+"0";
+    }
+    
+    if (checkvals2 == true) {
+        temp = temp  + "1";
+    } else {
+        temp = temp + "0";
+    }
+    
+     if (checkvals3 == true) {
+        temp = temp  + "1";
+    } else {
+        temp = temp + "0";
+    }
+    
+     if (checkvals4 == true) {
+        temp = temp  + "1";
+    } else {
+        temp = temp + "0";
+    }
+    
+    
+     
+    result[i]=temp;
+   //alert("temp"+temp);
+}
+//alert("temp");
+XSP.executeOnServer('view:_id1:eventEntityPerm', "", "", result);]]></xp:this.script>
+					</xp:eventHandler>
+				</xp:button></xp:td>
+		</xp:tr>
+	</xp:table>
+	
+	<xp:br></xp:br>
+	<xp:br></xp:br>
+	Field Permissions<xp:table>
+		<xp:tr>
+			<xp:td><xp:table id="table3" rendered="true">
+		<xp:tr>
+			<xp:td>
+				<xp:span style="font-weight:bold">Profile:&#160;</xp:span>
+				<xp:br></xp:br>
+				<xp:comboBox id="fieldCombo1"
+					binding="#{javascript:viewScope.profNam3}">
+					<xp:selectItem itemLabel="--Select Profile--"></xp:selectItem>
+					<xp:selectItems>
+						<xp:this.value><![CDATA[#{javascript:viewScope.profileNames}]]></xp:this.value>
+					</xp:selectItems>
+					<xp:eventHandler event="onchange" submit="true"
+						refreshMode="partial" refreshId="fieldCombo2">
+					</xp:eventHandler>
+				</xp:comboBox>
+			</xp:td>
+			<xp:td>
+				<xp:span style="font-weight:bold">Module:</xp:span>
+				<xp:br></xp:br>
+				<xp:comboBox id="fieldCombo2"
+					binding="#{javascript:viewScope.modulNam3}">
+					<xp:selectItem itemLabel="--Select Module--"></xp:selectItem>
+					<xp:selectItems>
+						<xp:this.value><![CDATA[#{javascript:var profName = "Admin";
+var profile = new bsuite.jsonparsing.ProfileEdit();
+if(profName!=null){
+return profile.getModuleNames(profName);
+}}]]></xp:this.value>
+					</xp:selectItems>
+					<xp:eventHandler event="onchange" submit="true"
+						refreshMode="partial" refreshId="table3">
+						<xp:this.action><![CDATA[#{javascript:var profName = getComponent("fieldCombo1").getValue();
+var moduleName = getComponent("fieldCombo2").getValue();
+var profile = new bsuite.jsonparsing.ProfileEdit();
+if(profName!=null&&moduleName!=null){
+viewScope.entityNamesL = profile.getEntityNames(profName,moduleName);
+}}]]></xp:this.action>
+					</xp:eventHandler>
+
+				</xp:comboBox>
+			</xp:td>
+			<xp:td>
+				<xp:span style="font-weight:bold">Entity:</xp:span>
+				<xp:br></xp:br>
+				<xp:comboBox id="fieldCombo3"
+					binding="#{javascript:viewScope.entityNam3}">
+					<xp:selectItem itemLabel="--Select Entity--"></xp:selectItem>
+					<xp:selectItems>
+						<xp:this.value><![CDATA[#{javascript:var values:java.util.Vector = viewScope.entityNamesL;
+if(values!=null){
+
+return values;
+}}]]></xp:this.value>
+					</xp:selectItems>
+					<xp:eventHandler event="onchange" submit="true"
+						refreshMode="partial" refreshId="table3">
+						<xp:this.action><![CDATA[#{javascript:viewScope.selProfile = getComponent("fieldCombo1").getValue();
+viewScope.selModule = getComponent("fieldCombo2").getValue();
+viewScope.selEntity = getComponent("fieldCombo3").getValue();
+var moduleVisib = new bsuite.jsonparsing.ProfileEdit();
+moduleVisib.getFieldPermission(viewScope.selProfile,viewScope.selModule,viewScope.selEntity);
+}]]></xp:this.action>
+					</xp:eventHandler>
+				</xp:comboBox>
+			</xp:td>
+			<xp:td>
+				
+				<xp:br></xp:br>
+				
+			</xp:td>
+		</xp:tr>
+		<xp:tr>
+			<xp:td style="font-weight:bold">Field&#160; Name</xp:td>
+			<xp:td style="font-weight:bold">Read</xp:td>
+			<xp:td style="font-weight:bold">Update</xp:td>
+			<xp:td>
+				
+			</xp:td>
+
+		</xp:tr>
+
+		<xp:repeat id="repeat3" rows="30" var="rowData">
+			<xp:this.value><![CDATA[#{javascript:var fieldP:java.util.Vector = viewScope.fieldPerm;
+if(fieldP!=null){
+return fieldP;
+}}]]></xp:this.value>
+			<xp:tr>
+				<xp:td>
+					<xp:inputText id="inputText3">
+						<xp:this.value><![CDATA[#{javascript:@Left(rowData,":");}]]></xp:this.value>
+					</xp:inputText>
+				</xp:td>
+				<xp:td>
+					<xp:checkBox text="Visible" id="checkBox5">
+
+						<xp:this.defaultChecked><![CDATA[#{javascript:var val = @Right(rowData,":");
+if(val.charAt(0)=="1"){
+return true;
+}
+else{
+return false;
+}}]]></xp:this.defaultChecked>
+					</xp:checkBox>
+				</xp:td>
+				<xp:td>
+					<xp:checkBox text="Update" id="checkBox6">
+
+						<xp:this.defaultChecked><![CDATA[#{javascript:var val = @Right(rowData,":");
+if(val.charAt(1)=="0"){//if 0 then readonly property is false therefor editable
+return true;
+}
+else{
+return false;
+}}]]></xp:this.defaultChecked>
+					</xp:checkBox>
+				</xp:td>
+
+				<xp:td>
+					
+				</xp:td>
+			</xp:tr>
+		</xp:repeat>
+
+	</xp:table></xp:td>
+		</xp:tr>
+		<xp:tr>
+			<xp:td><xp:button value="Save" id="button6" style="background-color:rgb(192,192,192);width:100.0px">
+					<xp:eventHandler event="onclick" submit="false"
+						id="eventHandler3">
+						<xp:this.script><![CDATA[var table = document.getElementById('#{id:table3}');
+
+var i = 0;
+var result = new Array();
+////alert("table rolws"+table.rows.length);
+for (i = 2; i < table.rows.length; i++) {
+
+    var fieldName = table.rows[i].cells[0].firstChild.innerHTML;
+    var checkvals1 = table.rows[i].cells[1].firstChild.firstChild.checked;//visibility
+    var checkvals2 = table.rows[i].cells[2].firstChild.firstChild.checked;//ronly
+ 
+      
+    //alert("temp"+fieldName);
+    
+    var temp;
+    if (checkvals1 == true) {
+        temp = fieldName + ":"+"1";
+    } else {
+        temp = fieldName + ":"+"0";
+    }
+    
+    if (checkvals2 == true) {
+        temp = temp  + "0";//If checked it is editable therefore readonly property is set to false
+    } else {
+        temp = temp + "1";//if it is not checked it is for readonly therfore readonly property is set to true
+    }
+    
+  
+    
+    
+     
+    result[i]=temp;
+    //alert("temp"+temp);
+}
+//alert("temp");
+XSP.executeOnServer('view:_id1:eventFieldPerm', "", "", result);]]></xp:this.script>
+					</xp:eventHandler>
+</xp:button></xp:td>
+		</xp:tr>
+	</xp:table>
+	
+	<xp:br></xp:br>
+	Feature Permissions<xp:table>
+		<xp:tr>
+			<xp:td><xp:table id="table4" rendered="true">
+		<xp:tr>
+			<xp:td>
+				<xp:span style="font-weight:bold">Profile:&#160;</xp:span>
+				<xp:br></xp:br>
+				<xp:comboBox id="featureCombo1"
+					binding="#{javascript:viewScope.profNam4}">
+					<xp:selectItem itemLabel="--Select Profile--"></xp:selectItem>
+					<xp:selectItems>
+						<xp:this.value><![CDATA[#{javascript:viewScope.profileNames}]]></xp:this.value>
+					</xp:selectItems>
+					<xp:eventHandler event="onchange" submit="true"
+						refreshMode="partial" refreshId="featureCombo2">
+					</xp:eventHandler>
+				</xp:comboBox>
+			</xp:td>
+			<xp:td>
+				<xp:span style="font-weight:bold">Module:</xp:span>
+				<xp:br></xp:br>
+				<xp:comboBox id="featureCombo2"
+					binding="#{javascript:viewScope.modulNam4}">
+					<xp:selectItem itemLabel="--Select Module--"></xp:selectItem>
+					<xp:selectItems>
+						<xp:this.value><![CDATA[#{javascript:var profName = "Admin";
+var profile = new bsuite.jsonparsing.ProfileEdit();
+if(profName!=null){
+return profile.getModuleNames(profName);
+}}]]></xp:this.value>
+					</xp:selectItems>
+					<xp:eventHandler event="onchange" submit="true"
+						refreshMode="partial" refreshId="table4">
+						<xp:this.action><![CDATA[#{javascript:var profName = getComponent("featureCombo1").getValue();
+var moduleName = getComponent("featureCombo2").getValue();
+var profile = new bsuite.jsonparsing.ProfileEdit();
+if(profName!=null&&moduleName!=null){
+viewScope.entityNamesL2 = profile.getEntityNames(profName,moduleName);
+}}]]></xp:this.action>
+					</xp:eventHandler>
+
+				</xp:comboBox>
+			</xp:td>
+			<xp:td><xp:span style="font-weight:bold">Entity:</xp:span>
+				<xp:br></xp:br>
+				<xp:comboBox id="featureCombo3"
+					binding="#{javascript:viewScope.entityNam4}">
+					<xp:selectItem itemLabel="--Select Entity--"></xp:selectItem>
+					<xp:selectItems>
+						<xp:this.value><![CDATA[#{javascript:var values:java.util.Vector = viewScope.entityNamesL2;
+if(values!=null){
+
+return values;
+}}]]></xp:this.value>
+					</xp:selectItems>
+					<xp:eventHandler event="onchange" submit="true"
+						refreshMode="partial" refreshId="table4">
+						<xp:this.action><![CDATA[#{javascript:var profileName = getComponent("featureCombo1").getValue();
+var moduleName = getComponent("featureCombo2").getValue();
+var entityName = getComponent("featureCombo3").getValue();
+var moduleVisib = new bsuite.jsonparsing.ProfileEdit();
+
+viewScope.selfProfile = profileName;
+viewScope.selfModule = moduleName;
+viewScope.selfEntity = entityName;
+
+moduleVisib.getFeaturePermission(profileName,moduleName,entityName);
+
+
+}]]></xp:this.action>
+					</xp:eventHandler>
+				</xp:comboBox>
+			</xp:td>
+			<xp:td>
+				
+				<xp:br></xp:br>
+				
+			</xp:td>
+		</xp:tr>
+		<xp:tr>
+			<xp:td style="font-weight:bold">Field&#160; Name</xp:td>
+			<xp:td style="font-weight:bold">Visible</xp:td>
+			<xp:td style="font-weight:bold"></xp:td>
+			<xp:td>
+				
+			</xp:td>
+
+		</xp:tr>
+
+		<xp:repeat id="repeat4" rows="30" var="rowData">
+			<xp:this.value><![CDATA[#{javascript:var featureP:java.util.Vector = viewScope.featurePerm;
+if(featureP!=null){
+return featureP;
+}}]]></xp:this.value>
+			<xp:tr>
+				<xp:td>
+					<xp:inputText id="inputText4">
+						<xp:this.value><![CDATA[#{javascript:@Left(rowData,":");}]]></xp:this.value>
+					</xp:inputText>
+				</xp:td>
+				<xp:td>
+					<xp:checkBox text="Visible" id="checkBox7">
+
+						<xp:this.defaultChecked><![CDATA[#{javascript:var val = @Right(rowData,":");
+if(val.charAt(0)=="1"){
+return true;
+}
+else{
+return false;
+}}]]></xp:this.defaultChecked>
+					</xp:checkBox>
+				</xp:td>
+				<xp:td>
+					
+				</xp:td>
+
+				<xp:td>
+					
+				</xp:td>
+			</xp:tr>
+		</xp:repeat>
+
+	</xp:table></xp:td>
+		</xp:tr>
+		<xp:tr>
+			<xp:td><xp:button value="Save" id="button1" style="background-color:rgb(192,192,192);width:100.0px">
+					<xp:eventHandler event="onclick" submit="false"
+						id="eventHandler4">
+						<xp:this.script><![CDATA[var table = document.getElementById('#{id:table4}');
+
+var i = 0;
+var result = new Array();
+//alert("table rolws"+table.rows.length);
+for (i = 2; i < table.rows.length; i++) {
+
+    var featureName = table.rows[i].cells[0].firstChild.innerHTML;
+    var checkvals1 = table.rows[i].cells[1].firstChild.firstChild.checked;//visibility
+    //alert("temp"+fieldName);
+    
+    var temp;
+    if (checkvals1 == true) {
+        temp = featureName + ":"+"1";
+    } else {
+        temp = featureName + ":"+"0";
+    }
+    
+    
+    result[i]=temp;
+    //alert("temp"+temp);
+}
+//alert("temp");
+XSP.executeOnServer('view:_id1:eventFeaturePerm', "", "", result);]]></xp:this.script>
+					</xp:eventHandler>
+</xp:button></xp:td>
+		</xp:tr>
+	</xp:table>
+	</xp:view>

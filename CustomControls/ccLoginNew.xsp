@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xe="http://www.ibm.com/xsp/coreex">
+	
+	<xe:dialog id="dialoglogin" title="Bsuite Login">
+			
+			<xp:panel styleClass="loginMessageText">
+
+				<xp:text escape="true" id="computedField10">
+					<xp:this.value><![CDATA[#{javascript:compositeData.get("loginMessage")}]]></xp:this.value>
+				</xp:text>
+			</xp:panel>
+			<xp:panel styleClass="loginErrorText" id="loginErrorPanel">
+			</xp:panel>
+			<xp:panel styleClass="loginFieldsGroup">
+				<xp:table >
+					<xp:tr>
+						<xp:td style="border:0;width:68.0px;">
+							<xp:label value="User" id="lblUser"
+								>
+							</xp:label>
+						</xp:td>
+						<xp:td style="width:203.0px;border:0;">
+							<xp:inputText id="inpUser"
+								style="width:95%">
+							</xp:inputText>
+						</xp:td>
+					</xp:tr>
+					<xp:tr>
+						<xp:td style="border:0;width:68.0px;">
+							<xp:label value="Password" id="lblPassword"
+								>
+							</xp:label>
+						</xp:td>
+						<xp:td style="width:203.0px;border:0;">
+							<xp:inputText id="inpPassword"
+								password="true" style="width:95%">
+							</xp:inputText>
+						</xp:td>
+					</xp:tr>
+				</xp:table>
+			</xp:panel>
+
+			<xp:panel styleClass="loginButtonContainer">
+				<xp:text escape="false" id="computedField11"
+					style="margin:15px;width:100px;">
+					<xp:this.value><![CDATA[<script language="javascript">
+processLogin = function() {
+dojo.xhrPost({
+    url : '#{javascript:compositeData.get("loginURL");}',
+    handleAs : "text",
+    preventCache : true,
+    content: {
+    	"UserName": dojo.byId('#{javascript:getClientId("inpUser")}').value,
+    	"Password": dojo.byId('#{javascript:getClientId("inpPassword")}').value
+    },
+    load : function(response, ioArgs) {
+    					if (response.indexOf('action="/names.nsf?Login"')==-1){
+    						document.cookie = "BackupSesID=; expires=Thu, 01-Jan-70 00:00:01 GMT";
+    						window.location.href = '#{javascript:compositeData.get("successURL");}';
+    					}else{
+    						dojo.xhrGet({
+    							url : '#{javascript:compositeData.get("logoutURL");}',
+    							handleAs : "text",
+							preventCache : true,
+    							load : function(response, ioArgs) {
+    								if (document.cookie.indexOf('BackupSesId=')!=-1){
+    									document.cookie = "DomAuthSessId=" + document.cookie.split('BackupSesID=')[1].substr(0, 32);
+    								}
+    								document.cookie = "BackupSesId=; expires=Thu, 01-Jan-70 00:00:01 GMT";
+    								dojo.byId('#{javascript:getClientId("loginErrorPanel")}').innerHTML = "You have entered an invalid username or password, or do not have sufficient credentials.";
+    							},
+    							error : function(response, ioArgs) {
+    								dojo.byId('#{javascript:getClientId("loginErrorPanel")}').innerHTML = "You have entered an invalid username or password, or do not have sufficient credentials.";
+    							}    							
+    						})
+    					}    					    					
+    				},
+    				error : function(response, ioArgs) {
+    					dojo.byId('#{javascript:getClientId("loginErrorPanel")}').innerHTML = "You have entered an invalid username or password, or do not have sufficient credentials.";
+    				}
+    			});
+} //processLogin
+</script>
+<button id="loginButton" style="margin:10px;" type="button" name="loginButton" onClick="processLogin()">Log In</button>]]></xp:this.value>
+				</xp:text>
+			</xp:panel>
+		</xe:dialog>
+	
+	<xp:link escape="true" id="link1" styleClass="bsuiteTitleText">
+		<xp:this.text><![CDATA[#{javascript:@Name("[CN]",@UserName())}]]></xp:this.text>
+		
+		<xp:eventHandler event="onmouseover" submit="false">
+			<xp:this.script><![CDATA[XSP.openMenu(thisEvent,#{javascript:getComponent('popuplogin').getMenuCtor()})]]></xp:this.script>
+		</xp:eventHandler></xp:link>
+
+	<xp:link escape="true" id="link2" text="Configure" rendered="false">
+
+		<xp:eventHandler event="onclick" submit="true"
+			refreshMode="partial" refreshId="ConfigureDiv">
+			<xp:this.action><![CDATA[#{javascript:/*
+if (getComponent("DefineEntities") == null)
+{
+var r = getComponent('container'); 
+var s = facesContext; 
+var ccheader="/ccHeader.xsp";
+bsuite.weberon.DynamicCC1.createPortlet(s, r,ccheader,'/ccDefineEntities.xsp',"DefineEntities","DefineEntities");
+println("After createPortleeeee");
+ var l = getComponent('linklist');
+ bsuite.weberon.DynamicCC1.createLink(l, "DefineEntities", "DefineEntities"+"link");
+}else{
+ 	if(viewScope.moveableToggle=="1"){
+ 		var parent = getComponent('container');	
+	  	var child = getComponent("DefineEntities"+"moveable");
+	  	parent.getChildren().add(0, child);
+ 	}else if(viewScope.moveableToggle=="0"){
+ 		var parent = getComponent('container');
+ 		var child = getComponent("DefineEntities");
+ 		parent.getChildren().add(0, child); 
+ 		
+ 	}
+}
+*/
+//var component = getComponent('ConfigureDiv'); 
+var component = getComponent('MainTabContainer'); 
+var s = facesContext;
+var c1="/ccDefineEntities.xsp"; 
+var id="modulediv";
+//bsuite.weberon.DynamicCC.loadCC(s, component, c1, id);
+bsuite.weberon.DynamicCC.loadCCinTab(s,component,c1,id,"Configure");
+println("OnLCick of Configure");
+}]]></xp:this.action>
+		</xp:eventHandler>
+	</xp:link>
+	
+	<xp:link escape="true" text="SetUp" id="link3">
+		<xp:this.rendered><![CDATA[#{javascript:var adm = sessionScope.profileName;
+var roleBoolean = context.getUser().getRoles().contains('[Deployer]');//Added if defined Deployer in Acl
+if(adm!=null){
+if(adm=="Admin"){
+return true;
+}else{
+return false;
+}
+}else if(roleBoolean){
+	return true;//To check Acl deployer role
+}}]]></xp:this.rendered>
+		<xp:eventHandler event="onmouseover" submit="false">
+			<xp:this.script><![CDATA[XSP.openMenu(thisEvent,#{javascript:getComponent('popupsetup').getMenuCtor()})]]></xp:this.script>
+		</xp:eventHandler>
+	</xp:link>
+	<xp:panel id="ref"></xp:panel>
+	<xe:popupMenu id="popuplogin">
+	<xp:eventHandler id="eventHandler11" event="onItemClick"
+		refreshMode="partial" refreshId="ref" submit="true">
+
+		<xp:this.onError><![CDATA[alert("error");]]></xp:this.onError>
+
+		<xp:this.action><![CDATA[#{javascript:
+		var user=@LowerCase(@Text(@Name("[CN]",@UserName())));
+							if (user != "anonymous"){
+							var logoff=compositeData.get("logoutURL");
+							facesContext.externalContext.redirect( logoff); 
+							}
+
+
+}]]></xp:this.action>
+		<xp:this.onComplete><![CDATA[
+
+var user='#{javascript:@LowerCase(@Text(@Name("[CN]",@UserName())))}';
+					if (user == "anonymous"){
+					XSP.openDialog("#{id:dialoglogin}");
+					}
+					
+
+]]></xp:this.onComplete>
+
+	</xp:eventHandler>
+
+	<xe:this.treeNodes>
+						
+			<xe:basicLeafNode  submitValue="something">
+			<xe:this.label><![CDATA[#{javascript:var userName = @LowerCase(@Text(@Name("[CN]",@UserName())));
+if (userName == "anonymous") {
+	return(compositeData.get("loginText"))
+} else {
+	return(compositeData.get("logoutText"))
+}}]]></xe:this.label>
+			
+			
+			</xe:basicLeafNode>
+		</xe:this.treeNodes>
+	</xe:popupMenu>
+	
+
+	
+	<xe:popupMenu id="popupsetup">
+		<xe:this.treeNodes>
+			<xe:basicLeafNode submitValue="configure"
+				label="Configure">
+			</xe:basicLeafNode>
+			<xe:basicLeafNode submitValue="profile"
+				label="Create Profile">
+			</xe:basicLeafNode>
+			<xe:basicLeafNode submitValue="createdata"
+				label="Create DataSharing Rules">
+			</xe:basicLeafNode>
+			<xe:basicLeafNode label="Edit Default Organization Setting"
+				submitValue="editdata">
+			</xe:basicLeafNode>
+			<xe:basicLeafNode label="Update Schema"
+				submitValue="updateschema">
+			</xe:basicLeafNode>
+			<xe:basicLeafNode label="Edit Role"
+				submitValue="editrole">
+			</xe:basicLeafNode>
+		</xe:this.treeNodes>
+
+
+		<xp:eventHandler event="onItemClick" submit="true"
+			refreshMode="partial" onStart="showWait()" onComplete="hideWait()">
+			<xp:this.action>
+				<xp:executeScript>
+					<xp:this.script><![CDATA[#{javascript:
+
+var choice=context.getSubmittedValue()
+if(choice=="configure"){
+println("OnClick if Configure");
+
+var component = getComponent('MainTabContainer'); 
+var s = facesContext;
+var c1="/ccDefineEntities.xsp"; 
+var id="modulediv";
+//bsuite.weberon.DynamicCC.loadCC(s, component, c1, id);
+bsuite.weberon.DynamicCC.loadCCinTab(s,component,c1,id,"Configure");
+println("OnLCick of Configure");
+
+}else if(choice=="profile"){
+println("OnClick if Create Profile");
+
+var component = getComponent('MainTabContainer'); 
+var s = facesContext;
+var c1="/ccDefineProfile.xsp"; 
+var id="modulePermdiv";
+//bsuite.weberon.DynamicCC.loadCC(s, component, c1, id);
+bsuite.weberon.DynamicCC.loadCCinTab(s,component,c1,id,"Profile");
+
+}else if(choice=="createdata"){
+println("OnClick if DataSharing");
+
+var component = getComponent('MainTabContainer'); 
+var s = facesContext;
+var c1="/ccDataSharing.xsp"; 
+var id="DataSharingdiv";
+//bsuite.weberon.DynamicCC.loadCC(s, component, c1, id);
+bsuite.weberon.DynamicCC.loadCCinTab(s,component,c1,id,"DataSharing");
+
+}else if(choice=="editdata"){
+
+println("OnClick of Edit DataSharing");
+
+var component = getComponent('MainTabContainer'); 
+var s = facesContext;
+var c1="/cc_ShowDataSharing.xsp"; 
+var id="editDataSharingdiv";
+//bsuite.weberon.DynamicCC.loadCC(s, component, c1, id);
+bsuite.weberon.DynamicCC.loadCCinTab(s,component,c1,id,"Edit_DefaultSetting");
+
+}
+
+else if(choice=="updateschema"){
+
+println("OnClick of updating schema");
+
+var component = getComponent('MainTabContainer'); 
+var s = facesContext;
+var c1="/ccUpdateModule.xsp"; 
+var id="updatemodulediv";
+//bsuite.weberon.DynamicCC.loadCC(s, component, c1, id);
+bsuite.weberon.DynamicCC.loadCCinTab(s,component,c1,id,"UpdateSchema");
+
+}
+else if(choice=="editrole"){
+println("OnLCick of EditRole");
+var component = getComponent('MainTabContainer'); 
+var s = facesContext;
+var c1="/ccEditRole.xsp"; 
+var id="EditRolediv";
+//bsuite.weberon.DynamicCC.loadCC(s, component, c1, id);
+bsuite.weberon.DynamicCC.loadCCinTab(s,component,c1,id,"Edit_Role");
+
+}
+
+
+}]]></xp:this.script>
+				</xp:executeScript>
+			</xp:this.action>
+		</xp:eventHandler>
+
+
+
+	</xe:popupMenu></xp:view>
+

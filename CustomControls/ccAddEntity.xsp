@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+
+	<xp:table>
+		<xp:tr>
+			<xp:td>
+				<xp:label value="Select Module: " id="label1"></xp:label>
+			</xp:td>
+			<xp:td>
+
+
+				<xp:comboBox id="moduleName">
+					<xp:selectItems>
+						<xp:this.value><![CDATA[#{javascript:return @DbColumn("","Modules",1);}]]></xp:this.value>
+					</xp:selectItems>
+				</xp:comboBox>
+
+
+
+
+
+			</xp:td>
+			<xp:td rowspan="4"></xp:td>
+		</xp:tr>
+		<xp:tr>
+			<xp:td>
+				<xp:label value="Entity Name:" id="label2"></xp:label>
+			</xp:td>
+			<xp:td>
+				<xp:inputText id="entityName"></xp:inputText>
+			</xp:td>
+			
+		</xp:tr>
+		<xp:tr>
+			<xp:td>
+				<xp:label value="List of Fields:" id="label3"></xp:label>
+			</xp:td>
+			<xp:td>
+				<xp:inputTextarea id="fields"
+					multipleSeparator=",">
+				</xp:inputTextarea>
+			</xp:td>
+			
+		</xp:tr>
+		
+		<xp:tr>
+			<xp:td></xp:td>
+			<xp:td>
+				<xp:button id="button1" value="Create Entity" style="background-color:rgb(192,192,192)">
+					<xp:eventHandler event="onclick" submit="true"
+						refreshMode="complete">
+						<xp:this.action><![CDATA[#{javascript:var defModule = new bsuite.configure.DefineModule();
+
+var moduleName = getComponent("moduleName").getValue();
+var entityName = getComponent("entityName").getValue();
+var fields :java.util.Vector = getComponent("fields").getValue();
+
+
+defModule.addEntity(moduleName,entityName, fields);
+var component = getComponent('loadCC'); 
+bsuite.loadcc.DynamicCC.removePreview(component);
+}]]></xp:this.action>
+					</xp:eventHandler></xp:button></xp:td>
+			
+		</xp:tr>
+	</xp:table>
+</xp:view>

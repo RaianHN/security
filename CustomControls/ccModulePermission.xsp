@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+	
+	<xp:this.beforePageLoad><![CDATA[#{javascript:var obj  = this.getParent();
+var id = obj.getClientId(facesContext);
+viewScope.clIdM = @LeftBack(id,":");
+println("obj"+obj);
+println("clid"+id);
+println("thisid"+this.getClientId(facesContext));}]]></xp:this.beforePageLoad>
+	<xp:table id="table1">
+
+		<xp:tr>
+			<xp:td align="left">
+				<xp:button value="Save" id="button1">
+					<xp:eventHandler event="onclick" submit="false">
+						<xp:this.script><![CDATA[//var clId = "#{javascript:viewScope.clIdM}";
+var clId = "view:_id1:_id2:MainTabContainer:Profile:modulePermdiv:modulediv";
+var numberOfModules = "#{javascript:viewScope.numberOfModules}";
+
+if(clId==null || clId==""){
+alert("Client id is null");
+return;
+}
+
+if(numberOfModules==null || numberOfModules==""){
+alert("No modules to process");
+return;
+}
+getModulePermission(clId,numberOfModules)]]></xp:this.script>
+					</xp:eventHandler></xp:button>
+			</xp:td>
+			<xp:td>
+				<xp:inputHidden id="inputHidden1"
+					binding="#{javascript:viewScope.clIdM;}">
+					<xp:this.value><![CDATA[#{javascript:
+var id  = this.getClientId(facesContext);
+return @LeftBack(id,":");}]]></xp:this.value>
+				</xp:inputHidden></xp:td>
+		</xp:tr>
+		<xp:tr>
+			<xp:td>
+				<xp:span style="font-weight:bold">Module Name</xp:span>
+			</xp:td>
+			<xp:td>
+				<xp:span style="font-weight:bold">Tab Visible</xp:span>
+			</xp:td>
+
+		</xp:tr>
+		<xp:repeat id="moduleRepeatM" rows="30" var="rowData">
+			<xp:this.value><![CDATA[#{javascript:var moduleP:java.util.Vector = viewScope.modulePermission;
+if(moduleP!=null){
+return moduleP;
+}
+}]]></xp:this.value>
+			<xp:tr>
+				<xp:td align="left">
+					<xp:inputText id="moduleNameM">
+						<xp:this.value><![CDATA[#{javascript:@Left(rowData,":");}]]></xp:this.value>
+					</xp:inputText>
+				</xp:td>
+				<xp:td align="center">
+					<xp:checkBox id="chk">
+						<xp:this.defaultChecked><![CDATA[#{javascript:var val = @Right(rowData,":");
+if(val.charAt(0)=="1"){
+return true;
+}
+}]]></xp:this.defaultChecked>
+					</xp:checkBox>
+				</xp:td>
+			</xp:tr>
+		</xp:repeat>
+
+	</xp:table>
+</xp:view>

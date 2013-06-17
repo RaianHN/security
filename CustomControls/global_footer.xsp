@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+	
+	 	
+	 	<xp:link escape="true"
+	 		text=" © Weberon 2002-2014. All Rights Reserved " id="link1"
+	 		style="font-size:9pt">
+	 	</xp:link>
+
+</xp:view>

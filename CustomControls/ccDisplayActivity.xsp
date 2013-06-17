@@ -15,7 +15,7 @@
 		<xe:this.summaryColumn>
 			<xe:viewSummaryColumn columnTitle="Subject"></xe:viewSummaryColumn>
 		</xe:this.summaryColumn>
-		<xp:this.facets>
+		<!--<xp:this.facets>
 			<xp:panel id="summarypanel1" xp:key="summary">
 				
 				<xp:link escape="true" id="link1">
@@ -43,5 +43,5 @@ uiactivity.resetUI(c, facesContext,"/ccActivity.xsp");}]]></xp:this.script>
 				partialExecute="true">
 			</xp:pager>
 		</xp:this.facets>
-	</xe:dataView>
+	--></xe:dataView>
 </xp:view>

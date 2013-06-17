@@ -1,13 +1,21 @@
-<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257A11001D5079" version="8.5" xmlns="http://www.lotus.com/dxl">
-<noteinfo noteid="2d2" sequence="8" unid="001E352118BB56D2652579250045C5F8">
-<created><datetime>20111010T181206,64+0530</datetime></created>
-<modified><datetime>20120602T105013,88+0530</datetime></modified>
-<revised><datetime>20111011T104122,79+0530</datetime></revised>
-<lastaccessed><datetime>20120602T105013,88+0530</datetime></lastaccessed>
-<addedtofile><datetime>20120602T105013,88+0530</datetime></addedtofile></noteinfo>
-<updatedby><name>CN=Admin BSUITE/O=Development</name></updatedby>
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257B8D0032F272" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="63e" sequence="6" unid="994B30826646135865257B4F001E6319">
+<created><datetime>20130416T110154,49+0530</datetime></created>
+<modified><datetime>20130617T144844,18+0530</datetime></modified>
+<revised><datetime>20130617T144844,17+0530</datetime></revised>
+<lastaccessed><datetime>20130617T144844,18+0530</datetime></lastaccessed>
+<addedtofile><datetime>20130617T144815,14+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
+<wassignedby><name>CN=Jaya K Prakash/O=Weberon</name></wassignedby>
 <item name="$TITLE"><text>viewpicklist.xsp</text></item>
 <item name="$Flags"><text>gC~4;</text></item>
+
+
+
+
+
+
+<item name="$FileNames" sign="true"><text>viewpicklist.xsp</text></item>
 <item name="$DesignerVersion"><text>8.5.2</text></item>
 
 
@@ -15,11 +23,4 @@
 
 
 
-
-
-
-
-
-
-
-<item name="$FileNames" sign="true"><text>viewpicklist.xsp</text></item></note>
+</note>

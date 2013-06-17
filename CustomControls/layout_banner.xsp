@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+
+	<xp:panel id="lotusBanner" styleClass="lotusBanner">
+		<xp:panel styleClass="lotusRightCorner" id="lotusRightCorner">
+			<xp:panel id="lotusInner" styleClass="lotusInner">
+				<xp:callback facetName="banner_content" id="callback1"></xp:callback>
+			</xp:panel>
+		</xp:panel>
+	</xp:panel>
+</xp:view>

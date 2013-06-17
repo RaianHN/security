@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xe="http://www.ibm.com/xsp/coreex">
+
+	<xe:dialog id="dialogConfirm" title="Next Step"
+		style="width:300px;">
+		<xe:dialogContent id="dialogContent1">
+			<xp:label value="Do you want to delete " id="label1">
+			</xp:label>
+			<xp:text escape="true" id="computedField1"
+				value="#{viewScope.selModule}" style="color:rgb(0,0,255)">
+
+			</xp:text>
+			<xp:label value="?" id="label2"></xp:label>
+		</xe:dialogContent>
+		<xe:dialogButtonBar id="dialogButtonBar1">
+			<xp:div style="text-align:center">
+
+				<xp:button value="Yes" id="button2">
+
+
+				<xp:eventHandler event="onclick" submit="true"
+					refreshMode="complete"
+					onComplete="XSP.closeDialog('#{id:dialogConfirm}');">
+					<xp:this.action><![CDATA[#{javascript:viewScope.errsms = "";
+var moduleName = viewScope.selModule;
+var dep = new bsuite.configure.DefineModule();
+if(moduleName!=null){
+if(dep.deleteModule(moduleName)){
+viewScope.errsms = "Module removed successfully";
+}else{
+viewScope.errsms = "Error in removing selected module";
+}
+}}]]></xp:this.action>
+				</xp:eventHandler></xp:button>
+				<xp:button value="No" id="button1">
+					<xp:eventHandler event="onclick" submit="false">
+						<xp:this.script><![CDATA[XSP.closeDialog('#{id:dialogConfirm}');]]></xp:this.script>
+					</xp:eventHandler></xp:button>
+			</xp:div>
+
+		</xe:dialogButtonBar>
+	</xe:dialog></xp:view>

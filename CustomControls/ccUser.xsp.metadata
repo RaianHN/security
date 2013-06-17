@@ -1,21 +1,22 @@
-<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257A11001D5079" version="8.5" xmlns="http://www.lotus.com/dxl">
-<noteinfo noteid="266" sequence="84" unid="DA19DD6DE556519B652579070022F712">
-<created><datetime>20110910T115154,74+0530</datetime></created>
-<modified><datetime>20120602T105013,34+0530</datetime></modified>
-<revised><datetime>20111021T114315,77+0530</datetime></revised>
-<lastaccessed><datetime>20120602T105013,34+0530</datetime></lastaccessed>
-<addedtofile><datetime>20120602T105013,34+0530</datetime></addedtofile></noteinfo>
-<updatedby><name>CN=Test User1/O=Development</name><name>CN=Admin BSUITE/O=Development</name><name>CN=Test User1/O=Development</name><name>CN=Admin BSUITE/O=Development</name></updatedby>
-<item name="$Flags"><text>gC~4;</text></item>
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257B8D0032F272" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="6da" sequence="6" unid="B92510DD25E8A8E165257B4F001E59E7">
+<created><datetime>20130416T110130,95+0530</datetime></created>
+<modified><datetime>20130617T144847,23+0530</datetime></modified>
+<revised><datetime>20130617T144847,22+0530</datetime></revised>
+<lastaccessed><datetime>20130617T144847,23+0530</datetime></lastaccessed>
+<addedtofile><datetime>20130617T144819,89+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
+<wassignedby><name>CN=Jaya K Prakash/O=Weberon</name></wassignedby>
 <item name="$TITLE"><text>ccUser.xsp</text></item>
-
-
-
+<item name="$Flags"><text>gC~4;</text></item>
 
 
 
 
 <item name="$FileNames" sign="true"><text>ccUser.xsp</text></item>
 <item name="$DesignerVersion"><text>8.5.2</text></item>
+
+
+
 
 </note>

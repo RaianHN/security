@@ -55,7 +55,7 @@ var doc=viewentry.getDocument();
 sessionScope.put('userdocumentId',doc.getUniversalID());
 var c= getComponent('container');
 uiuser.resetUI(c, facesContext,"/ccUser.xsp");
-//bsuite.weber.tools.CompUtil.create(c, facesContext,"/ccUser.xsp")}]]></xp:this.script>
+//bsuite.tools.CompUtil.create(c, facesContext,"/ccUser.xsp")}]]></xp:this.script>
 						</xp:executeScript>
 					</xp:actionGroup>
 				</xp:this.action>

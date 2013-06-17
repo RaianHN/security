@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xc="http://www.ibm.com/xsp/custom"
+	xmlns:xe="http://www.ibm.com/xsp/coreex">
+
+
+	<xp:this.beforePageLoad><![CDATA[#{javascript:var profileNames = getProfiles();
+viewScope.profileNames = profileNames;}]]></xp:this.beforePageLoad>
+	<xp:this.resources>
+		<xp:script src="/CommonFunctions.jss" clientSide="false"></xp:script>
+	</xp:this.resources>
+	<xp:table style="width:100%">
+		<xp:tr>
+			<xp:td align="left">
+				<xp:table>
+					<xp:tr>
+						<xp:td>
+							<xp:span style="font-weight:bold">
+								Profile
+							</xp:span>
+							:
+						</xp:td>
+						<xp:td>
+							<xp:comboBox id="moduleCombo"
+								binding="#{javascript:viewScope.selProfile1}">
+								<xp:selectItem
+									itemLabel="--Select Profile--" id="selectItem1">
+								</xp:selectItem>
+								<xp:selectItems id="selectItems1">
+									<xp:this.value><![CDATA[#{javascript:viewScope.profileNames}]]></xp:this.value>
+								</xp:selectItems>
+
+
+								<xp:eventHandler event="onchange"
+									submit="true" refreshMode="complete">
+									<xp:this.action><![CDATA[#{javascript:viewScope.modulePermission = null;
+var profName = getComponent("moduleCombo").getValue();
+viewScope.selectedProfile = profName;
+var profName2 = viewScope.selectedProfile;
+dBar.info("selected profile"+profName);
+if (profName=="--Select Profile--" || profName2==null || profName2 == undefined){
+return;
+}
+
+var obj = new bsuite.jsonparsing.ProfileEdit();
+obj.getModulePermission(profName2);
+dBar.info("after getting module permission")
+
+
+
+//Below commented for new security UI
+/*
+var component = getComponent('panelPermission'); 
+var s = facesContext;
+var c1="/ccPermissions.xsp";
+// var c1="/cc_TestPage.xsp";
+var id="modulediv";
+bsuite.loadcc.DynamicCC.removePreview(component);
+bsuite.loadcc.DynamicCC.loadCC(s, component, c1, id);
+*/}]]></xp:this.action>
+								</xp:eventHandler>
+							</xp:comboBox>
+						</xp:td>
+						<xp:td styleClass="debugButton">
+							<xp:button value="Save" id="buttonSaveProfile">
+								<xp:eventHandler event="onclick"
+									submit="false">
+									<xp:this.script><![CDATA[var id = "#{id:checkBoxM1}";
+savePermissionsUI(id);]]></xp:this.script>
+
+
+
+								</xp:eventHandler>
+							</xp:button>
+							&#160;&#160;&#160;
+							<xp:link escape="true" text="Create New"
+								id="link37" style="font-size:7pt">
+								<xp:eventHandler event="onclick"
+									submit="false">
+									<xp:this.script><![CDATA[XSP.openTooltipDialog('#{id:tooltipDialog13}','#{id:link37}')]]></xp:this.script>
+								</xp:eventHandler>
+							</xp:link>
+
+
+
+						</xp:td>
+
+
+
+					</xp:tr>
+				</xp:table>
+
+			</xp:td>
+			<xp:td>
+
+			</xp:td>
+
+
+
+
+
+
+
+
+
+
+		</xp:tr>
+
+		<xp:tr>
+			<xp:td colspan="5" id="profileTable">
+				<xp:panel id="panelPermission" style="width:auto"></xp:panel>
+			</xp:td>
+		</xp:tr>
+	</xp:table>
+
+
+
+	<xe:tooltipDialog id="tooltipDialog13">
+		<xp:panel>
+			<xp:table>
+
+				<xp:tr>
+					<xp:td>
+						<xp:inputText id="inputText3">
+
+
+						</xp:inputText>
+
+					</xp:td>
+					<xp:td></xp:td>
+				</xp:tr>
+				<xp:tr>
+					<xp:td>
+						<xp:button value="Save" id="button32"
+							styleClass="lotusFormButton" style="font-size:7pt">
+
+
+							<xp:eventHandler event="onclick"
+								submit="true" refreshMode="partial" refreshId="panelPermission"
+								onStart="showWait()" onComplete="hideWait()"
+								onError="showError()">
+								<xp:this.script><![CDATA[XSP.closeTooltipDialog('#{id:tooltipDialog13}')]]></xp:this.script>
+
+								<xp:this.action><![CDATA[#{javascript:var profName = getComponent("inputText3").getValue();
+var dp = new bsuite.configure.Deploy();
+dp.createProfileDoc(profName);
+dp.updateProfileDoc(profName);}]]></xp:this.action>
+							</xp:eventHandler>
+						</xp:button>
+						&#160;
+						<xp:button value="Cancel" id="button33"
+							style="font-size:7pt" styleClass="lotusFormButton">
+							<xp:eventHandler event="onclick"
+								submit="false" id="eventHandler55">
+								<xp:this.script><![CDATA[XSP.closeTooltipDialog('#{id:tooltipDialog13}')]]></xp:this.script>
+							</xp:eventHandler>
+						</xp:button>
+					</xp:td>
+					<xp:td></xp:td>
+				</xp:tr>
+			</xp:table>
+		</xp:panel>
+
+	</xe:tooltipDialog>
+</xp:view>

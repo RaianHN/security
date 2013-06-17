@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core" xmlns:xc="http://www.ibm.com/xsp/custom"
+	xmlns:xe="http://www.ibm.com/xsp/coreex">
+
+	<xp:panel id="lotusContent" styleClass="lotusContent">
+
+		<xe:dynamicContent id="dync" defaultFacet="profile"
+			useHash="false">
+
+			<xe:this.facets>
+
+				<xc:ccUIProfile xp:key="profile" id="profile_page"></xc:ccUIProfile>
+				<xc:ccUIRole xp:key="role" id="role_page"></xc:ccUIRole>
+				<xc:ccUIOrg xp:key="org" id="org_page"></xc:ccUIOrg>
+				<xc:ccUIConfig xp:key="config" id="config_page"></xc:ccUIConfig>
+				<xc:ccUIDefine xp:key="define" id="define_page"></xc:ccUIDefine>
+				<xc:ccUIAssoc xp:key="associate" id="assoc_page"></xc:ccUIAssoc>
+			</xe:this.facets>
+		</xe:dynamicContent>
+
+	</xp:panel>
+</xp:view>

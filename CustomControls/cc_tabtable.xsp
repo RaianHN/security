@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xc="http://www.ibm.com/xsp/custom"
+	xmlns:xe="http://www.ibm.com/xsp/coreex">
+	
+
+
+	<xp:div id="maindiv">
+
+		<xc:BsuiteBanner></xc:BsuiteBanner>
+		<xp:br></xp:br>
+		<xc:BsuiteTitleBar></xc:BsuiteTitleBar>		
+		<xc:BsuiteMain rendered="false"></xc:BsuiteMain>
+
+		<!--<xp:div id="ConfigureDiv">
+			<xp:div id="CCLoadDiv" style="height:auto;width:100%"
+				binding="#{wrkspc.tabs}">
+			</xp:div>
+		</xp:div>
+
+	-->
+		<xe:djTabContainer id="MainTabContainer"
+			style="height:682px;width:100%;">
+			<xe:djTabPane id="djTabHome" title="Home"></xe:djTabPane>
+			<xe:djTabPane id="djTabConfigure" title="Configure">
+				<xc:ccDefineEntities></xc:ccDefineEntities>
+			</xe:djTabPane>
+			<xe:djTabPane id="djProfile" title="Profile">
+				<xc:ccDefineProfile></xc:ccDefineProfile>
+			</xe:djTabPane>
+			<xe:djTabPane id="djRole" title="Role">
+				<xc:ccEditRole></xc:ccEditRole>
+			</xe:djTabPane>
+			<xe:djTabPane id="djSchema" title="Schema">
+				<xc:ccUpdateModule></xc:ccUpdateModule>
+			</xe:djTabPane>
+			<xe:djTabPane id="djDataSharing" title="Data Sharing" rendered="false">
+				<xc:ccDataSharing></xc:ccDataSharing>
+			</xe:djTabPane>
+			<xe:djTabPane id="djOrganization"
+				title="Organiztion Settings">
+				<xc:cc_ShowDataSharing></xc:cc_ShowDataSharing>
+			</xe:djTabPane>
+			<xe:djTabPane id="djTabPane1" title="Assocate User">
+				<xc:associateUser></xc:associateUser>
+			</xe:djTabPane>
+
+		</xe:djTabContainer>
+	</xp:div>
+</xp:view>

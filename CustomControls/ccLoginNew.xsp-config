@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config>
+  <faces-config-extension>
+    <namespace-uri>http://www.ibm.com/xsp/custom</namespace-uri>
+    <default-prefix>xc</default-prefix>
+  </faces-config-extension>
+  <composite-component>
+    <component-type>ccLoginNew</component-type>
+    <composite-name>ccLoginNew</composite-name>
+    <composite-file>/ccLoginNew.xsp</composite-file>
+    <composite-extension>
+      <designer-extension>
+        <in-palette>true</in-palette>
+      </designer-extension>
+    </composite-extension>
+    <property>
+      <property-name>loginText</property-name>
+      <property-class>string</property-class>
+      <display-name>Login Text</display-name>
+      <property-extension>
+        <designer-extension>
+          <default-value>login</default-value>
+        </designer-extension>
+      </property-extension>
+    </property>
+    <property>
+      <property-name>verifyAccessURL</property-name>
+      <property-class>string</property-class>
+      <display-name>URL To Verify Login</display-name>
+    </property>
+    <property>
+      <property-name>successURL</property-name>
+      <property-class>string</property-class>
+      <display-name>Redirect URL On Sign -In</display-name>
+    </property>
+    <property>
+      <property-name>loginURL</property-name>
+      <property-class>string</property-class>
+      <display-name>URL for Login</display-name>
+    </property>
+    <property>
+      <property-name>logoutURL</property-name>
+      <property-class>string</property-class>
+      <display-name>URL after Logut</display-name>
+    </property>
+    <property>
+      <property-name>logoutText</property-name>
+      <property-class>string</property-class>
+      <display-name>Logout Text</display-name>
+    </property>
+    <property>
+      <property-name>titleBar</property-name>
+      <property-class>string</property-class>
+      <display-name>Title Bar</display-name>
+    </property>
+    <property>
+      <property-name>loginMessage</property-name>
+      <property-class>string</property-class>
+      <display-name>Login Message</display-name>
+    </property>
+  </composite-component>
+</faces-config>

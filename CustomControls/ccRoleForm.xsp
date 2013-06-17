@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+
+	<xp:this.data>
+		<xp:dominoDocument var="document1" action="editDocument"
+			documentId="#{javascript:sessionScope.roleDocumentId}">
+			<xp:this.databaseName><![CDATA[#{javascript:  
+    return database;}]]></xp:this.databaseName>
+		</xp:dominoDocument>
+	</xp:this.data>
+	<xp:panel>
+		<xp:table>
+			<xp:tr>
+				<xp:td>
+					<xp:label value="RoleName" id="label1"></xp:label></xp:td>
+				<xp:td>
+					<xp:text escape="true" id="computedField1"><xp:this.value><![CDATA[#{javascript:var val=document1.getDocument().getItemValueString("role_name");
+val;}]]></xp:this.value></xp:text></xp:td>
+			</xp:tr>
+			<xp:tr>
+				<xp:td>
+					<xp:label value="Parent Role" id="label2"></xp:label></xp:td>
+				<xp:td>
+					<xp:text escape="true" id="computedField2"><xp:this.value><![CDATA[#{javascript:var val=document1.getDocument().getItemValueString("role_to");
+val;}]]></xp:this.value></xp:text></xp:td>
+			</xp:tr>
+			<xp:tr>
+				<xp:td colspan="2">
+					<xp:checkBox text="Share Data With Peers" id="checkBox1"><xp:this.defaultChecked><![CDATA[#{javascript:var val=document1.getDocument().getItemValueString("sharewithpeers");
+if(val=="1"){
+return true;
+}else if(val=="0"){
+return false;
+}}]]></xp:this.defaultChecked></xp:checkBox></xp:td>
+				
+			</xp:tr>
+			<xp:tr>
+				<xp:td colspan="2">
+					<xp:button value="Save" id="button1" style="background-color:rgb(192,192,192)">
+						<xp:eventHandler event="onclick" submit="true"
+							refreshMode="partial" refreshId="ShowRoleDoc"
+							onStart="showWait();" onComplete="hideWait();">
+							<xp:this.action><![CDATA[#{javascript:var rolename=getComponent("computedField1").getValue();
+var parentrole=getComponent("computedField2").getValue();
+var share=getComponent("checkBox1").getValue();
+var temp;
+if(share=="true"){
+
+temp="1";
+}else{
+
+temp="0";
+}
+var doc=document1.getDocument();
+var oldval=doc.getItemValueString("sharewithpeers")
+
+if(oldval!=temp){
+doc.replaceItemValue("sharewithpeers",temp);
+}
+doc.save(true,false);
+
+}]]></xp:this.action>
+						</xp:eventHandler></xp:button>
+					<xp:button value="Close" id="button2" style="background-color:rgb(192,192,192)">
+						<xp:eventHandler event="onclick" submit="true"
+							refreshMode="partial" refreshId="ShowRoleDoc"
+							onStart="showWait();" onComplete="hideWait();">
+							<xp:this.action><![CDATA[#{javascript:var component = getComponent("ShowRoleDoc");
+bsuite.weberon.DynamicCC.removePreview(component);}]]></xp:this.action>
+						</xp:eventHandler></xp:button></xp:td>
+				
+			</xp:tr>
+		</xp:table></xp:panel></xp:view>

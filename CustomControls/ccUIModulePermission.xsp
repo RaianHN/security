@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+<xp:panel id="panelmodulePerm">
+	<xp:checkBox id="checkBoxM1" defaultChecked="#{javascript:viewScope.modulePerm}" text="Visible">
+
+	</xp:checkBox>
+	<xp:checkBox id="checkBoxM2"
+		rendered="#{javascript:!viewScope.modulePerm}" text="Visible"
+		loaded="false">
+	</xp:checkBox>
+
+
+
+</xp:panel>
+</xp:view>

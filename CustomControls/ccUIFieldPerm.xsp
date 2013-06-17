@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xc="http://www.ibm.com/xsp/custom">
+
+	<xp:section id="sectionFieldPerm" header="Field Permissions"
+		initClosed="true">
+		<xp:table>
+			<xp:tr>
+				<xp:td>
+
+					<xp:label value="Record Type" id="label4"></xp:label>
+				</xp:td>
+				<xp:td>
+					<xp:comboBox id="frecordType">
+						<xp:selectItem itemLabel="-Select Entity-"></xp:selectItem>
+
+
+						<xp:selectItems>
+							<xp:this.value><![CDATA[#{javascript:
+
+var profName = viewScope.profileName;
+
+var moduleName = viewScope.moduleName;
+
+var profile = new bsuite.jsonparsing.ProfileEdit();
+
+if(profName!=null&&moduleName!=null){
+
+//var entnames:java.util.Vector = profile.getEntityNames(profName,moduleName);
+//viewScope.entname = entnames;
+//return entnames;
+
+var moduleVisib = new bsuite.jsonparsing.ProfileEdit();
+
+var entityPermission = moduleVisib.getEntityNames(profName,moduleName);
+println("entityPermission "+entityPermission)
+if(entityPermission!=null){
+
+return entityPermission;
+
+}
+}
+
+}]]></xp:this.value>
+						</xp:selectItems>
+
+						<xp:eventHandler event="onchange" submit="true"
+							refreshMode="partial" refreshId="panelFieldP">
+
+
+							<xp:this.action><![CDATA[#{javascript:var component = getComponent("panelFieldP"); 
+	var s = facesContext;
+	var c1="/ccFieldTable.xsp"; 
+	var id="ccFieldTable";
+	bsuite.weberon.DynamicCC.removePreview(component);
+	bsuite.weberon.DynamicCC.loadCC(s, component, c1, id);	}]]></xp:this.action>
+						</xp:eventHandler>
+					</xp:comboBox>
+				</xp:td>
+			</xp:tr>
+
+		</xp:table>
+
+
+
+		<xp:panel id="panelFieldP">
+
+
+			<xc:ccFieldTable></xc:ccFieldTable>
+		</xp:panel>
+	</xp:section>
+</xp:view>

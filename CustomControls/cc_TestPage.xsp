@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+	xmlns:xc="http://www.ibm.com/xsp/custom">
+	<xp:table>
+		<xp:tr>
+			<xp:td></xp:td>
+			
+		</xp:tr>
+	</xp:table>
+
+
+
+
+
+	<xp:br></xp:br>
+
+
+</xp:view>

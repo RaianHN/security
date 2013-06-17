@@ -1,21 +1,22 @@
-<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257A11001D5079" version="8.5" xmlns="http://www.lotus.com/dxl">
-<noteinfo noteid="2c6" sequence="51" unid="8EE9D34DC88B8A4565257925001EEC5F">
-<created><datetime>20111010T110745,91+0530</datetime></created>
-<modified><datetime>20120602T105013,82+0530</datetime></modified>
-<revised><datetime>20111010T153024,99+0530</datetime></revised>
-<lastaccessed><datetime>20120602T105013,82+0530</datetime></lastaccessed>
-<addedtofile><datetime>20120602T105013,82+0530</datetime></addedtofile></noteinfo>
-<updatedby><name>CN=Admin BSUITE/O=Development</name></updatedby>
-<item name="$Flags"><text>gC~4;</text></item>
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257B8D0032F272" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="726" sequence="6" unid="0D8F8E5836448A6D65257B4F001E53C9">
+<created><datetime>20130416T110115,29+0530</datetime></created>
+<modified><datetime>20130617T144847,99+0530</datetime></modified>
+<revised><datetime>20130617T144847,98+0530</datetime></revised>
+<lastaccessed><datetime>20130617T144847,99+0530</datetime></lastaccessed>
+<addedtofile><datetime>20130617T144822,23+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
+<wassignedby><name>CN=Jaya K Prakash/O=Weberon</name></wassignedby>
 <item name="$TITLE"><text>ccRelationTypeView.xsp</text></item>
-
-
-
+<item name="$Flags"><text>gC~4;</text></item>
 
 
 
 
 <item name="$FileNames" sign="true"><text>ccRelationTypeView.xsp</text></item>
 <item name="$DesignerVersion"><text>8.5</text></item>
+
+
+
 
 </note>
