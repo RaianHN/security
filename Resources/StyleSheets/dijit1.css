@@ -1,0 +1,121 @@
+.tundra .dijitTextBox, .tundra .dijitComboBox, .tundra .dijitSpinner, .tundra .dijitTextArea, .tundra .dijitInlineEditor input {
+    background: url("images/validationInputBg.png") repeat-x scroll left top #FFFFFF;
+    border: 1px solid #B3B3B3;
+    line-height: normal;
+}
+
+
+.tundra .dijitTextBox, .tundra .dijitComboBox, .tundra .dijitSpinner, .tundra .dijitTextArea {
+    font-family: sans-serif;
+    font-size: 100%;
+}
+
+.tundra .dijitInputField INPUT, .tundra .dijitTextBox, .tundra .dijitComboBox, .tundra .dijitSpinner {
+    margin: 0 0.1em;
+}
+
+.dijitTextBox, .dijitComboBox, .dijitSpinner {
+    border: 1px solid black;
+    vertical-align: middle;
+    width: 15em;
+}
+
+
+.dijitLeft {
+    background-position: left top;
+    background-repeat: no-repeat;
+}
+
+
+
+.dijitInlineTable {
+    -moz-box-sizing: content-box;
+    border: 0 none;
+    display: inline-block;
+    padding: 0;
+}
+
+
+.tundra .dijitComboBox .dijitButtonNode, .tundra .dijitSpinner .dijitButtonNode {
+    border-color: #9B9B9B;
+    border-style: solid;
+    border-width: 0 0 0 1px;
+}
+
+
+.tundra .dijitComboBox .dijitButtonNode {
+    padding: 1px 0.2em;
+}
+
+
+.tundra .dijitArrowButton {
+    color: #111111;
+}
+
+
+.tundra .dijitButtonNode {
+    -moz-border-bottom-colors: none;
+    -moz-border-image: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background: url("images/buttonEnabled.png") repeat-x scroll left bottom #FFFFFF;
+    border-color: #C0C0C0 #C0C0C0 #9B9B9B;
+    border-style: solid;
+    border-width: 1px;
+    padding: 0.1em 0.2em 0.2em;
+}
+
+DIV.dijitArrowButton {
+    float: right;
+}
+
+.dijitButtonNode, .dijitButtonNode * {
+    cursor: pointer;
+}
+
+
+.dijitButtonNode {
+    border: 1px solid gray;
+    line-height: normal;
+    margin: 0;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.tundra .dijitValidationIcon {
+    background: url("images/warning.png") no-repeat scroll center center transparent;
+    width: 16px;
+}
+
+.dijitValidationIcon {
+    display: block;
+    float: right;
+    height: auto;
+    padding: 0 2px;
+    visibility: hidden;
+}
+
+.dijitReset {
+    border: 0 none;
+    color: inherit;
+    font: inherit;
+    margin: 0;
+    padding: 0;
+}
+
+
+.dijitInputField {
+    overflow: hidden;
+}
+
+
+.tundra .dijitComboBox .dijitInputField {
+    padding: 1px 0;
+}
+
+
+dijitReset dijitInputField input{
+color:#02277C
+}

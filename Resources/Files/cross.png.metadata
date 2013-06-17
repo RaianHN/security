@@ -1,16 +1,17 @@
-<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257A11001D5079" version="8.5" xmlns="http://www.lotus.com/dxl">
-<noteinfo noteid="2e2" sequence="1" unid="B4CF38ACACB39E1865257925004A037C">
-<created><datetime>20111010T185825,56+0530</datetime></created>
-<modified><datetime>20120602T105013,96+0530</datetime></modified>
-<revised><datetime>20111010T185825,60+0530</datetime></revised>
-<lastaccessed><datetime>20120602T105013,96+0530</datetime></lastaccessed>
-<addedtofile><datetime>20120602T105013,96+0530</datetime></addedtofile></noteinfo>
-<updatedby><name>CN=Mark Hughes/O=rcc</name><name>CN=Admin BSUITE/O=Development</name></updatedby>
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257B8D0032F272" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="61a" sequence="3" unid="F482BCF7AD8DA20B65257B4F001EDE4F">
+<created><datetime>20130416T110709,91+0530</datetime></created>
+<modified><datetime>20130617T144814,09+0530</datetime></modified>
+<revised><datetime>20130617T144814,08+0530</datetime></revised>
+<lastaccessed><datetime>20130617T144814,09+0530</datetime></lastaccessed>
+<addedtofile><datetime>20130617T144814,04+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
+<wassignedby><name>CN=Jaya K Prakash/O=Weberon</name></wassignedby>
 <item name="$TITLE"><text>cross.png</text></item>
 <item name="$Flags"><text>345CgQ</text></item>
 <item name="$FlagsExt"><text>D</text></item>
-
 <item name="$FileModDT" sign="true"><datetime dst="true">20100610T114250,30-05</datetime></item>
+<item name="$DesignerVersion"><text>8.5.3</text></item>
 
-<item name="$FileNames" sign="true"><text>cross.png</text></item>
-<item name="$DesignerVersion"><text>8.5.3</text></item></note>
+
+<item name="$FileNames" sign="true"><text>cross.png</text></item></note>

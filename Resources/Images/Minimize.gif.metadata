@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257B8D0032F272" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="596" sequence="3" unid="67588502025EAA5765257B4F001ECC46">
+<created><datetime>20130416T110623,74+0530</datetime></created>
+<modified><datetime>20130617T144810,94+0530</datetime></modified>
+<revised><datetime>20130617T144810,93+0530</datetime></revised>
+<lastaccessed><datetime>20130617T144810,94+0530</datetime></lastaccessed>
+<addedtofile><datetime>20130617T144810,90+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
+<wassignedby><name>CN=Jaya K Prakash/O=Weberon</name></wassignedby>
+<item name="$Flags"><text>34CiQ</text></item>
+<item name="$FlagsExt" sign="true"><text>D</text></item>
+<item name="$ImagesWide" sign="true"><number>1</number></item>
+<item name="$ImagesHigh" sign="true"><number>1</number></item>
+<item name="$ImagesColorize" sign="true"><number>0</number></item>
+<item name="$FileModDT" sign="true"><datetime>20040914T145418,91+0530</datetime></item>
+<item name="$ImageNames" sign="true"><text>Min.gif</text></item>
+<item name="$TITLE" sign="true"><textlist><text>Minimize.gif</text><text>minimize</text></textlist></item>
+<item name="$DesignerVersion"><text>8.5.3</text></item>
+
+</note>

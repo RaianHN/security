@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257B8D0032F272" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="382" sequence="5" unid="0B7302149EEF09D165257B4F001EED7B">
+<created><datetime>20130416T110748,75+0530</datetime></created>
+<modified><datetime>20130617T144758,79+0530</datetime></modified>
+<revised><datetime>20130617T144758,78+0530</datetime></revised>
+<lastaccessed><datetime>20130617T144758,79+0530</datetime></lastaccessed>
+<addedtofile><datetime>20130617T144758,71+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
+<wassignedby><name>CN=Jaya K Prakash/O=Weberon</name></wassignedby>
+<item name="$Flags"><text>34567Cg~`</text></item>
+<item name="$TITLE" sign="true"><text>oneuiv2-core.theme</text></item>
+<item name="$DesignerVersion"><text>8.5.3</text></item>
+
+
+<item name="$FileNames" sign="true"><text>oneuiv2-core.theme</text></item>
+<item name="$CSSFiles"><textlist><text>/.ibmxspres/domino/oneuiv2/base/core.css</text><text>/.ibmxspres/domino/oneuiv2/base/dojo.css</text></textlist></item></note>

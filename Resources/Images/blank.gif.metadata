@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257B8D0032F272" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="542" sequence="3" unid="F62AA5AD0473BFB865257B4F001ECC08">
+<created><datetime>20130416T110623,12+0530</datetime></created>
+<modified><datetime>20130617T144808,84+0530</datetime></modified>
+<revised><datetime>20130617T144808,83+0530</datetime></revised>
+<lastaccessed><datetime>20130617T144808,84+0530</datetime></lastaccessed>
+<addedtofile><datetime>20130617T144808,79+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
+<wassignedby><name>CN=Jaya K Prakash/O=Weberon</name></wassignedby>
+<item name="$Flags"><text>34CiQ</text></item>
+<item name="$ImagesWide" sign="true"><number>1</number></item>
+<item name="$ImagesHigh" sign="true"><number>1</number></item>
+<item name="$ImagesColorize" sign="true"><number>0</number></item>
+<item name="$ImageNames" sign="true"><text>treans1.gif</text></item>
+<item name="$Comment" sign="true"><text>Used for Outlines</text></item>
+<item name="$TITLE" sign="true"><textlist><text>blank.gif</text><text>blank</text></textlist></item>
+<item name="$DesignerVersion"><text>8.5.3</text></item>
+
+</note>

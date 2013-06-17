@@ -1,0 +1,17 @@
+<!--
+	The default theme contents use theme inheritance.
+
+	Application themes can extend an existing global theme using the
+	extends attribute.  Existing themes include the following options:
+
+	1. webstandard 2. oneui 3. notes
+-->
+<theme extends="One_Ui_V2_Core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="platform:/plugin/com.ibm.designer.domino.stylekits/schema/stylekit.xsd">
+	
+	<resource>
+		<content-type>text/css</content-type>
+		<href>/.ibmxspres/domino/oneuiv2/greenTheme/greenTheme.css</href>
+	</resource>
+
+
+</theme>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257B8D0032F272" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="3b2" sequence="5" unid="F8068DD2253BA3B965257B4F001EED74">
+<created><datetime>20130416T110748,68+0530</datetime></created>
+<modified><datetime>20130617T144759,99+0530</datetime></modified>
+<revised><datetime>20130617T144759,98+0530</datetime></revised>
+<lastaccessed><datetime>20130617T144759,99+0530</datetime></lastaccessed>
+<addedtofile><datetime>20130617T144759,91+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
+<wassignedby><name>CN=Jaya K Prakash/O=Weberon</name></wassignedby>
+<item name="$Flags"><text>34567Cg~`</text></item>
+<item name="$TITLE" sign="true"><text>Green.theme</text></item>
+<item name="$DesignerVersion"><text>8.5.3</text></item>
+
+
+<item name="$FileNames" sign="true"><text>Green.theme</text></item>
+<item name="$CSSFiles"><textlist><text>/.ibmxspres/domino/oneuiv2/greenTheme/greenTheme.css</text></textlist></item></note>

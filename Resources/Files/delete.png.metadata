@@ -1,16 +1,17 @@
-<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257A11001D5079" version="8.5" xmlns="http://www.lotus.com/dxl">
-<noteinfo noteid="2e6" sequence="1" unid="387EB9338C65F79065257925004A037D">
-<created><datetime>20111010T185825,57+0530</datetime></created>
-<modified><datetime>20120602T105013,98+0530</datetime></modified>
-<revised><datetime>20111010T185825,66+0530</datetime></revised>
-<lastaccessed><datetime>20120602T105013,98+0530</datetime></lastaccessed>
-<addedtofile><datetime>20120602T105013,98+0530</datetime></addedtofile></noteinfo>
-<updatedby><name>CN=Mark Hughes/O=rcc</name><name>CN=Admin BSUITE/O=Development</name></updatedby>
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257B8D0032F272" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="616" sequence="3" unid="3429945DD69AB4EB65257B4F001EDE50">
+<created><datetime>20130416T110709,92+0530</datetime></created>
+<modified><datetime>20130617T144813,98+0530</datetime></modified>
+<revised><datetime>20130617T144813,97+0530</datetime></revised>
+<lastaccessed><datetime>20130617T144813,98+0530</datetime></lastaccessed>
+<addedtofile><datetime>20130617T144813,93+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
+<wassignedby><name>CN=Jaya K Prakash/O=Weberon</name></wassignedby>
 <item name="$TITLE"><text>delete.png</text></item>
 <item name="$Flags"><text>345CgQ</text></item>
 <item name="$FlagsExt"><text>D</text></item>
-
 <item name="$FileModDT" sign="true"><datetime>20060312T195210,00-06</datetime></item>
+<item name="$DesignerVersion"><text>8.5.3</text></item>
 
-<item name="$FileNames" sign="true"><text>delete.png</text></item>
-<item name="$DesignerVersion"><text>8.5</text></item></note>
+
+<item name="$FileNames" sign="true"><text>delete.png</text></item></note>

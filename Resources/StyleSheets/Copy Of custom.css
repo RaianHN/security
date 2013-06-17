@@ -1,0 +1,19 @@
+.lotusPlaceBar .lotusBtnContainer{
+	float:left;
+}
+
+.xspPanelViewColumnHeader{
+	padding-right:10px;	
+}
+
+.xspDataTableViewPanel {
+	width:100%;
+}
+
+.xspColumnViewStart{
+	padding-right:10px;	
+}
+
+.xspColumnViewMiddle{
+	padding-right:10px;	
+}
