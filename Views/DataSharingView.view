@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE note SYSTEM 'xmlschemas/domino_8_5_3.dtd'>
+<note class='view' xmlns='http://www.lotus.com/dxl' version='8.5' maintenanceversion='3.0'
+ replicaid='65257B8D0032F272'>
+<noteinfo noteid='21a' unid='E10CDCF7B90C82CC65257B4F001E1E14' sequence='2'>
+<created><datetime>20130416T105857,80+0530</datetime></created>
+<modified><datetime>20130617T144754,89+0530</datetime></modified>
+<revised><datetime>20130617T144754,88+0530</datetime></revised>
+<lastaccessed><datetime>20130617T144754,89+0530</datetime></lastaccessed>
+<addedtofile><datetime>20130617T144754,87+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
+<wassignedby><name>CN=Jaya K Prakash/O=Weberon</name></wassignedby>
+<item name='$FormulaClass' sign='true'><text>1</text></item>
+<item name='$TITLE' sign='true'><text>DataSharingView</text></item>
+<item name='$Index' sign='true'><text/></item>
+<item name='$Formula' summary='true' sign='true'><formula compiled='true'>
+rgACAEgAAgAkMAUACgBNb2R1bGVOYW1lAQABACsAIgIFAAoARW50aXR5TmFtZSICAQABACsAIgIF
+AAoAVGFyZ2V0Um9sZSICAwAFADYAMQAFAAIACgAKAAkABAAkMFNvdXJjZVJvbGVBY2Nlc3NUeXBl
+JENvbmZsaWN0JFJFRgAEAAQAAAAgAAUABABGb3JtAQALAGRhdGFzaGFyaW5nAAoCAwAHAAoABAAJ
+TDFT
+</formula></item>
+<item name='$Collation' summary='true'>
+<rawitemdata type='2'>
+DwABAABEAGYAAAACACQw
+</rawitemdata></item>
+<item name='$ViewFormat' summary='true' sign='true'>
+<rawitemdata type='5'>
+AQADAAQACAAAAFZDAQACACAAVgAAAMoAAQAACgAAAAAAAAAAAAICAAAAVkMAAAoACgAAAAAAUAAB
+AAAKAAAAAAAAAAAAAgIAAABWQwAACgAKAAAAAABQAAEAAAoAAAAAAAAAAAACAgAAACQwTW9kdWxl
+TmFtZStFbnRpdHlOYW1lK1RhcmdldFJvbGVWAAIASAACACQwBQAKAE1vZHVsZU5hbWUBAAEAKwAi
+AgUACgBFbnRpdHlOYW1lIgIBAAEAKwAiAgUACgBUYXJnZXRSb2xlIgIDAAcADAAFAAkxUzhTAFNv
+dXJjZVJvbGVTb3VyY2VSb2xlQWNjZXNzVHlwZUFjY2Vzc1R5cGUmAAEAAAABAQAJAQAACgEBDgoA
+AAEArSsBAAEAAQAAAAAAAAAAAFdDAQEACQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP//AAAAAAAA
+AAAAAAAAAABXQwEBAAkAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAD//wAAAAAAAAAAAAAAAAAAV0MB
+AQAJAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAA//8AAAAAAAAAAAAAAAAAAEIAAAAAAAEA////AAUA
+////AAEAAAAAAAAAAAAAAAAAAQD///8AAQD///8AAAABAAAAAAABAAAAAAABAAAAAAAAAAgAAAAA
+AAEA
+</rawitemdata></item>
+<item name='$Comment' sign='true'><text/></item>
+<item name='$Flags'><text>PY</text></item>
+<item name='$DesignerVersion'><text>8.5.3</text></item></note>
+
