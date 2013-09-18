@@ -161,29 +161,29 @@ public class Extranet {
 			}
 
 			// IF ANONYMOUS has Reader access or more NO READERS TO THE DOCUMENT
-			System.out.println("strDomain "+strDomain+" strPath "+strPath+" moduleName "+ModuleName);
+			
 			if (doc.getItemValueString("ReaderRole").equals("")
 					&& doc.getItemValueString("ReaderEmployees").equals("")
 					&& doc.getItemValueString("Supervisors").equals(""))
 			{// OPEN
 				// FOR
 				// EVERYONE
-				System.out.println("0");
+				
 				if (intLevel > 1)
 				{// CHECK IF ANONYMOUS ENTRY IS AVAILABLE AND
 					// GET
 					// HIS ACCESS
 					//TODO this block doesnt get executed if there is no Anonymous entry in the database, hence it strUrl is returning "" relook into this
-					System.out.println("1");
+					
 					if (doc.hasItem("CommonUNID"))
 					{
-						System.out.println("2");
+						
 						strURL = strDomain + "/" + strPath + ModuleName
 								+ "/00/" + doc.getItemValueString("CommonUNID")
 								+ "?OpenDocument";
 					} else
 					{
-						System.out.println("3");
+						
 						strURL = strDomain + "/" + strPath + ModuleName
 								+ "/00/" + doc.getUniversalID()
 								+ "?OpenDocument";
@@ -193,16 +193,16 @@ public class Extranet {
 
 			} else
 			{
-				System.out.println("4");
+				
 				if (doc.hasItem("CommonUNID"))
 				{
-					System.out.println("5");
+					
 					strURL = strDomain + "/" + strPath + ModuleName + "/00/"
 							+ doc.getItemValueString("CommonUNID")
 							+ "?OpenDocument";
 				} else
 				{
-					System.out.println("6");
+					
 					strURL = strDomain + "/" + strPath + ModuleName + "/00/"
 							+ doc.getUniversalID() + "?OpenDocument";
 

@@ -103,7 +103,7 @@ public class DynamicColumns2 {
 		Document doc = null;
 		Session sessionObj = Utility.getCurrentSession();
 		String servName = Utility.getCurrentDatabase().getServer();
-		System.out.println("saveing doc");
+		
 		 try
 		 {
 			 

@@ -740,7 +740,7 @@ public static Document getGlobalProfile(Database tadb) throws NotesException{
 			return profile;
 		}
 	} catch (NotesException e) {
-		System.out.println(e.id + " " + e.text);
+		
 	}catch(Exception e)
 	{
 		e.printStackTrace();

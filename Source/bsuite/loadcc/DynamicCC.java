@@ -16,28 +16,28 @@ import com.ibm.xsp.extlib.component.dojo.layout.UIDojoTabPane;
 
 public class DynamicCC {
 	public static void loadCC(FacesContext s, UIComponent component, String c1, String id)
-	{	System.out.println("view--12");
-	System.out.println("component"+component.getId());
-	System.out.println("c1 "+c1);
-	System.out.println("id "+id);
+	{	
+	
+	
+	
 	UIIncludeComposite result = new UIIncludeComposite();        
 	        result.setPageName(c1);        
 	        result.setId(id);
-	        System.out.println("view--13");
+	        
 	        ControlImpl con = new ControlImpl(component);
 			ControlImpl con1 = new ControlImpl(result);
-			System.out.println("view--14");
+			
 	con.addChild(con1);
-	System.out.println("view--15");
-	System.out.println("faces"+s.toString());
-	System.out.println("con "+con.getId());
+	
+	
+	
 	ControlBuilder.buildControl(s,con,true);
-	System.out.println("view--16");
+	
 	}
 	
 	public static void loadCCinTab(FacesContext s, UIComponent component, String c1, String id,String tabtitle)
 	{	
-		System.out.println("Inside loadCCinTab");
+		
 		UIIncludeComposite result = new UIIncludeComposite();        
 	    result.setPageName(c1);        
 	    result.setId(id);

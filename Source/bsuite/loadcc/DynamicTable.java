@@ -106,7 +106,7 @@ public class DynamicTable {
 				{
 			
 					int cnt = cols.size();
-					System.out.println(Integer.toString(cnt));
+					
 					for (int i=0; i< cnt; ++i){	
 						String lv= (String)cols.get(i);						
 						String[] a= lv.split("#");					

@@ -279,18 +279,18 @@ public class Profile{
 	}
 
 	private ProfileJson getProfileJsonObject() {
-		System.out.println("get profile json1");
+		
 		Association as = new Association();
-		System.out.println("get profile json2");
+		
 		String currentuser=null;
 		try {
-			System.out.println("get profile json3");
+			
 			currentuser = Utility.getCurrentSession().getEffectiveUserName();
-			System.out.println("profile json1"+currentuser);
+			
 		} catch (NotesException e1) {
 			e1.printStackTrace();
 		}
-		System.out.println("profile json2"+currentuser);
+		
 		Document profDoc = as.getAssociatedProfile(currentuser);
 		if (profDoc == null) {
 			return null;

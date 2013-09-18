@@ -225,7 +225,7 @@ public class SessionContext {
 		
 			ids = getViewScope().get("seldocids");
 			
-			System.out.println("==ids ===="+ids);
+			
 			
 			if(ids==null)
 			{

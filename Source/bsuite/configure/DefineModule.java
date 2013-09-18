@@ -28,7 +28,7 @@ public class DefineModule {
 	}
 
 	public void addModules(Vector<String> modules) {
-		System.out.println("inside add module");
+		
 		for (String moduleName : modules) {
 			String moduleJson = createJsonString(moduleName);
 			createModuleDocument(moduleJson, moduleName);
@@ -37,7 +37,7 @@ public class DefineModule {
 	}
 
 	public void addModules(String module) {
-		System.out.println("inside add module");
+		
 		String moduleJson = createJsonString(module);
 		createModuleDocument(moduleJson, module);
 	}
@@ -49,8 +49,8 @@ public class DefineModule {
 	 */
 	private void createModuleDocument(String moduleJson, String moduleName) {
 		if (isDuplicateModule(moduleName)) {
-			System.out.println("duplicate module " + moduleName
-					+ "hence not added");
+			
+					
 			return;
 		}
 
@@ -375,7 +375,7 @@ public class DefineModule {
 
 			View modulesView = currentdb.getView("Modules");
 
-			// System.out.println("Document name"+modulesView.getDocumentByKey(moduleName));
+			// 
 			Document moduleDoc = modulesView.getDocumentByKey(moduleName);
 
 			String jsonInput = moduleDoc.getItemValueString("JsonString");
@@ -436,7 +436,7 @@ public class DefineModule {
 
 			View modulesView = currentdb.getView("Modules");
 
-			// System.out.println("Document name"+modulesView.getDocumentByKey(moduleName));
+			// 
 			Document moduleDoc = modulesView.getDocumentByKey(moduleName);
 
 			String jsonInput = moduleDoc.getItemValueString("JsonString");
@@ -496,7 +496,7 @@ public class DefineModule {
 
 			View modulesView = currentdb.getView("Modules");
 
-			// System.out.println("Document name"+modulesView.getDocumentByKey(moduleName));
+			// 
 			Document moduleDoc = modulesView.getDocumentByKey(moduleName);
 
 			String jsonInput = moduleDoc.getItemValueString("JsonString");
@@ -540,11 +540,10 @@ public class DefineModule {
 	public void addField(String moduleName, String entityName, String field) {
 
 		try {
-			System.out.println("adding field1");
+			
 			View modulesView = currentdb.getView("Modules");
 
-			System.out.println("Document name"
-					+ modulesView.getDocumentByKey(moduleName));
+			
 			Document moduleDoc = modulesView.getDocumentByKey(moduleName);
 
 			String jsonInput = moduleDoc.getItemValueString("JsonString");
@@ -552,7 +551,7 @@ public class DefineModule {
 			ObjectMapper mapper = new ObjectMapper();
 
 			Module module = mapper.readValue(jsonInput, Module.class);
-			System.out.println("adding field2");
+			
 			ArrayList<Entity> entities = null;
 			if (module.getEntities() == null) {
 				entities = new ArrayList();
@@ -560,7 +559,7 @@ public class DefineModule {
 				entities = module.getEntities();
 			}
 			Entity entity = null;
-			System.out.println("adding field3");
+			
 			for (Entity e : entities) {
 				if (entities != null) {
 					if (e.getEntityName().equals(entityName)) {
@@ -571,7 +570,7 @@ public class DefineModule {
 			}
 
 			ArrayList<Field> fieldsList = entity.getFields();
-			System.out.println("adding field4");
+			
 			if (fieldsList == null) {
 				fieldsList = new ArrayList<Field>();
 			}
@@ -655,7 +654,7 @@ public class DefineModule {
 
 	@SuppressWarnings("unchecked")
 	public Vector getModules() {
-		System.out.println("inside get modules");
+		
 		View moduleView = null;
 		try {
 			moduleView = currentdb.getView("Modules");
@@ -690,7 +689,7 @@ public class DefineModule {
 
 			e.printStackTrace();
 		}
-		System.out.println("add r1");
+		
 		if (roleJson.equals("")) {
 			RoleHierarchy rH = new RoleHierarchy();
 			ArrayList<Role> roleList = new ArrayList<Role>();
@@ -713,7 +712,7 @@ public class DefineModule {
 				e.printStackTrace();
 			}
 		} else {
-			System.out.println("add r2");
+			
 			try {
 				RoleHierarchy rH = mapper.readValue(roleJson,
 						RoleHierarchy.class);
@@ -746,7 +745,7 @@ public class DefineModule {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("add r3");
+		
 
 	}
 
@@ -792,7 +791,7 @@ public class DefineModule {
 	private Document getRoleDocument() {
 
 		try {
-			System.out.println("inside get role doc");
+			
 			View rolesView = currentdb.getView("Roles");
 			Document roleDoc = rolesView.getDocumentByKey("roleHierarchy");
 			if (roleDoc == null) {
@@ -960,7 +959,7 @@ public class DefineModule {
 		ObjectMapper mapper = new ObjectMapper();
 		Module module = null;
 		try {
-			System.out.println("json " + moduleJson);
+			
 			module = mapper.readValue(moduleJson, Module.class);
 		} catch (JsonParseException e) {
 			e.printStackTrace();
@@ -1134,7 +1133,7 @@ public class DefineModule {
 
 			View modulesView = currentdb.getView("Modules");
 
-			// System.out.println("Document name"+modulesView.getDocumentByKey(moduleName));
+			// 
 			Document moduleDoc = modulesView.getDocumentByKey(moduleName);
 
 			String jsonInput = moduleDoc.getItemValueString("JsonString");
@@ -1184,7 +1183,7 @@ public class DefineModule {
 
 			View modulesView = currentdb.getView("Modules");
 
-			// System.out.println("Document name"+modulesView.getDocumentByKey(moduleName));
+			// 
 			Document moduleDoc = modulesView.getDocumentByKey(moduleName);
 
 			String jsonInput = moduleDoc.getItemValueString("JsonString");

@@ -36,9 +36,9 @@ public class Association {
 	public Association() {
 		try{
 			session = Utility.getCurrentSession();
-			System.out.println("in association");
+			
 			namesdb = Utility.getDatabase("admntool.nsf");
-			System.out.println("in association"+namesdb.getFileName());
+			
 			securityDb = Utility.getDatabase("Security.nsf");
 			reldb = Utility.getDatabase("relation.nsf");
 			
@@ -73,7 +73,7 @@ public class Association {
 			// Changing the canonical form to abr form so that it will lookup in
 			// the $VIMPeople view
 			String abbrname = getFormattedName(currentuser, "abr");
-			System.out.println("formatted name"+abbrname);
+			
 			Document persondoc = getPerson(abbrname);
 			String persondocunid = persondoc.getUniversalID();
 			String lookupkey = JSFUtil.getlookupkey(reldocunid, persondocunid);
@@ -116,11 +116,11 @@ public class Association {
 			// Person unid
 			// Changing the canonical form to abr form so that it will lookup in
 			// the $VIMPeople view
-			System.out.println("formatted name1"+currentuser);
+			
 			String abbrname = getFormattedName(currentuser, "abr");
-			System.out.println("formatted name"+abbrname);
+			
 			Document persondoc = getPerson(abbrname);
-			System.out.println("persondoc id "+persondoc.getUniversalID());
+			
 			String persondocunid = persondoc.getUniversalID();
 			String lookupkey = JSFUtil.getlookupkey(reldocunid, persondocunid);
 			Vector tmp = new Vector();
@@ -145,7 +145,7 @@ public class Association {
 	public Document getPerson(String username) {
 		try {		
 			View peopleview = namesdb.getView("employeeprofile");
-			System.out.println("people view"+peopleview.getName());
+			
 			Document userdoc = peopleview.getDocumentByKey(username);
 			return userdoc;
 		} catch (Exception e) {
@@ -157,13 +157,13 @@ public class Association {
 	
 	public String getFormattedName(String currentuser, String param) {
 		try {			
-			System.out.println("in get formatted name "+currentuser);
-			System.out.println("effective username"+session.getEffectiveUserName());
+			
+			
 			Name user = session.createName(currentuser);
-			System.out.println("in get formatted name abbreviated "+user.getAbbreviated());
-			System.out.println("in get formatted name cannonical"+user.getCanonical());
-			System.out.println("in get formatted name common"+user.getCommon());
-			System.out.println("effective username"+session.getEffectiveUserName());
+			
+			
+			
+			
 			if (param.equals("abr")) {
 				return user.getAbbreviated();
 			}
@@ -546,7 +546,7 @@ public void deleteRoleDoc(String employeeId){
 	
 	String relDocUnid = getRelationDocUnid("IS_A");
 	String lookupkey = JSFUtil.getlookupkey(relDocUnid,employeeId);
-	System.out.println("role1 lookup key"+lookupkey);
+	
 	Vector tmp = new Vector();
 	tmp.add(lookupkey);
 	//to get personunid and get associated role doc
@@ -555,9 +555,9 @@ public void deleteRoleDoc(String employeeId){
 	String personunid = employeeId;
 		//get has_a relation
 		String relationId = getRelationDocUnid("HAS_ROLE");
-		System.out.println("relation id"+relationId);
+		
 		String lookupkey1 = JSFUtil.getlookupkey(relationId,personunid);
-		System.out.println("lookup key"+lookupkey1);
+		
 		Vector tmp1 = new Vector();
 		tmp1.add(lookupkey1);
 		try{			
@@ -585,21 +585,21 @@ public void deleteRoleDoc(String employeeId){
 public void deleteProfileDoc(String employeeId){	
 	
 	String relDocUnid = getRelationDocUnid("IS_A");
-	System.out.println("rel doc unid profile"+relDocUnid);
+	
 	String lookupkey = JSFUtil.getlookupkey(relDocUnid,employeeId);
-	System.out.println("lookup key profile1"+lookupkey);
+	
 	Vector tmp = new Vector();
 	tmp.add(lookupkey);
 	//to get personunid and get associated role doc
 	//String personunid = JSFUtil.DBLookupString("relation",
 			//"TargetRelation", tmp, 4);
 	String personunid = employeeId;
-	System.out.println("person unid target"+personunid);
+	
 		//get has_a relation
 		String relationId = getRelationDocUnid("HAS_A");
-		System.out.println("relation id"+relationId);
+		
 		String lookupkey1 = JSFUtil.getlookupkey(relationId,personunid);
-		System.out.println("lookup key profile"+lookupkey1);
+		
 		Vector tmp1 = new Vector();
 		tmp1.add(lookupkey1);
 		try{

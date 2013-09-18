@@ -169,7 +169,7 @@ public class JSFUtil {
         }
         @SuppressWarnings("unchecked")
 		public static String DBLookupString(String Dbname, String vwname,Vector key, int i){
-        	System.out.println("test4");
+        	
         	if (vwname.trim() == "") {return null;}
         	if (i < 0){ return null;}//Then Exit Function
         	//if (key.length==0){return null;}// Then Exit Function
@@ -182,7 +182,7 @@ public class JSFUtil {
 			return nlist;
         }
         public static Vector DBLookupVector(String Dbname, String vwname,Vector key, int i){
-        	System.out.println("test5");
+        	
         	Vector nlist = new Vector();;
         	Vector column = new Vector();
 			try {
@@ -192,14 +192,14 @@ public class JSFUtil {
 				if (i < 0){ return null;}
 				 column=getallColumnValue( Dbname,  vwname, key,  i);
 				if(column.size()!=0){
-					System.out.println(Integer.toString(column.size()));
+					
 					
 					//Object item= column.elementAt(i);
 					//String c2=item.getClass().getName();
-					//System.out.println(c2+":"+item);
+					//
 					
 					return column;
-					}else{System.out.println("did not fimd reportees");}
+					}else{}
 				return nlist;
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -217,18 +217,18 @@ public class JSFUtil {
 			try {
 				db = Utility.getCurrentSession().getDatabase("", BSUtil.getBsuitePath(Utility.getCurrentDatabase())+"relation.nsf");  
 				if(db==null){
-					System.out.println("db is null");
+					
 				}
 				View view1 = db.getView(vwname);
 				
 				if(view1==null){
-					System.out.println("view is null");
+					
 				}
 				
 				ViewEntry ve =  view1.getEntryByKey(key);
 				
 				if(ve==null){
-					System.out.println("test6ve null");
+					
 					
 					return columns;}
 				 columns = ve.getColumnValues();
@@ -249,19 +249,19 @@ public class JSFUtil {
 			try {
 				db = Utility.getCurrentSession().getDatabase("", BSUtil.getBsuitePath(Utility.getCurrentDatabase())+"relation.nsf");  
 				if(db==null){
-					System.out.println("db is null");
+					
 				}
 				View view1 = db.getView(vwname);
 				
 				if(view1==null){
-					System.out.println("view is null");
+					
 				}
 				
 				
 				ViewEntryCollection vec =  view1.getAllEntriesByKey(key);
 				ViewEntry ve ;
 				if(vec==null){
-					System.out.println("test6ve null");
+					
 					
 					return columns;}
 				ve =vec.getFirstEntry();

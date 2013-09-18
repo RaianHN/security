@@ -40,7 +40,7 @@ public class DynamicCC1 {
 		//div.setStyle("height: 20px; background-color: transparent");
 		
 		//panel.getChildren().add(div);
-		System.out.println("inside create portlet");
+		
 		UIIncludeComposite result = new UIIncludeComposite();
 	    result.setPageName(c1);
 	    result.setId(id+"header");
@@ -60,14 +60,14 @@ public class DynamicCC1 {
 		Map viewScope = (Map) context.getApplication().getVariableResolver().resolveVariable(context, "viewScope");
 		
 		String toggle=(String) viewScope.get("moveableToggle");
-		System.out.println("inside create portlet1");
+		
 		if (toggle.equals("0")){
 		
 			component.getChildren().add(0, panel);	
 				
-			System.out.println("inside create portlet2");
+			
 		}else if(toggle.equals("1")){
-			System.out.println("inside create portlet3");
+			
 			UIPanelEx panelmoveable = new UIPanelEx();
 			panelmoveable.setId(id+"moveable");
 			/*panelmoveable.setDojoType("dojo.dnd.Moveable");
@@ -90,24 +90,24 @@ public class DynamicCC1 {
 		
 			String position=(String) viewScope.get("position");
 			String zIndex=(String) viewScope.get("zIndex");
-			System.out.println("inside create portlet31");
+			
 			panelmoveable.setStyle("position: absolute;  left:"+position+"px; top:"+position+"px ;z-index:"+zIndex+";");
-			System.out.println("inside create portlet32");
+			
 			int val= Integer.parseInt(position);
 			val=val+20;
 			if (val>110){
 				val=10;
 			}
-			System.out.println("inside create portlet33");
+			
 			viewScope.put("position", Integer.toString(val));
 			viewScope.put("zIndex",Integer.toString((Integer.parseInt(zIndex)+1)));	
-			System.out.println("inside create portlet4");
+			
 		}
 		ControlBuilder.buildControl(s,con,true);
-		System.out.println("no error while loading portlet");
+		
 		}catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("exception while loading portlet"+ e.toString());
+			
 
 		}
 	}
@@ -157,7 +157,7 @@ public class DynamicCC1 {
 	public static void setStyle(UIComponent com, String left, String top, String zindex)
 	{
 			((UIPanelEx) com).setStyle("position: absolute;  left:" + left + "; top:" + top+ "; z-index:"+zindex+";" );
-			//System.out.println("id:"+((UIPanelEx) com).getId()+"-"+ "styleonserver:"+((UIPanelEx) com).getStyle());
+			//
 	}
 	
 	
@@ -201,7 +201,7 @@ public class DynamicCC1 {
 	
 	public static void removeLink(UIComponent linkcontainer, UIComponent link)
 	{
-		System.out.println("LINKID:"+link.getId());
+		
 			removecrumb(link.getId());
 			 linkcontainer.getChildren().remove(link);
 	}
@@ -209,18 +209,18 @@ public class DynamicCC1 {
 	{
 		try {
 			UIOutlineBreadCrumbs bc=(UIOutlineBreadCrumbs) JSFUtil.findComponent("breadCrumbs1");
-			System.out.println("Startitr");
+			
 
 			List<ITreeNode> list=bc.getTreeNodes()	;
 			ListIterator itr = list.listIterator(); 
-			System.out.println("Stcnt:"+list.size());
+			
 			while(itr.hasNext()) {
 
 				ComplexLeafTreeNode element = (ComplexLeafTreeNode) itr.next(); 
-				System.out.println("Label:"+element.getLabel()+"link"+"::"+label);
+				
 				String glb= element.getLabel()+"link";
 			    if(glb.equals(label)){
-			    	//System.out.println("Label:"+element.getLabel()+"link"+"::"+label);
+			    	//
 			    	itr.remove();
 			    	return;
 			    }
@@ -236,18 +236,18 @@ public class DynamicCC1 {
 	}
 	public static void removeothercrumb(UIComponent link){
 		String label = link.getId();
-		System.out.println("Startitr");
+		
 		UIOutlineBreadCrumbs bc=(UIOutlineBreadCrumbs) JSFUtil.findComponent("breadCrumbs1");
 		List<ITreeNode> list=bc.getTreeNodes()	;
 		ListIterator itr = list.listIterator(); 
-		System.out.println("Stcnt:"+list.size());
+		
 		while(itr.hasNext()) {
 
 			ComplexLeafTreeNode element = (ComplexLeafTreeNode) itr.next(); 
 			
 			String glb= element.getLabel()+"link";
 		    if(!(glb.equals(label))){
-		    	System.out.println("Label:"+element.getLabel()+"link"+"::"+label);
+		    	
 		    	itr.remove();
 		    	
 		    }
@@ -255,7 +255,7 @@ public class DynamicCC1 {
 	}
 	
 	public static void setCompDojoType(UIComponent linkcontainer,UIComponent topcomp){
-		System.out.println("toggling Move ");
+		
 		List list=linkcontainer.getChildren();
 		FacesContext context = FacesContext.getCurrentInstance();
 		Map viewScope = (Map) context.getApplication().getVariableResolver().resolveVariable(context, "viewScope");
@@ -275,18 +275,18 @@ public class DynamicCC1 {
 				moveableportlet.getChildren().add(portlet);
 				topcomp.getChildren().add(0, moveableportlet);
 				viewScope.put("moveableToggle", "1");
-				System.out.println("inside java function1 "+viewScope.get("moveableToggle"));
+				
 			}else if(portletmovable.getChildCount()==0)
 			{
 				portletmovable.getChildren().add(portlet);
 				topcomp.getChildren().add(0, portletmovable);
 				viewScope.put("moveableToggle", "1");
-				System.out.println("inside java function2 "+viewScope.get("moveableToggle"));
+				
 			}else{
 				topcomp.getChildren().add(portlet);
 				JSFUtil.removeComponent(id+"moveable");
 				viewScope.put("moveableToggle", "0");
-				System.out.println("inside java function3 "+viewScope.get("moveableToggle"));
+				
 			}
 		}
 	}
@@ -300,7 +300,7 @@ public class DynamicCC1 {
 				r.getChildren().remove(i);
 			}
 		}	
-		System.out.println("inside the create preview");
+		
         UIIncludeComposite result = new UIIncludeComposite();
         result.setPageName(cc);
         ControlBuilder objBuilder = new ControlBuilder();
@@ -385,7 +385,7 @@ public class DynamicCC1 {
 	 
 	 
 	 public static void setCompDojoType2(UIComponent topcomp, String[] sorted){
-			System.out.println("toggling Move ");
+			
 			
 			FacesContext context = FacesContext.getCurrentInstance();
 			Map viewScope = (Map) context.getApplication().getVariableResolver().resolveVariable(context, "viewScope");
@@ -393,7 +393,7 @@ public class DynamicCC1 {
 			String toggle = (String) viewScope.get("moveableToggle");
 			if ( toggle.equalsIgnoreCase("1"))
 			{
-				System.out.println("setcomp 1");
+				
 				
 				
 				createGridContainer(topcomp);
@@ -453,7 +453,7 @@ public class DynamicCC1 {
 			
 			else if (toggle.equalsIgnoreCase("0"))
 			{
-				System.out.println("setcomp 0");
+				
 				((XspDiv)topcomp).setDojoType("");
 				
 			}
@@ -483,19 +483,19 @@ public class DynamicCC1 {
 					moveableportlet.getChildren().add(portlet);
 					topcomp.getChildren().add(0, moveableportlet);
 					viewScope.put("moveableToggle", "1");
-					System.out.println("inside java function1 "+viewScope.get("moveableToggle"));
+					
 				}else if(portletmovable.getChildCount()==0)
 				{
 					portletmovable.getChildren().add(portlet);
 					topcomp.getChildren().add(0, portletmovable);
 					viewScope.put("moveableToggle", "1");
-					System.out.println("inside java function2 "+viewScope.get("moveableToggle"));
+					
 				}else{
-					System.out.println("dojo type:"+((XspDiv)topcomp).getDojoType());
+					
 					topcomp.getChildren().add(0,portlet);
 					JSFUtil.removeComponent(id+"moveable");
 					viewScope.put("moveableToggle", "0");
-					System.out.println("inside java function3 "+viewScope.get("moveableToggle"));
+					
 				}
 			}
 		}
@@ -513,7 +513,7 @@ public class DynamicCC1 {
 	 
 	 
 	 public static void setCompDojoType(UIComponent topcomp, String[] sorted){
-			System.out.println("toggling Move ");
+			
 			
 			FacesContext context = FacesContext.getCurrentInstance();
 			Map viewScope = (Map) context.getApplication().getVariableResolver().resolveVariable(context, "viewScope");
@@ -536,18 +536,18 @@ public class DynamicCC1 {
 					moveableportlet.getChildren().add(portlet);
 					topcomp.getChildren().add(0, moveableportlet);
 					viewScope.put("moveableToggle", "1");
-					System.out.println("inside java function1 "+viewScope.get("moveableToggle"));
+					
 				}else if(portletmovable.getChildCount()==0)
 				{
 					portletmovable.getChildren().add(portlet);
 					topcomp.getChildren().add(0, portletmovable);
 					viewScope.put("moveableToggle", "1");
-					System.out.println("inside java function2 "+viewScope.get("moveableToggle"));
+					
 				}else{
 					topcomp.getChildren().add(0,portlet);
 					JSFUtil.removeComponent(id+"moveable");
 					viewScope.put("moveableToggle", "0");
-					System.out.println("inside java function3 "+viewScope.get("moveableToggle"));
+					
 				}
 			}
 		}
@@ -556,7 +556,7 @@ public class DynamicCC1 {
 	 
 	 public static void setCompDojoType1(UIComponent topcomp, UIComponent topcomp1, String[] sorted)
 	 {
-			System.out.println("toggling Move ");
+			
 			
 			FacesContext context = FacesContext.getCurrentInstance();
 			Map viewScope = (Map) context.getApplication().getVariableResolver().resolveVariable(context, "viewScope");
@@ -581,7 +581,7 @@ public class DynamicCC1 {
 					topcomp1.getChildren().add(0,portlet);
 					JSFUtil.removeComponent(id+"moveable");
 					viewScope.put("moveableToggle", "0");
-					System.out.println("first");
+					
 					continue;
 				}
 				
@@ -595,7 +595,7 @@ public class DynamicCC1 {
 						portletmovable.getChildren().add(portlet1);
 						topcomp.getChildren().add(0, portletmovable);
 						viewScope.put("moveableToggle", "1");
-						System.out.println("second1");
+						
 						
 					}
 					else
@@ -606,7 +606,7 @@ public class DynamicCC1 {
 						moveableportlet.getChildren().add(portlet1);
 						topcomp.getChildren().add(0, moveableportlet);
 						viewScope.put("moveableToggle", "1");
-						System.out.println("second2");
+						
 						
 						
 					}
@@ -713,23 +713,23 @@ public class DynamicCC1 {
 	 
 	 public static void reorderLinks(UIComponent list,UIOutlineBreadCrumbs breadcrumbs, String [] listarr)
 	 {
-		 System.out.println("inside reorderlinks");
+		 
 		 if (breadcrumbs == null)
 		 {
-			 System.out.println("breadcrumbs is null");
+			 
 		 }
 		 else
 		 {
-			 System.out.println("breadcrumbs is not null");
+			 
 			 int ct = breadcrumbs.getChildCount();
-			 System.out.println("breadcrumbs child count:"+ct);
+			 
 			 int ct1 = breadcrumbs.getTreeNodes().size();
-			 System.out.println("breadcrumbs treenodes size:"+ct1);
+			 
 		 }
 		 
 		 
 		 int count = list.getChildCount();
-		 System.out.println("inside reorderlinks listcount:"+ count);
+		 
 		 for (int i=0; i< count ; ++i)
 		 {
 			 list.getChildren().remove(0);
@@ -738,9 +738,9 @@ public class DynamicCC1 {
 			 
 			 
 		 }
-		 System.out.println("inside reorderlinks after deleting previous links");
+		 
 		 int len = listarr.length - 1;
-		 System.out.println("inside reorderlinks listarr length:"+len);
+		 
 		 for (int i=0; i< len; ++i)
 		 {
 			 createLink(list, listarr[i], listarr[i]+"link");

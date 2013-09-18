@@ -56,7 +56,7 @@ public class Role {
 		Map viewScope = (Map) JSFUtil.getVariableValue("viewScope");
 		String moduleName = (String) viewScope.get("moduleName");
 		String entityName = (String) viewScope.get("entityName");
-		System.out.println("roleNam "+roleName);
+		
 		this.hierarchyRoleList = getFinalRoleList(roleName);// to get the child
 															// roles of the
 															// given role

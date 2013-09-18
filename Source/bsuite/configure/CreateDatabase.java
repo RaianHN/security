@@ -23,7 +23,7 @@ public class CreateDatabase
 	{
 		try
 		{
-			System.out.println("inside CreateDB mehtod");
+			
 			// Session session=Utility.getCurrentSession();
 			// //NotesFactory.createSession();
 
@@ -42,8 +42,8 @@ public class CreateDatabase
 				String fn = db.getFileName();
 				String currentpath = Utility.getBsuitePath(db);
 				String fulldb = currentpath + fn;
-				//System.out.println("Current dbpth,"+fulldb);
-				//System.out.println("dbpath,"+dbpath);
+				//
+				//
 				//fn.equalsIgnoreCase(dbName.replace(" ","") + ".nsf")
 				if (fulldb.equalsIgnoreCase(dbpath + ".nsf"))
 				{
@@ -55,14 +55,14 @@ public class CreateDatabase
 			}
 			if (!found)
 			{
-				System.out.println("Not found, creating db");
+				
 				db1 = dir.createDatabase(dbpath);
 				db1.setTitle(dbName);
 				View view1 = db1.createView("AllDocuments");
 				view1.setSelectionFormula("SELECT @All");
 			}
 			else
-				System.out.println("found, not creating db");
+				
 
 			return db1;
 
@@ -87,7 +87,7 @@ public class CreateDatabase
 
 			if (db.getView(viewName) != null)
 			{
-				System.out.println("View Exists, not creting");
+				
 				return db.getView(viewName);
 			}
 		}
@@ -109,17 +109,17 @@ public class CreateDatabase
 				db.open();
 			}
 			// String selFormula
-			System.out.println("View Creating");
+			
 			if (db.getView(viewName) != null)
 			{
-				System.out.println("View Exists, not creting");
+				
 				return db.getView(viewName);
 			}
 
 			View view1 = db.createView(viewName);
 			view1.setSelectionFormula(selFormula);
 
-			System.out.println("View Created");
+			
 			return view1;
 
 		}
@@ -137,11 +137,11 @@ public class CreateDatabase
 	{
 		try
 		{
-			System.out.println("inside createViewColumn");
-			System.out.println("View Name " + view.getName());
-			System.out.println("View Column Pos " + pos);
-			System.out.println("View Column title " + title);
-			System.out.println("View Column Formula  " + formula);
+			
+			
+			
+			
+			
 			Vector columns = view.getColumns();
 			if (!(columns.contains(title)))
 			{
@@ -165,9 +165,9 @@ public class CreateDatabase
 		{
 			Database db = createDB(x);
 			
-			System.out.println("2nd part");
+			
 			ArrayList<Entity> entityList = dmodule.getEntities(x);
-			System.out.println("2nd part  1111");
+			
 
 			if (entityList != null)
 			{
@@ -187,7 +187,7 @@ public class CreateDatabase
 			}
 			else
 			{
-				System.out.println("Entities1 is null");
+				
 			}
 		}
 	}
@@ -196,28 +196,28 @@ public class CreateDatabase
 	{
 		try
 		{
-			System.out.println("1");
+			
 			Document persondoc = getPerson(name);
 			String personDocId = persondoc.getUniversalID();
-			System.out.println("UNID " + personDocId);
+			
 			
 
 			String src_data = name;
 			String relationid = getRelationNameUnid("HAS_A");
 			String trg_data = "Admin";
 			Database securityDb = Utility.getDatabase("Security.nsf");
-			System.out.println("2");
+			
 			View profileview = securityDb.getView("ProfileView");
 			Document profiledoc = profileview.getDocumentByKey(trg_data);
 			String targetid = profiledoc.getUniversalID();
 			String srcunid = personDocId;
-			System.out.println("3");
+			
 			//creating relationship between person and admin profile
 			createRelationship(srcunid, "admntool.nsf", src_data, securityDb
 					.getFileName(), trg_data, targetid, relationid);
-			System.out.println("4");
+			
 			//Create Role Association with the Person
-			System.out.println("in role assoc" + name);
+			
 			createRoleAssociation(name, "CEO");
 
 		}
@@ -232,7 +232,7 @@ public class CreateDatabase
 	{
 
 		String src_data = username;
-		System.out.println("role1 username " + src_data);
+		
 		Document persondoc = getPerson(username);
 		String personDocId = "";
 		try
@@ -252,21 +252,20 @@ public class CreateDatabase
 		try
 		{
 
-			System.out.println("role1 persondocid " + personDocId);
+			
 			String relationid = getRelationNameUnid("HAS_ROLE");
-			System.out.println("role2 relationid " + relationid);
+			
 			String rolename = roleName;
-			System.out.println("role3 " + rolename);
+			
 			Database securityDb = Utility.getDatabase("Security.nsf");
 			View roleview = securityDb.getView("RolesView");
-			System.out.println("role4 " + roleview.getName());
+			
 			Document roledoc = roleview.getDocumentByKey(rolename);
 			String roleunid = roledoc.getUniversalID();
-			System.out.println("role5 " + roleunid);
-			System.out.println("role association details");
-			System.out.println(personDocId + " " + src_data + " "
-					+ securityDb.getFileName() + " " + rolename + " "
-					+ relationid);
+			
+			
+			
+					
 			createRelationship(personDocId, "admntool.nsf", src_data,
 					securityDb.getFileName(), rolename, roleunid, relationid);
 		}
@@ -392,7 +391,7 @@ public class CreateDatabase
 		{
 			Document persondoc = getPerson(personName);
 			String personDocId = persondoc.getUniversalID();
-			System.out.println("UNID " + personDocId);
+			
 			Database empdb = Utility.getDatabase("employees.nsf");
 
 				

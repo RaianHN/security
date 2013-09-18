@@ -274,12 +274,12 @@ public class Utility
 		try {
 			ACL acl = Utility.getCurrentDatabase().getACL();
 			ACLEntry aclentry = acl.getEntry("Anonymous");
-			System.out.println("acl entry 0");
+			
 			if (aclentry == null) {
-				System.out.println("acl entry 1");
+				
 				level = 0;
 			} else {
-				System.out.println("acl entry 2");
+				
 				level = aclentry.getLevel();
 			}
 		} catch (NotesException e) {

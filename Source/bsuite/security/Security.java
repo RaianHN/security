@@ -111,8 +111,8 @@ public class Security {
 
 		// gettinf visible feature names;
 
-		System.out.println("RoleName " + role.getRoleName());
-		System.out.println("ProfileName " + profile.getProfileName());
+		
+		
 	}
 
 	public Profile getProfile() {
@@ -159,7 +159,7 @@ public class Security {
 
 	public boolean isFieldVisible(String entityyName, String fieldName) {
 		visibleFields = profile.getVisibleFieldsNames(module, entityyName);
-		System.out.println("visible fields" + visibleFields);
+		
 		if (visibleFields.indexOf(fieldName) < 0) {
 			return false;
 		} else {
@@ -173,7 +173,7 @@ public class Security {
 
 	public boolean isFieldReadonly(String entityName, String fieldName) {
 		editableFields = profile.getEditableFieldsNames(module, entityName);
-		System.out.println("editable fields" + editableFields);
+		
 		if (editableFields.indexOf(fieldName) < 0) {
 			return true;
 		} else {
@@ -223,7 +223,7 @@ public class Security {
 		if(domDoc!=null){
 			 doc = domDoc.getDocument();
 		}else{
-			 System.out.println("currentDocument is null ");
+			 
 			 return false;
 		}
 		
@@ -231,7 +231,7 @@ public class Security {
 		Association as = new Association();
 		try {
 			 currentUName = ExtLibUtil.getCurrentSession().getEffectiveUserName();
-			 System.out.println("currentUName "+currentUName);
+			 
 		} catch (NotesException e1) {
 			e1.printStackTrace();
 		}
@@ -240,12 +240,12 @@ public class Security {
 		try {
 			if(doc.hasItem("DocumentCreator")){
 				uName = as.getFormattedName(doc.getItemValueString("DocumentCreator"), "canonical");
-				 System.out.println("doc Creator "+uName);
+				 
 			}
 		} catch (NotesException e) {
 			e.printStackTrace();
 		}
-		System.out.println("Comparing  "+currentUName+" "+uName);
+		
 		if(currentUName.equals(uName)){//Compare 
 			return true;
 		}else{
