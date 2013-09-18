@@ -117,26 +117,6 @@ public static int timeCompareDates(DateTime dt1, DateTime dt2)
 		
 		return timecomp;
 	}
- /*public static int timeCompare(DateTime dt1, DateTime dt2) throws NotesException
- {    
-	 Session session = ExtLibUtil.getCurrentSession();
-		int timecomp=0;
-		try {
-			if (dt1.equals(null) || dt2.equals(null)){
-				return 0;
-			}
-			DateTime dtMy1 = session.createDateTime(dt1.getDateOnly());
-			System.out.print("dt1"+dtMy1);
-			DateTime dtMy2 = session.createDateTime(dt2.getDateOnly());
-			System.out.print("dt2"+dtMy2);
-			timecomp = dtMy1.timeDifference(dtMy2)/86400; 
 
-			return timecomp;
-		} catch (NotesException e) {
-			System.out.println(e.id + " " + e.text);
-		}
-		System.out.print("Outside catch");
-		return timecomp;
-	}*/
 	
 }

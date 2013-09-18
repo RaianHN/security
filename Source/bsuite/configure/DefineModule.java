@@ -268,13 +268,7 @@ public class DefineModule {
 		return true;
 	}
 
-	/*
-	 * private boolean addGroupEntryFeature(Module module, SchemaGroup group,
-	 * Feature feature) { // To add entity or feature to this group
-	 * ManageGroup.addObjToGrp(module, group,"f:"+feature.getFeatureName());
-	 * 
-	 * return true; }
-	 */
+	
 
 	public boolean renameFeatureGroup(String moduleName, String groupName,
 			String newName) {
@@ -345,7 +339,6 @@ public class DefineModule {
 				features = module.getFeatures();
 			}
 
-			// ArrayList<Feature> featureList = new ArrayList<Feature>();
 
 			// Add features to the new entity
 			Feature feature = new Feature();
@@ -851,18 +844,7 @@ public class DefineModule {
 
 	}
 
-	/*
-	 * private DocumentCollection getModuleDocs(){
-	 * 
-	 * try { View moduleView = currentdb.getView("Modules"); DocumentCollection
-	 * moduleDocs =
-	 * 
-	 * 
-	 * return moduleDocs; } catch (NotesException e) { e.printStackTrace(); }
-	 * 
-	 * 
-	 * return null; }
-	 */
+	
 	private Document getModuleDoc(String moduleName) {
 		try {
 			View moduleView = currentdb.getView("Modules");
@@ -990,11 +972,7 @@ public class DefineModule {
 		ArrayList<Entity> entityList = module.getEntities();
 
 		if (entityList != null) {
-			/*
-			 * Vector entityNames = new Vector(); for(Entity e:entityList){
-			 * 
-			 * entityNames.add(e.getEntityName()); } return entityNames;
-			 */
+			
 			return entityList;
 		}
 
@@ -1124,7 +1102,6 @@ public class DefineModule {
 				features = module.getFeatures();
 			}
 
-			// ArrayList<Feature> featureList = new ArrayList<Feature>();
 
 			for (Feature f : features) {
 				// Add features to the new entity

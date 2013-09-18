@@ -672,16 +672,9 @@ public class Deploy {
 		module1.setEntities(entityList);
 		System.out.println("added entity" + entity.getEntityName() + " "
 				+ entity.getCreate());
-		// Create the view here after adding new entity for the existing fields
+	
 
-		/*
-		 * String selFormula="SELECT Form=\""+entity.getEntityName()+"\"";
-		 * 
-		 * CreateDatabase cd = new CreateDatabase();
-		 * 
-		 * view = cd.createView(db,entity.getEntityName(), selFormula);
-		 * System.out.println("after create view call");
-		 */
+		
 
 		return jsonObj;
 
@@ -751,13 +744,7 @@ public class Deploy {
 		System.out.println("added entity" + field.getFieldName() + " "
 				+ field.getVisible());
 
-		/*
-		 * CreateDatabase cd = new CreateDatabase(); view = cd.getView(db,
-		 * entityName); try { if(view.getColumnNames().contains(fieldName)){
-		 * return jsonObj; } } catch (NotesException e) { // TODO Auto-generated
-		 * catch block e.printStackTrace(); }
-		 * cd.createViewColumn(view,vColumn,fieldName,fieldName);
-		 */
+		
 		return jsonObj;
 
 	}

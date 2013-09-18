@@ -70,21 +70,7 @@ public class DynamicCC1 {
 			System.out.println("inside create portlet3");
 			UIPanelEx panelmoveable = new UIPanelEx();
 			panelmoveable.setId(id+"moveable");
-			/*panelmoveable.setDojoType("dojo.dnd.Moveable");
-			DojoAttribute dojoAttributes = new DojoAttribute();
-			dojoAttributes.setComponent(panelmoveable);
-			dojoAttributes.setName("skip");
-			dojoAttributes.setValue("true");
 			
-			
-			panelmoveable.addDojoAttribute(dojoAttributes);
-			
-			DojoAttribute dojoAttributes1 = new DojoAttribute();
-			dojoAttributes1.setComponent(panelmoveable);
-			dojoAttributes1.setName("handle");
-			dojoAttributes1.setValue("view:_id1:_id18:"+id+"handle");
-			panelmoveable.addDojoAttribute(dojoAttributes1);
-			*/
 			component.getChildren().add(0,panelmoveable);
 			panelmoveable.getChildren().add(0, panel);
 		
@@ -397,55 +383,7 @@ public class DynamicCC1 {
 				
 				
 				createGridContainer(topcomp);
-				/*
 				
-				((XspDiv)topcomp).setDojoType("dojox.layout.GridContainer");
-				
-				DojoAttribute dojoAttribute1 = new DojoAttribute();
-				dojoAttribute1.setComponent(topcomp);
-				dojoAttribute1.setName("allowAutoScroll");
-				dojoAttribute1.setValue("false");
-				
-				
-				DojoAttribute dojoAttribute2 = new DojoAttribute();
-				dojoAttribute2.setComponent(topcomp);
-				dojoAttribute2.setName("nbZones");
-				dojoAttribute2.setValue("1");
-				
-				
-				DojoAttribute dojoAttribute3 = new DojoAttribute();
-				dojoAttribute3.setComponent(topcomp);
-				dojoAttribute3.setName("hasResizableColumns");
-				dojoAttribute3.setValue("false");
-				
-				
-				DojoAttribute dojoAttribute4 = new DojoAttribute();
-				dojoAttribute4.setComponent(topcomp);
-				dojoAttribute4.setName("acceptTypes");
-				dojoAttribute4.setValue("dojox.widget.Portlet");
-				
-				
-				DojoAttribute dojoAttribute5 = new DojoAttribute();
-				dojoAttribute5.setComponent(topcomp);
-				dojoAttribute5.setName("withHandles");
-				dojoAttribute5.setValue("true");
-				
-				DojoAttribute dojoAttribute6 = new DojoAttribute();
-				dojoAttribute6.setComponent(topcomp);
-				dojoAttribute6.setName("handleClasses");
-				dojoAttribute6.setValue("portletHeader");
-				
-				
-				((XspDiv)topcomp).addDojoAttribute(dojoAttribute1);
-				((XspDiv)topcomp).addDojoAttribute(dojoAttribute2);
-				((XspDiv)topcomp).addDojoAttribute(dojoAttribute3);
-				((XspDiv)topcomp).addDojoAttribute(dojoAttribute4);
-				((XspDiv)topcomp).addDojoAttribute(dojoAttribute5);
-				((XspDiv)topcomp).addDojoAttribute(dojoAttribute6);
-				
-				
-				*/	
-					
 				
 				
 				
