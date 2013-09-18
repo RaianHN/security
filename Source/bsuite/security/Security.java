@@ -1,6 +1,5 @@
 package bsuite.security;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,19 +14,14 @@ import com.ibm.xsp.model.domino.wrapped.DominoDocument;
 import bsuite.relationship.Association;
 import bsuite.utility.*;
 
-/**
- * [Class description. The first sentence should be a meaningful summary of the
- * class since it will be displayed as the class summary on the Javadoc package
- * page.]
- * 
- * [Other notes, including guaranteed invariants, usage instructions and/or
- * examples, reminders about desired improvements, etc.]
+/**Security bean which encapsulates profile and role objects,
+ * provides the api to get accessible modules, features, entities, fields.
  * 
  * @author JPrakash
  */
 public class Security {
 
-	private Profile profile;
+	private Profile profile; 
 	private Role role;
 	private ArrayList<String> modules;
 	private HashMap<String, ArrayList<String>> modulesEntities;
@@ -40,31 +34,55 @@ public class Security {
 	private String myDocs;// Holds the search string based on role hierarchy and
 							// data sharing
 
+	/**
+	 *Returns the search string for the current module and entity based on the datasharing rule,
+	 *can be used as the search formula in any view
+	 *@return view selection formula as string
+	 */
 	public String getMyDocs() {
 
 		return role.getSearchString();
 	}
 
-	public void setMyDocs(String myDocs) {
-		this.myDocs = myDocs;
-	}
-
+	
+	
+	/**
+	 *Returns the profile name of the current user
+	 *@return profile name as string
+	 */
 	public String getProfileName() {
 		return profileName;
 	}
 
+	/**
+	 *Setter for the profileName property
+	 *@param profileName string 
+	 */
 	public void setProfileName(String profileName) {
 		this.profileName = profileName;
 	}
 
+	/**
+	 *Returns the role name of the current user
+	 *@return role as string
+	 */
 	public String getRoleName() {
 		return roleName;
 	}
 
+	/**
+	 *Setter for roleName property
+	 *@param roleName as string
+	 */
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
 	}
 
+	
+	/**
+	 * Security Bean constructor
+	 * Initializes profile and role object for the current user
+	 */
 	@SuppressWarnings("unchecked")
 	public Security() {
 
