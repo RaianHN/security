@@ -12,7 +12,7 @@ import lotus.domino.View;
  */
 
 public class SetupSecurity extends CreateDatabase{
-	//private StringBuffer log;
+	
 	private Deploy deploy;
 //1. Create relation.nsf in the same folder
 	//

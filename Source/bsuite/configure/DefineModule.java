@@ -108,7 +108,7 @@ public class DefineModule {
 				features = module.getFeatures();
 			}
 
-			// ArrayList<Feature> featureList = new ArrayList<Feature>();
+			
 
 			for (String s : featurenames) {
 				// Add features to the new entity

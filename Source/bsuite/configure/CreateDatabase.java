@@ -24,8 +24,8 @@ public class CreateDatabase
 		try
 		{
 			
-			// Session session=Utility.getCurrentSession();
-			// //NotesFactory.createSession();
+			
+			
 
 			Database db1 = null;
 			@SuppressWarnings("unused")
@@ -372,8 +372,8 @@ public class CreateDatabase
 	{
 		DefineModule def = new DefineModule();
 		Vector<String> moduleNames = def.getModules();
-		//CreateDatabase cd = new CreateDatabase();
-		//cd.createDatabases(moduleNames);
+		
+		
 		createDatabases(moduleNames);
 
 	}

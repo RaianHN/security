@@ -35,11 +35,11 @@ public class DynamicCC1 {
 		panel.setStyle("height: auto ; width: auto");
 		panel.setId(id);
 		
-		//XspDiv div = new XspDiv();
-		//div.setId(id+"handle");
-		//div.setStyle("height: 20px; background-color: transparent");
 		
-		//panel.getChildren().add(div);
+		
+		
+		
+		
 		
 		UIIncludeComposite result = new UIIncludeComposite();
 	    result.setPageName(c1);
@@ -116,16 +116,16 @@ public class DynamicCC1 {
 		String cid=comp1.getClientId(FacesContext.getCurrentInstance());
 		
 		String onClick="jumplink('"+cid+"');";
-		//String onClick= "console.log('onclickevent'); var com = document.getElementById('view:_id1:_id18:"+comID+"' );console.log(com); if (com != null){  dojox.fx.smoothScroll({ node:dojo.byId('view:_id1:_id18:"+comID+"'), win:window, duration:400}).play(); var toggle = document.getElementById('view:_id1:_id18:Toggle');if (toggle.getAttribute('value') == '1'){var portletstyle=com.parentNode.style.cssText; com.parentNode.style.cssText=portletstyle+ 'z-index:'+zIndex; XSP.executeOnServer('view:_id1:eventHandler4','', '', ++zIndex);}}";
-		//String onClick= "console.log('onclickevent'); var com = XSP.getElementById('#{id:"+comID+"}' ); if (com != null){ console.log(\"hi\"); dojox.fx.smoothScroll({ node:dojo.byId('#{id:"+comID+"}'), win:window, duration:400}).play(); var portletstyle=com.parentNode.style.cssText; com.parentNode.style.cssText=portletstyle+ 'z-index:'+zIndex++;}";
+		
+		
 		link.setOnclick(onClick);
-		//link.setOnclick("var com = document.getElementById(\"{id:comID}\" );\n\nif (com != null)\n{\n\ndojox.fx.smoothScroll({ node:dojo.byId(\"{id:comID}\" ), win:window, duration:400}).play();}" );
-		//link.setStyle("padding-left:5px;padding-right:5px;");
+		
+		
 		component.getChildren().add(link);
 		addCrumb(onClick,comID);
-		//UIPassThroughTag sep = new UIPassThroughTag();
-       // sep.setValue("0");
-       // component.getChildren().add(sep);
+		
+       
+       
 	}
 	public static void addCrumb(String onClick, String label){
 		UIOutlineBreadCrumbs bc=(UIOutlineBreadCrumbs) JSFUtil.findComponent("breadCrumbs1");

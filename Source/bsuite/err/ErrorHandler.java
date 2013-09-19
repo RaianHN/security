@@ -90,7 +90,7 @@ public class ErrorHandler
 		try
 		{
 			stackTrace = getStackTrace(ee);
-			//System.out.print("trace "+stackTrace);
+			
 			methodName = getMethodName(stackTrace, 1);
 			className = getClassName(stackTrace, 1);
 			errLine = getMethodErrorLine(stackTrace, methodName);

@@ -32,7 +32,7 @@ public class SetupValidator {
 		this.currentdb= Utility.getCurrentDatabase();
 		this.server_g=currentdb.getServer();
 		this.session=Utility.getCurrentSession();
-		//this.bsuiteuser = session.getEffectiveUserName();
+		
 		this.bsuitepath = getBsuitePath(currentdb);
 		}
 		catch(Exception e)
@@ -61,7 +61,7 @@ public class SetupValidator {
 		
 		try {
 			System.out.print("Inside getSetupdoc");
-			//String iscreate=(String)sessionScope.get("createSetup");
+			
 			//if (iscreate.equals("true")){
 			Database custdb = session.getDatabase(session.getServerName(), bsuitepath+"customer.nsf");
 				View setupview=custdb.getView("Setup Profile");

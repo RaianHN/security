@@ -339,7 +339,7 @@ public class Utility
 		{
 			ExternalContext exCon = FacesContext.getCurrentInstance().getExternalContext(); 
 			HttpServletRequest request= (HttpServletRequest) exCon.getRequest();
-			String remoteAddress = request.getLocalAddr();//getRemoteAddr();//getLocalName();//getRemoteHost();//
+			String remoteAddress = request.getLocalAddr();//
 			InetAddress inetAddress = InetAddress.getByName(remoteAddress);
 		
 			

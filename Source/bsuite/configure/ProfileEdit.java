@@ -55,7 +55,7 @@ public class ProfileEdit {
 	public Vector<String> getEntityPermission(String profileName,
 			String moduleName) {
 		// System.out.println("getting feature perm for" + profileName + " "
-		// + moduleName);
+		
 		Document profDoc = getProfileDoc(getSecurityDatabase(), profileName);
 		String jsonString = "";
 		try {
@@ -95,14 +95,14 @@ public class ProfileEdit {
 			e.printStackTrace();
 		}
 		// setFeatureViewScopeCrud(getJsonProfileObj(jsonString),
-		// moduleName,entityName);
+		
 
 	}
 
 	public Vector<String> getFeaturePermission(String profileName,
 			String moduleName) {
 		// System.out.println("getting feature perm for" + profileName + " "
-		// + moduleName);
+		
 		Document profDoc = getProfileDoc(getSecurityDatabase(), profileName);
 		String jsonString = "";
 		try {
@@ -204,11 +204,11 @@ public class ProfileEdit {
 			// 
 			for (Module mod : profile.getModules()) {
 				// System.out.println("comparing " + moduleSecurity[0] + " "
-				// + mod.getModuleName());
+				
 				if (moduleSecurity[0].equals(mod.getModuleName())) {
 					// System.out.println("module permission" +
 					// moduleSecurity[1]
-					// + "  ");
+					
 					mod.setTabvis(moduleSecurity[1]);
 					break;
 				}
@@ -269,17 +269,17 @@ public class ProfileEdit {
 			// 
 			for (Module mod : profile.getModules()) {
 				// System.out.println("comparing " + moduleSecurity[0] + " "
-				// + mod.getModuleName());
+				
 				if (moduleSecurity[0].equals(mod.getModuleName())) {
 					// System.out.println("module permission" +
 					// moduleSecurity[1]
-					// + "  ");
+					
 					for (Feature feature : mod.getFeatures()) {
 						// System.out.println("comparing " + moduleSecurity[1]
-						// + " " + feature.getFeatureName());
+						
 						if (moduleSecurity[1].equals(feature.getFeatureName())) {
 							// System.out.println("module permission"
-							// + moduleSecurity[2] + "  ");
+							
 							feature.setVisible(moduleSecurity[2]);
 							break;
 						}
@@ -318,7 +318,7 @@ public class ProfileEdit {
 		Module module = null;
 		// System.out.println("inside entity perm " + profile.getProfName() +
 		// " "
-		// + moduleName);
+		
 		for (Module mod : profile.getModules()) {
 			if (mod.getModuleName().equals(moduleName)) {
 				module = mod;
@@ -352,7 +352,7 @@ public class ProfileEdit {
 		Module module = null;
 		// System.out.println("inside entity perm " + profile.getProfName() +
 		// " "
-		// + moduleName);
+		
 		for (Module mod : profile.getModules()) {
 			if (mod.getModuleName().equals(moduleName)) {
 				module = mod;
@@ -448,11 +448,11 @@ public class ProfileEdit {
 			for (Entity entity : module.getEntities()) {
 				// 
 				// System.out.println("entity name" + entityName
-				// + " getfname" + entity.getEntityName());
+				
 
 				if (entityName.equals(entity.getEntityName())) {
 					// System.out
-					// .println("inside save 54" + entityPerm);
+					
 					entity.setCreate(Character.toString(entityPerm.charAt(0)));
 					entity.setRead(Character.toString(entityPerm.charAt(1)));
 					entity.setUpdate(Character.toString(entityPerm.charAt(2)));
@@ -537,7 +537,7 @@ public class ProfileEdit {
 			for (Field field : entity.getFields()) {
 				// 
 				// System.out.println("field name" + fieldSecurity[0]
-				// + " getfname" + field.getFieldName());
+				
 
 				if (fieldSecurity[0].equals(field.getFieldName())) {
 					// 
@@ -907,7 +907,7 @@ public class ProfileEdit {
 			for (Entity entity : module.getEntities()) {
 				// 
 				// System.out.println("entity name" + entityName
-				// + " getfname" + entity.getEntityName());
+				
 
 				if (entityName.equals(entity.getEntityName())) {
 					// 

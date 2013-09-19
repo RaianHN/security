@@ -151,7 +151,7 @@ public class CompUtil {
          result.setStyle("WIDTH:139PX;");
          result.setRegion(position);
          result.setSplitter(split);
-         result.setId(id);// setId(result, "djBorderPane1");
+         result.setId(id);
          r.getChildren().add(result);
          return result;
      }
@@ -173,7 +173,7 @@ public class CompUtil {
 		try {
 			result = new XspDataTableEx();
 			 result.setVar(var);//"viewentry"
-			// result.setRows(30); 
+			 
 			 result.setId(id);//"viewPanel1"  			 
 			
 			 ValueBinding vb1  = FacesContext.getCurrentInstance().getApplication().createValueBinding(value);
@@ -270,21 +270,21 @@ public class CompUtil {
          result.setColumnName(columnname);         
          result.setId(id);   
          
-         //result.setValue("hi");
+         
          parent.getChildren().add(result);      
          return result;
      }
 
      public static XspViewColumnHeader createViewcolumnheader(XspViewColumn parent,String value, String id ) {
          XspViewColumnHeader result = new XspViewColumnHeader();
-      // result.setParent(parent);
-         //result.setTitle(value);
+      
+         
     
          result.setValue(value);
          result.setId(id);    
-        //parent.getFacets().put("header", result);
-        // parent.getFacet("header").getChildren().add(result);
-          // parent.getChildren().add(result);
+        
+        
+          
              
          return result;
      }
@@ -295,7 +295,7 @@ public class CompUtil {
          result.setId( "page"+id);
          
          
-         //result.setFor(parent.getId());
+         
          return result;
      }
    

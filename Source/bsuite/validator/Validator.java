@@ -26,7 +26,7 @@ public class Validator {
 	 */
 	public boolean validateRichTextField(String compId) {
 			String content = null;
-			//com.ibm.xsp.component.xp.XspInputRichText rtField = (XspInputRichText) JSFUtil.findComponent(compId);
+			
 			XspInputTextarea rtField = (XspInputTextarea) JSFUtil.findComponent(compId);
 
 			content = rtField.getValueAsString();

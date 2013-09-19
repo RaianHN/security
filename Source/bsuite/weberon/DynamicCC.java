@@ -109,9 +109,9 @@ public class DynamicCC {
       	XspEventHandler ev2= CompUtil.createEventHandler("onItemClick", "partial",onItemClickExpr, true,"panel1");
       	result.getChildren().add(ev2);
       	
-      	//result.setValueBinding("onItemClick", vb2);
-         // result.getChildren().add(treeNodes);
-         // return result;
+      	
+         
+         
       	result.addNode(treeNodes);
           component.getChildren().add(result);
 		

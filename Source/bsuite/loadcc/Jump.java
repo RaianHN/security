@@ -35,12 +35,12 @@ private void addTree() {
 		String id=link.getText();	
 		UIComponent comp1=JSFUtil.findComponent(id);
 		String cid=comp1.getClientId(FacesContext.getCurrentInstance());
-		//FacesContext context = FacesContext.getCurrentInstance();
+		
 		try {
 			ComplexLeafTreeNode children;
 			children = new ComplexLeafTreeNode();
 			children.setLabel(id);
-			//children.setOnClick("var com = document.getElementById('view:_id1:_id18:"+id+"' ); if (com != null){  dojox.fx.smoothScroll({ node:dojo.byId('view:_id1:_id18:"+id+"'), win:window, duration:400}).play();var toggle = document.getElementById('view:_id1:_id18:Toggle');if (toggle.getAttribute('value') == '1'){ var portletstyle=com.parentNode.style.cssText; com.parentNode.style.cssText=portletstyle+ 'z-index:'+zIndex; XSP.executeOnServer('view:_id1:eventHandler4','', '', ++zIndex);}}" );
+			
 			children.setOnClick("jumplink('"+cid+"');");
 			addChild(children);	
 		} catch (Exception e) {

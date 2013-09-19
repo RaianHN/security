@@ -77,9 +77,9 @@ public class ProfileEdit {
 			}
 		}
 		result = module.getModuleName()+":"+module.getTabvis();
-		//Map viewScope = SessionContext.getViewScope();
 		
-		//viewScope.put("moduleP", result);
+		
+		
 		
 		return result;
 	}
@@ -423,7 +423,7 @@ public class ProfileEdit {
 			if(e.getEntityName().equals(entityName)){
 				//entitySecurity.add(e.getEntityName() + ":" + e.getCreate()
 				//		+ e.getRead() + e.getUpdate() + e.getDelete()
-				//		+ e.getAccessType());
+				
 				viewScope.put("entityPermission",e.getEntityName() + ":" + e.getCreate()
 								+ e.getRead() + e.getUpdate() + e.getDelete()
 								+ e.getAccessType());
@@ -460,7 +460,7 @@ public class ProfileEdit {
 		String fieldN=null;
 		// System.out.println("inside entity perm " + profile.getProfName() +
 		// " "
-		// + moduleName);
+		
 		for (Module mod : profile.getModules()) {
 			if (mod.getModuleName().equals(moduleName)) {
 				module = mod;
@@ -568,11 +568,11 @@ public class ProfileEdit {
 			for (Entity entity : module.getEntities()) {
 				// 
 				// System.out.println("entity name" + entityName
-				// + " getfname" + entity.getEntityName());
+				
 
 				if (entityName.equals(entity.getEntityName())) {
 					// System.out
-					// .println("inside save 54" + entityPerm);
+					
 					entity.setCreate(Character.toString(entityPerm.charAt(0)));
 					entity.setRead(Character.toString(entityPerm.charAt(1)));
 					entity.setUpdate(Character.toString(entityPerm.charAt(2)));
@@ -830,7 +830,7 @@ public class ProfileEdit {
 			for (Field field : entity.getFields()) {
 				// 
 				// System.out.println("field name" + fieldSecurity[0]
-				// + " getfname" + field.getFieldName());
+				
 
 				if (fieldSecurity[0].equals(field.getFieldName())) {
 					// 
@@ -1404,7 +1404,7 @@ public class ProfileEdit {
 			for (Entity entity : module.getEntities()) {
 				// 
 				// System.out.println("entity name" + entityName
-				// + " getfname" + entity.getEntityName());
+				
 
 				if (entityName.equals(entity.getEntityName())) {
 					// 
@@ -1492,7 +1492,7 @@ public class ProfileEdit {
 					}
 
 					// result =
-					// result+","+module.getModuleName()+":"+module.getFeatures().size();
+					
 				}
 
 			}

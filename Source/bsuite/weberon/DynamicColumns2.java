@@ -59,7 +59,7 @@ public class DynamicColumns2 {
 	public void createRestService()//**
 	{
 		
-			//DominoViewItemFileService restView = new DominoViewItemFileService();
+			
 			DominoViewJsonService restView = new DominoViewJsonService();
 			Map sessionscope = (Map) JSFUtil.getVariableValue("sessionScope");
 			restView.setDatabaseName("Test/customer.nsf");
@@ -129,10 +129,10 @@ public class DynamicColumns2 {
 							
 							doc.replaceItemValue("sColumns", vec);
 							doc.save();
-							// break;
+							
 						}
 						
-						//view.getNextDocument(doc);
+						
 					}
 					
 					
@@ -210,11 +210,11 @@ public class DynamicColumns2 {
 				if (viewName1 != null && viewName1.equalsIgnoreCase("Xview"))
 				{
 					cols = doc.getItemValue("sColumns");
-		//			break;
+		
 				}
 		
 		
-				//doc = view.getNextDocument(doc);
+				
 			
 				if (cols != null)
 				{

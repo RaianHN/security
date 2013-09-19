@@ -241,7 +241,7 @@ public class Association {
 			String profileunid = JSFUtil.DBLookupString("relation",
 					"SourceRelation", tmp1, 4);
 			//Database securitydb = session.getDatabase("", bsuitepath
-			//		+ "Security.nsf");
+			
 			
 			Document profiledoc = securityDb.getDocumentByUNID(profileunid);
 			
@@ -551,7 +551,7 @@ public void deleteRoleDoc(String employeeId){
 	tmp.add(lookupkey);
 	//to get personunid and get associated role doc
 	//String personunid = JSFUtil.DBLookupString("relation",
-		//	"TargetRelation", tmp, 4);	
+			
 	String personunid = employeeId;
 		//get has_a relation
 		String relationId = getRelationDocUnid("HAS_ROLE");
@@ -592,7 +592,7 @@ public void deleteProfileDoc(String employeeId){
 	tmp.add(lookupkey);
 	//to get personunid and get associated role doc
 	//String personunid = JSFUtil.DBLookupString("relation",
-			//"TargetRelation", tmp, 4);
+			
 	String personunid = employeeId;
 	
 		//get has_a relation

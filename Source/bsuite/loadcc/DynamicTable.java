@@ -95,7 +95,7 @@ public class DynamicTable {
 				if (viewName1 != null && viewName1.equalsIgnoreCase("Xview"))
 				{
 					cols = doc.getItemValue("sColumns");
-		//			break;
+		
 				}
 		
 				String hdexp;
@@ -119,7 +119,7 @@ public class DynamicTable {
 						hcol.setHeader(header);
 						if(i==0){
 							UIComponent doclink = CompUtil.createOpenDocLink(hcol, a[0], linkexp, Integer.toString( linkc++));
-							//UIComponent doclink = this.createLink(a[0],Integer.toString( linkc++));    // create a header comp
+							    // create a header comp
 							doclink.getChildren().add(this.createEventhandler());//
 
 						}else{
@@ -145,9 +145,9 @@ public class DynamicTable {
 		e.printStackTrace();
 	}
 		finally{
-		//	view.recycle();//**
+		//**
 			doc.recycle();//**
-		//	view = null;//**
+		//**
 			doc = null;//**
 		}
 		
@@ -223,7 +223,7 @@ public class DynamicTable {
         return result;
 
 		
-		//return null;
+		
 		
 	}
 	
