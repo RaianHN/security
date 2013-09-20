@@ -11,7 +11,7 @@ function defineEntity(E_Name, E_List, E_Features){
 	var vie:NotesView = database.getView("ProfileView");	
 
 	var profiledoc : NotesDocument= vie.getFirstDocument();
-	println("Profile Name passes ",profiledoc.getItemValueString("prof_name"));
+	
 	while(profiledoc!=null){
 		defaultModulePermission(profiledoc,E_Name);
 		defaultFieldPermission(profiledoc,E_Name);
@@ -55,8 +55,8 @@ function getProfiles(){
 
 function defineProfile(ProfileName){
 	/*
-	println("security database"+securityDb.getFileName());
-	println("inside dbprofile");
+	
+	
 	var doc :NotesDocument = securityDb.createDocument();
 	doc.replaceItemValue("Form","permissions")
 	doc.replaceItemValue("prof_name",ProfileName);	
@@ -87,7 +87,7 @@ function defaultModulePermission(profiledoc,moduleName){
 }
 
 function defaultFieldPermission(profiledoc,moduleName){
-	println("field permission");
+	
 	
 	var vie:NotesView = database.getView("All Documents");
 	//var doc: NotesDocument=vie.getDocumentByKey("Employee");
@@ -192,9 +192,9 @@ for(x in fields){
 	println("FieldName ",fieldname)
 	var fvisread=@Right(x,":")
 	var fieldvisible=fvisread.charAt(0);
-	println("Field Vissible ",fieldvisible);
+	
 	var fieldreadonly=fvisread.charAt(1);
-	println("Field Readonly ",fieldreadonly);*/
+	*/
 	}
 return vect;
 
@@ -220,15 +220,15 @@ for(x in features){
 }
 
 function editCrud(profileName,entityName,value){
-	println("crud value"+value);
+	
 	var vie:NotesView = database.getView("ProfileView");
 	var doc:NotesDocument = vie.getDocumentByKey(profileName);
 	var entCrud = doc.getItemValue("E_Crud");
-	println(entCrud);
+	
 	var isNew = 1;
 
 	for(x=0;x<entCrud.size();x++){	
-	println("Entity Name "+entCrud.get(x));
+	
 	var eName=@Left(entCrud.get(x),":");
 	if(eName==entityName){
 		entCrud.set(x,eName+":"+value);
@@ -238,7 +238,7 @@ function editCrud(profileName,entityName,value){
 	}
 	/*
 	for(x in entCrud){
-		println("Entity Name ",x);
+		
 		var eName = @Left(x,":")
 		if(eName==entityName){
 			entCrud.removeElement(x); //edit the existing entity
@@ -261,7 +261,7 @@ function editCrud(profileName,entityName,value){
 function setPermission(profileName,entityName){
 	var arr = context.getSubmittedValue().split(",");
 	var entityCrud = new bsuite.jsonparsing.ProfileEdit;
-	println("setting field permission"+typeof(arr)+"submitted type"+typeof(context.getSubmittedValue()));
+	
 	
 	entityCrud.saveFieldCrud(profileName, entityName, context.getSubmittedValue());
 	/*
@@ -420,10 +420,10 @@ function createProfileResponse(entityName){
 }
 function setModulePermission(profileName){
 	var profileName = getComponent("moduleCombo").getValue();
-	println("profileName"+profileName);
+	
 	var arr = context.getSubmittedValue().split(",");
 	var entityCrud = new bsuite.jsonparsing.ProfileEdit;
-	println("setting field permission"+typeof(arr)+"submitted type"+typeof(context.getSubmittedValue()));
+	
 	
 	entityCrud.saveModulePerm(profileName,context.getSubmittedValue());
 }
@@ -431,10 +431,10 @@ function setModulePermission(profileName){
 function setEntityPermission(){
 	var profileName = getComponent("moduleCombo").getValue();
 
-	println("profileName"+profileName);
+	
 	var arr = context.getSubmittedValue().split(",");
 	var entityCrud = new bsuite.jsonparsing.ProfileEdit;
-	println("setting field permission"+typeof(arr)+"submitted type"+typeof(context.getSubmittedValue()));
+	
 	
 	entityCrud.saveEntityPerm(profileName,context.getSubmittedValue());
 }
@@ -442,10 +442,10 @@ function setEntityPermission(){
 function setEntityActionPermission(){
 	var profileName = getComponent("moduleCombo").getValue();
 
-	println("profileName"+profileName);
+	
 	var arr = context.getSubmittedValue().split(",");
 	var entityCrud = new bsuite.jsonparsing.ProfileEdit;
-	println("setting field permission"+typeof(arr)+"submitted type"+typeof(context.getSubmittedValue()));
+	
 	
 	entityCrud.saveEntityActionPerm(profileName,context.getSubmittedValue());
 }
@@ -454,11 +454,11 @@ function setVieawActionPermisssion(){
 	var profileName  = getComponent("moduleCombo").getValue();
 	var arr = context.getSubmittedValue().split(",");
 	var entityCrud = new bsuite.jsonparsing.ProfileEdit;
-	println("setting field permission"+typeof(arr)+"submitted type"+typeof(context.getSubmittedValue()));
 	
-	println("arr "+arr);
-	println("profile name"+profileName);
-	println("submitted value"+context.getSubmittedValue());
+	
+	
+	
+	
 	entityCrud.saveGroupPerm(profileName,context.getSubmittedValue());
 	
 }
@@ -467,11 +467,11 @@ function setGroupActionPermission(){
 	var profileName  = getComponent("moduleCombo").getValue();
 	var arr = context.getSubmittedValue().split(",");
 	var entityCrud = new bsuite.jsonparsing.ProfileEdit;
-	println("setting field permission"+typeof(arr)+"submitted type"+typeof(context.getSubmittedValue()));
 	
-	println("arr "+arr);
-	println("profile name"+profileName);
-	println("submitted value"+context.getSubmittedValue());
+	
+	
+	
+	
 	entityCrud.saveGroupActionPerm(profileName,context.getSubmittedValue());
 	
 }
@@ -480,7 +480,7 @@ function setFieldPermission(profileName,moduleName,entityName){
 	var profileName = getComponent("moduleCombo").getValue();
 	var arr = context.getSubmittedValue().split(",");
 	var fieldCrud = new bsuite.jsonparsing.ProfileEdit;
-	println("setting field permission"+typeof(arr)+"submitted type"+typeof(context.getSubmittedValue()));
+	
 	
 	fieldCrud.saveFieldPerm(profileName,context.getSubmittedValue());
 }
@@ -489,11 +489,11 @@ function setFeaturePermission(){
 	var profileName = getComponent("moduleCombo").getValue();
 	
 	
-	println("profileName"+profileName);
+	
 
 	var arr = context.getSubmittedValue().split(",");
 	var featureCrud = new bsuite.jsonparsing.ProfileEdit;
-	println("setting feature permission"+typeof(arr)+"submitted type"+typeof(context.getSubmittedValue()));
+	
 	
 	//featureCrud.saveFeaturePerm(profileName,moduleName,entityName,context.getSubmittedValue());
 	featureCrud.saveFeaturePerm(profileName,context.getSubmittedValue());
@@ -502,9 +502,9 @@ function setFeaturePermission(){
 
 function loadViewEntity(moduleName,entityName){
 
-	println("Inside loadViewEntity");
+	
 	var tabentity:java.util.ArrayList=sessionScope.moduleentity;
-	println("TabEntity ",tabentity);	
+		
 	var i;
 	
 		for(i=0;i<tabentity.size();i++)
@@ -518,17 +518,17 @@ function loadViewEntity(moduleName,entityName){
 	var temp=moduleName+":"+entityName;
 	tabentity.add(temp);
 	
-	println("SessionScope moduleEntity ",sessionScope.moduleentity);
-	println("ModuleName ",moduleName);
+	
+	
 	
 	//In order to show the Delete button in the view
 	var entityDelete = new bsuite.jsonparsing.ProfileEdit;
 	var result=entityDelete.checkEntityDelete(moduleName,entityName);
 	if(result){
-		println("Result is true");
+		
 		viewScope.entityDelete=true;
 	}else{
-		println("Result is false");
+		
 		viewScope.entityDelete=false;
 	}
 	
@@ -572,9 +572,9 @@ function loadCreateEntity(moduleName,entityName){
 		tabentity.add(temp);
 	}
 
-	println("SessionScope moduleEntity ",sessionScope.moduleentity);
-	println("viewsco create entity"+viewScope.entityName);
-	println("modulename"+moduleName);
+	
+	
+	
 	var component = getComponent('EntityPanel'+moduleName);	
 	var s = facesContext;
 	var c1="/cc_entityForm.xsp"; 
@@ -582,8 +582,8 @@ function loadCreateEntity(moduleName,entityName){
 	sessionScope.employeeRegister = viewScope.entityName;
 	viewScope.moduleName = moduleName;
 	viewScope.entityName = entityName;
-	println("viewsco"+viewScope.entityName);
-	println("modulename"+moduleName);
+	
+	
 	bsuite.weberon.DynamicCC.removePreview(component);
 	bsuite.weberon.DynamicCC.loadCC(s, component, c1, id);	
 	
@@ -594,9 +594,9 @@ function loadCreateEntity(moduleName,entityName){
 /*
 function loadViewEntity(moduleName,entityName){
 
-	println("Inside loadViewEntity");
+	
 	var tabentity:java.util.ArrayList=sessionScope.moduleentity;
-	println("TabEntity ",tabentity);	
+		
 	var i;
 	
 		for(i=0;i<tabentity.size();i++)
@@ -610,8 +610,8 @@ function loadViewEntity(moduleName,entityName){
 	var temp=moduleName+":"+entityName;
 	tabentity.add(temp);
 	
-	println("SessionScope moduleEntity ",sessionScope.moduleentity);
-	println("ModuleName ",moduleName);
+	
+	
 	var component = getComponent('EntityPanel'+moduleName); 
 	var s = facesContext;
 	var c1="/cc_EntityView.xsp"; 
@@ -626,8 +626,8 @@ function loadViewEntity(moduleName,entityName){
 
 function loadEditEntity(moduleName,entityName){
 	wrkspc.resetBean();
-	println("viewsco create entity"+viewScope.entityName);
-	println("modulename"+moduleName);
+	
+	
 	var component=getComponent("readPanel"+moduleName);
 	var s = facesContext;
 	var c1="/cc_EditEntity.xsp"; 
@@ -635,8 +635,8 @@ function loadEditEntity(moduleName,entityName){
 	sessionScope.employeeRegister = viewScope.entityName;
 	viewScope.moduleName = moduleName;
 	viewScope.entityName = entityName;
-	println("viewsco"+viewScope.entityName);
-	println("modulename"+moduleName);
+	
+	
 	println("Component ",component)
 	bsuite.weberon.DynamicCC.removePreview(component);
 	bsuite.weberon.DynamicCC.loadCC(s, component, c1, id);	
@@ -649,8 +649,8 @@ function loadTestControl(componentid,cc,ccid,moduleName,entityName){
 	var s = facesContext;
 	var c1=cc; 
 	var id=ccid;
-	println("inside oncomplete");
-	println("component "+component);
+	
+	
 	component2 = getComponent(ccid);
 	if(component2==null){
 		viewScope.moduleName = moduleName;
@@ -746,40 +746,40 @@ function createModulePermArr(){
 }
 
 function getNumberOfModules(profileName){
-	println("in getn");
+	
 	profileName = context.getSubmittedValue();
-	println("in getn"+profileName);
+	
 	var moduleN = new bsuite.jsonparsing.ProfileEdit().getNumberOfMOdules(profileName);
 	getComponent("inputNModules").setValue(moduleN);
 }
 function getNumberOfFeatures(){
-	println("in getn features");
+	
 	params = context.getSubmittedValue().split(":");//will hold profileName,moduleName
 	profileName = params[0];
 	moduleName = params[1];
-	println("in getn "+profileName+" "+moduleName);
+	
 	var featuresN = new bsuite.jsonparsing.ProfileEdit().getNumberOfFeatures(profileName,moduleName);
 	getComponent("inputNFeatures").setValue(featuresN);
-	println("in get features "+profileName+" "+moduleName+" "+featuresN);
+	
 	
 }
 function getNumberOfEntities(profileName, moduleName){
-	println("in getn entities");
+	
 	params = context.getSubmittedValue().split(":");//will hold profileName,moduleName
 	profileName = params[0];
 	moduleName = params[1];
-	println("in getn "+profileName+" "+moduleName);
+	
 	var entitiesN = new bsuite.jsonparsing.ProfileEdit().getNumberOfEntities(profileName, moduleName);
 	getComponent("inputNEntities").setValue(entitiesN);
-	println("in get entities "+profileName+" "+moduleName+" "+entitiesN);
+	
 }
 function getNumberOfFields(profileName, moduleName, entityName){
-	println("in getn");
+	
 	params = context.getSubmittedValue().split(":");//will hold profileName,moduleName, entityName
 	profileName = params[0];
 	moduleName = params[1];
 	entityName = params[2];
-	println("in getn "+profileName+" "+moduleName);
+	
 	var fieldsN = new bsuite.jsonparsing.ProfileEdit().getNumberOfFields(profileName, moduleName, entityName);
 	getComponent("inputNFields").setValue(fieldsN);
 	
@@ -789,10 +789,10 @@ function getNumberOfFields(profileName, moduleName, entityName){
 function setAccessTypePermission(){
 	//var profileName = getComponent("moduleCombo").getValue();
 var profileName="Admin";
-	println("profileName"+profileName);
+	
 	var arr = context.getSubmittedValue().split(",");
 	var entityCrud = new bsuite.jsonparsing.ProfileEdit;
-	println("setting field permission"+typeof(arr)+"submitted type"+typeof(context.getSubmittedValue()));
+	
 	
 	var securityDb:NotesDatabase = database;
 	var vie:NotesView = database.getView("ProfileView");
@@ -848,27 +848,27 @@ function updateDeleteSchema(){
 }
 function loadProfile(){
 	
-	println("in loadProfile");	
+		
 	var profileName = getComponent("moduleCombo").getValue();
 	viewScope.profileName = profileName;
 	var moduleName = context.getSubmittedValue();
 	viewScope.moduleName = moduleName;
 	
-	println("submitted value "+context.getSubmittedValue());
+	
 	
 	if(moduleName == null || profileName == null){
 		return;
 		}
-	println("in loadProfile 1");
+	
 	var profileObj = new bsuite.jsonparsing.ProfileEdit();
 	var perm = profileObj.getModulePermission(profileName,moduleName);
 	
-	println("in loadProfile 2");
+	
 	
 	
 	var val = @Right(perm,":");
 
-	println("in loadProfile 3");
+	
 	
 	if(val.charAt(0)=="1"){
 
@@ -879,11 +879,11 @@ function loadProfile(){
 		viewScope.modulePerm = false;
 	}
 	
-	println("in loadProfile 4");
+	
 	var strGroupN = profileObj.getNumberOfGroups(profileName, moduleName);
-	println("in loadProfile 5");
+	
 	var strActionN = profileObj.getActionN(profileName, moduleName);
-	println("in loadProfile 6");
+	
 	
 	
 
