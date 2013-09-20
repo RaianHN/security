@@ -172,9 +172,8 @@ public class JSFUtil {
         	
         	if (vwname.trim() == "") {return null;}
         	if (i < 0){ return null;}//Then Exit Function
-        	//if (key.length==0){return null;}// Then Exit Function
-        	//Set vwEmp = DB.GetView(strView)
-        	String nlist=null;// = new Vector();
+
+        	String nlist=null;
         	Vector column=getColumnValue( Dbname,  vwname, key,  i);
         	if(column.size()!=0){
         	nlist=   (String) column.elementAt(i);
@@ -194,15 +193,12 @@ public class JSFUtil {
 				if(column.size()!=0){
 					
 					
-					//Object item= column.elementAt(i);
-					//String c2=item.getClass().getName();
-					//
+			
 					
 					return column;
 					}else{}
 				return nlist;
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
         
@@ -274,7 +270,6 @@ public class JSFUtil {
 				 
 				 
 			} catch (NotesException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			

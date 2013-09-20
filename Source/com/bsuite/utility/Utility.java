@@ -57,7 +57,6 @@ public class Utility
 		
 		try 
 		{
-			//Database emdb = getDatabase("employee.nsf");
 			Database emdb = getDatabase("Employees");
 			if( emdb.isOpen())
 			{
@@ -171,7 +170,6 @@ public class Utility
 		try {
 			
 			String dbPath = dbNames.getDbPath(dbTitle);
-			//db = Utility.getCurrentSession().getDatabase("", dbPath);
 			db = ExtLibUtil.getCurrentSession().getDatabase("", dbPath);
 
 		}
@@ -273,7 +271,6 @@ public class Utility
 	 *@return, fqdn as string
 	 */
 	public static String getFQDN() {
-		//Database mbdb = getDatabase("admntool.nsf");
 		Database mbdb = getDatabase("ManageBsuite");
 		String fqdn = "";
 		try {
@@ -335,11 +332,9 @@ public class Utility
 	
 	
 	
-	//public static int getACLLevel()
 	public static int getACLLevel(String dbName) {
 		int level = 0;
 		try {
-			//ACL acl = ExtLibUtil.getCurrentDatabase().getACL();
 			ACL acl = getDatabase(dbName).getACL();
 			ACLEntry aclentry = acl.getEntry("Anonymous");
 			
@@ -407,7 +402,7 @@ public class Utility
 		{
 			ExternalContext exCon = FacesContext.getCurrentInstance().getExternalContext(); 
 			HttpServletRequest request= (HttpServletRequest) exCon.getRequest();
-			String remoteAddress = request.getLocalAddr();//getRemoteAddr();//getLocalName();//getRemoteHost();//
+			String remoteAddress = request.getLocalAddr();
 			InetAddress inetAddress = InetAddress.getByName(remoteAddress);
 		
 			
@@ -566,7 +561,6 @@ public static Document getEmployeeProfile(String empName)
 	
 	try 
 	{
-		//Database emdb = getDatabase("employee.nsf");
 		Database emdb = getDatabase("Employees");
 		if( emdb.isOpen())
 		{
@@ -637,7 +631,6 @@ public static boolean checkBsuiteRole(String strRoleTitle)
 		
 		
 			Vector varRoles;
-			//Database emdb = getDatabase("employee.nsf");
 			Database emdb = getDatabase("Employees");
 			
 			
@@ -692,7 +685,6 @@ public static Document getBranchProfile(String strBranch) throws NotesException{
 	Document branch=null;
 	try {
 		if(strBranch != "" ){
-			//Database emdb = getDatabase("employee.nsf");
 			Database emdb = getDatabase("Employees");
 			View view=emdb.getView("branchprofile");
 			branch=view.getDocumentByKey(strBranch,true);
@@ -766,7 +758,6 @@ public static Document getLeaveAccount(String strEmployee){
 	 Document lprofile=null;
 	 View view;
 	 try{
-		 //Database db=ExtLibUtil.getCurrentDatabase();
 		 Database db = getDatabase("Employees");
 		 view = db.getView("accountprofile");
 		 strEmployee = SessionContext.getFormattedNamewithagrs(strEmployee, 3);
@@ -813,7 +804,6 @@ public static void getLeavePercentage(DateTime date,String BsuiteUser)
 		DocumentCollection dc;
 		DateTime leavedate;
 		Vector<String> empleave=new Vector<String>();
-		 //Database db=ExtLibUtil.getCurrentDatabase();
 		 Database db= getDatabase("Employees");
 	
 		StringBuilder searchFormula=new StringBuilder();
@@ -1240,7 +1230,6 @@ private static void renderServiceJSONGet()
 			Document module=moduleView.getFirstDocument();
 			while(module!=null)
 			{
-				//Database tadb =Utility.getDatabase(module.getItemValueString("ModuleName"));
 				Database tadb =Utility.getDatabase(module.getItemValueString("ModuleTitle").replaceAll(" ", ""));
 				
 				

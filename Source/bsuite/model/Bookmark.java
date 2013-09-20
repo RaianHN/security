@@ -517,7 +517,6 @@ public class Bookmark {
 				String edit = (String) viewScope.get("editfavdocid");
 				if (edit.equals(""))
 				{
-					// TODO what is entity
 					favorite.replaceItemValue("WebsiteURL", SessionContext.getDocumentToProcess().getUniversalID());
 				}
 

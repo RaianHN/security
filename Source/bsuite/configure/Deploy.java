@@ -373,10 +373,9 @@ public class Deploy {
 
 		modules.add(moduleNew);
 
-		// }
+		
 
 		pf.setModules(modules);
-		// pf.setProfName(profileName);
 		
 		try {
 			JsonString = mapper2.writeValueAsString(pf);
@@ -390,9 +389,7 @@ public class Deploy {
 		}
 
 		try {
-			// Document doc = db.createDocument();
-			// doc.replaceItemValue("Form", "permissions");
-			// doc.replaceItemValue("prof_name", profileName);
+			
 			doc.replaceItemValue("JsonString", JsonString);
 			doc.save();
 
@@ -490,7 +487,6 @@ public class Deploy {
 	}
 
 	public boolean deploy() {
-		// createDatabases();//Create databases for modules
 		createRoleDocs();// Create role documents for the role hierarchy created
 							// in security.nsf
 		createProfileDocs();// Create the profile documents, standard and admin
@@ -499,11 +495,9 @@ public class Deploy {
 		return true;
 	}
 
-	// var cd = new bsuite.configure.CreateDatabase();
-	// cd.RegisterEmployee(user)
+
 
 	public void deploy(String user) {
-		// createDatabases();//Create databases for modules
 		
 		createRoleDocs();
 		
@@ -512,12 +506,8 @@ public class Deploy {
 		
 		if (user != null && !user.equals("")) {
 
-			// Create role documents for the role hierarchy created in
-			// security.nsf
-			// Create the profile documents, standard and admin in Security.nsf
 
-			//CreateDatabase cd = new CreateDatabase();
-			//cd.RegisterEmployee(user);
+
 
 		} else {
 			
@@ -718,8 +708,7 @@ public class Deploy {
 
 		}
 		
-		// com.bsuite.jsonparsing.Entity entity =
-		// defineEntityPermission(entityName, "1", "1", "1", "1","1");
+
 		ArrayList<bsuite.jsonparsing.Field> fieldList = null;
 		if (entity1.getFields() == null) {
 			fieldList = new ArrayList<bsuite.jsonparsing.Field>();
@@ -846,7 +835,6 @@ public class Deploy {
 		ObjectMapper mapper = new ObjectMapper();
 		ProfileEdit pe = new ProfileEdit();
 		
-		//for(int i=0;i<dc.size();i++){//For each profile document
 			try {
 				doc = pe.getProfileDoc(Utility.getCurrentDatabase(), profileName);
 				
@@ -854,7 +842,6 @@ public class Deploy {
 				
 				for(int j=0;j<modules.size();j++){//For each module in the schema
 					moduleName = modules.get(j);
-					//db = pf.getDatabase(moduleName+".nsf");
 					db = Utility.getDatabase(moduleName+".nsf");
 					features = df.getFeatures(moduleName); //for the features defined in each module
 					 entities = df.getEntityNames(moduleName);
@@ -994,7 +981,6 @@ public class Deploy {
 				
 				for(int j=0;j<modules.size();j++){//For each module in the schema
 					moduleName = modules.get(j);
-					//db = pf.getDatabase(moduleName+".nsf");
 					db = Utility.getDatabase(moduleName+".nsf");
 					features = df.getFeatures(moduleName); //for the features defined in each module
 					 entities = df.getEntityNames(moduleName);
