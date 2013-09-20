@@ -31,8 +31,7 @@ public class Security {
 	private ArrayList<String> visibleFields;
 	private ArrayList<String> editableFields;
 	private String module;
-	private String myDocs;// Holds the search string based on role hierarchy and
-							// data sharing
+	
 
 	/**
 	 *Returns the search string for the current module and entity based on the datasharing rule,
@@ -86,14 +85,13 @@ public class Security {
 	@SuppressWarnings("unchecked")
 	public Security() {
 
-		profile = new Profile();
-		role = new Role();
+		profile = new Profile();//Instantiate profile object for the current user
+		role = new Role();//Instantiate role object for the current user
 
 		Map sessionScope = (Map) JSFUtil.getVariableValue("sessionScope");
 		if (profile != null) {
-
 			profileName = profile.getProfileName();
-			sessionScope.put("profileName", profileName);
+			sessionScope.put("profileName", profileName);//Put the profile name in sessionScoped variable
 			if (role != null) {
 				roleName = role.getRoleName();
 				sessionScope.put("roleName", roleName);
@@ -109,7 +107,6 @@ public class Security {
 			}
 		}
 
-		// gettinf visible feature names;
 
 		
 		
