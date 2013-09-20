@@ -14,6 +14,12 @@ import bsuite.relationship.Association;
 import bsuite.utility.Utility;
 
 
+ /**
+  * Profile object contains module information in profileJson object
+  * 
+  *@author JPrakash
+  *@created Sep 20, 2013
+ */
 public class Profile{
 	private ProfileJson profileJson;
 	private String profileName;
@@ -22,12 +28,19 @@ public class Profile{
 		this.profileName = profileName;
 	}
 
+	/**
+	 * Profile constructor which initializes jsonProfile object
+	 */
 	public Profile() {
 		super();
 		this.profileJson = getProfileJsonObject();
 
 	}
 
+	/**
+	 *returns the list of visible modules in the current profile
+	 *@return List of module objects
+	 */
 	public ArrayList<Module> getVisibleModules() {
 		ArrayList<Module> vModules = new ArrayList<Module>();
 		if (profileJson == null) {
@@ -41,6 +54,11 @@ public class Profile{
 		return vModules;
 	}
 
+	/**
+	 *Returns the list of creatable entities
+	 *@param moduleName
+	 *@return list of creatable entities
+	 */
 	public ArrayList<Entity> getCreatableEntities(String moduleName) {
 		ArrayList<Entity> cEntities = new ArrayList<Entity>();
 		Module mod = getModule(moduleName);
@@ -56,6 +74,12 @@ public class Profile{
 		return cEntities;
 	}
 
+	/**
+	 *Returns the list of readable fields
+	 *@param moduleName modulName as string
+	 *@param entityName entity name as string
+	 *@return
+	 */
 	public ArrayList<Field> getReadonlyFields(String moduleName,
 			String entityName) {
 		ArrayList<Field> rFields = new ArrayList<Field>();
@@ -69,6 +93,12 @@ public class Profile{
 		return rFields;
 	}
 
+	/**
+	 *Returns the list of editable fields
+	 *@param moduleName module name as string
+	 *@param entityName entity name as string
+	 *@return list of editable fields
+	 */
 	public ArrayList<Field> getEditableFields(String moduleName,
 			String entityName) {
 		ArrayList<Field> eFields = new ArrayList<Field>();
@@ -82,6 +112,11 @@ public class Profile{
 
 	}
 
+	/**
+	 *Returns the list of visible features
+	 *@param moduleName module name as string
+	 *@return list of visible features
+	 */
 	public ArrayList<Feature> getVisibleFeatures(String moduleName) {
 		ArrayList<Feature> vFeatures = new ArrayList<Feature>();
 		Module mod = getModule(moduleName);
@@ -95,6 +130,12 @@ public class Profile{
 		return vFeatures;
 	}
 
+	/**
+	 *Returns true if a particular entity is readable
+	 *@param moduleName module name as string
+	 *@param entityName module name as string
+	 *@return true if readable false otherwise
+	 */
 	public boolean isEntityRead(String moduleName, String entityName) {
 		if (getEntity(moduleName, entityName).getRead().equals("1")) {
 			return true;
@@ -103,6 +144,12 @@ public class Profile{
 		}
 	}
 
+	/**
+	 * Returns true if a particular entity is readable	 
+	 *@param moduleName module name as string
+	 *@param entityName module name as string
+	 *@return true if editable false otherwise
+	 */
 	public boolean isEntityUpdate(String moduleName, String entityName) {
 		if (getEntity(moduleName, entityName).getUpdate().equals("1")) {
 			return true;
@@ -112,6 +159,12 @@ public class Profile{
 
 	}
 
+	/**
+	 * Returns true if a particular entity is deletable	 
+	 *@param moduleName module name as string
+	 *@param entityName module name as string
+	 *@return true if deletable false otherwise
+	 */
 	public boolean isEntityDelete(String moduleName, String entityName) {
 		if (getEntity(moduleName, entityName).getDelete().equals("1")) {
 			return true;
@@ -120,12 +173,24 @@ public class Profile{
 		}
 	}
 
+	/**
+	 *Entity access type is used in dynamic entities to specify prive, private ronly, public etc
+	 *1 private, 2 public, 3 public ronly
+	 *@param moduleName module name as string
+	 *@param entityName module name as string
+	 *@return 
+	 */
 	public String getEntityAccessType(String moduleName, String entityName) {
 		String accessType = getEntity(moduleName, entityName).getAccessType();
 		return accessType;
 
 	}
 
+	/**
+	 *Returns the moduleobject 
+	 *@param moduleName as string
+	 *@return module object
+	 */
 	private Module getModule(String moduleName) {
 		if (moduleName.contains("_")) {
 			moduleName = moduleName.replace("_", " ");
@@ -141,6 +206,10 @@ public class Profile{
 		return null;
 	}
 
+	/**
+	 *Returns the list of visible modules for this profile
+	 *@return list of visible module names
+	 */
 	public ArrayList<String> getVisibleModulesNames() {
 		ArrayList<String> vModules = new ArrayList<String>();
 		if (profileJson == null) {
@@ -154,6 +223,10 @@ public class Profile{
 		return vModules;
 	}
 
+	/**Returns the list of creatable entity names for this module
+	 *@param moduleName as string
+	 *@return list of module names
+	 */
 	public ArrayList<String> getCreatableEntitiesNames(String moduleName) {
 		ArrayList<String> cEntities = new ArrayList<String>();
 		Module mod = getModule(moduleName);
@@ -172,6 +245,11 @@ public class Profile{
 		return cEntities;
 	}
 
+	/**returns the list of field names which is readable for this entity
+	 *@param moduleName as string
+	 *@param entityName as string
+	 *@return list of readable field names
+	 */
 	public ArrayList<String> getReadonlyFieldsNames(String moduleName,
 			String entityName) {
 		ArrayList<String> rFields = new ArrayList<String>();
@@ -184,7 +262,12 @@ public class Profile{
 
 		return rFields;
 	}
-
+	
+	/**returns the list of field names which is editable for this entity
+	 *@param moduleName as string
+	 *@param entityName as string
+	 *@return list of editable field names
+	 */
 	public ArrayList<String> getEditableFieldsNames(String moduleName,
 			String entityName) {
 		ArrayList<String> eFields = new ArrayList<String>();
@@ -198,8 +281,13 @@ public class Profile{
 
 	}
 
-	public ArrayList<String> getVisibleFeaturesNames(String moduleName) {
 
+	/**
+	 *Returns the list of visible feature names for this module
+	 *@param moduleName as string
+	 *@return list of visible features
+	 */
+	public ArrayList<String> getVisibleFeaturesNames(String moduleName) {
 		if (moduleName.contains("_")) {
 			moduleName = moduleName.replace("_", " ");
 		}
@@ -216,6 +304,12 @@ public class Profile{
 
 	}
 
+	/**
+	 * Returns the Entity object for the given module and entity name
+	 *@param moduleName as string
+	 *@param entityName as string
+	 *@return Entity object
+	 */
 	private Entity getEntity(String moduleName, String entityName) {
 		Module module = getModule(moduleName);
 		for (Entity entity : module.getEntities()) {
@@ -225,6 +319,12 @@ public class Profile{
 		}
 		return null;
 	}
+	
+	/**
+	 *@param entity returns the entity action object associated with the current entity
+	 *@param actionName as string
+	 *@return entityAction object
+	 */
 	private EntityAction getEntityAction(Entity entity, String actionName){
 		if(entity==null ){
 			return null;
@@ -242,6 +342,13 @@ public class Profile{
 		}
 		return null;
 	}
+	
+	/**
+	 *Returns the GroupPermission object for the given group name, ie viewAction
+	 *@param moduleName as string
+	 *@param viewActionName as string
+	 *@return
+	 */
 	private GroupPermission getViewAction(String moduleName, String viewActionName){
 		Module module = getModule(moduleName);
 		for(GroupPermission gp:module.getGroups()){
@@ -252,6 +359,12 @@ public class Profile{
 		return null;
 	}
 
+	/**
+	 * returns the list of visible field names for a given module and entity
+	 *@param moduleName as string
+	 *@param entityName as string
+	 *@return list of visible field names
+	 */
 	public ArrayList<String> getVisibleFieldsNames(String moduleName,
 			String entityName) {
 		ArrayList<String> vFields = new ArrayList<String>();
@@ -265,6 +378,12 @@ public class Profile{
 		return vFields;
 	}
 
+	/**
+	 * returns the list of visible field objects for a given module and entity
+	 *@param moduleName as string
+	 *@param entityName as string
+	 *@return list of visible field objects
+	 */
 	public ArrayList<Field> getVisibleFields(String moduleName,
 			String entityName) {
 		ArrayList<Field> vFields = new ArrayList<Field>();
@@ -278,6 +397,10 @@ public class Profile{
 		return vFields;
 	}
 
+	/**
+	 * returns the profile json object which contains the module objects 
+	 *@return profileJson object
+	 */
 	private ProfileJson getProfileJsonObject() {
 		
 		Association as = new Association();
@@ -322,6 +445,11 @@ public class Profile{
 
 	}
 
+	/**
+	 * Returns the list of readable entity names
+	 *@param moduleName as string
+	 *@return list of entitynames
+	 */
 	public ArrayList<String> getReadableEntitiesNames(String moduleName) {
 		ArrayList<String> rEntities = new ArrayList<String>();
 		Module mod = getModule(moduleName);
@@ -340,6 +468,11 @@ public class Profile{
 		return rEntities;
 	}
 
+	/**
+	 * Returns the list of deletable entity names
+	 *@param moduleName as string
+	 *@return list of entitynames
+	 */
 	public ArrayList<String> getDeletableEntitiesNames(String moduleName) {
 		ArrayList<String> dEntities = new ArrayList<String>();
 		Module mod = getModule(moduleName);
@@ -358,6 +491,10 @@ public class Profile{
 		return dEntities;
 	}
 
+	/**Returns the list of all entity names in the module
+	 *@param moduleName as string
+	 *@return list of entitynames
+	 */
 	public ArrayList<String> getAllEntitiesNames(String moduleName) {
 		ArrayList<String> aEntities = new ArrayList<String>();
 		Module mod = getModule(moduleName);
@@ -377,12 +514,19 @@ public class Profile{
 		return aEntities;
 	}
 
+	/**Returns the profile name
+	 *@return as string
+	 */
 	public String getProfileName() {
 
 		return profileName;
 	}
 
-	// to get all the public R/W entities in the given module
+	/**
+	 * to get all the public R/W entities in the given module
+	 *@param moduleName as string
+	 *@return list of names 
+	 */
 	public ArrayList<String> getPublicRWEntities(String moduleName) {
 		ArrayList<String> aEntities = new ArrayList<String>();
 		Module mod = getModule(moduleName);
@@ -398,7 +542,10 @@ public class Profile{
 
 	}
 
-	// to get all the public Read entities in the given module
+	/**returns the public Readonly entitynames
+	 *@param moduleName as string
+	 *@return listof entitynames
+	 */
 	public ArrayList<String> getPublicReadEntities(String moduleName) {
 		ArrayList<String> aEntities = new ArrayList<String>();
 		Module mod = getModule(moduleName);
@@ -414,6 +561,11 @@ public class Profile{
 
 	}
 
+	/**Returns all fieldnames for a given module and entityname
+	 *@param moduleName as string
+	 *@param entityName as string
+	 *@return list of field names
+	 */
 	public ArrayList<String> getAllFieldsNames(String moduleName,
 			String entityName) {
 		ArrayList<String> vFields = new ArrayList<String>();
@@ -427,6 +579,12 @@ public class Profile{
 	}
 	
 
+	/**
+	 * Returns true if the given entity is creatable
+	 *@param moduleName as string
+	 *@param entityName as string
+	 *@return true if creatable false otherwise 
+	 */
 	public boolean isEntityCreate(String moduleName, String entityName){
 		if (getEntity(moduleName, entityName).getCreate().equals("1")) {
 			return true;
@@ -436,6 +594,11 @@ public class Profile{
 		
 	}
 
+	/**Returns true if a given viewAction is visible
+	 *@param moduleName as string
+	 *@param groupName as string, ie viewAction name
+	 *@return true if visibe false otherwise
+	 */
 	public boolean isViewActionVisible(String moduleName, String groupName) {
 		GroupPermission gp = getViewAction(moduleName, groupName);
 		if(gp==null)return false;
@@ -446,6 +609,12 @@ public class Profile{
 		}
 	}
 	
+	/**Returns true if a given entityAction is visible, ie objectAction
+	 *@param moduleName as string
+	 *@param entityName as string
+	 *@param actionName as string
+	 *@return true or false
+	 */
 	public boolean isEntityActionVisible(String moduleName, String entityName,String actionName){
 		EntityAction ea = getEntityAction(getEntity(moduleName, entityName), actionName);
 		if(ea==null){

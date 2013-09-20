@@ -14,7 +14,7 @@ public class Entity{
 	private ArrayList<Field> fields;
 	private ArrayList<EntityAction>actions;
 	
-	private String accessType;
+	private String accessType;//1 private, 2 public, 3 private readonly
 	//Added for fields and features perms
 
 	
