@@ -688,6 +688,20 @@ public Vector getAssociatedUsers(String RoleName) {
 
 
 /**
+ * To get the list of names associated to a given profile.
+ *@return
+ */
+public Vector getAssociatedProfileUsers(){
+	try{
+		
+	}catch (Exception e) {
+		
+	}
+	
+	return null;
+}
+
+/**
  
  [To check the Role document field "sharewithpeers" field value]
   

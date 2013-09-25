@@ -17,8 +17,7 @@ import bsuite.utility.Utility;
 
 
 /**
-[Class description-- To get the user's associated rolename]
-   
+ * To get the associated role name of the current user
   @author TSangmo
   @created On Aug 8, 2012
  */
@@ -31,6 +30,10 @@ public class Role {
 	private Vector<String> effectiveUsersList = new Vector<String>();
 	private Association as = new Association();
 	private String currentuser;
+	
+	/**
+	 * Role constructor to initialize the current user's associate role name
+	 */
 	public Role() {
 		try{
 			currentuser = Utility.getCurrentSession().getEffectiveUserName();
@@ -44,12 +47,8 @@ public class Role {
 
 	
 	/**
-	 
-	 [this is called from getmydocs() in workspace to create the search String to be applied on view]
-	  
-	  @return [It will return search string]
-	 
-	@return
+	 Returns the search string, which is called to be included in teh view selection formula
+	  @return the view search formula a string
 	 */
 	@SuppressWarnings({ "unchecked"})
 	public String createSearchString() {
@@ -57,9 +56,9 @@ public class Role {
 		String moduleName = (String) viewScope.get("moduleName");
 		String entityName = (String) viewScope.get("entityName");
 		
-		this.hierarchyRoleList = getFinalRoleList(roleName);// to get the child
-															// roles of the
-															// given role
+		//To get the child roles of a given role
+		this.hierarchyRoleList = getFinalRoleList(roleName);
+		
 		this.dataSharedRoles = getRolesFromDataSharingRules(moduleName,
 				entityName, roleName);// pass current entity the uesr is
 										// accessing and roleName

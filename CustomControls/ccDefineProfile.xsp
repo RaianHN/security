@@ -5,7 +5,9 @@
 
 
 	<xp:this.beforePageLoad><![CDATA[#{javascript:var profileNames = getProfiles();
-viewScope.profileNames = profileNames;}]]></xp:this.beforePageLoad>
+viewScope.profileNames = profileNames;
+
+}]]></xp:this.beforePageLoad>
 	<xp:this.resources>
 		<xp:script src="/CommonFunctions.jss" clientSide="false"></xp:script>
 	</xp:this.resources>
@@ -81,7 +83,20 @@ savePermissionsUI(id);]]></xp:this.script>
 								</xp:eventHandler>
 							</xp:link>
 
+							<xp:link escape="true" id="lDelete" style="font-size:7pt;margin-left:15.0px">
+							
+							<xp:this.rendered><![CDATA[#{javascript:var profName = getComponent("moduleCombo").getValue();
 
+if (profName=="--Select Profile--" || profName==null || profName == undefined){
+return false;
+}else{
+	return true;
+}
+}]]></xp:this.rendered><xp:this.text><![CDATA[#{javascript:return "Delete "+viewScope.selectedProfile+" profile";}]]></xp:this.text>
+								<xp:eventHandler event="onclick"
+									submit="false">
+									<xp:this.script><![CDATA[XSP.openTooltipDialog('#{id:tdDeleteProfile}','#{id:lDelete}')]]></xp:this.script>
+								</xp:eventHandler></xp:link>
 
 						</xp:td>
 
@@ -162,4 +177,47 @@ dp.updateProfileDoc(profName);}]]></xp:this.action>
 		</xp:panel>
 
 	</xe:tooltipDialog>
-</xp:view>
+	<xe:tooltipDialog id="tdDeleteProfile" title="Delete Profile">
+		<xp:panel>
+			
+			<xp:table>
+				<xp:tr>
+					<xp:td>
+						<xp:messages id="messages1"></xp:messages>
+
+					</xp:td>
+					<xp:td></xp:td>
+				</xp:tr>
+				<xp:tr>
+					<xp:td>
+						<xp:span>
+							Choose the replacement for the deleted
+							profile.
+						</xp:span>
+					</xp:td>
+					<xp:td></xp:td>
+				</xp:tr>
+				<xp:tr>
+					<xp:td>
+						<xp:comboBox id="comboBox1">
+							<xp:selectItems id="selectItems2">
+								<xp:this.value><![CDATA[#{javascript:viewScope.profileNames}]]></xp:this.value>
+							</xp:selectItems>
+						</xp:comboBox>
+					</xp:td>
+					<xp:td></xp:td>
+				</xp:tr>
+				<xp:tr>
+					<xp:td>
+						<xp:button value="Ok" id="button1"
+							styleClass="lotusFormButton" style="font-size:7pt">
+						</xp:button>
+						&#160;
+						<xp:button value="Cancel" id="button2"
+							styleClass="lotusFormButton" style="font-size:7pt">
+						</xp:button>
+					</xp:td>
+					<xp:td></xp:td>
+				</xp:tr>
+			</xp:table></xp:panel>
+	</xe:tooltipDialog></xp:view>
