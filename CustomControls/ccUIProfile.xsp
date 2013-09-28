@@ -6,8 +6,6 @@
 
 	
 	<xc:ccDefineProfile id="saveProfile"></xc:ccDefineProfile>
-	<xp:br></xp:br>
-
 	<xp:panel id="moduleTabs">
 
 

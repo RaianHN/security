@@ -925,3 +925,16 @@ function saveFieldPermissionsUI(id){
 	console.log("%o",fieldPArray);		
 }
 
+function isError(){
+	
+	var formError = dojo.query('.lotusFormError');
+	var globalError = dojo.query('.lotusError');
+	var editError = dojo.query('.lotusInfo');
+	if(formError!="" || globalError!="" || editError!=""){
+		return true;
+	}else{
+		return false;
+	}
+	
+	
+}
