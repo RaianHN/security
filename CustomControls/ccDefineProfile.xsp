@@ -261,4 +261,4 @@ var replPrfName = getComponent("comboBox1").getValue();;
 			</xp:table>
 		</xp:panel>
 	</xe:dialog>
-	<xp:br></xp:br></xp:view>
+	</xp:view>
