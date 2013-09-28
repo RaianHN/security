@@ -14,6 +14,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import bsuite.jsonparsing.GroupEntry;
 import bsuite.jsonparsing.ProfileJson;
 import bsuite.utility.Utility;
+import bsuite.relationship.Association;
 
 import bsuite.utility.Utility;
 
@@ -21,6 +22,7 @@ import lotus.domino.Database;
 import lotus.domino.Document;
 import lotus.domino.NotesException;
 import lotus.domino.View;
+
 
 public class Deploy {
 
@@ -1190,4 +1192,58 @@ public class Deploy {
 		return doc;
 	}
 
+	/**
+	 * Used to delete the profile by giving an alternate profile
+	 *@param profileName deletable profile
+	 *@param replPrfName replacement profile name
+	 */
+	public static boolean deleteProfile(String profileName, String replPrfName){
+		//validate if profile exists
+		//validate if replacement profile exists
+		//Get all associated persons to this profile
+		//For each person change the profile association
+		//remove and return the result
+		
+		ProfileEdit pf = new ProfileEdit();
+		Document profileDoc = pf.getProfileDoc(Utility.getCurrentDatabase(),profileName);
+		
+		if(pf==null){
+			Utility.addErrorMessage("Selected profile is not found");
+			return false;
+		}
+		
+		
+		if(pf.getProfileDoc(Utility.getCurrentDatabase(),profileName)==null){
+			Utility.addErrorMessage("Selected replacement profile is not found");
+			return false;
+		}
+		
+		Association assoc = new Association();		
+		ArrayList<String> associatedProfileUsers = assoc.getAssociatedProfileUsers(profileName);
+		
+		CreateDatabase cd = new CreateDatabase();
+		
+		
+		for(String user:associatedProfileUsers){
+			cd.createProfileAssociation(user, replPrfName);
+		}
+		
+		try
+		{
+			if(profileDoc.remove(true)){
+				Utility.addConfirmMessage("Profile document has been deleted successfully");
+			}else{
+				Utility.addErrorMessage("Error in deleting the profile, check delete permission ");
+			}
+		}
+		catch (NotesException e)
+		{
+			Utility.addErrorMessage("Error in deleting the profile");
+			e.printStackTrace();
+			return false;
+		}
+		
+		return true;
+		
+	}
 }

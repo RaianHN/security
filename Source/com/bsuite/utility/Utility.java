@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Vector;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.application.FacesMessage.Severity;
 import javax.faces.component.UIComponent;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -1394,6 +1396,28 @@ public static Vector getSupervisors(String empName)
 }
 
 
+public static void addInfoMessage(String msg)
+{
+	Severity type = FacesMessage.SEVERITY_INFO;
+	 FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(type,msg,""));	
+}
 
+public static void addWarnMessage(String msg)
+{
+	Severity type = FacesMessage.SEVERITY_WARN;
+	 FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(type,msg,""));	
+}
+
+public static void addErrorMessage(String msg)
+{
+	Severity type = FacesMessage.SEVERITY_ERROR;
+	 FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(type,msg,""));	
+}
+
+public static void addConfirmMessage(String msg)
+{
+	Severity type = FacesMessage.SEVERITY_FATAL;
+	 FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(type,msg,""));	
+}
 
 }

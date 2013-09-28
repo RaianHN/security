@@ -1,5 +1,6 @@
 package bsuite.relationship;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Vector;
 
@@ -24,12 +25,13 @@ import lotus.domino.View;
  */
 public class Association {
 	
-	private Database namesdb;
+	private Database admntool;
 	private Database securityDb;
 	private Database reldb;
 	private View roleView ; 
 	private View categoryRelationView;
 	private Session session;
+	private View profileView;
 	
 	
 	
@@ -37,13 +39,14 @@ public class Association {
 		try{
 			session = Utility.getCurrentSession();
 			
-			namesdb = Utility.getDatabase("admntool.nsf");
+			admntool = Utility.getDatabase("admntool.nsf");
 			
-			securityDb = Utility.getDatabase("Security.nsf");
+			securityDb = Utility.getCurrentDatabase();
 			reldb = Utility.getDatabase("relation.nsf");
 			
 			roleView=securityDb.getView("RolesView");
 			categoryRelationView = reldb.getView("CategoryRelation");
+			profileView = securityDb.getView("ProfileView");
 		}catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -144,7 +147,7 @@ public class Association {
 	
 	public Document getPerson(String username) {
 		try {		
-			View peopleview = namesdb.getView("employeeprofile");
+			View peopleview = admntool.getView("employeeprofile");
 			
 			Document userdoc = peopleview.getDocumentByKey(username);
 			return userdoc;
@@ -673,7 +676,7 @@ public Vector getAssociatedUsers(String RoleName) {
 		Document persondoc = null;
 		String fname = "";
 		for (String x : personunid) {
-			persondoc = namesdb.getDocumentByUNID(x);
+			persondoc = admntool.getDocumentByUNID(x);
 			fname = persondoc.getItemValueString("FullName");
 			users.add(fname);
 		}
@@ -691,10 +694,37 @@ public Vector getAssociatedUsers(String RoleName) {
  * To get the list of names associated to a given profile.
  *@return
  */
-public Vector getAssociatedProfileUsers(){
+@SuppressWarnings("unchecked")
+public ArrayList<String> getAssociatedProfileUsers(String profileName){
 	try{
+		// get the rolename unid
+		Document profileDoc = profileView.getDocumentByKey(profileName);
+
+		String profileUnid = profileDoc.getUniversalID();
+
+		// Get HAS_A relationame unid	
+		Document reldoc = categoryRelationView.getDocumentByKey("HAS_A");
+		String relationid = reldoc.getUniversalID();
+
+		// Do lookup to get the person unids
+		String key = JSFUtil.getlookupkey(relationid, profileUnid);
+		Vector tmp = new Vector();
+		tmp.add(key);
+		Vector<String> personunid = JSFUtil.DBLookupVector("relation",
+				"TargetRelation", tmp, 4);
+		
+		ArrayList<String> users = new ArrayList();
+		Document persondoc = null;
+		String fname = "";
+		for (String x : personunid) {
+			persondoc = admntool.getDocumentByUNID(x);
+			fname = persondoc.getItemValueString("FullName");
+			users.add(fname);
+		}
+		return users;
 		
 	}catch (Exception e) {
+		Utility.addErrorMessage("Error in getting the profile document");
 		
 	}
 	

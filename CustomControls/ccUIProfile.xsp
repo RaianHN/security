@@ -4,32 +4,7 @@
 	dojoParseOnLoad="true">
 
 
-	<xp:this.beforePageLoad><![CDATA[#{javascript:viewScope.remove("moduleName")
-viewScope.remove("selectedProfile");
-
-var title:string = database.getTitle();
-var user:string = session.getEffectiveUserName();
-var accPriv:int = database.queryAccessPrivileges(user);
-viewScope.status = "Privileges for " + user + " in " + title;
-// Check each privilege bit to see if it is 0 or 1
-if ((accPriv & NotesDatabase.DBACL_CREATE_DOCS) > 0)
-	viewScope.status += "\n\tCreate documents";
-if ((accPriv & NotesDatabase.DBACL_DELETE_DOCS) > 0)
-	viewScope.status += "\n\tDelete documents";
-if ((accPriv & NotesDatabase.DBACL_CREATE_PRIV_AGENTS) > 0)
-	viewScope.status += "\n\tCreate private agents";
-if ((accPriv & NotesDatabase.DBACL_CREATE_PRIV_FOLDERS_VIEWS) > 0)
-	viewScope.status += "\n\tCreate private folders/views";
-if ((accPriv & NotesDatabase.DBACL_CREATE_SHARED_FOLDERS_VIEWS) > 0)
-	viewScope.status += "\n\tCreate shared folders/views";
-if ((accPriv & NotesDatabase.DBACL_CREATE_SCRIPT_AGENTS) > 0)
-	viewScope.status += "\n\tCreate LotusScript/Java agents";
-if ((accPriv & NotesDatabase.DBACL_READ_PUBLIC_DOCS) > 0)
-	viewScope.status += "\n\tRead public documents";
-if ((accPriv & NotesDatabase.DBACL_WRITE_PUBLIC_DOCS) > 0)
-	viewScope.status += "\n\tWrite public documents";
-if ((accPriv & NotesDatabase.DBACL_REPLICATE_COPY_DOCS) > 0)
-	viewScope.status += "\n\tReplicate or copy documents";}]]></xp:this.beforePageLoad>
+	
 	<xc:ccDefineProfile id="saveProfile"></xc:ccDefineProfile>
 	<xp:br></xp:br>
 

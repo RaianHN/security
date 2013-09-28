@@ -913,3 +913,40 @@ function setFieldNumber(strHiddenFId){
 	var fieldN = profileObj.getFieldN(prfileName,mdouleName,mdouleName)
 	
 }
+
+function hasDeleteAccess(db,user){
+	var accPriv = db.queryAccessPrivileges(user);
+	
+	if ((accPriv & NotesDatabase.DBACL_DELETE_DOCS) > 0){//Do and operation to find out
+			return true;
+		}else{
+			bsuite.utility.Utility.addWarnMessage("You do not have delete access for "+db.getTitle());
+			return false;
+		}
+
+}
+
+function hasCreateAccess(db,user){
+	var accPriv = db.queryAccessPrivileges(user);
+	
+	if ((accPriv & NotesDatabase.DBACL_CREATE_DOCS) > 0){//Do and operation to find out
+		return true;
+	}else{
+		bsuite.utility.Utility.addWarnMessage("You do not have create access for "+db.getTitle());
+		return false;
+	}
+	
+}
+
+function hasEditorAccess(db,user){
+	
+	var accLevel:int = db.queryAccess(user);
+	if(accLevel>3){
+		return true;
+	}else{
+		bsuite.utility.Utility.addWarnMessage("You do not have edit access for "+db.getTitle());
+		return false;
+	}
+	
+}
+

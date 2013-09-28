@@ -127,6 +127,7 @@ public class ProfileEdit {
 
 		} catch (NotesException e) {
 			e.printStackTrace();
+			return null;
 		}
 		return profDoc;
 	}

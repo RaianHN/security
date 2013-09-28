@@ -7,10 +7,11 @@
 	<xp:this.beforePageLoad><![CDATA[#{javascript:var profileNames = getProfiles();
 viewScope.profileNames = profileNames;
 
+
+
+
 }]]></xp:this.beforePageLoad>
-	<xp:this.resources>
-		<xp:script src="/CommonFunctions.jss" clientSide="false"></xp:script>
-	</xp:this.resources>
+
 	<xp:table style="width:100%">
 		<xp:tr>
 			<xp:td align="left">
@@ -64,7 +65,9 @@ bsuite.loadcc.DynamicCC.loadCC(s, component, c1, id);
 							</xp:comboBox>
 						</xp:td>
 						<xp:td styleClass="debugButton">
-							<xp:button value="Save" id="buttonSaveProfile">
+							<xp:button value="Save"
+								id="buttonSaveProfile" rendered="#{javascript:viewScope.editSec;}">
+
 								<xp:eventHandler event="onclick"
 									submit="false">
 									<xp:this.script><![CDATA[var id = "#{id:checkBoxM1}";
@@ -76,27 +79,37 @@ savePermissionsUI(id);]]></xp:this.script>
 							</xp:button>
 							&#160;&#160;&#160;
 							<xp:link escape="true" text="Create New"
-								id="link37" style="font-size:7pt">
+								id="link37" style="font-size:7pt" rendered="#{javascript:viewScope.createSec}">
 								<xp:eventHandler event="onclick"
 									submit="false">
 									<xp:this.script><![CDATA[XSP.openTooltipDialog('#{id:tooltipDialog13}','#{id:link37}')]]></xp:this.script>
 								</xp:eventHandler>
 							</xp:link>
 
-							<xp:link escape="true" id="lDelete" style="font-size:7pt;margin-left:15.0px">
-							
-							<xp:this.rendered><![CDATA[#{javascript:var profName = getComponent("moduleCombo").getValue();
+							<xp:link escape="true" id="lDelete"
+								style="font-size:7pt;margin-left:15.0px">
+
+								<xp:this.rendered><![CDATA[#{javascript:var profName = getComponent("moduleCombo").getValue();
+var deleRel = viewScope.deleRel;
+var deleSec = viewScope.deleSec;
 
 if (profName=="--Select Profile--" || profName==null || profName == undefined){
 return false;
 }else{
-	return true;
+	if(deleRel && deleSec){
+		return true;
+	}else{
+		return false;
+	}
+	
 }
-}]]></xp:this.rendered><xp:this.text><![CDATA[#{javascript:return "Delete "+viewScope.selectedProfile+" profile";}]]></xp:this.text>
+}]]></xp:this.rendered>
+								<xp:this.text><![CDATA[#{javascript:return "Delete "+viewScope.selectedProfile+" profile";}]]></xp:this.text>
 								<xp:eventHandler event="onclick"
 									submit="false">
 									<xp:this.script><![CDATA[XSP.openTooltipDialog('#{id:tdDeleteProfile}','#{id:lDelete}')]]></xp:this.script>
-								</xp:eventHandler></xp:link>
+								</xp:eventHandler>
+							</xp:link>
 
 						</xp:td>
 
@@ -151,8 +164,7 @@ return false;
 
 
 							<xp:eventHandler event="onclick"
-								submit="true" refreshMode="partial" refreshId="panelPermission"
-								onStart="showWait()" onComplete="hideWait()"
+								submit="true" refreshMode="complete" onStart="showWait()" onComplete="hideWait()"
 								onError="showError()">
 								<xp:this.script><![CDATA[XSP.closeTooltipDialog('#{id:tooltipDialog13}')]]></xp:this.script>
 
@@ -179,7 +191,7 @@ dp.updateProfileDoc(profName);}]]></xp:this.action>
 	</xe:tooltipDialog>
 	<xe:tooltipDialog id="tdDeleteProfile" title="Delete Profile">
 		<xp:panel>
-			
+
 			<xp:table>
 				<xp:tr>
 					<xp:td>
@@ -211,6 +223,13 @@ dp.updateProfileDoc(profName);}]]></xp:this.action>
 					<xp:td>
 						<xp:button value="Ok" id="button1"
 							styleClass="lotusFormButton" style="font-size:7pt">
+							<xp:eventHandler event="onclick"
+								submit="true" refreshMode="complete">
+								<xp:this.action><![CDATA[#{javascript:var profileName  = viewScope.selectedProfile;
+var replPrfName = getComponent("comboBox1").getValue();;
+ bsuite.configure.Deploy.deleteProfile(profileName, replPrfName);
+}]]></xp:this.action>
+							</xp:eventHandler>
 						</xp:button>
 						&#160;
 						<xp:button value="Cancel" id="button2"
@@ -219,5 +238,7 @@ dp.updateProfileDoc(profName);}]]></xp:this.action>
 					</xp:td>
 					<xp:td></xp:td>
 				</xp:tr>
-			</xp:table></xp:panel>
-	</xe:tooltipDialog></xp:view>
+			</xp:table>
+		</xp:panel>
+	</xe:tooltipDialog>
+</xp:view>
