@@ -38,9 +38,9 @@ public class Security {
 	 *can be used as the search formula in any view
 	 *@return view selection formula as string
 	 */
-	public String getMyDocs() {
+	public String getSearchString(String entityName) {
 
-		return role.getSearchString();
+		return role.getSearchString(module,entityName);
 	}
 
 	

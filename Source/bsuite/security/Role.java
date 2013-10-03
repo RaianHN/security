@@ -51,10 +51,8 @@ public class Role {
 	  @return the view search formula a string
 	 */
 	@SuppressWarnings({ "unchecked"})
-	public String createSearchString() {
-		Map viewScope = (Map) JSFUtil.getVariableValue("viewScope");
-		String moduleName = (String) viewScope.get("moduleName");
-		String entityName = (String) viewScope.get("entityName");
+	public String createSearchString(String moduleName, String entityName) {
+	
 		
 		//To get the child roles of a given role
 		this.hierarchyRoleList = getFinalRoleList(roleName);
@@ -205,8 +203,8 @@ public class Role {
 		this.roleName = roleName;
 	}
 
-	public String getSearchString() {
-		searchString = createSearchString();
+	public String getSearchString(String moduleName, String entityName) {
+		searchString = createSearchString(moduleName,entityName);
 		return searchString;
 	}
 
