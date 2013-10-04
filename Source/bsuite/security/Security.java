@@ -19,6 +19,7 @@ import bsuite.utility.*;
  * 
  * @author JPrakash
  */
+ 
 public class Security {
 
 	private Profile profile; 
@@ -112,39 +113,67 @@ public class Security {
 		
 	}
 
+	/**getter for profile
+	 *@return profile object
+	 */
 	public Profile getProfile() {
 		return profile;
 	}
 
+	/**setter for profile
+	 *@param profile
+	 */
 	public void setProfile(Profile profile) {
 		this.profile = profile;
 	}
 
+	/**getter for role object
+	 *@return Role object
+	 */
 	public Role getRole() {
 		return role;
 	}
 
+	/**setter for role object
+	 *@param role
+	 */
 	public void setRole(Role role) {
 		this.role = role;
 	}
 
+	/**getter for all visible modules
+	 *@return
+	 */
 	public ArrayList<String> getModules() {
 		return modules;
 	}
 
+	/**setter for visible modules
+	 *@param modules
+	 */
 	public void setModules(ArrayList<String> modules) {
 		this.modules = modules;
 	}
 
+	/**getter for creatable entities
+	 *@return
+	 */
 	public HashMap<String, ArrayList<String>> getModulesEntities() {
 		return modulesEntities;
 	}
 
+	/**setter for creatable entities
+	 *@param modulesEntities
+	 */
 	public void setModulesEntities(
 			HashMap<String, ArrayList<String>> modulesEntities) {
 		this.modulesEntities = modulesEntities;
 	}
 
+	/**returns the feature visibility for the given modulename
+	 *@param featureName name of the feature
+	 *@return true or false
+	 */
 	public boolean isFeatureVisible(String featureName) {
 		visibleFeatures = profile.getVisibleFeaturesNames(module);
 		if (visibleFeatures.indexOf(featureName) < 0) {
@@ -154,6 +183,11 @@ public class Security {
 		}
 	}
 
+	/**Returns the field visibility for a given module's entity's field
+	 *@param entityyName name of the entity
+	 *@param fieldName field name
+	 *@return true or false
+	 */
 	public boolean isFieldVisible(String entityyName, String fieldName) {
 		visibleFields = profile.getVisibleFieldsNames(module, entityyName);
 		
@@ -164,10 +198,19 @@ public class Security {
 		}
 	}
 	
+	/**Returns if menu is visible
+	 *@param groupName name of the menu
+	 *@return true or false
+	 */
 	public boolean isMenuVisible(String groupName){
 		return profile.isViewActionVisible(module,groupName);
 	}
 
+	/**Returns if the field is readonly
+	 *@param entityName name of the entity
+	 *@param fieldName name of the field
+	 *@return true or false
+	 */
 	public boolean isFieldReadonly(String entityName, String fieldName) {
 		editableFields = profile.getEditableFieldsNames(module, entityName);
 		
@@ -178,24 +221,44 @@ public class Security {
 		}
 	}
 
+	/**Returns if the object is creatable
+	 *@param entityName name of the entity(Object)
+	 *@return true or false
+	 */
 	public boolean isObjectCreatable(String entityName) {
 		return profile.isEntityCreate(module, entityName);
 
 	}
 
+	/**Returns if the object is creatable
+	 *@param entityName name of the entity(Object)
+	 *@return true or false
+	 */
 	public boolean isObjectReadable(String entityName) {
 		return profile.isEntityRead(module, entityName);
 	}
-
+	
+	/**Returns if the object is editable
+	 *@param entityName name of the entity(Object)
+	 *@return true or false
+	 */
 	public boolean isObjectEditable(String entityName) {
 		
 		return profile.isEntityUpdate(module, entityName) || isMyDoc();
 	}
-
+	
+	/**Returns if the object is deletable
+	 *@param entityName name of the entity(Object)
+	 *@return true or false
+	 */
 	public boolean isObjectDeletable(String entityName) {
 		return profile.isEntityDelete(module, entityName) || isMyDoc();
 	}
 
+	
+	/**Returns if the module is visible
+	 *@return true or false
+	 */
 	public boolean isModuleVisible() {
 		ArrayList<String> visibleModules = profile.getVisibleModulesNames();
 		if (visibleModules.indexOf(module) < 0) {
@@ -205,15 +268,25 @@ public class Security {
 		}
 	}
 
+	/**setter for the module name
+	 *@param module
+	 */
 	public void setModule(String module) {
 		this.module = module;
 	}
 
+	/**Returns the module name
+	 *@return module name as string
+	 */
 	public String getModule() {
 		return module;
 	}
+	
+	
+	/**Used in isEntityEditable and isEntityDeletable, to return true if the document belongs to current user
+	 *@return true or false
+	 */
 	private boolean isMyDoc(){
-		//Used in isEntityEditable and isEntityDeletable, to return true if the document belongs to current user
 		//get currentDocument variable 
 		DominoDocument domDoc = (DominoDocument)JSFUtil.getVariableValue("currentDocument");
 		Document doc = null;
@@ -250,6 +323,11 @@ public class Security {
 		}
 		
 	}
+	/**Returns if the objectAction is visible (Action inside the form)
+	 *@param objectName name of the entity
+	 *@param actionName name of the action in the entity
+	 *@return true or false
+	 */
 	public boolean isObjectActionVisible(String objectName, String actionName){
 		return profile.isEntityActionVisible(module, objectName, actionName);
 	}
