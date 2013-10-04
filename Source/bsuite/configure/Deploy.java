@@ -9,6 +9,7 @@ import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
+import bsuite.jsonparsing.ProfileEdit;
 import bsuite.jsonparsing.ProfileJson;
 import bsuite.utility.Utility;
 import bsuite.relationship.Association;
