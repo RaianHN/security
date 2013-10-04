@@ -38,6 +38,7 @@ public class Utility
 	 *[Returns all the employee names from employee database]
 	 *@return Vector containing the employee names
 	 */
+	@SuppressWarnings("unchecked")
 	public static Vector getAllEmployees() 
 	{
 		
@@ -405,6 +406,7 @@ public class Utility
 	 *@param ctype type 1 for abbreviated, 2 for common, 3 for canonical
 	 *@return Vector formated usernames
 	 */
+	@SuppressWarnings("unchecked")
 	public static Vector getFormattedNames(Vector varValues, int ctype)
 	{
 		Vector names = new Vector();

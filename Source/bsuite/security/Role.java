@@ -1,7 +1,6 @@
 package bsuite.security;
 
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Vector;
 
 import lotus.domino.Database;
@@ -10,8 +9,6 @@ import lotus.domino.DocumentCollection;
 import lotus.domino.NotesException;
 import lotus.domino.View;
 import bsuite.relationship.Association;
-import bsuite.utility.*;
-
 import bsuite.utility.Utility;
 
 

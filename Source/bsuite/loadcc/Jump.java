@@ -2,27 +2,21 @@ package bsuite.loadcc;
 
 import java.util.List;
 
-
-import bsuite.loadcc.JSFUtil;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
 
 import com.ibm.xsp.component.xp.XspDiv;
 import com.ibm.xsp.component.xp.XspOutputLink;
-import com.ibm.xsp.extlib.tree.complex.ComplexContainerTreeNode;
 import com.ibm.xsp.extlib.tree.complex.ComplexLeafTreeNode;
 import com.ibm.xsp.extlib.tree.impl.BasicNodeList;
-
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.script.ScriptEngine;  
-import javax.script.ScriptEngineFactory;  
-import javax.script.ScriptEngineManager;  
-import javax.script.ScriptException;  
+@SuppressWarnings("serial")
 public class Jump extends BasicNodeList{
 public Jump() {
 	addTree();
 		
 }
 
+@SuppressWarnings("unchecked")
 private void addTree() {
 	
 	
@@ -44,7 +38,6 @@ private void addTree() {
 			children.setOnClick("jumplink('"+cid+"');");
 			addChild(children);	
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

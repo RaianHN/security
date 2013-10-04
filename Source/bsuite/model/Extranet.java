@@ -5,12 +5,9 @@ import java.util.Map;
 import lotus.domino.Database;
 import lotus.domino.Document;
 import lotus.domino.NotesException;
-
 import bsuite.err.ErrorHandler;
 import bsuite.security.UserAccess;
 import bsuite.utility.SessionContext;
-import bsuite.utility.Utility;
-
 import bsuite.utility.Utility;
 
 public class Extranet {
@@ -39,10 +36,10 @@ public class Extranet {
 	 *[Creates or removes extranet url]
 	 *@param true to create, false to remove
 	 */
+	@SuppressWarnings("unchecked")
 	private static void generateExtranetURL(boolean val)
 	{
 
-		System.out.print(" inside generateExtranetURL boolean");
 
 		Map viewScope = SessionContext.getViewScope();
 		String strDomain = Utility.getFQDN();
@@ -54,40 +51,31 @@ public class Extranet {
 			String strURL;
 			if (val)
 			{
-				System.out.print(" inside generateExtranetURL boolean true");
 				strURL = getExtranetURL(currentdoc, strDomain, level, currentdb
 						.getFileName());
-				System.out.print(" inside generateExtranetURL boolean doc"+ currentdoc);
-				System.out.print(" inside generateExtranetURL boolean url"+ strURL);
 				
 				if (currentdoc.hasItem("xtrastatus"))
 				{
 					currentdoc.replaceItemValue("xtrastatus", "1");
-					System.out.print(" if1");
 				}
-				System.out.print(" before if2"+ viewScope.get("msgfor"));
 				
 				if (viewScope.get("msgfor")!=null && viewScope.get("msgfor").toString().equals("doc"))
 				{
 					
-					System.out.print(" inside if2");
 					viewScope
 							.put("errsmsDoc",
 									"You have successfully generated URL for this document.");
 					viewScope.put("errvalDoc", "true");
 					
-					System.out.print(" if2");
 				} else
 				{
 					viewScope
 							.put("errsms",
 									"You have successfully generated URL for this document.");
 					viewScope.put("errval", "true");
-					System.out.print(" if2 else");
 				}
 			} else
 			{
-				System.out.print(" inside generateExtranetURL boolean false");
 				strURL = "";
 				if (viewScope.get("msgfor").equals("doc"))
 				{
@@ -103,7 +91,6 @@ public class Extranet {
 
 			currentdoc.replaceItemValue("ExtranetURL", strURL);
 			currentdoc.save(true, false);
-			System.out.print(" inside generateExtranetURL boolean end of try");
 		} catch (NotesException e)
 		{
 
@@ -128,7 +115,6 @@ public class Extranet {
 	private static String getExtranetURL(Document doc, String strDomain,
 			Integer intLevel, String ModuleName)
 	{
-		System.out.print(" inside getExtranetURL");
 		try
 		{
 			String strURL = "";
@@ -210,7 +196,6 @@ public class Extranet {
 
 			}
 
-			System.out.print(" inside getExtranetURL before return"+strURL);
 			return strURL;
 		} catch (NotesException e)
 		{
@@ -233,9 +218,9 @@ public class Extranet {
 	 *@param currentDoc document to process
 	 *@return, true if no errors
 	 */
+	@SuppressWarnings("unchecked")
 	private static boolean processExtranetURL(Document currentDoc)
 	{
-		System.out.print("inside processExtranetURL");
 		boolean ret = true;
 		Map viewScope = SessionContext.getViewScope();
 		try
@@ -298,7 +283,6 @@ public class Extranet {
 	public static void initGenerateURL() {
 
 	
-		System.out.print("inside initGenerateURL");
 			Document currentDoc = SessionContext.getDocumentToProcess();
 			boolean extranet = processExtranetURL(currentDoc);
 			
@@ -318,9 +302,9 @@ public class Extranet {
 	
 	
 	
+	@SuppressWarnings("unchecked")
 	private static void generateExtranetURL(Document currentdoc)
 	{
-		System.out.print("inside generateExtranetURL");
 		try 
 		{
 			

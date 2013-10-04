@@ -1,7 +1,6 @@
 package bsuite.loadcc;
 
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
@@ -11,19 +10,18 @@ import javax.faces.context.FacesContext;
 
 import com.ibm.xsp.component.UIIncludeComposite;
 import com.ibm.xsp.component.UIPanelEx;
-import com.ibm.xsp.component.UIPassThroughTag;
-import com.ibm.xsp.extlib.builder.ControlBuilder;
-import com.ibm.xsp.extlib.builder.ControlBuilder.ControlImpl;
-import com.ibm.xsp.extlib.component.outline.UIOutlineBreadCrumbs;
 import com.ibm.xsp.component.xp.XspDiv;
 import com.ibm.xsp.component.xp.XspOutputLink;
 import com.ibm.xsp.dojo.DojoAttribute;
+import com.ibm.xsp.extlib.builder.ControlBuilder;
+import com.ibm.xsp.extlib.builder.ControlBuilder.ControlImpl;
+import com.ibm.xsp.extlib.component.outline.UIOutlineBreadCrumbs;
 import com.ibm.xsp.extlib.tree.ITreeNode;
-import com.ibm.xsp.extlib.tree.complex.ComplexContainerTreeNode;
 import com.ibm.xsp.extlib.tree.complex.ComplexLeafTreeNode;
 
 public class DynamicCC1 {
 	
+	@SuppressWarnings("unchecked")
 	public static void createPortlet(FacesContext s, UIComponent component, String c1, String c2, String id, String title)
 	{
 		try{
@@ -70,21 +68,7 @@ public class DynamicCC1 {
 			
 			UIPanelEx panelmoveable = new UIPanelEx();
 			panelmoveable.setId(id+"moveable");
-			/*panelmoveable.setDojoType("dojo.dnd.Moveable");
-			DojoAttribute dojoAttributes = new DojoAttribute();
-			dojoAttributes.setComponent(panelmoveable);
-			dojoAttributes.setName("skip");
-			dojoAttributes.setValue("true");
-			
-			
-			panelmoveable.addDojoAttribute(dojoAttributes);
-			
-			DojoAttribute dojoAttributes1 = new DojoAttribute();
-			dojoAttributes1.setComponent(panelmoveable);
-			dojoAttributes1.setName("handle");
-			dojoAttributes1.setValue("view:_id1:_id18:"+id+"handle");
-			panelmoveable.addDojoAttribute(dojoAttributes1);
-			*/
+		
 			component.getChildren().add(0,panelmoveable);
 			panelmoveable.getChildren().add(0, panel);
 		
@@ -120,6 +104,7 @@ public class DynamicCC1 {
 	}
 	
 	
+	@SuppressWarnings("unchecked")
 	public static void createLink(UIComponent component, String comID, String linkID)
 	{
 		//Addlink to breadcrumb
@@ -157,7 +142,6 @@ public class DynamicCC1 {
 	public static void setStyle(UIComponent com, String left, String top, String zindex)
 	{
 			((UIPanelEx) com).setStyle("position: absolute;  left:" + left + "; top:" + top+ "; z-index:"+zindex+";" );
-			//
 	}
 	
 	
@@ -187,6 +171,7 @@ public class DynamicCC1 {
 	
 	
 	
+	@SuppressWarnings("unchecked")
 	public static void setPanelvisible(UIComponent com){
 		Map viewscope = (Map) JSFUtil.getVariableValue("viewScope"); 
 		viewscope.put("msg","1" );
@@ -205,6 +190,7 @@ public class DynamicCC1 {
 			removecrumb(link.getId());
 			 linkcontainer.getChildren().remove(link);
 	}
+	@SuppressWarnings("unchecked")
 	public static void removecrumb(String label)
 	{
 		try {
@@ -228,12 +214,12 @@ public class DynamicCC1 {
 
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
 	
 			
 	}
+	@SuppressWarnings("unchecked")
 	public static void removeothercrumb(UIComponent link){
 		String label = link.getId();
 		
@@ -254,6 +240,7 @@ public class DynamicCC1 {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	public static void setCompDojoType(UIComponent linkcontainer,UIComponent topcomp){
 		
 		List list=linkcontainer.getChildren();
@@ -292,6 +279,7 @@ public class DynamicCC1 {
 	}
 	
 	
+	@SuppressWarnings({ "unchecked", "static-access" })
 	public static void createPreview(UIComponent r, FacesContext s, String cc)
 	{
 		int childcount=r.getChildCount();
@@ -318,6 +306,7 @@ public class DynamicCC1 {
 			}
 		}
 	}
+	@SuppressWarnings("unchecked")
 	public static void restore(String linklist)
 	{
 	
@@ -373,7 +362,8 @@ public class DynamicCC1 {
 	
 	
 	
-	 public static SortData[] sort(SortData[]input)
+	 @SuppressWarnings("unchecked")
+	public static SortData[] sort(SortData[]input)
 		
 		{
 			Arrays.sort(input, new Compare());
@@ -384,7 +374,8 @@ public class DynamicCC1 {
 	 
 	 
 	 
-	 public static void setCompDojoType2(UIComponent topcomp, String[] sorted){
+	 @SuppressWarnings("unchecked")
+	public static void setCompDojoType2(UIComponent topcomp, String[] sorted){
 			
 			
 			FacesContext context = FacesContext.getCurrentInstance();
@@ -397,54 +388,7 @@ public class DynamicCC1 {
 				
 				
 				createGridContainer(topcomp);
-				/*
 				
-				((XspDiv)topcomp).setDojoType("dojox.layout.GridContainer");
-				
-				DojoAttribute dojoAttribute1 = new DojoAttribute();
-				dojoAttribute1.setComponent(topcomp);
-				dojoAttribute1.setName("allowAutoScroll");
-				dojoAttribute1.setValue("false");
-				
-				
-				DojoAttribute dojoAttribute2 = new DojoAttribute();
-				dojoAttribute2.setComponent(topcomp);
-				dojoAttribute2.setName("nbZones");
-				dojoAttribute2.setValue("1");
-				
-				
-				DojoAttribute dojoAttribute3 = new DojoAttribute();
-				dojoAttribute3.setComponent(topcomp);
-				dojoAttribute3.setName("hasResizableColumns");
-				dojoAttribute3.setValue("false");
-				
-				
-				DojoAttribute dojoAttribute4 = new DojoAttribute();
-				dojoAttribute4.setComponent(topcomp);
-				dojoAttribute4.setName("acceptTypes");
-				dojoAttribute4.setValue("dojox.widget.Portlet");
-				
-				
-				DojoAttribute dojoAttribute5 = new DojoAttribute();
-				dojoAttribute5.setComponent(topcomp);
-				dojoAttribute5.setName("withHandles");
-				dojoAttribute5.setValue("true");
-				
-				DojoAttribute dojoAttribute6 = new DojoAttribute();
-				dojoAttribute6.setComponent(topcomp);
-				dojoAttribute6.setName("handleClasses");
-				dojoAttribute6.setValue("portletHeader");
-				
-				
-				((XspDiv)topcomp).addDojoAttribute(dojoAttribute1);
-				((XspDiv)topcomp).addDojoAttribute(dojoAttribute2);
-				((XspDiv)topcomp).addDojoAttribute(dojoAttribute3);
-				((XspDiv)topcomp).addDojoAttribute(dojoAttribute4);
-				((XspDiv)topcomp).addDojoAttribute(dojoAttribute5);
-				((XspDiv)topcomp).addDojoAttribute(dojoAttribute6);
-				
-				
-				*/	
 					
 				
 				
@@ -512,7 +456,8 @@ public class DynamicCC1 {
 	 
 	 
 	 
-	 public static void setCompDojoType(UIComponent topcomp, String[] sorted){
+	 @SuppressWarnings("unchecked")
+	public static void setCompDojoType(UIComponent topcomp, String[] sorted){
 			
 			
 			FacesContext context = FacesContext.getCurrentInstance();
@@ -554,15 +499,13 @@ public class DynamicCC1 {
 	 
 	 
 	 
-	 public static void setCompDojoType1(UIComponent topcomp, UIComponent topcomp1, String[] sorted)
+	 @SuppressWarnings("unchecked")
+	public static void setCompDojoType1(UIComponent topcomp, UIComponent topcomp1, String[] sorted)
 	 {
 			
 			
 			FacesContext context = FacesContext.getCurrentInstance();
 			Map viewScope = (Map) context.getApplication().getVariableResolver().resolveVariable(context, "viewScope");
-			
-			String toggle = (String) viewScope.get("moveableToggle");
-			
 			
 			int count = sorted.length;
 			
@@ -576,7 +519,6 @@ public class DynamicCC1 {
 				
 				if ((portletmovable != null) && (portletmovable.getChildCount()!= 0))
 				{
-					System.out.print("inside if block");
 					UIPanelEx portlet= (UIPanelEx) JSFUtil.findComponent(topcomp,id);
 					topcomp1.getChildren().add(0,portlet);
 					JSFUtil.removeComponent(id+"moveable");
@@ -618,7 +560,8 @@ public class DynamicCC1 {
 	 
 	 
 	 
-	 public static void reorderInsideGrid(UIComponent topcomp, String[] sorted)
+	 @SuppressWarnings("unchecked")
+	public static void reorderInsideGrid(UIComponent topcomp, String[] sorted)
 	 {
 		 int count = sorted.length;
 		 Object[] portlets = topcomp.getChildren().toArray();
@@ -720,10 +663,6 @@ public class DynamicCC1 {
 		 }
 		 else
 		 {
-			 
-			 int ct = breadcrumbs.getChildCount();
-			 
-			 int ct1 = breadcrumbs.getTreeNodes().size();
 			 
 		 }
 		 

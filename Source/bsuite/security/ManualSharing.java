@@ -23,7 +23,6 @@ public class ManualSharing {
 		try {
 			userName = Utility.getCurrentSession().getEffectiveUserName();
 		} catch (NotesException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

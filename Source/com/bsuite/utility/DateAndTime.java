@@ -97,9 +97,7 @@ public static int timeCompareDates(DateTime dt1, DateTime dt2)
 				return 0;
 			}
 			DateTime dtMy1 = session.createDateTime(dt1.getDateOnly());
-			System.out.print("dt1"+dtMy1);
 			DateTime dtMy2 = session.createDateTime(dt2.getDateOnly());
-			System.out.print("dt2"+dtMy2);
 			timecomp = dtMy1.timeDifference(dtMy2)/86400; 
 
 			return timecomp;

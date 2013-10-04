@@ -15,6 +15,7 @@ import bsuite.utility.Utility;
 
 import bsuite.utility.Utility;
 
+@SuppressWarnings("unused")
 public class CreateDatabase
 {
 	public StringBuilder strLog;
@@ -28,7 +29,6 @@ public class CreateDatabase
 			
 
 			Database db1 = null;
-			@SuppressWarnings("unused")
 			Database currentdb = Utility.getCurrentDatabase();
 			String path = Utility.getBsuitePath(Utility.getCurrentDatabase());
 			boolean found = false;
@@ -125,7 +125,6 @@ public class CreateDatabase
 		}
 		catch (Exception e)
 		{
-			// TODO: handle exception
 		}
 
 		return null;
@@ -151,7 +150,6 @@ public class CreateDatabase
 		}
 		catch (Exception e)
 		{
-			// TODO: handle exception
 		}
 
 	}
@@ -223,7 +221,6 @@ public class CreateDatabase
 		}
 		catch (Exception e)
 		{
-			// TODO: handle exception
 		}
 
 	}
@@ -304,7 +301,6 @@ public class CreateDatabase
 		}
 		catch (Exception e)
 		{
-			// TODO: handle exception
 		}
 		return null;
 	}
@@ -333,12 +329,10 @@ public class CreateDatabase
 		}
 		catch (Exception e)
 		{
-			// TODO: handle exception
 		}
 
 	}
 
-	@SuppressWarnings("unused")
 	private String getFormattedName(String currentuser, String param)
 	{
 		try
@@ -362,7 +356,6 @@ public class CreateDatabase
 		}
 		catch (Exception e)
 		{
-			// TODO: handle exception
 		}
 		return null;
 	}
@@ -422,7 +415,6 @@ public class CreateDatabase
 		}
 		catch (Exception e)
 		{
-			// TODO: handle exception
 		}
 
 	}

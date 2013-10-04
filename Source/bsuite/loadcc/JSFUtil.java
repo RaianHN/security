@@ -1,25 +1,22 @@
 
 package bsuite.loadcc;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
+
 import javax.faces.application.Application;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.el.ValueBinding;
 
-import bsuite.utility.Utility;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
-
 import lotus.domino.Database;
-import lotus.domino.Document;
-import lotus.domino.DocumentCollection;
 import lotus.domino.NotesException;
 import lotus.domino.View;
 import lotus.domino.ViewEntry;
 import lotus.domino.ViewEntryCollection;
+import bsuite.utility.Utility;
 
 
 
@@ -143,27 +140,30 @@ public class JSFUtil {
 				UIComponent comp=findComponent(compid);
 				return comp.getClientId(FacesContext.getCurrentInstance());
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return null;
         }
         
         
-        public static Object getApplciationComponent(String scopeid){
+        @SuppressWarnings("unchecked")
+		public static Object getApplciationComponent(String scopeid){
 	
 			Map applicationscope = (Map) JSFUtil.getVariableValue("applicationScope"); 
 			return applicationscope.get(scopeid);
         }
-        public static Object getSessionComponent(String scopeid){
+        @SuppressWarnings("unchecked")
+		public static Object getSessionComponent(String scopeid){
         	Map sessionscope = (Map) JSFUtil.getVariableValue("sessionScope"); 
         	return sessionscope.get(scopeid);
         }
-        public static Object getViewComponent(String scopeid){
+        @SuppressWarnings("unchecked")
+		public static Object getViewComponent(String scopeid){
         	Map viewscope = (Map) JSFUtil.getVariableValue("viewScope"); 	
         	return viewscope.get(scopeid);
         }
-        public static Object getRequestComponent(String scopeid){
+        @SuppressWarnings("unchecked")
+		public static Object getRequestComponent(String scopeid){
         	Map requestscope = (Map) JSFUtil.getVariableValue("requestScope");	
         	return requestscope.get(scopeid);
         }
@@ -180,7 +180,8 @@ public class JSFUtil {
         	}
 			return nlist;
         }
-        public static Vector DBLookupVector(String Dbname, String vwname,Vector key, int i){
+        @SuppressWarnings("unchecked")
+		public static Vector DBLookupVector(String Dbname, String vwname,Vector key, int i){
         	
         	Vector nlist = new Vector();;
         	Vector column = new Vector();
@@ -205,7 +206,8 @@ public class JSFUtil {
         	return nlist;
         }
         
-        private static Vector getColumnValue(String Dbname, String vwname,Vector key, int i){
+        @SuppressWarnings("unchecked")
+		private static Vector getColumnValue(String Dbname, String vwname,Vector key, int i){
         	Database db;
         	
         	Vector columns= new Vector();
@@ -231,18 +233,17 @@ public class JSFUtil {
 				 
 				 
 			} catch (NotesException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
         	return columns;
         }
-        private static Vector getallColumnValue(String Dbname, String vwname,Vector key, int i){
+        @SuppressWarnings("unchecked")
+		private static Vector getallColumnValue(String Dbname, String vwname,Vector key, int i){
         	Database db;
         	
         	Vector<String> columns= new Vector();
-        	String[] str1 = null;
-			try {
+        	try {
 				db = Utility.getCurrentSession().getDatabase("", BSUtil.getBsuitePath(Utility.getCurrentDatabase())+"relation.nsf");  
 				if(db==null){
 					

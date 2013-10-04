@@ -32,7 +32,8 @@ public class EntitySchema {
 	 entity.setActions(actions);
 	  
 	  ObjectMapper mapper=new ObjectMapper();
-	  String val="";
+	  @SuppressWarnings("unused")
+	String val="";
 	  try{
 		val = mapper.writeValueAsString(entity);
 	  }catch (Exception e) {

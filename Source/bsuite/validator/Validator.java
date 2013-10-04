@@ -2,7 +2,6 @@ package bsuite.validator;
 
 import bsuite.utility.JSFUtil;
 
-import com.ibm.xsp.component.xp.XspInputRichText;
 import com.ibm.xsp.component.xp.XspInputTextarea;
 
 /**

@@ -15,6 +15,7 @@ import com.ibm.xsp.extlib.component.dojo.layout.UIDojoTabPane;
 
 
 public class DynamicCC {
+	@SuppressWarnings("unchecked")
 	public static void loadCC(FacesContext s, UIComponent component, String c1, String id)
 	{	
 	
@@ -35,6 +36,7 @@ public class DynamicCC {
 	
 	}
 	
+	@SuppressWarnings("unchecked")
 	public static void loadCCinTab(FacesContext s, UIComponent component, String c1, String id,String tabtitle)
 	{	
 		

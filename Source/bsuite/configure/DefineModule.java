@@ -375,7 +375,6 @@ public class DefineModule {
 
 			View modulesView = currentdb.getView("Modules");
 
-			// 
 			Document moduleDoc = modulesView.getDocumentByKey(moduleName);
 
 			String jsonInput = moduleDoc.getItemValueString("JsonString");
@@ -436,7 +435,6 @@ public class DefineModule {
 
 			View modulesView = currentdb.getView("Modules");
 
-			// 
 			Document moduleDoc = modulesView.getDocumentByKey(moduleName);
 
 			String jsonInput = moduleDoc.getItemValueString("JsonString");
@@ -490,13 +488,13 @@ public class DefineModule {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public void addEntity(String moduleName, String entityName) {
 
 		try {
 
 			View modulesView = currentdb.getView("Modules");
 
-			// 
 			Document moduleDoc = modulesView.getDocumentByKey(moduleName);
 
 			String jsonInput = moduleDoc.getItemValueString("JsonString");
@@ -537,6 +535,7 @@ public class DefineModule {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public void addField(String moduleName, String entityName, String field) {
 
 		try {
@@ -596,6 +595,7 @@ public class DefineModule {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public void addEntityAction(String moduleName, String entityName,
 			String actionName) {
 
@@ -659,7 +659,6 @@ public class DefineModule {
 		try {
 			moduleView = currentdb.getView("Modules");
 		} catch (NotesException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		Document doc;
@@ -742,7 +741,6 @@ public class DefineModule {
 		try {
 			roleDoc.save();
 		} catch (NotesException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -899,6 +897,7 @@ public class DefineModule {
 	 * @param moduleName
 	 *@return Vector containing groupnames
 	 */
+	@SuppressWarnings("unchecked")
 	public Vector getGroupNames(String moduleName) {
 		String moduleJson = getModuleJson(moduleName);
 		ObjectMapper mapper = new ObjectMapper();
@@ -925,6 +924,7 @@ public class DefineModule {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	public ArrayList getGroupEntryNames(String moduleName, String groupName) {
 		String moduleJson = getModuleJson(moduleName);
 		ObjectMapper mapper = new ObjectMapper();
@@ -1082,6 +1082,7 @@ public class DefineModule {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	public void removeFeature(String moduleName, String featureName) {
 		try {
 
@@ -1128,12 +1129,12 @@ public class DefineModule {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public void removeEntity(String moduleName, String entityName) {
 		try {
 
 			View modulesView = currentdb.getView("Modules");
 
-			// 
 			Document moduleDoc = modulesView.getDocumentByKey(moduleName);
 
 			String jsonInput = moduleDoc.getItemValueString("JsonString");
@@ -1177,13 +1178,13 @@ public class DefineModule {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public void removeField(String moduleName, String entityName,
 			String fieldName) {
 		try {
 
 			View modulesView = currentdb.getView("Modules");
 
-			// 
 			Document moduleDoc = modulesView.getDocumentByKey(moduleName);
 
 			String jsonInput = moduleDoc.getItemValueString("JsonString");

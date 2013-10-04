@@ -45,7 +45,6 @@ public class DbNames {
 		this.relation = relation;
 	}
 
-	//
 	private View profileView;
 	private String prodFolder;
 

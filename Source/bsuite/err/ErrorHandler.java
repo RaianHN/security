@@ -2,20 +2,17 @@ package bsuite.err;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.Date;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
 import lotus.domino.*;
-
-import bsuite.utility.SessionContext;
-import bsuite.utility.Utility;
 
 import bsuite.utility.Utility;
 
 public class ErrorHandler
 {
 
+	@SuppressWarnings("unchecked")
 	private Vector stackTrace;
 	private String errMsg;
 	private String methodName;
@@ -118,6 +115,7 @@ public class ErrorHandler
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	private Vector getStackTrace(Throwable ee)
 	{
 		return getStackTrace(ee, 0);
@@ -128,6 +126,7 @@ public class ErrorHandler
 	 * error message, and skipping over a given number of items (as determined
 	 * by the skip variable)
 	 */
+	@SuppressWarnings("unchecked")
 	private Vector getStackTrace(Throwable ee, int skip)
 	{
 		Vector v = new Vector(32);
@@ -160,6 +159,7 @@ public class ErrorHandler
 	 * java.lang.Integer.parseInt(Integer.java:335)
 	 * JavaAgent.NotesMain(JavaAgent.java:15) ...
 	 */
+	@SuppressWarnings("unchecked")
 	private String getMethodName(Vector trace, int linenum)
 	{
 		try
@@ -184,6 +184,7 @@ public class ErrorHandler
 	 * java.lang.Integer.parseInt(Integer.java:335)
 	 * JavaAgent.NotesMain(JavaAgent.java:15) ...
 	 */
+	@SuppressWarnings("unchecked")
 	private String getClassName(Vector trace, int linenum)
 	{
 		try
@@ -209,6 +210,7 @@ public class ErrorHandler
 	 * the stack trace. This corresponds to the weird stackLevel variable I use
 	 * in the getBasicLogFields method.
 	 */
+	@SuppressWarnings("unchecked")
 	private String getMethodReference(Vector trace, int linenum)
 	{
 		
@@ -232,6 +234,7 @@ public class ErrorHandler
 	 * java.lang.Integer.parseInt(Integer.java:335)
 	 * JavaAgent.NotesMain(JavaAgent.java:15) ...
 	 */
+	@SuppressWarnings("unchecked")
 	private int getMethodErrorLine(Vector trace, String methodName)
 	{
 		try
@@ -255,6 +258,7 @@ public class ErrorHandler
 	 *@param methodName method name
 	 *@return
 	 */
+	@SuppressWarnings("unchecked")
 	private String getMethodReference(Vector trace, String methodName)
 	{
 		try

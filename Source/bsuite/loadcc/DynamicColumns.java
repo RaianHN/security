@@ -6,9 +6,13 @@ import com.ibm.xsp.component.xp.XspDataTableEx;
 
 public class DynamicColumns {
 
+	@SuppressWarnings("unused")
 	private XspDataTableEx dataTb ;
+	@SuppressWarnings("unused")
 	private UIPanelEx viewPanel;
+	@SuppressWarnings("unused")
 	private static int linkc=0;
+	@SuppressWarnings("unused")
 	private static int colc=0;
 	public String tableid="tabledemo";
 	

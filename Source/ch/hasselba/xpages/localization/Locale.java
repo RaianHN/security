@@ -52,7 +52,8 @@ public class Locale {
      * The loading routine is shamelessly copied from Ulrich Krause:
      * http://openntf.org/XSnippets.nsf/snippet.xsp?id=access-.properties-files
      */
-    public static Map<String, String> getPropertiesFromFile(String fileName) {
+    @SuppressWarnings("unchecked")
+	public static Map<String, String> getPropertiesFromFile(String fileName) {
         Properties prop = new Properties();
 
         try {
@@ -113,9 +114,7 @@ public class Locale {
      */
     public void dump() {
         for (int i = 0; i < this.locales.size(); i++) {
-            LocaleEntry e = this.locales.get(i);
-            System.out.println(e.getId() + " - " + e.getName() + " - "
-                    + e.getValue());
+
         }
 
     }

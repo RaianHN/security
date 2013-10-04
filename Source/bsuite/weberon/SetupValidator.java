@@ -15,8 +15,10 @@ import bsuite.utility.Utility;
 public class SetupValidator
 {
 
+	@SuppressWarnings("unchecked")
 	public Map sessionScope;
 	private Database currentdb;
+	@SuppressWarnings("unused")
 	private String server_g;
 	protected Session session;
 	protected String bsuitepath;
@@ -73,7 +75,6 @@ public class SetupValidator
 
 		try
 		{
-			System.out.print("Inside getSetupdoc");
 			Database custdb = session.getDatabase(session.getServerName(),
 					bsuitepath + "customer.nsf");
 			View setupview = custdb.getView("Setup Profile");
@@ -87,7 +88,6 @@ public class SetupValidator
 					sessionScope.put("setupDocId", docid);
 					sessionScope.put("createSetup", "");
 
-					System.out.print("complete");
 				}
 
 			}

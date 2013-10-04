@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Vector;
 
-import javax.faces.context.FacesContext;
-
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -17,7 +15,6 @@ import bsuite.configure.Deploy;
 import bsuite.jsonparsing.Entity;
 import bsuite.jsonparsing.Feature;
 import bsuite.jsonparsing.Field;
-import bsuite.jsonparsing.GroupPermission;
 import bsuite.jsonparsing.Module;
 import bsuite.jsonparsing.ProfileJson;
 import bsuite.security.Profile;
@@ -25,12 +22,9 @@ import bsuite.utility.JSFUtil;
 import bsuite.utility.SessionContext;
 import bsuite.utility.Utility;
 
-import bsuite.utility.Utility;
-
 import lotus.domino.Database;
 import lotus.domino.Document;
 import lotus.domino.NotesException;
-import lotus.domino.Session;
 import lotus.domino.View;
 
 public class ProfileEdit {
@@ -381,9 +375,6 @@ public class ProfileEdit {
 				}
 
 			}
-			String[] entitySecurity;
-			String eSec = "";
-
 			for (Entity entity : module.getEntities()) {
 				
 
@@ -504,8 +495,6 @@ public class ProfileEdit {
 		ProfileJson profile = getJsonProfileObj(jsonString);
 		Module module = null;
 
-		String[] fieldSecurity;
-		String fSec = "";
 		String moduleName = "";
 		String entityName = "";
 		String fieldName = "";
@@ -594,7 +583,6 @@ public class ProfileEdit {
 	}
 
 	private int getFeatureNumber(ProfileJson profile, String moduleName) {
-		Vector<String> featureSecurity = new Vector<String>();
 		Module module = null;
 		for (Module mod : profile.getModules()) {
 			if (mod.getModuleName().equals(moduleName)) {
@@ -625,7 +613,6 @@ public class ProfileEdit {
 	}
 
 	private int getEntityNumber(ProfileJson profile, String moduleName) {
-		Vector<String> entitySecurity = new Vector<String>();
 		Module module = null;
 
 		for (Module mod : profile.getModules()) {
@@ -659,7 +646,6 @@ public class ProfileEdit {
 
 	private int getFieldNumber(ProfileJson profile, String moduleName,
 			String entityName) {
-		Vector<String> fieldSecurity = new Vector<String>();
 		Module module = null;
 
 		for (Module mod : profile.getModules()) {
@@ -684,7 +670,6 @@ public class ProfileEdit {
 		return 0;
 	}
 
-	@SuppressWarnings("unchecked")
 	private int getModuleNumber(ProfileJson profile) {
 		ArrayList<Module> modules = profile.getModules();
 		if (modules != null) {
@@ -779,9 +764,6 @@ public class ProfileEdit {
 				}
 
 			}
-			String[] entitySecurity;
-			String eSec = "";
-
 			for (Entity entity : module.getEntities()) {
 				
 
@@ -1087,6 +1069,7 @@ public class ProfileEdit {
 		return profile;
 	}
 
+	@SuppressWarnings("unchecked")
 	public ProfileJson removeEntity1(ProfileJson profile, String profileName,
 			String moduleName) {
 		DefineModule dm = new DefineModule();
@@ -1189,13 +1172,6 @@ public class ProfileEdit {
 
 	
 	public static boolean isModuleAvailable(String moduleName, Document profDoc){
-		String jsonString = "";
-		try {
-			jsonString = profDoc.getItemValueString("JsonString");
-		} catch (NotesException e) {
-			Utility.setErrorString("Error in getting module", "true");
-			e.printStackTrace();
-		}
 		return false;
 	}
 }

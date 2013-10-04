@@ -21,6 +21,7 @@ import com.ibm.xsp.extlib.tree.complex.ComplexLeafTreeNode;
 
 
 public class DynamicCC {
+	@SuppressWarnings("unchecked")
 	public static void loadCC(FacesContext s, UIComponent component, String c1, String id)
 	{	
 	
@@ -41,6 +42,7 @@ public class DynamicCC {
 	
 	}
 	
+	@SuppressWarnings("unchecked")
 	public static void loadCCinTab(FacesContext s, UIComponent component, String c1, String id,String tabtitle)
 	{	
 		
@@ -77,6 +79,7 @@ public class DynamicCC {
 	}
 	
 	
+	@SuppressWarnings("unchecked")
 	public static void createDropDown(UIComponent component){
 		
 		  UIOutlineDropDownButton result = new UIOutlineDropDownButton();
@@ -95,14 +98,7 @@ public class DynamicCC {
     
       	
       	
-      /*  XspEventHandler event = new XspEventHandler();        
-        MethodBinding action = 
-       	 FacesContext.getCurrentInstance().getApplication().createMethodBinding(onItemClickExpr, null);
-          event.setAction(action);              
-          event.setSubmit(true);
-          event.setEvent("onItemClick");
-          event.setRefreshMode("partial");
-          event.setRefreshId("panel1");*/
+
       	
       	
       	

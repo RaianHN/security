@@ -1,6 +1,5 @@
 package bsuite.loadcc;
 
-import java.util.StringTokenizer;
 import java.util.Vector;
 
 import javax.faces.component.UIComponent;
@@ -12,21 +11,13 @@ import lotus.domino.Document;
 import lotus.domino.NotesException;
 import lotus.domino.Session;
 import lotus.domino.View;
-
-
-import bsuite.loadcc.BSUtil;
-import bsuite.loadcc.CompUtil;
-import bsuite.loadcc.JSFUtil;
+import bsuite.utility.Utility;
 
 import com.ibm.xsp.component.UIPanelEx;
 import com.ibm.xsp.component.xp.XspColumn;
 import com.ibm.xsp.component.xp.XspDataTableEx;
 import com.ibm.xsp.component.xp.XspEventHandler;
 import com.ibm.xsp.component.xp.XspOutputLink;
-import com.ibm.xsp.component.xp.XspPager;
-import com.ibm.xsp.extlib.component.dojo.grid.UIDojoDataGrid;
-import com.ibm.xsp.extlib.component.dojo.grid.UIDojoDataGridColumn;
-import bsuite.utility.Utility;
 
 
 
@@ -68,7 +59,6 @@ public class DynamicTable {
 			createColumns(dataTb);
 			
 		} catch (NotesException ne) {
-			// TODO Auto-generated catch block
 			ne.printStackTrace();
 		}catch (Exception e){
 			e.printStackTrace();
@@ -78,9 +68,9 @@ public class DynamicTable {
 		
 	}
 	
+	@SuppressWarnings({ "unchecked", "static-access" })
 	public  void createColumns(XspDataTableEx com)throws NotesException
 	{
-		 View view = null;//**
 		 Document doc = null;//**
 		
 		try
@@ -138,16 +128,13 @@ public class DynamicTable {
 		}		
 		catch (NotesException ne) 
 		{
-			// TODO Auto-generated catch block
 			ne.printStackTrace();
 		}
 	catch (Exception e){
 		e.printStackTrace();
 	}
 		finally{
-		//**
 			doc.recycle();//**
-		//**
 			doc = null;//**
 		}
 		
@@ -165,7 +152,6 @@ public class DynamicTable {
 				v1 = sessionObj.getDatabase(servName, "Test/customer.nsf").getView("Testview");
 				return v1.getFirstDocument();
 			} catch (NotesException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return null;
@@ -183,7 +169,6 @@ public class DynamicTable {
 			
 			
 		}
-		String hdexp;
 		int len = columns.length;
 		for (int i=0; i< len; ++i)
 		{
@@ -191,7 +176,6 @@ public class DynamicTable {
 			String[] a= lv.split("#");
 			XspColumn result = CompUtil.createDataColumn(table , Integer.toString(i));
 
-			hdexp= headerexp+ a[0]+")}";
 			UIComponent header = createHeaderLink(a[1],Integer.toString( i));    // create a header comp
 			result.setHeader(header);
 			CompUtil.createTabComputedfield(result, a[0], "ticket", Integer.toString(i));

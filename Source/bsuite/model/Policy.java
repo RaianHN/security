@@ -241,7 +241,6 @@ public class Policy {
 		try
 		{
 			
-			Vector v = new Vector();
 			String var1, var2, var3;
 
 			String strSubject = "A new policy has been published on : " + currentdoc.getItemValueString("Subject");
@@ -312,6 +311,7 @@ public class Policy {
 	/**
 	 *[Creates a request to sign the selected policy document]
 	 */
+	@SuppressWarnings("unchecked")
 	public void signPolicy()
 	{
 		

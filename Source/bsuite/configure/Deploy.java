@@ -4,19 +4,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Vector;
 
-import javax.management.relation.Role;
-
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
-import bsuite.jsonparsing.GroupEntry;
 import bsuite.jsonparsing.ProfileJson;
 import bsuite.utility.Utility;
 import bsuite.relationship.Association;
-
-import bsuite.utility.Utility;
 
 import lotus.domino.Database;
 import lotus.domino.Document;
@@ -45,7 +40,6 @@ public class Deploy {
 			Utility.getCurrentDatabase().createView("Test View");
 
 		} catch (NotesException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -60,7 +54,6 @@ public class Deploy {
 		try {
 			roleView = Utility.getCurrentDatabase().getView("RolesView");
 		} catch (NotesException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
@@ -80,19 +73,18 @@ public class Deploy {
 					}
 				}
 			} catch (NotesException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	public void createProfileDoc(String profileName) throws NotesException {
 		createProfileDocument(Utility.getDatabase("Security.nsf"), profileName);
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public void createProfileDocument(Database db, String profileName) {
 		// Creates the profile document in security.nsf
 
@@ -480,6 +472,7 @@ public class Deploy {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public void createDatabases() {
 		DefineModule def = new DefineModule();
 		Vector<String> moduleNames = def.getModules();
@@ -562,11 +555,6 @@ public class Deploy {
 
 	}
 
-	private ProfileJson updateModule(ProfileJson jsonObj, Module module) {
-
-		return null;
-	}
-
 	private ProfileJson updateFeature(ProfileJson jsonObj, String moduleName,
 			String featureName) {
 		
@@ -594,8 +582,7 @@ public class Deploy {
 			for (bsuite.jsonparsing.Feature feature : featureList) {
 
 				if (feature.getFeatureName().equals(featureName)) {
-					System.out.println("The feature " + featureName
-							+ " already exists");
+
 					return jsonObj;
 				}
 			}
@@ -616,6 +603,7 @@ public class Deploy {
 	private ProfileJson updateEntity(ProfileJson jsonObj, String moduleName,
 			String entityName, Database db) {
 		
+		@SuppressWarnings("unused")
 		View view = null;
 		ArrayList<bsuite.jsonparsing.Module> modules = jsonObj.getModules();
 		
@@ -638,15 +626,12 @@ public class Deploy {
 		
 
 		if (entityList != null) {
-			System.out.println("24.." + entityList.size() + " "
-					+ module1.getModuleName());
+
 			for (bsuite.jsonparsing.Entity entity : entityList) {
-				System.out.println("entityName" + entity.getEntityName() + " "
-						+ entityName);
+
 				if (entity != null && entity.getEntityName() != null) {
 					if (entity.getEntityName().equals(entityName)) {
-						System.out.println("The entity " + entityName
-								+ " already exists");
+
 						return jsonObj;
 					}
 				}
@@ -662,8 +647,7 @@ public class Deploy {
 		
 		entityList.add(entity);
 		module1.setEntities(entityList);
-		System.out.println("added entity" + entity.getEntityName() + " "
-				+ entity.getCreate());
+
 	
 
 		
@@ -675,7 +659,6 @@ public class Deploy {
 	private ProfileJson updateField(ProfileJson jsonObj, String moduleName,
 			String entityName, String fieldName, Database db, int vColumn) {
 		
-		View view = null;
 		ArrayList<bsuite.jsonparsing.Module> modules = jsonObj.getModules();
 		
 		bsuite.jsonparsing.Module module1 = null;
@@ -696,11 +679,9 @@ public class Deploy {
 		
 		ArrayList<bsuite.jsonparsing.Entity> entityList = module1.getEntities();
 		
-		System.out.println("24.." + entityList.size() + " "
-				+ module1.getModuleName());
+
 		for (bsuite.jsonparsing.Entity entity : entityList) {
-			System.out.println("entityName" + entity.getEntityName() + " "
-					+ entityName);
+
 			if (entity != null && entity.getEntityName() != null) {
 				if (entity.getEntityName().equals(entityName)) {
 					entity1 = entity;
@@ -720,8 +701,7 @@ public class Deploy {
 		for (bsuite.jsonparsing.Field field : fieldList) {
 			if (field != null && field.getFieldName() != null) {
 				if (field.getFieldName().equals(fieldName)) {
-					System.out.println("The Field " + fieldName
-							+ " already exists");
+
 					return jsonObj;
 				}
 			}
@@ -732,8 +712,7 @@ public class Deploy {
 		
 		fieldList.add(field);
 		entity1.setFields(fieldList);
-		System.out.println("added entity" + field.getFieldName() + " "
-				+ field.getVisible());
+
 
 		
 		return jsonObj;
@@ -763,11 +742,9 @@ public class Deploy {
 		
 		ArrayList<bsuite.jsonparsing.Entity> entityList = module1.getEntities();
 		
-		System.out.println("24.." + entityList.size() + " "
-				+ module1.getModuleName());
+
 		for (bsuite.jsonparsing.Entity entity : entityList) {
-			System.out.println("entityName" + entity.getEntityName() + " "
-					+ entityName);
+
 			if (entity != null && entity.getEntityName() != null) {
 				if (entity.getEntityName().equals(entityName)) {
 					entity1 = entity;
@@ -806,9 +783,8 @@ public class Deploy {
 	 *[This method is used to update the given profile document once a new profile document is created.]
 	 *@return
 	 */
+	@SuppressWarnings("unchecked")
 	public boolean updateProfileDoc(String profileName)throws NotesException, JsonGenerationException, JsonMappingException, IOException{
-		
-		ArrayList<Document> dc = getProfileDocs();//Get document collection of all profiles
 		
 		Document doc = null;
 		String moduleName = null;
@@ -828,7 +804,6 @@ public class Deploy {
 		
 		
 		ProfileJson jsonObj =null; 
-		View view = null;
 		String entityName = "";
 		String fieldName = "";
 		String groupName = "";
@@ -846,9 +821,7 @@ public class Deploy {
 					features = df.getFeatures(moduleName); //for the features defined in each module
 					 entities = df.getEntityNames(moduleName);
 					 groups = df.getGroupNames(moduleName);
-					 view = null;
-					
-					if(features==null){
+					 if(features==null){
 						
 					}
 					
@@ -941,9 +914,9 @@ public class Deploy {
 			} catch (NotesException e) {
 				e.printStackTrace();
 			}
-		//}	
 		return true;
 	}
+	@SuppressWarnings("unchecked")
 	public void updateAllProfiles() throws NotesException, JsonGenerationException, JsonMappingException, IOException{
 		
 		ArrayList<Document> dc = getProfileDocs();//Get document collection of all profiles
@@ -953,7 +926,6 @@ public class Deploy {
 		String featureName = null;
 		DefineModule df = new DefineModule();
 		
-		CreateDatabase cd = new CreateDatabase();
 		Database db = null;
 		
 		Vector<String> modules = df.getModules();//Get the list of module name from the schema
@@ -967,7 +939,6 @@ public class Deploy {
 		
 		
 		ProfileJson jsonObj =null; 
-		View view = null;
 		String entityName = "";
 		String fieldName = "";
 		String groupName = "";
@@ -984,9 +955,7 @@ public class Deploy {
 					features = df.getFeatures(moduleName); //for the features defined in each module
 					 entities = df.getEntityNames(moduleName);
 					 groups = df.getGroupNames(moduleName);
-					 view = null;
-					
-					if(features==null){
+					 if(features==null){
 						
 					}
 					
