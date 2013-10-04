@@ -815,8 +815,6 @@ public class Deploy {
 		String featureName = null;
 		DefineModule df = new DefineModule();
 		
-		ProfileEdit pf = new ProfileEdit();
-		CreateDatabase cd = new CreateDatabase();
 		Database db = null;
 		
 		Vector<String> modules = df.getModules();//Get the list of module name from the schema
@@ -955,7 +953,6 @@ public class Deploy {
 		String featureName = null;
 		DefineModule df = new DefineModule();
 		
-		ProfileEdit pf = new ProfileEdit();
 		CreateDatabase cd = new CreateDatabase();
 		Database db = null;
 		
