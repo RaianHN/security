@@ -9,7 +9,6 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
-
 import bsuite.configure.DefineModule;
 import bsuite.configure.Deploy;
 import bsuite.jsonparsing.Entity;
@@ -30,7 +29,6 @@ import lotus.domino.View;
 public class ProfileEdit {
 
 	public ProfileEdit() {
-
 	}
 
 	public void getModulePermission(String profileName) throws NotesException {
@@ -444,11 +442,8 @@ public class ProfileEdit {
 		String fSec = "";
 		for (int i = 1; i < arr.length; i++) {
 			fSec = arr[i];
-
 			fieldSecurity = fSec.split(":");
-
 			for (Field field : entity.getFields()) {
-
 				
 
 				if (fieldSecurity[0].equals(field.getFieldName())) {
@@ -681,6 +676,9 @@ public class ProfileEdit {
 
 	public Vector<String> getModuleNames(String profileName) {
 		ProfileJson profile = getProfileObj(profileName);
+		if (profile == null) {
+			return null;
+		}
 		Vector<String> modules = new Vector<String>();
 		for (Module mod : profile.getModules()) {
 			modules.add(mod.getModuleName());
@@ -690,6 +688,9 @@ public class ProfileEdit {
 
 	private ProfileJson getProfileObj(String profileName) {
 		Document profDoc = getProfileDoc(getSecurityDatabase(), profileName);
+		if (profDoc == null) {
+			return null;
+		}
 		String jsonString = "";
 		try {
 			jsonString = profDoc.getItemValueString("JsonString");
@@ -1159,6 +1160,7 @@ public class ProfileEdit {
 				.getBindingValue("#{security.profile}");
 
 		String eaccess = profile.getEntityAccessType(moduleName, entityName);
+		// If it is Public read/Write then do nothing
 		if (!eaccess.equals("2")) {
 			if (profile.isEntityDelete(moduleName, entityName)) {
 				return true;

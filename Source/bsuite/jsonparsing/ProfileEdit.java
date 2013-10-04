@@ -30,9 +30,7 @@ public class ProfileEdit {
 
 	public ProfileEdit() {
 	}
-	public void Getmetho(){
-		//
-	}
+
 	public void getModulePermission(String profileName) throws NotesException {
 		Document profDoc = getProfileDoc(getSecurityDatabase(), profileName);
 		String jsonString = "";
@@ -216,6 +214,7 @@ public class ProfileEdit {
 
 		} catch (NotesException e) {
 			e.printStackTrace();
+			return null;
 		}
 		return profDoc;
 	}
@@ -261,11 +260,8 @@ public class ProfileEdit {
 	}
 
 	public void saveModulePerm(String profileName, String vals) {
-
 		String[] arr = vals.split(",");
-
 		Document profDoc = getProfileDoc(getSecurityDatabase(), profileName);
-
 
 		String jsonString = "";
 		try {
@@ -333,7 +329,6 @@ public class ProfileEdit {
 
 			mSec = arr[i];
 			moduleSecurity = mSec.split(":");
-
 			for (Module mod : profile.getModules()) {
 
 				if (moduleSecurity[0].equals(mod.getModuleName())) {
@@ -391,7 +386,6 @@ public class ProfileEdit {
 					+ e.getRead() + e.getUpdate() + e.getDelete()
 					+ e.getAccessType());
 		}
-
 
 		Map viewScope = SessionContext.getViewScope();
 		viewScope.put("entityPerm", entitySecurity);
@@ -485,7 +479,6 @@ public class ProfileEdit {
 			String moduleName) {
 		Vector<String> featureSecurity = new Vector<String>();
 		Module module = null;
-
 		for (Module mod : profile.getModules()) {
 			if (mod.getModuleName().equals(moduleName)) {
 				module = mod;
@@ -514,13 +507,10 @@ public class ProfileEdit {
 	}
 
 	public void saveEntityPerm(String profileName, String vals) {
-
 		String[] arr = vals.split(",");
 		String[] arrs = null;
-
 		Document profDoc = getProfileDoc(getSecurityDatabase(), profileName);
 		String jsonString = "";
-
 		try {
 			jsonString = profDoc.getItemValueString("JsonString");
 		} catch (NotesException e) {
@@ -812,8 +802,6 @@ public class ProfileEdit {
 
 	}
 
-	
-	
 	public void saveFieldPerm(String profileName, String vals) {
 		String[] arr = vals.split(",");
 		String[] arrs = null;
@@ -1632,7 +1620,6 @@ public class ProfileEdit {
 		Vector<String> ets = dm.getEntityNames(moduleName);
 		Vector<String> profEts = getEntityNames(profileName, moduleName);
 		profEts.removeAll(ets);
-		// 
 
 		for (String rEnt : profEts) {
 			removeEntity(profile, moduleName, rEnt);
@@ -1648,7 +1635,6 @@ public class ProfileEdit {
 		Vector<String> proFields = getFieldNames(profileName, moduleName,
 				entityName);
 		proFields.removeAll(fields);
-		// 
 		if (proFields.size() == 0) {
 			return profile;
 		}
