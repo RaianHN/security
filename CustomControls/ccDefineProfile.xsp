@@ -40,27 +40,16 @@ viewScope.profileNames = profileNames;
 var profName = getComponent("moduleCombo").getValue();
 viewScope.selectedProfile = profName;
 var profName2 = viewScope.selectedProfile;
-dBar.info("selected profile"+profName);
 if (profName=="--Select Profile--" || profName2==null || profName2 == undefined){
 return;
 }
 
 var obj = new bsuite.jsonparsing.ProfileEdit();
 obj.getModulePermission(profName2);
-dBar.info("after getting module permission")
 
 
 
-//Below commented for new security UI
-/*
-var component = getComponent('panelPermission'); 
-var s = facesContext;
-var c1="/ccPermissions.xsp";
-// var c1="/cc_TestPage.xsp";
-var id="modulediv";
-bsuite.loadcc.DynamicCC.removePreview(component);
-bsuite.loadcc.DynamicCC.loadCC(s, component, c1, id);
-*/}]]></xp:this.action>
+}]]></xp:this.action>
 								</xp:eventHandler>
 							</xp:comboBox>
 						</xp:td>

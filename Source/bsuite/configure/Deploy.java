@@ -20,6 +20,10 @@ import lotus.domino.NotesException;
 import lotus.domino.View;
 
 
+ /**This class is used to create profile, create role and update permissions
+  *@author JPrakash
+  *@created Oct 6, 2013
+ */
 public class Deploy {
 
 	public boolean createRoleDocs() {
@@ -89,7 +93,7 @@ public class Deploy {
 	public void createProfileDocument(Database db, String profileName) {
 		// Creates the profile document in security.nsf
 
-		// get all the modules defined in xmployee.nsf
+		// get all the modules defined in security.nsf
 		// and the schema defined for each entity
 		// for each field and feature in entity set the permissions and add it
 		// to entity list of profile and finally add the modules in profile
@@ -232,9 +236,9 @@ public class Deploy {
 	}
 
 	private void updateProfileDocument(Document doc, String moduleName) {
-		// Creates the profile document in security.nsf
+		// updates the already created profile document in security.nsf
 
-		// get all the modules defined in xmployee.nsf
+		// get all the modules defined in security.nsf
 		// and the schema defined for each entity
 		// for each field and feature in entity set the permissions and add it
 		// to entity list of profile and finally add the modules in profile

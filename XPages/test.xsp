@@ -7,15 +7,12 @@
 	<xc:ccDebugToolbar load="true" defaultCollapsed="false"
 		collapseTo="left">
 	</xc:ccDebugToolbar>
-	<xp:this.beforePageLoad><![CDATA[#{javascript:
-var user:string = session.getEffectiveUserName();
-var accPriv:int = database.queryAccessPrivileges(user);
-
-viewScope.del = hasDeleteAccess(database,user);
-viewScope.cre = hasCreateAccess(database,user);
-viewScope.edit = hasEditorAccess(database,user);
+	<xp:this.beforePageLoad><![CDATA[#{javascript:var role = new bsuite.security.Role();
+//bsuite.security.Role.getSearchString(String moduleName, String entityName)
+viewScope.search = role.getSearchString("policies","Policy");
 
 }]]></xp:this.beforePageLoad>
 	<xp:br></xp:br>
 	<xc:ccErrorControl ></xc:ccErrorControl>
+	<xp:br></xp:br>
 	</xp:view>

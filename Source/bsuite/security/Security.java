@@ -96,6 +96,7 @@ public class Security {
 			if (role != null) {
 				roleName = role.getRoleName();
 				sessionScope.put("roleName", roleName);
+				
 			}
 			modules = profile.getVisibleModulesNames();
 			modulesEntities = new HashMap<String, ArrayList<String>>();
