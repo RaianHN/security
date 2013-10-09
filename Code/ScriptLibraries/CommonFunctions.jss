@@ -856,7 +856,7 @@ function loadProfile(){
 	
 	
 	
-	if(moduleName == null || profileName == null){
+	if(moduleName == null || profileName == null || profileName=="--Select Profile--"){
 		return;
 		}
 	
