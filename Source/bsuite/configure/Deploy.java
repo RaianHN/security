@@ -105,6 +105,14 @@ public class Deploy {
 		// object
 		// save it as a document in security database, by replacing JsonString
 		// value
+		
+		ProfileEdit pe = new ProfileEdit();
+		Document profileDoc = pe.getProfileDoc(Utility.getCurrentDatabase(),profileName);
+		
+		if(profileDoc!=null){
+			Utility.addErrorMessage(profileName+" is already present.");
+			return;
+		}
 
 		DefineModule def = new DefineModule();
 		Vector<String> moduleNames = def.getModules();
@@ -1185,13 +1193,13 @@ public class Deploy {
 		ProfileEdit pf = new ProfileEdit();
 		Document profileDoc = pf.getProfileDoc(Utility.getCurrentDatabase(),profileName);
 		
-		if(pf==null){
+		if(profileDoc==null){
 			Utility.addErrorMessage("Selected profile is not found");
 			return false;
 		}
 		
 		
-		if(pf.getProfileDoc(Utility.getCurrentDatabase(),profileName)==null){
+		if(pf.getProfileDoc(Utility.getCurrentDatabase(),replPrfName)==null){
 			Utility.addErrorMessage("Selected replacement profile is not found");
 			return false;
 		}

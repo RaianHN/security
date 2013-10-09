@@ -43,7 +43,7 @@
 						<xp:this.action><![CDATA[#{javascript:var defModule = new bsuite.configure.DefineModule();
 
 var moduleName = getComponent("moduleName").getValue();
-var features:java.util.Vector = getComponent("features").getValue();
+var features = getComponent("features").getValue();
 
 defModule.addFeatures(moduleName,features);
 var component = getComponent('loadCC'); 

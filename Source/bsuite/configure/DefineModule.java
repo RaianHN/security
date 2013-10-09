@@ -508,7 +508,7 @@ public class DefineModule {
 
 			ArrayList<Field> fieldsList = new ArrayList<Field>();
 
-			if(!field.equals("") || field!=null){
+			if(!field.equals("") && field!=null){
 				
 					// Add fields to the new entity
 					Field field1 = new Field();

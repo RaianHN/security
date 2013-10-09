@@ -255,6 +255,12 @@ viewScope.groupEntries = schemaObj.getGroupEntryNames(moduleName,selectedGroup);
 			</xp:tr>
 		</xp:table>
 	</xp:div>
+	<xp:button value="Update Groups" id="bUpdateProfiles">
+		<xp:eventHandler event="onclick" submit="true"
+			refreshMode="complete">
+			<xp:this.action><![CDATA[#{javascript:updateAddSchema();}]]></xp:this.action>
+		</xp:eventHandler>
+	</xp:button>
 	<xp:br></xp:br>
 	</xp:div>
 	</xp:view>

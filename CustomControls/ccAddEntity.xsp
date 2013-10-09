@@ -53,7 +53,7 @@
 
 var moduleName = getComponent("moduleName").getValue();
 var entityName = getComponent("entityName").getValue();
-var fields :java.util.Vector = getComponent("fields").getValue();
+var fields  = getComponent("fields").getValue();
 
 
 defModule.addEntity(moduleName,entityName, fields);
