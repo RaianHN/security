@@ -2,6 +2,10 @@ package bsuite.jsonparsing;
 
 import java.util.ArrayList;
 
+ /**Entity object used in the profile document to define permissions, contains getters and setters for its properties
+  *@author JPrakash
+  *@created Oct 9, 2013
+ */
 public class Entity{
 	
 	

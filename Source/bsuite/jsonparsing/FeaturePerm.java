@@ -1,5 +1,10 @@
 package bsuite.jsonparsing;
 
+ /***This class is for Features in the json String, for feature permissions and is stored in profile document, contains getter
+  * and setters for feature and its permission, not in use currently
+  *@author JPrakash
+  *@created Oct 9, 2013
+ */
 public class FeaturePerm {
 
 	private String featureName;

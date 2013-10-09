@@ -26,11 +26,19 @@ import lotus.domino.Document;
 import lotus.domino.NotesException;
 import lotus.domino.View;
 
+ /**This class is used to modify the profile object
+  *@author JPrakash
+  *@created Oct 9, 2013
+ */
 public class ProfileEdit {
 
 	public ProfileEdit() {
 	}
 
+	/**Sets the module permissions in the viewscope, which will be used to show the tabs when a profile is selected
+	 *@param profileName name of the profile
+	 *@throws NotesException
+	 */
 	public void getModulePermission(String profileName) throws NotesException {
 		Document profDoc = getProfileDoc(getSecurityDatabase(), profileName);
 		String jsonString = "";
@@ -43,6 +51,12 @@ public class ProfileEdit {
 		profDoc.recycle();
 	}
 	
+	/**Sets the module permission for a given profile and its module
+	 *@param profileName name of the profile
+	 *@param moduleName module name
+	 *@return permission string
+	 *@throws NotesException
+	 */
 	public String getModulePermission(String profileName, String moduleName) throws NotesException {
 		Document profDoc = getProfileDoc(getSecurityDatabase(), profileName);
 		String jsonString = "";
@@ -56,6 +70,11 @@ public class ProfileEdit {
 		return setModuleViewScope(getJsonProfileObj(jsonString), moduleName);
 	}
 
+	/**Prepares a string with module name and tab visibility
+	 *@param profile profile name
+	 *@param moduleName module name
+	 *@return permission string
+	 */
 	private String setModuleViewScope(ProfileJson profile,
 			String moduleName) {
 	
@@ -79,6 +98,11 @@ public class ProfileEdit {
 		
 		return result;
 	}
+	/**Gets the entity permissions and sets in the view scope of a given module and profile
+	 *@param profileName profile name
+	 *@param moduleName module name
+	 *@return lis of entities and its permissions
+	 */
 	public Vector<String> getEntityPermission(String profileName,
 			String moduleName) {
 
@@ -92,6 +116,12 @@ public class ProfileEdit {
 		return setEntityViewScopeCrud(getJsonProfileObj(jsonString), moduleName);
 
 	}
+	/**Gets the entity action permission of a given entity and sets in the view scope
+	 *@param profileName profile name
+	 *@param moduleName module name
+	 *@param entityName entity name
+	 *@return list of entity action permission
+	 */
 	public Vector<String> getEntityActionPermission(String profileName,
 			String moduleName,String entityName){
 		//This method is used to get the entity permission and its action permission, used in new security ui to get a particular entities permission
@@ -107,6 +137,12 @@ public class ProfileEdit {
 		
 	}
 
+	/**Gets the field permission of a given entity and sets in the view scope
+	 *@param profileName profile name
+	 *@param moduleName module name
+	 *@param entityName entity name
+	 *@return list of field and its permissions
+	 */
 	public Vector<String> getFieldPermission(String profileName,
 			String moduleName, String entityName) {
 		Document profDoc = getProfileDoc(getSecurityDatabase(), profileName);
@@ -120,6 +156,12 @@ public class ProfileEdit {
 				entityName);
 
 	}
+	/**Gets the group entry permission of a given group
+	 *@param profileName profile name
+	 *@param moduleName module name
+	 *@param groupName group name
+	 *@return lis of group entries and its permission set in view scope
+	 */
 	public Vector<String> getGroupEntryPermission(String profileName,String moduleName, String groupName){
 		Document profDoc = getProfileDoc(getSecurityDatabase(), profileName);
 		String jsonString = "";
@@ -132,6 +174,12 @@ public class ProfileEdit {
 		
 	}
 
+	/**Sets the group entry and its permission by preparig the string 
+	 *@param profile profile name
+	 *@param moduleName module name
+	 *@param groupName group name
+	 *@return string of group entry permissions
+	 */
 	@SuppressWarnings("unchecked")
 	private Vector<String> setGroupEntryCrud(ProfileJson profile,
 			String moduleName, String groupName) {
@@ -175,6 +223,11 @@ public class ProfileEdit {
 		
 		
 	}
+	/**Gets the feature permission, not in use
+	 *@param profileName
+	 *@param moduleName
+	 *@param entityName
+	 */
 	public void getFeaturePermission(String profileName, String moduleName,
 			String entityName) {
 		Document profDoc = getProfileDoc(getSecurityDatabase(), profileName);
@@ -189,6 +242,11 @@ public class ProfileEdit {
 
 	}
 
+	/**gets the feature permission of a given module
+	 *@param profileName profile name
+	 *@param moduleName module name
+	 *@return sets the permission string in the view scope
+	 */
 	public Vector<String> getFeaturePermission(String profileName,
 			String moduleName) {
 	
@@ -204,6 +262,11 @@ public class ProfileEdit {
 
 	}
 
+	/**Gets the profile document of a given profile name
+	 *@param db security databse
+	 *@param profileName profile name
+	 *@return document
+	 */
 	public Document getProfileDoc(Database db, String profileName) {
 
 		View profileView = null;
@@ -219,6 +282,9 @@ public class ProfileEdit {
 		return profDoc;
 	}
 
+	/**Returns the security databse handle
+	 *@return database
+	 */
 	public Database getSecurityDatabase() {
 		Database securitydb = null;
 
@@ -229,6 +295,9 @@ public class ProfileEdit {
 
 
 
+	/**Sets the module permission in the view scope
+	 *@param profile profile name
+	 */
 	@SuppressWarnings("unchecked")
 	private void setModuleViewScope(ProfileJson profile) {
 		Vector<String> moduleSecurity = new Vector<String>();
@@ -241,6 +310,10 @@ public class ProfileEdit {
 		viewScope.put("numberOfModules", moduleSecurity.size());
 	}
 
+	/**Returns the jsonProfile object for a given json string
+	 *@param jsonString
+	 *@return profielJson object
+	 */
 	public ProfileJson getJsonProfileObj(String jsonString) {
 		ObjectMapper mapper = new ObjectMapper();
 		ProfileJson profile = null;
@@ -259,6 +332,10 @@ public class ProfileEdit {
 		return profile;
 	}
 
+	/**Saves the module permission in the given profile document
+	 *@param profileName profile name
+	 *@param vals array of permissions
+	 */
 	public void saveModulePerm(String profileName, String vals) {
 		String[] arr = vals.split(",");
 		Document profDoc = getProfileDoc(getSecurityDatabase(), profileName);
@@ -309,6 +386,10 @@ public class ProfileEdit {
 		}
 	}
 
+	/**Used to store the given permission array in the profile document
+	 *@param profileName profile name
+	 *@param vals array of values
+	 */
 	public void saveFeaturePerm(String profileName, String vals) {
 		String[] arr = vals.split(",");
 		Document profDoc = getProfileDoc(getSecurityDatabase(), profileName);
@@ -365,6 +446,11 @@ public class ProfileEdit {
 		}
 	}
 
+	/**Sets the entity permission in the view scope
+	 *@param profile profile name
+	 *@param moduleName module name
+	 *@return string of permissions
+	 */
 	@SuppressWarnings("unchecked")
 	public Vector<String> setEntityViewScopeCrud(ProfileJson profile,
 			String moduleName) {
@@ -393,6 +479,12 @@ public class ProfileEdit {
 
 	}
 	
+	/**Sets the entity action permission in the view scope
+	 *@param profile profil name
+	 *@param moduleName module name
+	 *@param entityName entity name
+	 *@return string set in the view scope
+	 */
 	@SuppressWarnings("unchecked")
 	public Vector<String> setEntityActionPerm(ProfileJson profile,
 			String moduleName, String entityName) {
@@ -443,6 +535,12 @@ public class ProfileEdit {
 
 	}
 	
+	/**Sets the field permissio in the view scope
+	 *@param profile profile name
+	 *@param moduleName module name
+	 *@param entityName entity name
+	 *@return array of permissions
+	 */
 	@SuppressWarnings("unchecked")
 	public Vector<String> setFieldViewScopeCrud(ProfileJson profile,
 			String moduleName, String entityName) {
@@ -481,6 +579,11 @@ public class ProfileEdit {
 
 	}
 
+	/**Used to set the feature permissions in the viewscope
+	 *@param profile profile name
+	 *@param moduleName module name
+	 *@return string fo permissions
+	 */
 	@SuppressWarnings("unchecked")
 	public Vector<String> setFeatureViewScopeCrud(ProfileJson profile,
 			String moduleName) {
@@ -513,6 +616,10 @@ public class ProfileEdit {
 
 	}
 
+	/**saves the given array of permissions in the profile document
+	 *@param profileName profile name
+	 *@param vals array of permissions
+	 */
 	public void saveEntityPerm(String profileName, String vals) {
 		String[] arr = vals.split(",");
 		String[] arrs = null;
@@ -579,6 +686,10 @@ public class ProfileEdit {
 
 	}
 	
+	/**Saves the given array of permissions in the profile document
+	 *@param profileName profile name
+	 *@param vals array of values
+	 */
 	public void saveEntityActionPerm(String profileName, String vals){
 		String[] arr = vals.split(",");
 		String[] arrs = null;
@@ -741,6 +852,12 @@ public class ProfileEdit {
 	}
 	
 
+	/**Saves the given permission of arrays in the profile document
+	 *@param profileName profiel name
+	 *@param moduleName module name
+	 *@param entityName entity name
+	 *@param vals array of values
+	 */
 	public void saveFieldPerm(String profileName, String moduleName,
 			String entityName, String vals) {
 
@@ -809,6 +926,10 @@ public class ProfileEdit {
 
 	}
 
+	/**Saves given value of permissions in the profile document
+	 *@param profileName profile name
+	 *@param vals array of permissions
+	 */
 	public void saveFieldPerm(String profileName, String vals) {
 		String[] arr = vals.split(",");
 		String[] arrs = null;
@@ -886,6 +1007,10 @@ public class ProfileEdit {
 
 	}
 
+	/**Saves the given permission in the profile document
+	 *@param profileName profiel name
+	 *@param vals array of permissions
+	 */
 	public void saveGroupActionPerm(String profileName, String vals) {
 		String[] arr = vals.split(",");
 		String[] arrs = null;
@@ -965,6 +1090,11 @@ public class ProfileEdit {
 		}
 
 	}
+	/**Returns the feature object
+	 *@param features feature list
+	 *@param featureName feature name
+	 *@return feature object
+	 */
 	private Feature saveGroupFeature(ArrayList<Feature> features, String featureName){
 		
 		if(features==null ||featureName==null){
@@ -981,6 +1111,10 @@ public class ProfileEdit {
 	}
 
 
+	/**Returns the number of module in a given profile 
+	 *@param profileName profile name
+	 *@return number
+	 */
 	public int getNumberOfMOdules(String profileName) {
 		Document profDoc = getProfileDoc(getSecurityDatabase(), profileName);
 		String jsonString = "";
@@ -993,6 +1127,11 @@ public class ProfileEdit {
 
 	}
 
+	/**Returns number of features in a given profile's module
+	 *@param profileName profile name
+	 *@param moduleName module name
+	 *@return number
+	 */
 	public int getNumberOfFeatures(String profileName, String moduleName) {
 		Document profDoc = getProfileDoc(getSecurityDatabase(), profileName);
 		String jsonString = "";
@@ -1006,6 +1145,11 @@ public class ProfileEdit {
 
 	}
 
+	/**Returns number of features in a given module 
+	 *@param profile profile name
+	 *@param moduleName module name
+	 *@return number
+	 */
 	private int getFeatureNumber(ProfileJson profile, String moduleName) {
 		Module module = null;
 		for (Module mod : profile.getModules()) {
@@ -1024,6 +1168,11 @@ public class ProfileEdit {
 
 	}
 
+	/**Returns number of entities in a given module
+	 *@param profileName profile name
+	 *@param moduleName module name
+	 *@return number
+	 */
 	public int getNumberOfEntities(String profileName, String moduleName) {
 		Document profDoc = getProfileDoc(getSecurityDatabase(), profileName);
 		String jsonString = "";
@@ -1036,6 +1185,11 @@ public class ProfileEdit {
 
 	}
 
+	/**Returns number of entities in a given module
+	 *@param profile profile name
+	 *@param moduleName module name
+	 *@return number
+	 */
 	private int getEntityNumber(ProfileJson profile, String moduleName) {
 		Module module = null;
 
@@ -1054,6 +1208,11 @@ public class ProfileEdit {
 		return 0;
 	}
 	
+	/**REturns number of groups in a given module
+	 *@param profileName profile name
+	 *@param moduleName module name
+	 *@return number
+	 */
 	public String getNumberOfGroups(String profileName, String moduleName){
 		Document profDoc = getProfileDoc(getSecurityDatabase(), profileName);
 		String jsonString = "";
@@ -1066,6 +1225,11 @@ public class ProfileEdit {
 
 	}
 
+	/**Returs number of groups in a given module
+	 *@param profile profile name
+	 *@param moduleName module name
+	 *@return number
+	 */
 	private String getGroupNumber(ProfileJson profile, String moduleName) {
 		Module module = null;
 
@@ -1087,6 +1251,10 @@ public class ProfileEdit {
 		
 	}
 	
+	/**Returns group names for a given module
+	 *@param module module object
+	 *@return list of grou names
+	 */
 	private ArrayList<String> getGroupNames(Module module){
 		ArrayList<String> groupNames = new ArrayList<String>();
 		
@@ -1105,6 +1273,12 @@ public class ProfileEdit {
 		}
 		return groupNames;
 	}
+	/**Returns number of fields in a given entity
+	 *@param profileName profile name
+	 *@param moduleName module name
+	 *@param entityName entity name
+	 *@return number
+	 */
 	public int getNumberOfFields(String profileName, String moduleName,
 			String entityName) {
 		Document profDoc = getProfileDoc(getSecurityDatabase(), profileName);
@@ -1119,6 +1293,12 @@ public class ProfileEdit {
 
 	}
 	
+	/**Returns number of actions in a given group
+	 *@param profileName profile name
+	 *@param moduleName module name
+	 *@param groupName group name
+	 *@return number
+	 */
 	public int getNumberOfActions(String profileName, String moduleName,
 			String groupName) {
 		Document profDoc = getProfileDoc(getSecurityDatabase(), profileName);
@@ -1133,6 +1313,12 @@ public class ProfileEdit {
 
 	}
 
+	/**Returns the number of actions ina given group
+	 *@param profile profile name
+	 *@param moduleName module name
+	 *@param groupName group name
+	 *@return number
+	 */
 	private int getActionNumber(ProfileJson profile, String moduleName,
 			String groupName) {
 		Module module = null;
@@ -1162,6 +1348,12 @@ public class ProfileEdit {
 		
 		return 0;
 	}
+	/**Returns number of fields for a given entity
+	 *@param profile
+	 *@param moduleName
+	 *@param entityName
+	 *@return
+	 */
 	private int getFieldNumber(ProfileJson profile, String moduleName,
 			String entityName) {
 		Module module = null;
@@ -1188,6 +1380,10 @@ public class ProfileEdit {
 		return 0;
 	}
 
+	/**Returns number of modules in a profile
+	 *@param profile
+	 *@return
+	 */
 	private int getModuleNumber(ProfileJson profile) {
 		ArrayList<Module> modules = profile.getModules();
 		if (modules != null) {
@@ -1197,6 +1393,10 @@ public class ProfileEdit {
 		return 0;
 	}
 
+	/**Returns list of module names in an profile
+	 *@param profileName
+	 *@return
+	 */
 	public Vector<String> getModuleNames(String profileName) {
 		ProfileJson profile = getProfileObj(profileName);
 		if (profile == null) {
@@ -1209,6 +1409,10 @@ public class ProfileEdit {
 		return modules;
 	}
 
+	/**Returns the profilejson object for a profile
+	 *@param profileName
+	 *@return
+	 */
 	private ProfileJson getProfileObj(String profileName) {
 		Document profDoc = getProfileDoc(getSecurityDatabase(), profileName);
 		if (profDoc == null) {
@@ -1223,6 +1427,11 @@ public class ProfileEdit {
 		return getJsonProfileObj(jsonString);
 	}
 
+	/**Returns the list of entity names for a given module
+	 *@param profileName
+	 *@param moduleName
+	 *@return
+	 */
 	public Vector<String> getEntityNames(String profileName, String moduleName) {
 		ProfileJson profile = getProfileObj(profileName);
 		Module module = getModule(profile, moduleName);
@@ -1233,6 +1442,11 @@ public class ProfileEdit {
 		return entities;
 	}
 
+	/**Returns list of entity names for a module
+	 *@param profile
+	 *@param moduleName
+	 *@return
+	 */
 	public Vector<String> getEntityNames(ProfileJson profile, String moduleName) {
 		Module module = getModule(profile, moduleName);
 		Vector<String> entities = new Vector<String>();
@@ -1242,6 +1456,11 @@ public class ProfileEdit {
 		return entities;
 	}
 
+	/**Returns the module object for given module name in a profile
+	 *@param profile
+	 *@param moduleName
+	 *@return
+	 */
 	private Module getModule(ProfileJson profile, String moduleName) {
 		for (Module module : profile.getModules()) {
 			if (module.getModuleName().equals(moduleName)) {
@@ -1251,6 +1470,10 @@ public class ProfileEdit {
 		return null;
 	}
 
+	/**Saves the access type permission using the given list of permissions in the array
+	 *@param profileName
+	 *@param vals
+	 */
 	public void saveAccessTypePerm(String profileName, String vals) {
 		String[] arr = null;
 		String[] arrs = null;
@@ -1322,6 +1545,10 @@ public class ProfileEdit {
 
 
 
+	/**Returns the number of modules in the profile
+	 *@param profileName
+	 *@return
+	 */
 	public String getModuleN(String profileName) {
 		Document profDoc = getProfileDoc(getSecurityDatabase(), profileName);
 		String jsonString = "";
@@ -1334,6 +1561,10 @@ public class ProfileEdit {
 
 	}
 
+	/**Returns number of features in the profile
+	 *@param profileName
+	 *@return
+	 */
 	public String getFeatureN(String profileName) {
 		Document profDoc = getProfileDoc(getSecurityDatabase(), profileName);
 		String jsonString = "";
@@ -1376,6 +1607,10 @@ public class ProfileEdit {
 		return result;
 	}
 
+	/**Returns number of entities in the profile
+	 *@param profileName
+	 *@return
+	 */
 	public String getEntityN(String profileName) {
 		Document profDoc = getProfileDoc(getSecurityDatabase(), profileName);
 		String jsonString = "";
@@ -1417,6 +1652,10 @@ public class ProfileEdit {
 	}
 
 
+	/**Returns number of fields in the profile
+	 *@param profileName
+	 *@return
+	 */
 	public String getFieldN(String profileName) {
 
 		Document profDoc = getProfileDoc(getSecurityDatabase(), profileName);
@@ -1450,6 +1689,11 @@ public class ProfileEdit {
 
 	}
 
+	/**Returns number of actions in the module
+	 *@param profileName
+	 *@param moduleName
+	 *@return
+	 */
 	public String getActionN(String profileName,String moduleName){
 		Document profDoc = getProfileDoc(getSecurityDatabase(), profileName);
 		String jsonString = "";
@@ -1481,6 +1725,12 @@ public class ProfileEdit {
 		return result;
 	}
 	
+	/**Returns number of fields in the entity
+	 *@param profileName
+	 *@param moduleName
+	 *@param entityName
+	 *@return
+	 */
 	public String getFieldN(String profileName, String moduleName, String entityName){
 		Document profDoc = getProfileDoc(getSecurityDatabase(), profileName);
 		String jsonString = "";
@@ -1511,6 +1761,12 @@ public class ProfileEdit {
 		return "0";
 	}
 	
+	/**returns the list of features from admin profile, this will be used
+		// when updating schema
+	 *@param profileName
+	 *@param moduleName
+	 *@return
+	 */
 	public Vector<String> getFeatureNames(String profileName, String moduleName) {
 		// returns the list of features from admin profile, this will be used
 		// when updating schema
@@ -1523,6 +1779,13 @@ public class ProfileEdit {
 		return features;
 	}
 
+	/** returns the list of fields in the amdin profile, this will be used
+		// when updating schema
+	 *@param profileName
+	 *@param moduleName
+	 *@param entityName
+	 *@return
+	 */
 	public Vector<String> getFieldNames(String profileName, String moduleName,
 			String entityName) {
 		// returns the list of fields in the amdin profile, this will be used
@@ -1548,6 +1811,13 @@ public class ProfileEdit {
 		return fields;
 	}
 	
+	/**returns the list of actions in the amdin profile, this will be used
+		// when updating schema
+	 *@param profileName
+	 *@param moduleName
+	 *@param entityName
+	 *@return
+	 */
 	public Vector<String> getEntityAction(String profileName, String moduleName,
 			String entityName) {
 		// returns the list of actions in the amdin profile, this will be used
@@ -1574,6 +1844,12 @@ public class ProfileEdit {
 	}
 	
 	
+	/**Removes a feature from teh schema
+	 *@param profile
+	 *@param moduleName
+	 *@param featureName
+	 *@return
+	 */
 	public ProfileJson removeFeature(ProfileJson profile, String moduleName,
 			String featureName) {
 		Module module = getModule(profile, moduleName);
@@ -1592,6 +1868,12 @@ public class ProfileEdit {
 		return profile;
 	}
 	
+	/**Removes the group entry in the profile
+	 *@param profile
+	 *@param module
+	 *@param featureName
+	 *@return
+	 */
 	private ProfileJson removeGroupEntry(ProfileJson profile, Module module, String featureName){
 		ArrayList<GroupPermission> groups = module.getGroups();
 		if(groups==null){
@@ -1610,6 +1892,11 @@ public class ProfileEdit {
 
 	
 
+	/**Removes the group entry from the grouppermission object
+	 *@param group
+	 *@param featureName
+	 *@return
+	 */
 	private boolean removeGroupEntry(GroupPermission group, String featureName)
 	{
 		ArrayList <GroupEntry> ge = group.getEntries();
@@ -1627,6 +1914,12 @@ public class ProfileEdit {
 	}
 
 	
+	/**Removes the entity from the module
+	 *@param profile
+	 *@param moduleName
+	 *@param entityName
+	 *@return
+	 */
 	public ProfileJson removeEntity(ProfileJson profile, String moduleName,
 			String entityName) {
 		Module module = getModule(profile, moduleName);
@@ -1641,6 +1934,13 @@ public class ProfileEdit {
 		return profile;
 	}
 
+	/**Removes the field from the entity
+	 *@param profile
+	 *@param moduleName
+	 *@param entityName
+	 *@param fieldName
+	 *@return
+	 */
 	public ProfileJson removeField(ProfileJson profile, String moduleName,
 			String entityName, String fieldName) {
 
@@ -1674,6 +1974,12 @@ public class ProfileEdit {
 		return profile;
 	}
 
+	/**Removes the feature from the module
+	 *@param profile
+	 *@param profileName
+	 *@param moduleName
+	 *@return
+	 */
 	public ProfileJson removeFeature1(ProfileJson profile, String profileName,
 			String moduleName) {
 		DefineModule dm = new DefineModule();
@@ -1688,6 +1994,12 @@ public class ProfileEdit {
 		return profile;
 	}
 
+	/**Removes the entity from the module
+	 *@param profile
+	 *@param profileName
+	 *@param moduleName
+	 *@return
+	 */
 	@SuppressWarnings("unchecked")
 	public ProfileJson removeEntity1(ProfileJson profile, String profileName,
 			String moduleName) {
@@ -1703,6 +2015,13 @@ public class ProfileEdit {
 		return profile;
 	}
 
+	/**Removes the field from the entity
+	 *@param profile
+	 *@param profileName
+	 *@param moduleName
+	 *@param entityName
+	 *@return
+	 */
 	public ProfileJson removeField1(ProfileJson profile, String profileName,
 			String moduleName, String entityName) {
 		DefineModule dm = new DefineModule();
@@ -1720,6 +2039,13 @@ public class ProfileEdit {
 		return null;
 	}
 	
+	/**Removes the entity action from the entity
+	 *@param profile
+	 *@param profileName
+	 *@param moduleName
+	 *@param entityName
+	 *@return
+	 */
 	public ProfileJson removeEntityActions1(ProfileJson profile, String profileName,
 			String moduleName, String entityName) {
 		DefineModule dm = new DefineModule();
@@ -1739,6 +2065,13 @@ public class ProfileEdit {
 		return null;
 	}
 
+	/**Removes the entity action from the entity
+	 *@param profile
+	 *@param moduleName
+	 *@param entityName
+	 *@param actionName
+	 *@return
+	 */
 	private ProfileJson removeEntityAction(ProfileJson profile, String moduleName,
 			String entityName, String actionName)
 	{
@@ -1772,6 +2105,9 @@ public class ProfileEdit {
 		return profile;
 	}
 
+	/**
+	 *Updates all the profile when something is deleted.
+	 */
 	public void removeUpdate() {
 		Deploy dp = new Deploy();
 		ArrayList<Document> pDocs = dp.getProfileDocs();
@@ -1826,6 +2162,11 @@ public class ProfileEdit {
 
 	}
 
+	/**Checks the delete access for an entity
+	 *@param moduleName
+	 *@param entityName
+	 *@return
+	 */
 	public boolean checkEntityDelete(String moduleName, String entityName) {
 		Profile profile = (Profile) JSFUtil
 				.getBindingValue("#{security.profile}");
@@ -1898,6 +2239,11 @@ public class ProfileEdit {
 		
 	}
 	
+	/**Returns the feature permissions
+	 *@param features
+	 *@param otherFeatureNames
+	 *@return
+	 */
 	@SuppressWarnings("unchecked")
 	private Vector<String> getFeaturePerm(ArrayList<Feature> features, ArrayList<String> otherFeatureNames){
 		Vector<String> featurePerm = new Vector<String>();
@@ -1926,6 +2272,11 @@ public class ProfileEdit {
 		
 		
 	}
+	/**Used in removing and grouping features
+	 *@param groupFeatureNames
+	 *@param module
+	 *@return
+	 */
 	private ArrayList<String> getOtherFeatures(ArrayList<String> groupFeatureNames,Module module){
 		if(module==null){
 			return null;
@@ -1939,6 +2290,10 @@ public class ProfileEdit {
 		
 		
 	}
+	/**usedin removing and grouping of features
+	 *@param module
+	 *@return
+	 */
 	private ArrayList<String> getAllFtNames(Module module){
 		ArrayList<Feature> features = module.getFeatures();
 		ArrayList<String> featureNames = new ArrayList<String>();
@@ -1956,6 +2311,11 @@ public class ProfileEdit {
 		
 	}
 	
+	/**Returns the list of feature names
+	 *@param groupNames
+	 *@param module
+	 *@return
+	 */
 	private ArrayList<String> getFeatureNames(ArrayList<String> groupNames, Module module){
 		ArrayList<String> featureNames = new ArrayList<String>();
 		ArrayList<String> featuresInGroup = null;
@@ -1979,6 +2339,11 @@ public class ProfileEdit {
 		return featureNames;
 		
 	}
+	/**Returns list of features in the group
+	 *@param groupName
+	 *@param groups
+	 *@return
+	 */
 	private ArrayList<String> getFeaturesInGroup(String groupName,ArrayList<GroupPermission> groups ){
 		ArrayList<String> features = new ArrayList<String>();
 		GroupPermission group = null;
@@ -2012,6 +2377,11 @@ public class ProfileEdit {
 	}
 	
 	
+	/**Sets the group permissions in the viewscope for later usage
+	 *@param profile
+	 *@param moduleName
+	 *@return
+	 */
 	@SuppressWarnings("unchecked")
 	private Vector<String> setGroupViewScopeCrud(ProfileJson profile,String moduleName) {
 		Vector<String> groupSecurity = new Vector<String>();
@@ -2039,6 +2409,11 @@ public class ProfileEdit {
 		return groupSecurity;
 	}
 	
+	/**Removes the module from the profile
+	 *@param profile
+	 *@param moduleName
+	 *@return
+	 */
 	private ProfileJson removeModule(ProfileJson profile, String moduleName) {
 		Module module = getModule(profile, moduleName);
 		if(module != null){
@@ -2049,6 +2424,10 @@ public class ProfileEdit {
 	}
 
 	
+	/**Removes the module from all profiles
+	 *@param moduleName
+	 *@return
+	 */
 	public boolean removeModule(String moduleName) {
 		Deploy dp = new Deploy();
 		ArrayList<Document> pDocs = dp.getProfileDocs();

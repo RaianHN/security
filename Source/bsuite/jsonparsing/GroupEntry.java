@@ -1,5 +1,9 @@
 package bsuite.jsonparsing;
 
+ /**Used to maintain the group entries inside a menu(group), contains getter and setters for groupentry and its permissions
+  *@author JPrakash
+  *@created Oct 9, 2013
+ */
 public class GroupEntry {
 	private String type;//entity of feature
 	private String name;//name of the entry
