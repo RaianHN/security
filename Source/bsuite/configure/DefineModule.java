@@ -719,7 +719,75 @@ public class DefineModule {
 		}
 
 	}
+	/**Entity feature will be removed from the given entity
+	 *@param moduleName module name
+	 *@param entityName entity name
+	 *@param actionName action name
+	 */
+	@SuppressWarnings("unchecked")
+	public void removeEntityAction(String moduleName, String entityName,
+			String actionName) {
 
+		try {
+			View modulesView = currentdb.getView("Modules");
+
+			Document moduleDoc = modulesView.getDocumentByKey(moduleName);
+
+			String jsonInput = moduleDoc.getItemValueString("JsonString");
+
+			ObjectMapper mapper = new ObjectMapper();
+
+			Module module = mapper.readValue(jsonInput, Module.class);
+			ArrayList<Entity> entities = null;
+			if (module.getEntities() == null) {
+				entities = new ArrayList();
+			} else {
+				entities = module.getEntities();
+			}
+			Entity entity = null;
+			for (Entity e : entities) {
+				if (entities != null) {
+					if (e.getEntityName().equals(entityName)) {
+						entity = e;
+						break;
+					}
+				}
+			}
+
+			ArrayList<EntityAction> actionList = entity.getActions();
+
+			if (actionList == null) {
+				return;
+			}
+			// remove actions from the entity
+			EntityAction ea  = null;
+			for(EntityAction action: actionList){
+				if(action.getActionName()!=null){
+					if(action.getActionName().equals(actionName)){
+						ea = action;
+						break;
+					}
+				}
+			}
+			
+			actionList.remove(ea);
+
+			entity.setActions(actionList);
+
+			moduleDoc.replaceItemValue("JsonString", mapper
+					.writeValueAsString(module));
+			moduleDoc.save();
+		} catch (NotesException e) {
+			e.printStackTrace();
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
 	/**Gets the list of module names from the modules view
 	 *@return list of module names
 	 */

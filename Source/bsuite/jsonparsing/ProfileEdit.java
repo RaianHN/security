@@ -1547,7 +1547,33 @@ public class ProfileEdit {
 		}
 		return fields;
 	}
+	
+	public Vector<String> getEntityAction(String profileName, String moduleName,
+			String entityName) {
+		// returns the list of actions in the amdin profile, this will be used
+		// when updating schema
+		ProfileJson profile = getProfileObj(profileName);
+		Module module = getModule(profile, moduleName);
+		Vector<String> actions = new Vector<String>();
 
+		if (module.getEntities() == null) {
+			return actions;
+		}
+		Entity ent = null;
+		for (Entity entity : module.getEntities()) {
+			if (entity.getEntityName().equals(entityName))
+				ent = entity;
+		}
+		if (ent.getActions() == null) {
+			return actions;
+		}
+		for (EntityAction action : ent.getActions()) {
+			actions.add(action.getActionName());
+		}
+		return actions;
+	}
+	
+	
 	public ProfileJson removeFeature(ProfileJson profile, String moduleName,
 			String featureName) {
 		Module module = getModule(profile, moduleName);
@@ -1655,6 +1681,58 @@ public class ProfileEdit {
 
 		return null;
 	}
+	
+	public ProfileJson removeEntityActions1(ProfileJson profile, String profileName,
+			String moduleName, String entityName) {
+		DefineModule dm = new DefineModule();
+		Vector<String> actions = dm.getEntityActions(moduleName, entityName);
+		Vector<String> proActions = getEntityAction(profileName, moduleName,
+				entityName);
+		if(actions!=null){
+			proActions.removeAll(actions);
+		}
+		if (proActions.size() == 0) {
+			return profile;
+		}
+		for (String action : proActions) {
+			removeEntityAction(profile, moduleName, entityName, action);
+		}
+
+		return null;
+	}
+
+	private ProfileJson removeEntityAction(ProfileJson profile, String moduleName,
+			String entityName, String actionName)
+	{
+		Module module = null;
+		for (Module mod : profile.getModules()) {
+			if (mod.getModuleName().equals(moduleName)) {
+				module = mod;
+				break;
+			}
+
+		}
+		Entity entity = null;
+		for (Entity e : module.getEntities()) {
+			if (e.getEntityName().equals(entityName)) {
+				entity = e;
+				break;
+			}
+		}
+		ArrayList<EntityAction> actions = entity.getActions();
+
+		if (actions == null || actions.size() == 0) {
+			return profile;
+		}
+		for (EntityAction a : actions) {
+			if (a.getActionName().equals(actionName)) {
+				actions.remove(a);
+				break;
+			}
+		}
+
+		return profile;
+	}
 
 	public void removeUpdate() {
 		Deploy dp = new Deploy();
@@ -1682,6 +1760,7 @@ public class ProfileEdit {
 					for (String entityName : entities) {
 						removeField1(profile, profileName, moduleName,
 								entityName);
+						removeEntityActions1(profile,profileName,moduleName, entityName);
 					}
 				}
 
