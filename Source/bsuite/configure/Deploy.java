@@ -24,6 +24,7 @@ import lotus.domino.View;
   *@author JPrakash
   *@created Oct 6, 2013
  */
+
 public class Deploy {
 
 	public boolean createRoleDocs() {
@@ -84,6 +85,10 @@ public class Deploy {
 		}
 	}
 
+	/**
+	 *@param profileName
+	 *@throws NotesException
+	 */
 	public void createProfileDoc(String profileName) throws NotesException {
 		createProfileDocument(Utility.getDatabase("Security.nsf"), profileName);
 

@@ -20,6 +20,10 @@ public class CreateDatabase
 {
 	public StringBuilder strLog;
 
+	/**Used in configuring dynamic security, creates the database and all documents view
+	 *@param dbName name of the databse
+	 *@return database
+	 */
 	public Database createDB(String dbName)
 	{
 		try
@@ -69,13 +73,18 @@ public class CreateDatabase
 		}
 		catch (Exception e)
 		{
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 		return null;
 	}
 
 	
 
+	/**Returns the view of a given database
+	 *@param db database
+	 *@param viewName viewname
+	 *@return database
+	 */
 	public View getView(Database db, String viewName)
 	{
 		try
@@ -99,6 +108,12 @@ public class CreateDatabase
 
 	}
 
+	/**Creates the view in the given database with the given selection formula
+	 *@param db database
+	 *@param viewName name of the view
+	 *@param selFormula view selection formula
+	 *@return view
+	 */
 	public View createView(Database db, String viewName, String selFormula)
 	{
 
@@ -125,22 +140,24 @@ public class CreateDatabase
 		}
 		catch (Exception e)
 		{
+			e.printStackTrace();
 		}
 
 		return null;
 	}
 
+	/**Creates a column in the given view with the given position and title
+	 *@param view view object
+	 *@param pos position
+	 *@param title title
+	 *@param formula column formula
+	 */
 	@SuppressWarnings("unchecked")
 	public void createViewColumn(View view, int pos, String title,
 			String formula)
 	{
 		try
-		{
-			
-			
-			
-			
-			
+		{		
 			Vector columns = view.getColumns();
 			if (!(columns.contains(title)))
 			{
@@ -150,10 +167,15 @@ public class CreateDatabase
 		}
 		catch (Exception e)
 		{
+			e.printStackTrace();
 		}
 
 	}
 
+	/**To create databases for list of module names passed and view will be created with the view selection formula,
+	 * for all the entities present in the view
+	 *@param modules list of moudule names
+	 */
 	@SuppressWarnings("unchecked")
 	public void createDatabases(Vector<String> modules)
 	{
@@ -183,13 +205,13 @@ public class CreateDatabase
 					}
 				}
 			}
-			else
-			{
-				
-			}
+			
 		}
 	}
 
+	/**When an employee is registerd, ceo and admin will be associated.
+	 *@param name name of the employee
+	 */
 	public void RegisterEmployee(String name)
 	{
 		try
@@ -225,6 +247,10 @@ public class CreateDatabase
 
 	}
 
+	/**Associates given user to the given role
+	 *@param username name of the user
+	 *@param roleName rolename
+	 */
 	public void createRoleAssociation(String username, String roleName)
 	{
 
@@ -272,6 +298,10 @@ public class CreateDatabase
 		}
 	}
 
+	/**Gets the person document
+	 *@param username name of the user
+	 *@return person document from admntool.nsf
+	 */
 	private Document getPerson(String username)
 	{
 		try
@@ -289,6 +319,10 @@ public class CreateDatabase
 		return null;
 	}
 
+	/**Returns the unid of the given relation
+	 *@param relationName hasa or isa
+	 *@return unid
+	 */
 	public String getRelationNameUnid(String relationName)
 	{
 		try
@@ -301,10 +335,20 @@ public class CreateDatabase
 		}
 		catch (Exception e)
 		{
+			e.printStackTrace();
 		}
 		return null;
 	}
 
+	/**Creates the relationshp document with the given data
+	 *@param srcunid source unid
+	 *@param sourcedb source database
+	 *@param src_data src data
+	 *@param targetdb target database
+	 *@param trg_data target database
+	 *@param targetid target id
+	 *@param relationid relation unid
+	 */
 	public void createRelationship(String srcunid, String sourcedb,
 			String src_data, String targetdb, String trg_data, String targetid,
 			String relationid)
@@ -329,10 +373,16 @@ public class CreateDatabase
 		}
 		catch (Exception e)
 		{
+			e.printStackTrace();
 		}
 
 	}
 
+	/**Returns the formatted name for a given name
+	 *@param currentuser current user name
+	 *@param param format
+	 *@return name 
+	 */
 	private String getFormattedName(String currentuser, String param)
 	{
 		try
@@ -356,10 +406,14 @@ public class CreateDatabase
 		}
 		catch (Exception e)
 		{
+			e.printStackTrace();
 		}
 		return null;
 	}
 
+	/**
+	 *Creates databases for all the modules
+	 */
 	@SuppressWarnings("unchecked")
 	public void createDatabases()
 	{
@@ -371,12 +425,22 @@ public class CreateDatabase
 
 	}
 
+	/**
+	 *Create databases for modules
+
+	 */
 	public void deploy()
 	{
 		createDatabases();//Create databases for modules
 
 	}
 
+	/**Creates relationship for person, profile and role
+	 *@param personName name of the person
+	 *@param edocid person doc unid
+	 *@param profileName profilename
+	 *@param role role name
+	 */
 	public void createEmployee(String personName, String edocid,
 			String profileName, String role)
 	{
@@ -419,6 +483,10 @@ public class CreateDatabase
 
 	}
 
+	/**Associates the person from admntool.nsf to the given profile
+	 *@param personName peron name
+	 *@param profileName profilename
+	 */
 	public void createProfileAssociation(String personName, String profileName)
 	{
 		Document persondoc = getPerson(personName);
@@ -460,6 +528,11 @@ public class CreateDatabase
 		}
 	}
 
+	/**Creates the profile and role relationship for a given username
+	 *@param personName name of the person
+	 *@param profileName name of the profile
+	 *@param roleName rolename
+	 */
 	public void createRoleProfileAssociation(String personName,
 			String profileName, String roleName)
 	{

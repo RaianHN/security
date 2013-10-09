@@ -14,7 +14,7 @@ import bsuite.utility.Utility;
 
 
 /**
- * To get the associated role name of the current user
+ *Maintains the role details for data visibility
   @author TSangmo
   @created On Aug 8, 2012
  */

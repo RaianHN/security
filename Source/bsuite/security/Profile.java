@@ -78,7 +78,7 @@ public class Profile{
 	 *Returns the list of readable fields
 	 *@param moduleName modulName as string
 	 *@param entityName entity name as string
-	 *@return
+	 *@return list of readable fields
 	 */
 	public ArrayList<Field> getReadonlyFields(String moduleName,
 			String entityName) {

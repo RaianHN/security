@@ -1,6 +1,7 @@
 package bsuite.security;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,6 +27,7 @@ public class Security {
 	private Role role;
 	private ArrayList<String> modules;
 	private HashMap<String, ArrayList<String>> modulesEntities;
+	private HashMap<String, ArrayList<String>> readableEntities;
 	private String profileName;
 	private String roleName;
 	private ArrayList<String> visibleFeatures;
@@ -333,4 +335,32 @@ public class Security {
 		return profile.isEntityActionVisible(module, objectName, actionName);
 	}
 
+	/**Returns the list of module names which is visible for the current user, used in global search
+	 *@return list of module names
+	 */
+	public String[] getVisibleModules(){
+		//Used in global search
+		if(modules==null){
+			return null;
+		}
+		Object[] ObjectList = modules.toArray();
+		String[] stringArray = Arrays.copyOf(ObjectList,ObjectList.length,String[].class);
+		return stringArray;
+		
+		
+		
+	}
+	/**Returns the list of entity names which is visible for the current user, used in global search
+	 *@return list of entity names
+	 */
+	public String[] getReadableEntities(String module){
+		//Used in global search
+		ArrayList<String> entities = readableEntities.get(module);
+		if(entities!=null){
+			Object[] ObjectList = entities.toArray();
+			String[] stringArray = Arrays.copyOf(ObjectList,ObjectList.length,String[].class);
+			return stringArray;
+		}
+		return null;
+	}
 }

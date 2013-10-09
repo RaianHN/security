@@ -16,9 +16,16 @@ import lotus.domino.Document;
 
 import bsuite.utility.Utility;
 
+ /**Used in datasharing to share the document manually
+  *@author JPrakash
+  *@created Oct 8, 2013
+ */
 public class ManualSharing {
 
 	String userName;	
+	/**
+	 * Constructor to  initialize the current user's name
+	 */
 	public ManualSharing() {
 		try {
 			userName = Utility.getCurrentSession().getEffectiveUserName();
@@ -26,6 +33,9 @@ public class ManualSharing {
 			e.printStackTrace();
 		}
 	}
+	/**
+	 *Adds the name of user names for sharing the current document and saves it
+	 */
 	@SuppressWarnings("unchecked")
 	public void sharing() {
 		Map viewscope = (Map) JSFUtil.getVariableValue("viewScope");
@@ -55,6 +65,9 @@ public class ManualSharing {
 
 	}
 
+	/**Used in showing the share button for the document creator
+	 *@return true or false
+	 */
 	@SuppressWarnings("unchecked")
 	public boolean sharevisible() {
 		Association as = new Association();
@@ -85,6 +98,9 @@ public class ManualSharing {
 		return false;
 	}
 
+	/**To get the FullName of all the employees from the employee document
+	 *@return list of employee names for datasharing.
+	 */
 	@SuppressWarnings("unchecked")
 	public Vector getFullName() {
 		Vector profileNames = new Vector();
@@ -109,6 +125,9 @@ public class ManualSharing {
 		return profileNames;
 	}
 
+	/**To show the user name which is already saved in the document for sharing.
+	 *@return list of usernames
+	 */
 	@SuppressWarnings("unchecked")
 	public Vector defaultValues() {
 		Map viewscope = (Map) JSFUtil.getVariableValue("viewScope");
@@ -134,6 +153,10 @@ public class ManualSharing {
 		return defaultusers;
 	}
 
+	
+	/**To get the role names which was already saved in the document for datasharing
+	 *@return list of roles
+	 */
 	@SuppressWarnings("unchecked")
 	public Vector defaultValuesRoles() {
 		Map viewscope = (Map) JSFUtil.getVariableValue("viewScope");

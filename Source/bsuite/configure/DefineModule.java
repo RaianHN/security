@@ -21,12 +21,22 @@ import lotus.domino.ViewEntryCollection;
 
 @SuppressWarnings("unused")
 public class DefineModule {
+	/**
+	 * This class holds all the methods related to module schema in module document
+	 */
 	Database currentdb;
 
+	/**
+	 * Constructor to initialize the current database
+	 */
 	public DefineModule() {
 		currentdb = Utility.getCurrentDatabase();
 	}
 
+	/**
+	 * For the given list of modules, creates the module document and json schema
+	 *@param modules list of modules
+	 */
 	public void addModules(Vector<String> modules) {
 		
 		for (String moduleName : modules) {
@@ -36,6 +46,9 @@ public class DefineModule {
 
 	}
 
+	/** For the given list of modules, creates the module document and json schema
+	 *@param modules module name
+	 */
 	public void addModules(String module) {
 		
 		String moduleJson = createJsonString(module);
@@ -88,6 +101,10 @@ public class DefineModule {
 		return null;
 	}
 
+	/**All the given features will be added to the module in the module documemt
+	 *@param moduleName name of the module
+	 *@param featurenames list of features
+	 */
 	@SuppressWarnings("unchecked")
 	public void addFeatures(String moduleName, Vector<String> featurenames) {
 		try {
@@ -138,6 +155,11 @@ public class DefineModule {
 
 	}
 
+	/**Adds the feature group to the module in the module document
+	 *@param moduleName name of the module
+	 *@param groupName group name,i,e menu
+	 *@return true or false
+	 */
 	public boolean addFeatureGroup(String moduleName, String groupName) {
 		// To add a new feature group for this module
 		try {
@@ -170,6 +192,11 @@ public class DefineModule {
 		return true;
 	}
 
+	/**Removes the feature group, ie. menu
+	 *@param moduleName name of the module
+	 *@param groupName name of the group
+	 *@return true or false
+	 */
 	public boolean removeFeatureGroup(String moduleName, String groupName) {
 		// To remove feature group for this module
 		try {
@@ -203,6 +230,13 @@ public class DefineModule {
 
 	}
 
+	/**To add the entries in the group
+	 *@param moduleName module name
+	 *@param groupName group name
+	 *@param type feature or entity, currently only feature
+	 *@param name feature name
+	 *@return true or false
+	 */
 	public boolean addObjectToGrp(String moduleName, String groupName,
 			String type, String name) {
 		// Called from outside to add an entry into the group
@@ -263,6 +297,12 @@ public class DefineModule {
 		return true;
 	}
 
+	/**Called from addObjectToGrp, to add the entry to the group
+	 *@param module module name
+	 *@param group group name
+	 *@param entry feature name
+	 *@return true or false
+	 */
 	private boolean addGroupEntry(Module module, SchemaGroup group, String entry) {
 		ManageGroup.addObjToGrp(module, group, entry);
 		return true;
@@ -319,6 +359,10 @@ public class DefineModule {
 		return true;
 	}
 
+	/**Adds the given feature in the module document
+	 *@param moduleName module name
+	 *@param featurename feature name
+	 */
 	@SuppressWarnings("unchecked")
 	public void addFeatures(String moduleName, String featurename) {
 		try {
@@ -367,6 +411,11 @@ public class DefineModule {
 
 	}
 
+	/**Adds the entity to the module in the module document
+	 *@param moduleName module name
+	 *@param entityName entity name
+	 *@param fields list of fields
+	 */
 	@SuppressWarnings("unchecked")
 	public void addEntity(String moduleName, String entityName,
 			Vector<String> fields) {
@@ -427,6 +476,11 @@ public class DefineModule {
 		}
 
 	}
+	/**Adds the entity to the module document
+	 *@param moduleName module name
+	 *@param entityName entity name
+	 *@param field field name
+	 */
 	@SuppressWarnings("unchecked")
 	public void addEntity(String moduleName, String entityName,
 			String field) {
@@ -488,6 +542,10 @@ public class DefineModule {
 
 	}
 
+	/**Adds the entity to the module document
+	 *@param moduleName module name
+	 *@param entityName entity name
+	 */
 	@SuppressWarnings("unchecked")
 	public void addEntity(String moduleName, String entityName) {
 
@@ -535,6 +593,11 @@ public class DefineModule {
 
 	}
 
+	/**Adds the field to the module's schema in the module document
+	 *@param moduleName module name
+	 *@param entityName entity name
+	 *@param field field name
+	 */
 	@SuppressWarnings("unchecked")
 	public void addField(String moduleName, String entityName, String field) {
 
@@ -595,6 +658,11 @@ public class DefineModule {
 
 	}
 
+	/**Entity feature will be added to the given entity
+	 *@param moduleName module name
+	 *@param entityName entity name
+	 *@param actionName action name
+	 */
 	@SuppressWarnings("unchecked")
 	public void addEntityAction(String moduleName, String entityName,
 			String actionName) {
@@ -652,6 +720,9 @@ public class DefineModule {
 
 	}
 
+	/**Gets the list of module names from the modules view
+	 *@return list of module names
+	 */
 	@SuppressWarnings("unchecked")
 	public Vector getModules() {
 		
@@ -678,6 +749,10 @@ public class DefineModule {
 		return moduleNames;
 	}
 
+	/**Adds the role in the role hierarchy document, this role hierarcy document will be used for first time deployment
+	 *@param roleName role name
+	 *@param roleParent parent role
+	 */
 	public void addRole(String roleName, String roleParent) {
 		Document roleDoc = getRoleDocument();
 		String roleJson = "";
@@ -747,6 +822,9 @@ public class DefineModule {
 
 	}
 
+	/**Gets the list of roles from the role hierarchy document
+	 *@return list of roles
+	 */
 	@SuppressWarnings("unchecked")
 	public Vector getRoles() {
 		Document roleDoc = getRoleDocument();
@@ -786,6 +864,9 @@ public class DefineModule {
 		return null;
 	}
 
+	/**
+	 *@return
+	 */
 	private Document getRoleDocument() {
 
 		try {

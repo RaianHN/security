@@ -31,6 +31,9 @@ public class Association
 	private Session session;
 	private View profileView;
 
+	/**
+	 * Association constructor for initialization
+	 */
 	public Association()
 	{
 		try
@@ -39,7 +42,7 @@ public class Association
 
 			admntool = Utility.getDatabase("admntool.nsf");
 
-			securityDb = Utility.getCurrentDatabase();
+			securityDb = Utility.getDatabase("Security.nsf");
 			reldb = Utility.getDatabase("relation.nsf");
 
 			roleView = securityDb.getView("RolesView");
@@ -57,7 +60,7 @@ public class Association
 	 * 
 	 * @return [user's profile Name]
 	 * @param currentuser
-	 * @return
+	 * @return profile document
 	 */
 	@SuppressWarnings( { "unchecked" })
 	public Document getAssociatedProfile(String currentuser)
@@ -106,7 +109,6 @@ public class Association
 	 * 
 	 * @return [RoleName]
 	 * @param currentuser
-	 * @return
 	 */
 	@SuppressWarnings("unchecked")
 	public String getAssociatedRoleName(String currentuser)
@@ -149,6 +151,10 @@ public class Association
 
 	}
 
+	/**To get the peron document from admntool.nsf
+	 *@param username
+	 *@return person document
+	 */
 	public Document getPerson(String username)
 	{
 		try
@@ -165,6 +171,11 @@ public class Association
 		return null;
 	}
 
+	/**Returns the formatted name of the given name
+	 *@param currentuser username
+	 *@param param format
+	 *@return formated name
+	 */
 	public String getFormattedName(String currentuser, String param)
 	{
 		try
@@ -194,6 +205,10 @@ public class Association
 		return null;
 	}
 
+	/**Gets the entity document's unid 
+	 *@param entityName name of the given entity
+	 *@return unid 
+	 */
 	public String getEntityUnid(String entityName)
 	{
 
@@ -212,6 +227,10 @@ public class Association
 
 	}
 
+	/**Returns the unid of the parent entity 
+	 *@param entityName name of the entity
+	 *@return unid of the parent entity
+	 */
 	@SuppressWarnings( { "unchecked" })
 	public String getParentEntity(String entityName)
 	{
@@ -223,6 +242,10 @@ public class Association
 		return "";
 	}
 
+	/**Returns the unid of the relation document 
+	 *@param relName name of the relation ex HAS_A
+	 *@return
+	 */
 	private String getRelationDocUnid(String relName)
 	{
 
@@ -244,7 +267,7 @@ public class Association
 	 * 
 	 * @return [ProfileName of the employee]
 	 * @param employeeId
-	 * @return
+	 * @return profile name
 	 */
 	@SuppressWarnings("unchecked")
 	public String getDefaultProfileName(String employeeId)
@@ -276,6 +299,10 @@ public class Association
 
 	}
 
+	/**Returns the profile name of the given user
+	 *@param currentuser user name
+	 *@return profile name
+	 */
 	public String getAssociatedProfileName(String currentuser)
 	{
 
@@ -336,6 +363,10 @@ public class Association
 
 	}
 
+	/**Retuns the FullName of the given employee id
+	 *@param employeeId 
+	 *@return fullname of employee
+	 */
 	@SuppressWarnings("unchecked")
 	public String getDefaultPersonName(String employeeId)
 	{
@@ -365,6 +396,13 @@ public class Association
 		return "";
 	}
 
+	/**To edit the profile and role name of an employee
+	 *@param employeeId unid of the employee
+	 *@param oldprofile profilename
+	 *@param newprofile profilename
+	 *@param oldrole rolename
+	 *@param newrole rolename
+	 */
 	public void editEmployee(String employeeId, String oldprofile,
 			String newprofile, String oldrole, String newrole)
 	{
@@ -373,6 +411,11 @@ public class Association
 		updateAssociatedRole(employeeId, oldrole, newrole);
 	}
 
+	/**To edit the profile and role name of an employee
+	 *@param employeeId unid of the employee
+	 *@param newrole rolename
+	 *@param newprofile profilename
+	 */
 	public void editEmployee(String employeeId, String newrole,
 			String newprofile)
 	{
@@ -385,10 +428,9 @@ public class Association
 	 * [It will update the profile name in the Person-Profile association
 	 * document when Admin change the profile name for the user]
 	 * 
-	 * @return [nothing]
-	 * @param employeeId
-	 * @param oldprofile
-	 * @param newprofile
+	 * @param employeeId unid of the persondocument
+	 * @param oldprofile profilename
+	 * @param newprofile profilename
 	 */
 	@SuppressWarnings("unchecked")
 	private void updateAssociatedProfile(String employeeId, String oldprofile,
@@ -481,12 +523,11 @@ public class Association
 
 	/**
 	 * [It will update the RoleName in the Person-Role association document when
-	 * Admin change the Rolename for the user]
+	 * Admin changes the Rolename for the user]
 	 * 
-	 * @return [nothing]
-	 * @param employeeId
-	 * @param oldrole
-	 * @param newrole
+	 * @param employeeId employee unid
+	 * @param oldrole rolename
+	 * @param newrole rolename
 	 */
 	@SuppressWarnings("unchecked")
 	private void updateAssociatedRole(String employeeId, String oldrole,
@@ -536,9 +577,8 @@ public class Association
 	 * [It will update the RoleName in the Person-Role association document when
 	 * Admin change the Rolename for the user]
 	 * 
-	 * @return [nothing]
-	 * @param employeeId
-	 * @param newrole
+	 * @param employeeId person doc unid
+	 * @param newrole rolename
 	 */
 	@SuppressWarnings("unchecked")
 	private void updateAssociatedRole(String employeeId, String newrole)
@@ -578,6 +618,9 @@ public class Association
 
 	}
 
+	/**Used when ane employee is deleted
+	 *@param employeeId unid of the person document
+	 */
 	public void deleteAssoDoc(String employeeId)
 	{
 		deleteEmpPersonAsso(employeeId);
@@ -590,8 +633,7 @@ public class Association
 	 * [Delete the Person-Role association document when the Employee is deleted
 	 * from the view]
 	 * 
-	 * @return [nothing]
-	 * @param employeeId
+	 * @param employeeId employeeId unid of the person document
 	 */
 	@SuppressWarnings("unchecked")
 	public void deleteRoleDoc(String employeeId)
@@ -704,7 +746,6 @@ public class Association
 	 * 
 	 * @return [Vector containing the names of users]
 	 * @param RoleName
-	 * @return
 	 */
 	@SuppressWarnings("unchecked")
 	public Vector getAssociatedUsers(String RoleName)
@@ -749,7 +790,7 @@ public class Association
 	/**
 	 * To get the list of names associated to a given profile.
 	 * 
-	 * @return
+	 * @return list of user names
 	 */
 	@SuppressWarnings("unchecked")
 	public ArrayList<String> getAssociatedProfileUsers(String profileName)
@@ -798,7 +839,7 @@ public class Association
 	 * 
 	 * @return [true if the field value is "1" else it will return "0"]
 	 * @param RoleName
-	 * @return
+	 * @return true of false
 	 */
 	public boolean isShareDataWithPeers(String RoleName)
 	{
