@@ -1583,12 +1583,50 @@ public class ProfileEdit {
 		for (Feature f : module.getFeatures()) {
 			if (f.getFeatureName().equals(featureName)) {
 				module.getFeatures().remove(f);
+				removeGroupEntry(profile,module,featureName);
 			}
 		}
+		
+		
 
 		return profile;
 	}
+	
+	private ProfileJson removeGroupEntry(ProfileJson profile, Module module, String featureName){
+		ArrayList<GroupPermission> groups = module.getGroups();
+		if(groups==null){
+			return profile;
+		}
+		for(GroupPermission group:groups){
+				if(removeGroupEntry(group,featureName)){
+					break;
+				}
+			
+		}
+		
+	
+		return profile;
+	}
 
+	
+
+	private boolean removeGroupEntry(GroupPermission group, String featureName)
+	{
+		ArrayList <GroupEntry> ge = group.getEntries();
+		if(ge==null){
+			return true;
+		}
+		for(GroupEntry g : ge){
+			if(g.getName().equals(featureName)){
+				ge.remove(g);
+				return true;
+			}
+		}
+		return false;
+		
+	}
+
+	
 	public ProfileJson removeEntity(ProfileJson profile, String moduleName,
 			String entityName) {
 		Module module = getModule(profile, moduleName);
