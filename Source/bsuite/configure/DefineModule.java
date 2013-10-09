@@ -95,7 +95,7 @@ public class DefineModule {
 		try {
 			return mapper.writeValueAsString(module);
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		}
 
 		return null;

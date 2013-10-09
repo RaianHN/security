@@ -61,6 +61,7 @@ public class ManualSharing {
 			doc.replaceItemValue("shareWithRoles", roles);
 			doc.save(true, false);
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 	}
@@ -94,6 +95,7 @@ public class ManualSharing {
 			}
 
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return false;
 	}
@@ -120,6 +122,7 @@ public class ManualSharing {
 			profileNames.remove(currentuser);
 
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 		return profileNames;
@@ -149,6 +152,7 @@ public class ManualSharing {
 			Document doc = entitydb.getDocumentByUNID(documentId);
 			defaultusers = doc.getItemValue("shareWithUser");
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return defaultusers;
 	}
@@ -181,6 +185,7 @@ public class ManualSharing {
 			defaultroles = doc.getItemValue("shareWithRoles");
 
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return defaultroles;
 	}

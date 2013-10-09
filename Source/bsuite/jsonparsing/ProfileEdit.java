@@ -462,14 +462,21 @@ public class ProfileEdit {
 				break;
 			}
 		}
-
-		for (Field f : entity.getFields()) {
-			fieldSecurity.add(f.getFieldName() + ":" + f.getVisible()
-					+ f.getReadonly());
+		ArrayList<Field> fields = entity.getFields();
+		if(fields!=null){
+			for (Field f : fields) {
+				fieldSecurity.add(f.getFieldName() + ":" + f.getVisible()
+						+ f.getReadonly());
+			}
 		}
+		
 		Map viewScope = SessionContext.getViewScope();
 		viewScope.put("fieldPerm", fieldSecurity);
-		viewScope.put("fieldN", Integer.toString(entity.getFields().size()));
+		if(fields==null){
+			viewScope.put("fieldN", 0);
+		}else{
+			viewScope.put("fieldN", Integer.toString(entity.getFields().size()));
+		}
 		return fieldSecurity;
 
 	}
@@ -821,8 +828,12 @@ public class ProfileEdit {
 		String fieldSec = "";
 		for (int i =0; i < arr.length; i++) {
 			arrs = arr[i].split(":");
-			moduleName = arrs[0];
-			entityName = arrs[1];
+			if(arrs.length>1){
+				moduleName = arrs[0];
+				entityName = arrs[1];
+			}else{
+				break;
+			}
 
 			for (Module mod : profile.getModules()) {
 				if (mod.getModuleName().equals(moduleName)) {

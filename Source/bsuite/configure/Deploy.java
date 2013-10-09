@@ -180,11 +180,12 @@ public class Deploy {
 																												// FieldList
 																												// for
 																												// this
-																												// entity
-					for (Field f : fields) {
-						bsuite.jsonparsing.Field field = defineFieldPermission(
-								f.getFieldName(), "0", "1");
-						fieldList.add(field);
+					if(fields!=null){																							// entity
+						for (Field f : fields) {
+							bsuite.jsonparsing.Field field = defineFieldPermission(
+									f.getFieldName(), "0", "1");
+							fieldList.add(field);
+						}
 					}
 					
 
@@ -318,11 +319,12 @@ public class Deploy {
 																											// FieldList
 																											// for
 																											// this
-																											// entity
-				for (Field f : fields) {
-					bsuite.jsonparsing.Field field = defineFieldPermission(f
-							.getFieldName(), "0", "1");
-					fieldList.add(field);
+				if(fields!=null){																									// entity
+					for (Field f : fields) {
+						bsuite.jsonparsing.Field field = defineFieldPermission(f
+								.getFieldName(), "0", "1");
+						fieldList.add(field);
+					}
 				}
 				
 

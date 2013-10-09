@@ -243,6 +243,7 @@ public class CreateDatabase
 		}
 		catch (Exception e)
 		{
+			e.printStackTrace();
 		}
 
 	}
@@ -479,6 +480,7 @@ public class CreateDatabase
 		}
 		catch (Exception e)
 		{
+			e.printStackTrace();
 		}
 
 	}

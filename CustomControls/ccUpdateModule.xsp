@@ -333,8 +333,8 @@ updateAddSchema();}]]></xp:this.action>
 				<xp:link escape="true" text="Add Entity" id="link2">
 					<xp:eventHandler event="onclick" submit="true"
 						refreshMode="partial" refreshId="updateTable"
-						onComplete="hideWait()" onStart="showWait()"
-						onError="showError()" id="eventHandler9">
+						onComplete="hideWait()" onStart="showWait()" onError="showError()"
+						id="eventHandler9">
 						<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("comboBox1").getValue();
 var entityName = getComponent("inputText2").getValue();
 var schemaObj = new bsuite.configure.DefineModule();
@@ -353,7 +353,7 @@ viewScope.Entities = schemaObj.getEntityNames(moduleName)
 }
 
 
-//updateAddSchema();}]]></xp:this.action>
+updateAddSchema();}]]></xp:this.action>
 					</xp:eventHandler>
 				</xp:link>
 

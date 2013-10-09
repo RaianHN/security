@@ -51,6 +51,7 @@ public class Association
 		}
 		catch (Exception e)
 		{
+			e.printStackTrace();
 		}
 
 	}
@@ -293,6 +294,7 @@ public class Association
 		}
 		catch (Exception e)
 		{
+			e.printStackTrace();
 		}
 
 		return "";
@@ -357,6 +359,7 @@ public class Association
 		}
 		catch (Exception e)
 		{
+			e.printStackTrace();
 		}
 
 		return "";
@@ -392,6 +395,7 @@ public class Association
 		}
 		catch (Exception e)
 		{
+			e.printStackTrace();
 		}
 		return "";
 	}
@@ -469,6 +473,7 @@ public class Association
 			}
 			catch (Exception e)
 			{
+				e.printStackTrace();
 			}
 
 		}
@@ -517,7 +522,7 @@ public class Association
 		}
 		catch (Exception e)
 		{
-
+			e.printStackTrace();
 		}
 	}
 
@@ -567,6 +572,7 @@ public class Association
 			}
 			catch (Exception e)
 			{
+				e.printStackTrace();
 			}
 
 		}
@@ -614,6 +620,7 @@ public class Association
 		}
 		catch (Exception e)
 		{
+			e.printStackTrace();
 		}
 
 	}
@@ -737,6 +744,7 @@ public class Association
 		}
 		catch (Exception e)
 		{
+			e.printStackTrace();
 		}
 
 	}
@@ -781,7 +789,7 @@ public class Association
 		}
 		catch (Exception e)
 		{
-
+			e.printStackTrace();
 		}
 
 		return null;
@@ -854,6 +862,7 @@ public class Association
 		}
 		catch (Exception e)
 		{
+			e.printStackTrace();
 		}
 		return false;
 	}

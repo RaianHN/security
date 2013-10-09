@@ -167,6 +167,7 @@ public class Role {
 			}
 
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 		return roles;
