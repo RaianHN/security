@@ -61,7 +61,7 @@ public class DebugToolbar {
 			if (conf == null) {
 			
 				//config could not be retrieved/ created: log to console
-				System.out.println("dBar: " + msg);
+				
 			
 			} else {
 			

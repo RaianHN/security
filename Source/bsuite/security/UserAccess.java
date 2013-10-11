@@ -3,16 +3,13 @@ package bsuite.security;
 import java.util.Collections;
 import java.util.Vector;
 
-import bsuite.err.ErrorHandler;
-import bsuite.utility.SessionContext;
-import bsuite.utility.Utility;
-
-import bsuite.utility.Utility;
-
 import lotus.domino.Database;
 import lotus.domino.Document;
 import lotus.domino.NotesException;
 import lotus.domino.View;
+import bsuite.err.ErrorHandler;
+import bsuite.utility.SessionContext;
+import bsuite.utility.Utility;
 
  /**
   *[Class containing security related methods]
@@ -88,6 +85,7 @@ public class UserAccess
 	 *@param strRoleTitle, role name
 	 *@return, true if has the given role, false otherwise
 	 */
+	@SuppressWarnings("unchecked")
 	public static boolean checkBsuiteRole(String strRoleTitle) 
 	{
 		
@@ -133,6 +131,7 @@ public class UserAccess
 	 *@param dbName, module name
 	 *@return, true if the current user belongs to given role
 	 */
+	@SuppressWarnings("unchecked")
 	public static boolean hasModuleRole(String strRoleTitle, String dbName)
 	{
 
@@ -160,6 +159,7 @@ public class UserAccess
 	 *@param strRoleName
 	 *@return
 	 */
+	@SuppressWarnings("unchecked")
 	public static Vector getRoleBasedEmployees(String strFileName,
 			String strRoleName)
 	{

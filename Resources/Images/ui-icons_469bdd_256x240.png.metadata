@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257B8D0032F272" version="8.5" xmlns="http://www.lotus.com/dxl">
-<noteinfo noteid="42e" sequence="3" unid="800BE0080909088965257B4F001ECC65">
-<created><datetime>20130416T110624,05+0530</datetime></created>
-<modified><datetime>20130617T144802,32+0530</datetime></modified>
-<revised><datetime>20130617T144802,31+0530</datetime></revised>
-<lastaccessed><datetime>20130617T144802,32+0530</datetime></lastaccessed>
-<addedtofile><datetime>20130617T144802,28+0530</datetime></addedtofile></noteinfo>
-<updatedby><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
-<wassignedby><name>CN=Jaya K Prakash/O=Weberon</name></wassignedby>
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257B3A002F83B9" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="1292" sequence="7" unid="245D705720A510B865257B1000282FCE">
+<created><datetime>20130212T124856,78+0530</datetime></created>
+<modified><datetime>20131011T191225,59+0530</datetime></modified>
+<revised><datetime>20131011T191225,58+0530</datetime></revised>
+<lastaccessed><datetime>20131011T191225,59+0530</datetime></lastaccessed>
+<addedtofile><datetime>20131011T191100,83+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Admin INB01/O=Alpha</name></updatedby>
+<wassignedby><name>CN=Admin INB01/O=Alpha</name></wassignedby>
 <item name="$TITLE"><text>ui-icons_469bdd_256x240.png</text></item>
 <item name="$FlagsExt" sign="true"><text>D</text></item>
 <item name="$ImagesWide" sign="true"><number>1</number></item>

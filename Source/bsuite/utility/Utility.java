@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Vector;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.application.FacesMessage.Severity;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
@@ -36,6 +38,7 @@ public class Utility
 	 *[Returns all the employee names from employee database]
 	 *@return Vector containing the employee names
 	 */
+	@SuppressWarnings("unchecked")
 	public static Vector getAllEmployees() 
 	{
 		
@@ -274,12 +277,12 @@ public class Utility
 		try {
 			ACL acl = Utility.getCurrentDatabase().getACL();
 			ACLEntry aclentry = acl.getEntry("Anonymous");
-			System.out.println("acl entry 0");
+			
 			if (aclentry == null) {
-				System.out.println("acl entry 1");
+				
 				level = 0;
 			} else {
-				System.out.println("acl entry 2");
+				
 				level = aclentry.getLevel();
 			}
 		} catch (NotesException e) {
@@ -339,7 +342,7 @@ public class Utility
 		{
 			ExternalContext exCon = FacesContext.getCurrentInstance().getExternalContext(); 
 			HttpServletRequest request= (HttpServletRequest) exCon.getRequest();
-			String remoteAddress = request.getLocalAddr();//getRemoteAddr();//getLocalName();//getRemoteHost();//
+			String remoteAddress = request.getLocalAddr();//
 			InetAddress inetAddress = InetAddress.getByName(remoteAddress);
 		
 			
@@ -403,6 +406,7 @@ public class Utility
 	 *@param ctype type 1 for abbreviated, 2 for common, 3 for canonical
 	 *@return Vector formated usernames
 	 */
+	@SuppressWarnings("unchecked")
 	public static Vector getFormattedNames(Vector varValues, int ctype)
 	{
 		Vector names = new Vector();
@@ -486,5 +490,29 @@ public class Utility
 		return true;
 
 	}
+    
+    public static void addInfoMessage(String msg)
+    {
+    	Severity type = FacesMessage.SEVERITY_INFO;
+    	 FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(type,msg,""));	
+    }
+
+    public static void addWarnMessage(String msg)
+    {
+    	Severity type = FacesMessage.SEVERITY_WARN;
+    	 FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(type,msg,""));	
+    }
+
+    public static void addErrorMessage(String msg)
+    {
+    	Severity type = FacesMessage.SEVERITY_ERROR;
+    	 FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(type,msg,""));	
+    }
+
+    public static void addConfirmMessage(String msg)
+    {
+    	Severity type = FacesMessage.SEVERITY_FATAL;
+    	 FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(type,msg,""));	
+    }
     
 }

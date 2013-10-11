@@ -12,7 +12,7 @@ public class BSUtil {
 			bsuitePath=tadb.getFilePath().substring(0,len);
 			return bsuitePath;
 		} catch (NotesException e) {
-			System.out.println(e.id + " " + e.text);
+			
 		}catch (Exception e){
 			e.printStackTrace();
 		}

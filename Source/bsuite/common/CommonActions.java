@@ -72,6 +72,7 @@ public class CommonActions {
 	 * @param currentdoc
 	 *            , handle to discussion document
 	 */
+	@SuppressWarnings("unchecked")
 	public static void createDiscussion(Document currentdoc) {
 		try {
 
@@ -104,6 +105,7 @@ public class CommonActions {
 	 *[This method is used to send the reference of the selected document
 	 * through mail]
 	 */
+	@SuppressWarnings("unchecked")
 	public static void sendReferenceRequest() {
 
 		try {
@@ -189,6 +191,7 @@ public class CommonActions {
 	 *@param mail, selected document
 	 *@return true if its a mail document
 	 */
+	@SuppressWarnings("unchecked")
 	private static boolean verifyMailDoc(Document mail) {
 
 		Boolean ret = false;
@@ -275,6 +278,7 @@ public class CommonActions {
 	/**
 	 *[Creates a P-request to delete the selected document]
 	 */
+	@SuppressWarnings("unchecked")
 	public static void deleteRequest() {
 
 		Vector docUNIDs = new Vector();
@@ -294,6 +298,7 @@ public class CommonActions {
 	 *[Returns the unids of all the selected documents for deletion]
 	 *@return vector containing unids
 	 */
+	@SuppressWarnings("unchecked")
 	private static Vector getUNIDSAndMarkDelete() {
 
 		String unid = "";
@@ -326,6 +331,7 @@ public class CommonActions {
 	/**
 	 *[Creates a p-request to archive the selected documents]
 	 */
+	@SuppressWarnings("unchecked")
 	public static void archiveRequest() {
 
 		try {
@@ -361,6 +367,7 @@ public class CommonActions {
 	 *[Checks if module is available for archiving]
 	 *@return true if module is available for archiving
 	 */
+	@SuppressWarnings("unchecked")
 	private static boolean checkModuleForArchive() {
 		boolean checkarchive = true;
 		Document module = null;
@@ -467,7 +474,6 @@ public class CommonActions {
 	}
 
 	public static void initGenerateURLRequest() {
-		System.out.print("inside initGenerateURLRequest");
 		Extranet.initGenerateURL();
 		
 	}

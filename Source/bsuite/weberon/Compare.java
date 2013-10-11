@@ -3,6 +3,7 @@ package bsuite.weberon;
 
 import java.util.Comparator;
 
+@SuppressWarnings("unchecked")
 public class Compare implements Comparator 
 {
 	

@@ -20,7 +20,7 @@ viewScope.selectedGroup = "-Select Group-";
 					<xp:selectItem itemLabel="-Select Module-" id="selectItem1"></xp:selectItem>
 
 					<xp:selectItems id="selectItems1">
-						<xp:this.value><![CDATA[#{javascript:viewScope.moduleNames}]]></xp:this.value>
+						<xp:this.value><![CDATA[#{javascript:return @DbColumn("","Modules",1);}]]></xp:this.value>
 					</xp:selectItems>
 					<xp:eventHandler event="onchange" submit="true"
 						refreshMode="partial" refreshId="mainDiv">
@@ -255,6 +255,12 @@ viewScope.groupEntries = schemaObj.getGroupEntryNames(moduleName,selectedGroup);
 			</xp:tr>
 		</xp:table>
 	</xp:div>
+	<xp:button value="Update Groups" id="bUpdateProfiles">
+		<xp:eventHandler event="onclick" submit="true"
+			refreshMode="complete">
+			<xp:this.action><![CDATA[#{javascript:updateAddSchema();}]]></xp:this.action>
+		</xp:eventHandler>
+	</xp:button>
 	<xp:br></xp:br>
 	</xp:div>
 	</xp:view>

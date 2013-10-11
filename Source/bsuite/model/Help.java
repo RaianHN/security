@@ -21,6 +21,7 @@ public class Help
 	/**
 	 *[To get contextual help for the view]
 	 */
+	@SuppressWarnings("unchecked")
 	public static void getContextHelpForView()
 	{
 		Map viewScope = SessionContext.getViewScope();
@@ -77,6 +78,7 @@ public class Help
 	 *[Sets the view scope variable to unid of the help document]
 	 *@param strKey
 	 */
+	@SuppressWarnings("unchecked")
 	private static void displayBsuiteHelp(String strKey)
 	{
 		

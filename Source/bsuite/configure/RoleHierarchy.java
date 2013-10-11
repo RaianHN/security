@@ -2,6 +2,10 @@ package bsuite.configure;
 
 import java.util.ArrayList;
 
+ /**Used to define the role hierarchy in the role hierarchy document
+  *@author JPrakash
+  *@created Oct 9, 2013
+ */
 public class RoleHierarchy {
 	private ArrayList<Role> roleList;
 

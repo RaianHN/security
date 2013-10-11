@@ -23,11 +23,11 @@ public class Example {
 	private DebugToolbar dBar;
 
 	public Example() {
-		System.out.println("Example() bean constructed");
+		
 		
 		dBar = new DebugToolbar( this.getClass().toString() );
 		dBar.info("Example message from the constructor of a bean");
-		System.out.println("Should have an Example bean with a notification that the bean was constructed");
+		
 	}
 
 	public void addErrorMessage(String msg) {
@@ -39,7 +39,7 @@ public class Example {
 	}
 
 	public void addWarningMessage(String msg) {
-		System.out.println("addWarningMessages Example bean");
+		
 		dBar.warn("addWarningMessage: " + msg);
 		someMethodForAnExample(true);
 		someMethodForAnExample(false);

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xp:view xmlns:xp="http://www.ibm.com/xsp/core"
-	xmlns:xc="http://www.ibm.com/xsp/custom">
-	
+	xmlns:xc="http://www.ibm.com/xsp/custom"
+	xmlns:xe="http://www.ibm.com/xsp/coreex">
+
 	<xp:image url="/complogo.jpg" id="logo" alt="Logo"
 		style="float:left;margin-right:20px;height:30px">
 	</xp:image>
@@ -9,12 +10,12 @@
 	<xp:div style="float:left">
 		<xc:ccLoadingIndicator></xc:ccLoadingIndicator>
 	</xp:div>
-	
+
 	<xp:tabbedPanel id="lotusUtility"
 		styleClass="lotusInlinelist lotusUtility">
 		<xp:tabPanel id="userName" startTabStyleClass="lotusFirst">
 			<xp:this.label><![CDATA[#{javascript:@Name("[CN]",session.getEffectiveUserName())}]]></xp:this.label>
-		</xp:tabPanel>
+			</xp:tabPanel>
 		<xp:tabPanel label="Log Out" id="logout">
 
 			<xp:this.href><![CDATA[#{javascript:var dburl = database.getFileName();
@@ -22,5 +23,5 @@ var url = "./"+dburl+"?logout&redirectTo="+database.getFilePath();
 return url;}]]></xp:this.href>
 		</xp:tabPanel>
 	</xp:tabbedPanel>
-	
-</xp:view>
+
+	</xp:view>

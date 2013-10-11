@@ -1,5 +1,10 @@
 package bsuite.jsonparsing;
 
+ /**Used to define the entity action permission in the entity object in profile document, contains getters and setters
+  * for action and its permission
+  *@author JPrakash
+  *@created Oct 9, 2013
+ */
 public class EntityAction {
 	private String actionName;
 	private String visible;

@@ -21,14 +21,24 @@ import lotus.domino.ViewEntryCollection;
 
 @SuppressWarnings("unused")
 public class DefineModule {
+	/**
+	 * This class holds all the methods related to module schema in module document
+	 */
 	Database currentdb;
 
+	/**
+	 * Constructor to initialize the current database
+	 */
 	public DefineModule() {
 		currentdb = Utility.getCurrentDatabase();
 	}
 
+	/**
+	 * For the given list of modules, creates the module document and json schema
+	 *@param modules list of modules
+	 */
 	public void addModules(Vector<String> modules) {
-		System.out.println("inside add module");
+		
 		for (String moduleName : modules) {
 			String moduleJson = createJsonString(moduleName);
 			createModuleDocument(moduleJson, moduleName);
@@ -36,8 +46,11 @@ public class DefineModule {
 
 	}
 
+	/** For the given list of modules, creates the module document and json schema
+	 *@param modules module name
+	 */
 	public void addModules(String module) {
-		System.out.println("inside add module");
+		
 		String moduleJson = createJsonString(module);
 		createModuleDocument(moduleJson, module);
 	}
@@ -49,8 +62,8 @@ public class DefineModule {
 	 */
 	private void createModuleDocument(String moduleJson, String moduleName) {
 		if (isDuplicateModule(moduleName)) {
-			System.out.println("duplicate module " + moduleName
-					+ "hence not added");
+			
+					
 			return;
 		}
 
@@ -82,12 +95,16 @@ public class DefineModule {
 		try {
 			return mapper.writeValueAsString(module);
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		}
 
 		return null;
 	}
 
+	/**All the given features will be added to the module in the module documemt
+	 *@param moduleName name of the module
+	 *@param featurenames list of features
+	 */
 	@SuppressWarnings("unchecked")
 	public void addFeatures(String moduleName, Vector<String> featurenames) {
 		try {
@@ -108,7 +125,7 @@ public class DefineModule {
 				features = module.getFeatures();
 			}
 
-			// ArrayList<Feature> featureList = new ArrayList<Feature>();
+			
 
 			for (String s : featurenames) {
 				// Add features to the new entity
@@ -138,6 +155,11 @@ public class DefineModule {
 
 	}
 
+	/**Adds the feature group to the module in the module document
+	 *@param moduleName name of the module
+	 *@param groupName group name,i,e menu
+	 *@return true or false
+	 */
 	public boolean addFeatureGroup(String moduleName, String groupName) {
 		// To add a new feature group for this module
 		try {
@@ -170,6 +192,11 @@ public class DefineModule {
 		return true;
 	}
 
+	/**Removes the feature group, ie. menu
+	 *@param moduleName name of the module
+	 *@param groupName name of the group
+	 *@return true or false
+	 */
 	public boolean removeFeatureGroup(String moduleName, String groupName) {
 		// To remove feature group for this module
 		try {
@@ -203,6 +230,13 @@ public class DefineModule {
 
 	}
 
+	/**To add the entries in the group
+	 *@param moduleName module name
+	 *@param groupName group name
+	 *@param type feature or entity, currently only feature
+	 *@param name feature name
+	 *@return true or false
+	 */
 	public boolean addObjectToGrp(String moduleName, String groupName,
 			String type, String name) {
 		// Called from outside to add an entry into the group
@@ -263,18 +297,18 @@ public class DefineModule {
 		return true;
 	}
 
+	/**Called from addObjectToGrp, to add the entry to the group
+	 *@param module module name
+	 *@param group group name
+	 *@param entry feature name
+	 *@return true or false
+	 */
 	private boolean addGroupEntry(Module module, SchemaGroup group, String entry) {
 		ManageGroup.addObjToGrp(module, group, entry);
 		return true;
 	}
 
-	/*
-	 * private boolean addGroupEntryFeature(Module module, SchemaGroup group,
-	 * Feature feature) { // To add entity or feature to this group
-	 * ManageGroup.addObjToGrp(module, group,"f:"+feature.getFeatureName());
-	 * 
-	 * return true; }
-	 */
+	
 
 	public boolean renameFeatureGroup(String moduleName, String groupName,
 			String newName) {
@@ -325,6 +359,10 @@ public class DefineModule {
 		return true;
 	}
 
+	/**Adds the given feature in the module document
+	 *@param moduleName module name
+	 *@param featurename feature name
+	 */
 	@SuppressWarnings("unchecked")
 	public void addFeatures(String moduleName, String featurename) {
 		try {
@@ -345,7 +383,6 @@ public class DefineModule {
 				features = module.getFeatures();
 			}
 
-			// ArrayList<Feature> featureList = new ArrayList<Feature>();
 
 			// Add features to the new entity
 			Feature feature = new Feature();
@@ -374,6 +411,11 @@ public class DefineModule {
 
 	}
 
+	/**Adds the entity to the module in the module document
+	 *@param moduleName module name
+	 *@param entityName entity name
+	 *@param fields list of fields
+	 */
 	@SuppressWarnings("unchecked")
 	public void addEntity(String moduleName, String entityName,
 			Vector<String> fields) {
@@ -382,7 +424,6 @@ public class DefineModule {
 
 			View modulesView = currentdb.getView("Modules");
 
-			// System.out.println("Document name"+modulesView.getDocumentByKey(moduleName));
 			Document moduleDoc = modulesView.getDocumentByKey(moduleName);
 
 			String jsonInput = moduleDoc.getItemValueString("JsonString");
@@ -435,6 +476,11 @@ public class DefineModule {
 		}
 
 	}
+	/**Adds the entity to the module document
+	 *@param moduleName module name
+	 *@param entityName entity name
+	 *@param field field name
+	 */
 	@SuppressWarnings("unchecked")
 	public void addEntity(String moduleName, String entityName,
 			String field) {
@@ -443,7 +489,6 @@ public class DefineModule {
 
 			View modulesView = currentdb.getView("Modules");
 
-			// System.out.println("Document name"+modulesView.getDocumentByKey(moduleName));
 			Document moduleDoc = modulesView.getDocumentByKey(moduleName);
 
 			String jsonInput = moduleDoc.getItemValueString("JsonString");
@@ -463,7 +508,7 @@ public class DefineModule {
 
 			ArrayList<Field> fieldsList = new ArrayList<Field>();
 
-			if(!field.equals("") || field!=null){
+			if(!field.equals("") && field!=null){
 				
 					// Add fields to the new entity
 					Field field1 = new Field();
@@ -497,13 +542,17 @@ public class DefineModule {
 
 	}
 
+	/**Adds the entity to the module document
+	 *@param moduleName module name
+	 *@param entityName entity name
+	 */
+	@SuppressWarnings("unchecked")
 	public void addEntity(String moduleName, String entityName) {
 
 		try {
 
 			View modulesView = currentdb.getView("Modules");
 
-			// System.out.println("Document name"+modulesView.getDocumentByKey(moduleName));
 			Document moduleDoc = modulesView.getDocumentByKey(moduleName);
 
 			String jsonInput = moduleDoc.getItemValueString("JsonString");
@@ -544,14 +593,19 @@ public class DefineModule {
 
 	}
 
+	/**Adds the field to the module's schema in the module document
+	 *@param moduleName module name
+	 *@param entityName entity name
+	 *@param field field name
+	 */
+	@SuppressWarnings("unchecked")
 	public void addField(String moduleName, String entityName, String field) {
 
 		try {
-			System.out.println("adding field1");
+			
 			View modulesView = currentdb.getView("Modules");
 
-			System.out.println("Document name"
-					+ modulesView.getDocumentByKey(moduleName));
+			
 			Document moduleDoc = modulesView.getDocumentByKey(moduleName);
 
 			String jsonInput = moduleDoc.getItemValueString("JsonString");
@@ -559,7 +613,7 @@ public class DefineModule {
 			ObjectMapper mapper = new ObjectMapper();
 
 			Module module = mapper.readValue(jsonInput, Module.class);
-			System.out.println("adding field2");
+			
 			ArrayList<Entity> entities = null;
 			if (module.getEntities() == null) {
 				entities = new ArrayList();
@@ -567,7 +621,7 @@ public class DefineModule {
 				entities = module.getEntities();
 			}
 			Entity entity = null;
-			System.out.println("adding field3");
+			
 			for (Entity e : entities) {
 				if (entities != null) {
 					if (e.getEntityName().equals(entityName)) {
@@ -578,7 +632,7 @@ public class DefineModule {
 			}
 
 			ArrayList<Field> fieldsList = entity.getFields();
-			System.out.println("adding field4");
+			
 			if (fieldsList == null) {
 				fieldsList = new ArrayList<Field>();
 			}
@@ -604,6 +658,12 @@ public class DefineModule {
 
 	}
 
+	/**Entity feature will be added to the given entity
+	 *@param moduleName module name
+	 *@param entityName entity name
+	 *@param actionName action name
+	 */
+	@SuppressWarnings("unchecked")
 	public void addEntityAction(String moduleName, String entityName,
 			String actionName) {
 
@@ -659,15 +719,85 @@ public class DefineModule {
 		}
 
 	}
+	/**Entity feature will be removed from the given entity
+	 *@param moduleName module name
+	 *@param entityName entity name
+	 *@param actionName action name
+	 */
+	@SuppressWarnings("unchecked")
+	public void removeEntityAction(String moduleName, String entityName,
+			String actionName) {
 
+		try {
+			View modulesView = currentdb.getView("Modules");
+
+			Document moduleDoc = modulesView.getDocumentByKey(moduleName);
+
+			String jsonInput = moduleDoc.getItemValueString("JsonString");
+
+			ObjectMapper mapper = new ObjectMapper();
+
+			Module module = mapper.readValue(jsonInput, Module.class);
+			ArrayList<Entity> entities = null;
+			if (module.getEntities() == null) {
+				entities = new ArrayList();
+			} else {
+				entities = module.getEntities();
+			}
+			Entity entity = null;
+			for (Entity e : entities) {
+				if (entities != null) {
+					if (e.getEntityName().equals(entityName)) {
+						entity = e;
+						break;
+					}
+				}
+			}
+
+			ArrayList<EntityAction> actionList = entity.getActions();
+
+			if (actionList == null) {
+				return;
+			}
+			// remove actions from the entity
+			EntityAction ea  = null;
+			for(EntityAction action: actionList){
+				if(action.getActionName()!=null){
+					if(action.getActionName().equals(actionName)){
+						ea = action;
+						break;
+					}
+				}
+			}
+			
+			actionList.remove(ea);
+
+			entity.setActions(actionList);
+
+			moduleDoc.replaceItemValue("JsonString", mapper
+					.writeValueAsString(module));
+			moduleDoc.save();
+		} catch (NotesException e) {
+			e.printStackTrace();
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	/**Gets the list of module names from the modules view
+	 *@return list of module names
+	 */
 	@SuppressWarnings("unchecked")
 	public Vector getModules() {
-		System.out.println("inside get modules");
+		
 		View moduleView = null;
 		try {
 			moduleView = currentdb.getView("Modules");
 		} catch (NotesException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		Document doc;
@@ -687,6 +817,10 @@ public class DefineModule {
 		return moduleNames;
 	}
 
+	/**Adds the role in the role hierarchy document, this role hierarcy document will be used for first time deployment
+	 *@param roleName role name
+	 *@param roleParent parent role
+	 */
 	public void addRole(String roleName, String roleParent) {
 		Document roleDoc = getRoleDocument();
 		String roleJson = "";
@@ -697,7 +831,7 @@ public class DefineModule {
 
 			e.printStackTrace();
 		}
-		System.out.println("add r1");
+		
 		if (roleJson.equals("")) {
 			RoleHierarchy rH = new RoleHierarchy();
 			ArrayList<Role> roleList = new ArrayList<Role>();
@@ -720,7 +854,7 @@ public class DefineModule {
 				e.printStackTrace();
 			}
 		} else {
-			System.out.println("add r2");
+			
 			try {
 				RoleHierarchy rH = mapper.readValue(roleJson,
 						RoleHierarchy.class);
@@ -750,13 +884,15 @@ public class DefineModule {
 		try {
 			roleDoc.save();
 		} catch (NotesException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("add r3");
+		
 
 	}
 
+	/**Gets the list of roles from the role hierarchy document
+	 *@return list of roles
+	 */
 	@SuppressWarnings("unchecked")
 	public Vector getRoles() {
 		Document roleDoc = getRoleDocument();
@@ -796,10 +932,13 @@ public class DefineModule {
 		return null;
 	}
 
+	/**
+	 *@return
+	 */
 	private Document getRoleDocument() {
 
 		try {
-			System.out.println("inside get role doc");
+			
 			View rolesView = currentdb.getView("Roles");
 			Document roleDoc = rolesView.getDocumentByKey("roleHierarchy");
 			if (roleDoc == null) {
@@ -851,18 +990,7 @@ public class DefineModule {
 
 	}
 
-	/*
-	 * private DocumentCollection getModuleDocs(){
-	 * 
-	 * try { View moduleView = currentdb.getView("Modules"); DocumentCollection
-	 * moduleDocs =
-	 * 
-	 * 
-	 * return moduleDocs; } catch (NotesException e) { e.printStackTrace(); }
-	 * 
-	 * 
-	 * return null; }
-	 */
+	
 	private Document getModuleDoc(String moduleName) {
 		try {
 			View moduleView = currentdb.getView("Modules");
@@ -918,6 +1046,7 @@ public class DefineModule {
 	 * @param moduleName
 	 *@return Vector containing groupnames
 	 */
+	@SuppressWarnings("unchecked")
 	public Vector getGroupNames(String moduleName) {
 		String moduleJson = getModuleJson(moduleName);
 		ObjectMapper mapper = new ObjectMapper();
@@ -944,6 +1073,7 @@ public class DefineModule {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	public ArrayList getGroupEntryNames(String moduleName, String groupName) {
 		String moduleJson = getModuleJson(moduleName);
 		ObjectMapper mapper = new ObjectMapper();
@@ -978,7 +1108,7 @@ public class DefineModule {
 		ObjectMapper mapper = new ObjectMapper();
 		Module module = null;
 		try {
-			System.out.println("json " + moduleJson);
+			
 			module = mapper.readValue(moduleJson, Module.class);
 		} catch (JsonParseException e) {
 			e.printStackTrace();
@@ -990,11 +1120,7 @@ public class DefineModule {
 		ArrayList<Entity> entityList = module.getEntities();
 
 		if (entityList != null) {
-			/*
-			 * Vector entityNames = new Vector(); for(Entity e:entityList){
-			 * 
-			 * entityNames.add(e.getEntityName()); } return entityNames;
-			 */
+			
 			return entityList;
 		}
 
@@ -1105,6 +1231,7 @@ public class DefineModule {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	public void removeFeature(String moduleName, String featureName) {
 		try {
 
@@ -1124,7 +1251,6 @@ public class DefineModule {
 				features = module.getFeatures();
 			}
 
-			// ArrayList<Feature> featureList = new ArrayList<Feature>();
 
 			for (Feature f : features) {
 				// Add features to the new entity
@@ -1152,12 +1278,12 @@ public class DefineModule {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public void removeEntity(String moduleName, String entityName) {
 		try {
 
 			View modulesView = currentdb.getView("Modules");
 
-			// System.out.println("Document name"+modulesView.getDocumentByKey(moduleName));
 			Document moduleDoc = modulesView.getDocumentByKey(moduleName);
 
 			String jsonInput = moduleDoc.getItemValueString("JsonString");
@@ -1201,13 +1327,13 @@ public class DefineModule {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public void removeField(String moduleName, String entityName,
 			String fieldName) {
 		try {
 
 			View modulesView = currentdb.getView("Modules");
 
-			// System.out.println("Document name"+modulesView.getDocumentByKey(moduleName));
 			Document moduleDoc = modulesView.getDocumentByKey(moduleName);
 
 			String jsonInput = moduleDoc.getItemValueString("JsonString");

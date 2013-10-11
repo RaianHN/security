@@ -10,10 +10,12 @@
 		<xp:script src="/baseactions.jss" clientSide="false"></xp:script>
 
 
-		<xp:script src="/Copy Of CustomControlLib.js" clientSide="true">
+		<xp:script src="/Copy Of CustomControlLib.js"
+			clientSide="true">
 		</xp:script>
 		<xp:styleSheet href="/custom.css"></xp:styleSheet>
 		<xp:script src="/commonCScript.js" clientSide="true"></xp:script>
+		<xp:script src="/CommonFunctions.jss" clientSide="false"></xp:script>
 	</xp:this.resources>
 
 
@@ -22,6 +24,43 @@
 
 
 
+	<xp:this.beforePageLoad><![CDATA[#{javascript://To check access to security and relations database, create edit and delete, used in rendering save, delete buttons
+
+var securityDb = database;
+var relDb = bsuite.utility.Utility.getDatabase("relation.nsf");
+var user = session.getEffectiveUserName();
+
+viewScope.createSec = false;
+viewScope.editSec = false;
+viewScope.deleSec = false;
+
+viewScope.createRel = false;
+viewScope.editRel = false;
+viewScope.deleRel = false;
+
+
+
+if(hasCreateAccess(securityDb,user)){
+	viewScope.createSec = true;
+	if(hasEditorAccess(securityDb,user)){
+		viewScope.editSec = true;		
+		if(hasDeleteAccess(securityDb,user)){
+			viewScope.deleSec = true;			
+		}
+	}
+}
+
+if(hasCreateAccess(relDb,user)){
+	viewScope.createRel = true;
+	if(hasEditorAccess(relDb,user)){
+		viewScope.editRel = true;
+		if(hasDeleteAccess(relDb,user)){
+			viewScope.deleRel = true;
+		}
+	}
+}
+
+}]]></xp:this.beforePageLoad>
 	<xc:ccDebugToolbar load="false" defaultCollapsed="false"
 		collapseTo="left">
 	</xc:ccDebugToolbar>
@@ -37,6 +76,7 @@
 
 		<xc:layout_place>
 			<xp:this.facets>
+				
 
 
 

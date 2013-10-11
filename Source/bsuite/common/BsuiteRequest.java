@@ -4,9 +4,6 @@ import java.util.Date;
 import java.util.Vector;
 
 import bsuite.err.ErrorHandler;
-import bsuite.utility.*;
-
-
 import lotus.domino.Database;
 import lotus.domino.DateTime;
 import lotus.domino.Document;
@@ -33,6 +30,7 @@ public class BsuiteRequest {
 	 *@return returns the request document
 
 	 */
+	@SuppressWarnings("unchecked")
 	public static Document createRequest(String requestType ,String selectionType, Vector selectedID , String searchFormula , int eventType , Vector varNewOption)
 
 	{

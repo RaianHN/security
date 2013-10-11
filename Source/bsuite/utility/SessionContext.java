@@ -68,6 +68,7 @@ public class SessionContext {
 	 *[Returns handle to current view scope object]
 	 *@return, view scope as map
 	 */
+	@SuppressWarnings("unchecked")
 	public static Map getViewScope()
 	{
 		
@@ -86,9 +87,9 @@ public class SessionContext {
 	 *[Returns the selected document from the UI by getting the document id set in the viewscope]
 	 *@return, current document as Document
 	 */
+	@SuppressWarnings("unchecked")
 	public static Document getDocumentToProcess() 
 	{
-		System.out.print("inside  getDocumentToProcess");
 			Object ids;
 			Document ret = null;
 		
@@ -106,7 +107,6 @@ public class SessionContext {
 				} 
 				catch (NotesException e) 
 				{
-					// TODO Auto-generated catch block
 					ErrorHandler erh = new ErrorHandler();
 					erh.createErrorDocument(e);
 				}

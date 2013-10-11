@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xp:view xmlns:xp="http://www.ibm.com/xsp/core"
 	xmlns:xc="http://www.ibm.com/xsp/custom">
+	<xp:this.resources>
+		<xp:script src="/CommonFunctions.jss" clientSide="false"></xp:script>
+	</xp:this.resources>
+	<xc:ccDebugToolbar load="true" defaultCollapsed="false"
+		collapseTo="left">
+	</xc:ccDebugToolbar>
+	<xp:this.beforePageLoad><![CDATA[#{javascript:var role = new bsuite.security.Role();
+//bsuite.security.Role.getSearchString(String moduleName, String entityName)
+viewScope.search = role.getSearchString("policies","Policy");
 
-
-
-
-
-	<xc:ccDefineProfile></xc:ccDefineProfile></xp:view>
+}]]></xp:this.beforePageLoad>
+	<xp:br></xp:br>
+	<xc:ccErrorControl ></xc:ccErrorControl>
+	<xp:br></xp:br>
+	</xp:view>

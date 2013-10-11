@@ -2,6 +2,11 @@ package bsuite.jsonparsing;
 
 import java.util.ArrayList;
 
+ /**Used to maintain the permissions of a module and is stored in the profile document, contains getter and setters
+  * for the module its entities, features and group
+  *@author JPrakash
+  *@created Oct 9, 2013
+ */
 public class Module {
 
 	private String moduleName;

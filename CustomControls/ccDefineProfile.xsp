@@ -5,10 +5,13 @@
 
 
 	<xp:this.beforePageLoad><![CDATA[#{javascript:var profileNames = getProfiles();
-viewScope.profileNames = profileNames;}]]></xp:this.beforePageLoad>
-	<xp:this.resources>
-		<xp:script src="/CommonFunctions.jss" clientSide="false"></xp:script>
-	</xp:this.resources>
+viewScope.profileNames = profileNames;
+
+
+
+
+}]]></xp:this.beforePageLoad>
+
 	<xp:table style="width:100%">
 		<xp:tr>
 			<xp:td align="left">
@@ -37,32 +40,23 @@ viewScope.profileNames = profileNames;}]]></xp:this.beforePageLoad>
 var profName = getComponent("moduleCombo").getValue();
 viewScope.selectedProfile = profName;
 var profName2 = viewScope.selectedProfile;
-dBar.info("selected profile"+profName);
 if (profName=="--Select Profile--" || profName2==null || profName2 == undefined){
 return;
 }
 
 var obj = new bsuite.jsonparsing.ProfileEdit();
 obj.getModulePermission(profName2);
-dBar.info("after getting module permission")
 
 
 
-//Below commented for new security UI
-/*
-var component = getComponent('panelPermission'); 
-var s = facesContext;
-var c1="/ccPermissions.xsp";
-// var c1="/cc_TestPage.xsp";
-var id="modulediv";
-bsuite.loadcc.DynamicCC.removePreview(component);
-bsuite.loadcc.DynamicCC.loadCC(s, component, c1, id);
-*/}]]></xp:this.action>
+}]]></xp:this.action>
 								</xp:eventHandler>
 							</xp:comboBox>
 						</xp:td>
 						<xp:td styleClass="debugButton">
-							<xp:button value="Save" id="buttonSaveProfile">
+							<xp:button value="Save"
+								id="buttonSaveProfile" rendered="#{javascript:viewScope.editSec;}">
+
 								<xp:eventHandler event="onclick"
 									submit="false">
 									<xp:this.script><![CDATA[var id = "#{id:checkBoxM1}";
@@ -74,14 +68,52 @@ savePermissionsUI(id);]]></xp:this.script>
 							</xp:button>
 							&#160;&#160;&#160;
 							<xp:link escape="true" text="Create New"
-								id="link37" style="font-size:7pt">
+								id="link37" style="font-size:7pt" rendered="#{javascript:viewScope.createSec}">
 								<xp:eventHandler event="onclick"
 									submit="false">
-									<xp:this.script><![CDATA[XSP.openTooltipDialog('#{id:tooltipDialog13}','#{id:link37}')]]></xp:this.script>
+									<xp:this.script><![CDATA[XSP.openDialog('#{id:dCreateProfile}')]]></xp:this.script>
 								</xp:eventHandler>
 							</xp:link>
 
+							<xp:link escape="true" id="lDelete"
+								style="font-size:7pt;margin-left:15.0px">
 
+								<xp:this.rendered><![CDATA[#{javascript:var profName = getComponent("moduleCombo").getValue();
+var deleRel = viewScope.deleRel;
+var deleSec = viewScope.deleSec;
+
+if (profName=="--Select Profile--" || profName==null || profName == undefined){
+return false;
+}else{
+	if(deleRel && deleSec){
+		return true;
+	}else{
+		return false;
+	}
+	
+}
+}]]></xp:this.rendered>
+								<xp:this.text><![CDATA[#{javascript:return "Delete "+viewScope.selectedProfile+" profile";}]]></xp:this.text>
+								<xp:eventHandler event="onclick"
+									submit="true" refreshMode="partial" refreshId="err">
+
+									<xp:this.action><![CDATA[#{javascript:var profiles:Array = new Array(viewScope.profileNames);
+var list:java.util.ArrayList = new java.util.ArrayList(viewScope.profileNames);
+list.remove(viewScope.selectedProfile);
+
+if(list.length===0){
+	bsuite.utility.Utility.addErrorMessage("No alternate profiles found, create a profile for replacement ");
+}else{
+	viewScope.alternateProfiles = list;
+}
+
+}]]></xp:this.action>
+									<xp:this.onComplete><![CDATA[if(!isError()){
+	XSP.openDialog('#{id:dDeleteProfile}')
+}
+]]></xp:this.onComplete>
+								</xp:eventHandler>
+							</xp:link>
 
 						</xp:td>
 
@@ -108,14 +140,17 @@ savePermissionsUI(id);]]></xp:this.script>
 
 		<xp:tr>
 			<xp:td colspan="5" id="profileTable">
-				<xp:panel id="panelPermission" style="width:auto"></xp:panel>
+				<xp:panel id="panelPermission" style="width:auto">
+					<xc:ccErrorControl id="err"></xc:ccErrorControl></xp:panel>
 			</xp:td>
 		</xp:tr>
 	</xp:table>
 
 
 
-	<xe:tooltipDialog id="tooltipDialog13">
+	
+	
+	<xe:dialog id="dCreateProfile" title="New Profile">
 		<xp:panel>
 			<xp:table>
 
@@ -136,15 +171,17 @@ savePermissionsUI(id);]]></xp:this.script>
 
 
 							<xp:eventHandler event="onclick"
-								submit="true" refreshMode="partial" refreshId="panelPermission"
-								onStart="showWait()" onComplete="hideWait()"
+								submit="true" refreshMode="complete" onStart="showWait()"
 								onError="showError()">
-								<xp:this.script><![CDATA[XSP.closeTooltipDialog('#{id:tooltipDialog13}')]]></xp:this.script>
+
 
 								<xp:this.action><![CDATA[#{javascript:var profName = getComponent("inputText3").getValue();
 var dp = new bsuite.configure.Deploy();
 dp.createProfileDoc(profName);
-dp.updateProfileDoc(profName);}]]></xp:this.action>
+dp.updateProfileDoc(profName);
+context.reloadPage();}]]></xp:this.action>
+								<xp:this.onComplete><![CDATA[hideWait();
+XSP.closeDialog('#{id:dCreateProfile}');]]></xp:this.onComplete>
 							</xp:eventHandler>
 						</xp:button>
 						&#160;
@@ -152,7 +189,7 @@ dp.updateProfileDoc(profName);}]]></xp:this.action>
 							style="font-size:7pt" styleClass="lotusFormButton">
 							<xp:eventHandler event="onclick"
 								submit="false" id="eventHandler55">
-								<xp:this.script><![CDATA[XSP.closeTooltipDialog('#{id:tooltipDialog13}')]]></xp:this.script>
+								<xp:this.script><![CDATA[XSP.closeDialog('#{id:dCreateProfile}')]]></xp:this.script>
 							</xp:eventHandler>
 						</xp:button>
 					</xp:td>
@@ -160,6 +197,57 @@ dp.updateProfileDoc(profName);}]]></xp:this.action>
 				</xp:tr>
 			</xp:table>
 		</xp:panel>
+	</xe:dialog>
+	<xe:dialog id="dDeleteProfile" title="Delete Profile">
+		<xp:panel>
 
-	</xe:tooltipDialog>
-</xp:view>
+			<xp:table>
+
+				<xp:tr>
+					<xp:td>
+						<xp:span>
+							Choose the replacement for the deleted
+							profile.
+						</xp:span>
+					</xp:td>
+					<xp:td></xp:td>
+				</xp:tr>
+				<xp:tr>
+					<xp:td>
+						<xp:comboBox id="comboBox1">
+							<xp:selectItems id="selectItems2">
+								<xp:this.value><![CDATA[#{javascript:viewScope.alternateProfiles}]]></xp:this.value>
+							</xp:selectItems>
+						</xp:comboBox>
+					</xp:td>
+					<xp:td></xp:td>
+				</xp:tr>
+				<xp:tr>
+					<xp:td>
+						<xp:button value="Ok" id="button1"
+							styleClass="lotusFormButton" style="font-size:7pt">
+							<xp:eventHandler event="onclick"
+								submit="true" refreshMode="complete">
+								<xp:this.action><![CDATA[#{javascript:var profileName  = viewScope.selectedProfile;
+var replPrfName = getComponent("comboBox1").getValue();;
+ bsuite.configure.Deploy.deleteProfile(profileName, replPrfName);
+ context.reloadPage();
+}]]></xp:this.action>
+								<xp:this.script><![CDATA[XSP.closeDialog('#{id:dDeleteProfile}')]]></xp:this.script>
+							</xp:eventHandler>
+						</xp:button>
+						&#160;
+						<xp:button value="Cancel" id="button2"
+							styleClass="lotusFormButton" style="font-size:7pt">
+							<xp:eventHandler event="onclick"
+								submit="false">
+								<xp:this.script><![CDATA[XSP.closeDialog('#{id:dDeleteProfile}')]]></xp:this.script>
+							</xp:eventHandler>
+						</xp:button>
+					</xp:td>
+					<xp:td></xp:td>
+				</xp:tr>
+			</xp:table>
+		</xp:panel>
+	</xe:dialog>
+	</xp:view>

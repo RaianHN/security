@@ -1,15 +1,14 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE note SYSTEM 'xmlschemas/domino_8_5_3.dtd'>
 <note default='true' class='icon' xmlns='http://www.lotus.com/dxl' version='8.5'
- maintenanceversion='3.0' replicaid='65257B8D0032F272'>
-<noteinfo noteid='11a' unid='D138407B08C7C31465257B8D0032F285' sequence='8'>
-<created><datetime>20130617T144628,85+0530</datetime></created>
-<modified><datetime>20130617T144837,27+0530</datetime></modified>
-<revised><datetime>20130617T144837,26+0530</datetime></revised>
-<lastaccessed><datetime>20130617T144837,27+0530</datetime></lastaccessed>
-<addedtofile><datetime>20130617T144628,88+0530</datetime></addedtofile></noteinfo>
-<updatedby><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
-<wassignedby><name>CN=Jaya K Prakash/O=Weberon</name></wassignedby>
+ maintenanceversion='3.0' replicaid='65257B3A002F83B9'>
+<noteinfo noteid='122' unid='D3B61BC1B9A2B88665257A55002CB2FD' sequence='16'>
+<created><datetime>20120809T133814,05+0530</datetime></created>
+<modified><datetime>20131011T191259,23+0530</datetime></modified>
+<revised><datetime>20131011T191259,22+0530</datetime></revised>
+<lastaccessed><datetime>20131011T191259,23+0530</datetime></lastaccessed>
+<addedtofile><datetime>20131011T191045,24+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Admin INB01/O=Alpha</name></updatedby>
 <item name='IconBitmap' summary='true'>
 <rawitemdata type='6'>
 AiAgAQAA///////wD///gAH//gAAf/wAAD/4AAAf8AAAD+AAAAfgAAAHwAAAA8AAAAPAAAADgAAA

@@ -2,6 +2,10 @@ package bsuite.configure;
 
 import java.util.ArrayList;
 
+ /**This class will be used in defining the schema of the profiles. contains getters and setters for group and its entries
+  *@author JPrakash
+  *@created Oct 9, 2013
+ */
 public class SchemaGroup {
 	//This class will be used in defining the schema of the profiles.
 	private String GroupName;

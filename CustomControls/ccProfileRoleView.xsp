@@ -25,7 +25,7 @@
 
 			</xp:td>
 		</xp:tr>
-		<xp:repeat id="repeat1" var="user1">
+		<xp:repeat id="repeat1" var="user1" rows="1000">
 			<xp:this.value><![CDATA[${javascript:var path =database.getFilePath();
 var dbpath =  @LeftBack(path ,"/");
 
@@ -39,7 +39,9 @@ db=dbpath+"/admntool.nsf";
 var serv = @Word(@Implode(@DbName(),", "),", ", 1);
 var com = new Array(serv,db);
 var x= @DbColumn(com,  "employeeprofile", 1);
-@Explode(x,",;",true);}]]></xp:this.value>
+println(x);
+@Explode(x,",;",true);
+}]]></xp:this.value>
 			<xp:tr>
 				<xp:td>
 					<xp:label value="#{javascript:user1}" id="label4">

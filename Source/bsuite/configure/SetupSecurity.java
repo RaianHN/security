@@ -12,23 +12,25 @@ import lotus.domino.View;
  */
 
 public class SetupSecurity extends CreateDatabase{
-	//private StringBuffer log;
-	private Deploy deploy;
-//1. Create relation.nsf in the same folder
+	
+	//1. Create relation.nsf in the same folder
 	//
+	@SuppressWarnings("unused")
 	private boolean createRelationDb(){
 		
 		return true;
 	}
+	@SuppressWarnings("unused")
 	private boolean createRoleDocs(){
 		
 		return true;
 	}
+	@SuppressWarnings("unused")
 	private boolean createProfileDocs(){
 		
 		return true;
 	}
-	
+	@SuppressWarnings("unused")
 	private boolean isDBExist(String dbName){
 		if(Utility.getDatabase(dbName)!=null){
 			return true;
@@ -37,6 +39,7 @@ public class SetupSecurity extends CreateDatabase{
 		}
 				
 	}
+	@SuppressWarnings("unused")
 	private boolean isViewExist(Database db, String viewName  ){
 		try {
 			if(db.getView(viewName)!=null){
@@ -50,6 +53,7 @@ public class SetupSecurity extends CreateDatabase{
 		}
 		return false;
 	}
+	@SuppressWarnings("unused")
 	private boolean isDocExist(Database db, View view, String key){
 		return true;
 	}

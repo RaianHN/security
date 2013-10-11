@@ -4,12 +4,8 @@
 	dojoParseOnLoad="true">
 
 
-	<xp:this.beforePageLoad><![CDATA[#{javascript:viewScope.remove("moduleName")
-viewScope.remove("selectedProfile");
-}]]></xp:this.beforePageLoad>
+	
 	<xc:ccDefineProfile id="saveProfile"></xc:ccDefineProfile>
-	<xp:br></xp:br>
-
 	<xp:panel id="moduleTabs">
 
 

@@ -2,6 +2,10 @@ package bsuite.jsonparsing;
 
 import java.util.ArrayList;
 
+ /**Entity object used in the profile document to define permissions, contains getters and setters for its properties
+  *@author JPrakash
+  *@created Oct 9, 2013
+ */
 public class Entity{
 	
 	
@@ -14,7 +18,7 @@ public class Entity{
 	private ArrayList<Field> fields;
 	private ArrayList<EntityAction>actions;
 	
-	private String accessType;
+	private String accessType;//1 private, 2 public, 3 private readonly
 	//Added for fields and features perms
 
 	
