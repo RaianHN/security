@@ -31,16 +31,7 @@ getComponent("dync").show("role");
 }]]></xp:this.action>
 						</xp:eventHandler>
 					</xp:tabPanel>
-					<xp:tabPanel label="Organizational Settings"
-						id="viewOrg" selectedTabStyleClass="lotusSelected"
-						loaded="false">
-						<xp:eventHandler event="onclick" submit="true"
-							refreshMode="partial" refreshId="lotusMain" onStart="showWait();"
-							onComplete="hideWait();" onError="showError();">
-							<xp:this.action><![CDATA[#{javascript:viewScope.menuSelected = "viewOrg";
-getComponent("dync").show("org")}]]></xp:this.action>
-						</xp:eventHandler>
-					</xp:tabPanel>
+					
 					<xp:tabPanel label="Configuration"
 						id="viewConfigure" selectedTabStyleClass="lotusSelected">
 						<xp:eventHandler event="onclick" submit="true"
@@ -69,7 +60,19 @@ getComponent("dync").show("associate")}]]></xp:this.action>
 						</xp:eventHandler>
 					</xp:tabPanel>
 					
-				</xp:tabbedPanel>
+				<xp:tabPanel label="Organizational Settings" id="viewOrg" selectedTabStyleClass="lotusSelected">
+						<xp:eventHandler event="onclick" submit="true" refreshMode="partial" refreshId="lotusMain" onStart="showWait();" onComplete="hideWait();" onError="showError();">
+							<xp:this.action><![CDATA[#{javascript:viewScope.menuSelected = "viewOrg";
+getComponent("dync").show("org")}]]></xp:this.action>
+						</xp:eventHandler>
+					</xp:tabPanel>
+					<xp:tabPanel label="Data Sharing" id="viewDataSharing" selectedTabStyleClass="lotusSelected">
+						<xp:eventHandler event="onclick" submit="true" refreshMode="partial" refreshId="lotusMain" onStart="showWait();" onComplete="hideWait();" onError="showError();">
+							<xp:this.action><![CDATA[#{javascript:viewScope.menuSelected = "viewDataSharing";
+getComponent("dync").show("datasharing")}]]></xp:this.action>
+						</xp:eventHandler>
+					</xp:tabPanel>
+					</xp:tabbedPanel>
 			</xp:panel>
 		</xp:panel>
 	</xp:panel>
