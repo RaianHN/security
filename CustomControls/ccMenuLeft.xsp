@@ -59,9 +59,13 @@ getComponent("dync").show("define")}]]></xp:this.action>
 getComponent("dync").show("associate")}]]></xp:this.action>
 						</xp:eventHandler>
 					</xp:tabPanel>
-					
-				<xp:tabPanel label="Organizational Settings" id="viewOrg" selectedTabStyleClass="lotusSelected">
-						<xp:eventHandler event="onclick" submit="true" refreshMode="partial" refreshId="lotusMain" onStart="showWait();" onComplete="hideWait();" onError="showError();">
+
+					<xp:tabPanel label="Organizational Settings"
+						id="viewOrg" selectedTabStyleClass="lotusSelected"
+						loaded="false">
+						<xp:eventHandler event="onclick" submit="true"
+							refreshMode="partial" refreshId="lotusMain" onStart="showWait();"
+							onComplete="hideWait();" onError="showError();">
 							<xp:this.action><![CDATA[#{javascript:viewScope.menuSelected = "viewOrg";
 getComponent("dync").show("org")}]]></xp:this.action>
 						</xp:eventHandler>
