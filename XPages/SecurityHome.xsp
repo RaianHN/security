@@ -61,7 +61,7 @@ if(hasCreateAccess(relDb,user)){
 }
 
 }]]></xp:this.beforePageLoad>
-	<xc:ccDebugToolbar load="true" defaultCollapsed="false"
+	<xc:ccDebugToolbar load="false" defaultCollapsed="false"
 		collapseTo="left">
 	</xc:ccDebugToolbar>
 	<xp:div id="lotusFrame" styleClass="lotusFrame">
