@@ -13,17 +13,18 @@
 			<xp:td>
 
 
-				<xp:label value="Role" id="label3"
-					style="font-weight:bold">
-				</xp:label>
-			</xp:td>
-			<xp:td>
 				<xp:label value="Profile" id="label2"
 					style="font-weight:bold">
 				</xp:label>
-
-
+				
 			</xp:td>
+			<xp:td>
+				
+
+
+			<xp:label value="Role" id="label3"
+				style="font-weight:bold">
+			</xp:label></xp:td>
 		</xp:tr>
 		<xp:repeat id="repeat1" var="user1" rows="1000">
 			<xp:this.value><![CDATA[${javascript:var path =database.getFilePath();
@@ -48,6 +49,20 @@ println(x);
 					</xp:label>
 				</xp:td>
 				<xp:td>
+					<xp:label id="label6">
+						<xp:this.value><![CDATA[#{javascript:var assoc = new bsuite.relationship.Association();
+if(assoc!=null){
+var rolen = assoc.getAssociatedProfileName(user1);
+
+if(rolen!="" && rolen!=null){
+return rolen
+}else{
+return "--"
+}
+}}]]></xp:this.value>
+					</xp:label>
+				</xp:td>
+				<xp:td>
 					<xp:label id="label5">
 						<xp:this.value><![CDATA[#{javascript:var assoc = new bsuite.relationship.Association();
 if(assoc!=null){
@@ -62,20 +77,7 @@ return "--"
 }}]]></xp:this.value>
 					</xp:label>
 				</xp:td>
-				<xp:td>
-					<xp:label id="label6">
-						<xp:this.value><![CDATA[#{javascript:var assoc = new bsuite.relationship.Association();
-if(assoc!=null){
-var rolen = assoc.getAssociatedProfileName(user1);
-
-if(rolen!="" && rolen!=null){
-return rolen
-}else{
-return "--"
-}
-}}]]></xp:this.value>
-					</xp:label>
-				</xp:td>
+				
 			</xp:tr>
 		</xp:repeat>
 

@@ -1,15 +1,15 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE note SYSTEM 'xmlschemas/domino_8_5_3.dtd'>
 <note class='view' xmlns='http://www.lotus.com/dxl' version='8.5' maintenanceversion='3.0'
- replicaid='65257B3A002F83B9'>
-<noteinfo noteid='7f6' unid='FEAEBB11996DEA3E65257AC30023F088' sequence='8'>
-<created><datetime>20121127T120233,36+0530</datetime></created>
-<modified><datetime>20131011T191218,03+0530</datetime></modified>
-<revised><datetime>20131011T191218,02+0530</datetime></revised>
-<lastaccessed><datetime>20131011T191218,03+0530</datetime></lastaccessed>
-<addedtofile><datetime>20131011T191057,31+0530</datetime></addedtofile></noteinfo>
-<updatedby><name>CN=Admin INB01/O=Alpha</name></updatedby>
-<wassignedby><name>CN=Admin INB01/O=Alpha</name></wassignedby>
+ replicaid='65257B4F001E0F81'>
+<noteinfo noteid='18e' unid='BC5781F9633EDA0D65257B4F001E1E18' sequence='23'>
+<created><datetime>20130416T105857,84+0530</datetime></created>
+<modified><datetime>20131012T141131,68+0530</datetime></modified>
+<revised><datetime>20131012T141131,67+0530</datetime></revised>
+<lastaccessed><datetime>20131012T141131,68+0530</datetime></lastaccessed>
+<addedtofile><datetime>20130416T105859,01+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Jaya K Prakash/O=Weberon</name></updatedby>
+<wassignedby><name>CN=Jaya K Prakash/O=Weberon</name></wassignedby>
 <item name='$FormatNote' summary='true'>
 <rawitemdata type='4'>
 AQDAsoe2zL1XyPV5KgAAeSVl
