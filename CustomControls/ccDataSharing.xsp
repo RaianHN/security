@@ -121,7 +121,14 @@ var com = new Array(serv,db);
 						<xp:eventHandler event="onclick" submit="true"
 							refreshMode="complete" id="eventHandler1"
 							disableValidators="true">
-							<xp:this.action><![CDATA[#{javascript:
+							<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("ModuleName").getValue();
+
+if(moduleName == "<<Select ModuleName>>")
+{
+	bsuite.utility.Utility.addErrorMessage("Please select Module Name and Entity before creating sharing rule ");
+}
+else
+{
 var securityDb:NotesDatabase = database;
 println("security database"+securityDb.getFileName());
 println("inside dbprofile");
@@ -137,7 +144,7 @@ doc.replaceItemValue("TargetRole",targetrole);
 doc.replaceItemValue("SourceRole",sourcerole);
 doc.save(true,false);
 doc.recycle();
-
+}
 	}]]></xp:this.action>
 
 						</xp:eventHandler>
