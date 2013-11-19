@@ -1,24 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+xmlns:xc="http://www.ibm.com/xsp/custom">
 
 	<xp:this.resources>
 		<xp:script src="/CommonFunctions.jss" clientSide="false"></xp:script>
 	</xp:this.resources>
 	<xp:div>
 		<xp:table>
+			
 			<xp:tr>
 				<xp:td>
 					<xp:label value="Module Name" id="label4"></xp:label>
 				</xp:td>
 				<xp:td>
 					<xp:comboBox id="ModuleName">
-					<xp:selectItem itemLabel="&lt;&lt;Select ModuleName&gt;&gt;"></xp:selectItem>
-						<xp:selectItems>
-						
+						<xp:selectItem
+							itemLabel="&lt;&lt;Select ModuleName&gt;&gt;" id="selectItem3">
+						</xp:selectItem>
+						<xp:selectItems id="selectItems3">
+
 							<xp:this.value><![CDATA[#{javascript:return @DbColumn("","Modules",1);}]]></xp:this.value>
 						</xp:selectItems>
 						<xp:eventHandler event="onchange" submit="true"
-							refreshMode="partial" refreshId="EntityName">
+							refreshMode="partial" refreshId="EntityName" id="eventHandler2">
 							<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("ModuleName").getValue();
 var schemaObj = new bsuite.configure.DefineModule();
 
@@ -33,7 +37,7 @@ viewScope.DataEntities = schemaObj.getEntityNames(moduleName)
 				<xp:td>
 					<xp:comboBox id="EntityName" loaded="true">
 
-						<xp:selectItems>
+						<xp:selectItems id="selectItems4">
 							<xp:this.value><![CDATA[#{javascript:var vals = viewScope.DataEntities;
 if(vals!=null){
 return vals;
@@ -107,16 +111,18 @@ var com = new Array(serv,db);
 					</xp:comboBox>
 				</xp:td>
 			</xp:tr>
-			
-			
+
+
 			<xp:tr>
 				<xp:td></xp:td>
 				<xp:td>
 					<xp:button value="Create Sharing Rule" id="button1"
 						style="background-color:rgb(192,192,192)">
 						<xp:eventHandler event="onclick" submit="true"
-							refreshMode="complete" id="eventHandler1">
-							<xp:this.action><![CDATA[#{javascript:var securityDb:NotesDatabase = database;
+							refreshMode="complete" id="eventHandler1"
+							disableValidators="true">
+							<xp:this.action><![CDATA[#{javascript:
+var securityDb:NotesDatabase = database;
 println("security database"+securityDb.getFileName());
 println("inside dbprofile");
 var modulename=getComponent("ModuleName").getValue();
@@ -131,7 +137,9 @@ doc.replaceItemValue("TargetRole",targetrole);
 doc.replaceItemValue("SourceRole",sourcerole);
 doc.save(true,false);
 doc.recycle();
+
 	}]]></xp:this.action>
+
 						</xp:eventHandler>
 					</xp:button>
 				</xp:td>

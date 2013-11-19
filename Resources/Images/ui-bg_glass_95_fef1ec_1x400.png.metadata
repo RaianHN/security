@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257B3A002F83B9" version="8.5" xmlns="http://www.lotus.com/dxl">
-<noteinfo noteid="702" sequence="7" unid="5083AC6D82F90E6D65257B1000282FC8">
-<created><datetime>20130212T124856,72+0530</datetime></created>
-<modified><datetime>20131011T191225,95+0530</datetime></modified>
-<revised><datetime>20131011T191225,94+0530</datetime></revised>
-<lastaccessed><datetime>20131011T191225,95+0530</datetime></lastaccessed>
-<addedtofile><datetime>20131011T191056,04+0530</datetime></addedtofile></noteinfo>
-<updatedby><name>CN=Admin INB01/O=Alpha</name></updatedby>
-<wassignedby><name>CN=Admin INB01/O=Alpha</name></wassignedby>
+<?xml version="1.0" encoding="UTF-8"?><note class="form" maintenanceversion="3.0" replicaid="65257BA000446406" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="446" sequence="9" unid="F67D0E97F5C8E3DC65257B4F001ECC5F">
+<created><datetime>20130416T110623,99+0530</datetime></created>
+<modified><datetime>20131021T132218,55+0530</datetime></modified>
+<revised><datetime>20131021T132218,54+0530</datetime></revised>
+<lastaccessed><datetime>20131021T132218,55+0530</datetime></lastaccessed>
+<addedtofile><datetime>20130706T175809,78+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Shubhra Sarkar/O=Weberon</name></updatedby>
+<wassignedby><name>CN=Shubhra Sarkar/O=Weberon</name></wassignedby>
 <item name="$TITLE"><text>ui-bg_glass_95_fef1ec_1x400.png</text></item>
 <item name="$FlagsExt" sign="true"><text>D</text></item>
 <item name="$ImagesWide" sign="true"><number>1</number></item>

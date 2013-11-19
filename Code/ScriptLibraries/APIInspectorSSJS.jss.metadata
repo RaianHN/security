@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?><note class="filter" maintenanceversion="3.0" replicaid="65257B3A002F83B9" version="8.5" xmlns="http://www.lotus.com/dxl">
-<noteinfo noteid="14c6" sequence="15" unid="C0C9EB79A68CA8A765257A28002A7368">
-<created><datetime>20120625T131340,56+0530</datetime></created>
-<modified><datetime>20131011T191258,00+0530</datetime></modified>
-<revised><datetime>20131011T191257,99+0530</datetime></revised>
-<lastaccessed><datetime>20131011T191258,00+0530</datetime></lastaccessed>
-<addedtofile><datetime>20131011T191103,66+0530</datetime></addedtofile></noteinfo>
-<updatedby><name>CN=Admin INB01/O=Alpha</name></updatedby>
-<wassignedby><name>CN=Admin INB01/O=Alpha</name></wassignedby>
+<?xml version="1.0" encoding="UTF-8"?><note class="filter" maintenanceversion="3.0" replicaid="65257BA000446406" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="836" sequence="11" unid="F84E5EE7EF76119565257B4F001EBBDD">
+<created><datetime>20130416T110541,73+0530</datetime></created>
+<modified><datetime>20131021T132234,15+0530</datetime></modified>
+<revised><datetime>20131021T132234,14+0530</datetime></revised>
+<lastaccessed><datetime>20131021T132234,15+0530</datetime></lastaccessed>
+<addedtofile><datetime>20130706T175842,45+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Shubhra Sarkar/O=Weberon</name></updatedby>
+<wassignedby><name>CN=Shubhra Sarkar/O=Weberon</name></wassignedby>
 <item name="$TITLE" sign="true"><text>APIInspectorSSJS</text></item>
 <item name="$Flags"><text>.5834Q</text></item>
 <item name="$PublicAccess" sign="true"><text>1</text></item>

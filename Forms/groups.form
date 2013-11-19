@@ -1,15 +1,15 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE note SYSTEM 'xmlschemas/domino_8_5_3.dtd'>
 <note class='form' xmlns='http://www.lotus.com/dxl' version='8.5' maintenanceversion='3.0'
- replicaid='65257B3A002F83B9'>
-<noteinfo noteid='736' unid='B2F0225DDB35891D65257B4F001E17EC' sequence='12'>
+ replicaid='65257BA000446406'>
+<noteinfo noteid='62a' unid='B2F0225DDB35891D65257B4F001E17EC' sequence='6'>
 <created><datetime>20130416T105842,04+0530</datetime></created>
-<modified><datetime>20131011T191237,07+0530</datetime></modified>
-<revised><datetime>20131011T191237,06+0530</datetime></revised>
-<lastaccessed><datetime>20131011T191237,07+0530</datetime></lastaccessed>
-<addedtofile><datetime>20131011T191056,32+0530</datetime></addedtofile></noteinfo>
-<updatedby><name>CN=Admin INB01/O=Alpha</name></updatedby>
-<wassignedby><name>CN=Admin INB01/O=Alpha</name></wassignedby>
+<modified><datetime>20131021T132223,91+0530</datetime></modified>
+<revised><datetime>20131021T132223,90+0530</datetime></revised>
+<lastaccessed><datetime>20131021T132223,91+0530</datetime></lastaccessed>
+<addedtofile><datetime>20130706T175820,98+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Shubhra Sarkar/O=Weberon</name></updatedby>
+<wassignedby><name>CN=Shubhra Sarkar/O=Weberon</name></wassignedby>
 <item name='$Comment' sign='true'><text/></item>
 <item name='$HTMLCode' sign='true'>
 <rawitemdata type='1'>
