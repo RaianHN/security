@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+	<xp:this.resources>
+		<xp:styleSheet href="/custom.css"></xp:styleSheet>
+	</xp:this.resources>
+	<xp:messages id="messages2" globalOnly="true" layout="list"
+		disableTheme="true" infoClass="lotusMessage lotusInfo"
+		errorClass="lotusMessage lotusError"
+		fatalClass="lotusMessage lotusConfirm"
+		warnClass="lotusMessage lotusWarning" styleClass="messages"
+		style="margin-top:10.0px;">
+	</xp:messages>
+
+</xp:view>
