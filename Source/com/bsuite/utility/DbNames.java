@@ -45,7 +45,6 @@ public class DbNames {
 		this.relation = relation;
 	}
 
-	//
 	private View profileView;
 	private String prodFolder;
 
@@ -154,7 +153,6 @@ public class DbNames {
 		// display error
 		// Set the file names of all dependent databases
 
-		//Database db = Utility.getCurrentDatabase();
 		Database db = ExtLibUtil.getCurrentDatabase();
 		String admnFileName = "";
 		String admnFilePath = "";
@@ -175,7 +173,6 @@ public class DbNames {
 				return;
 			}
 
-			//Database admntool = Utility.getCurrentSession().getDatabase("",admnFilePath + admnFileName);
 			Database admntool = ExtLibUtil.getCurrentSession().getDatabase("",admnFilePath +admnFileName);
 
 			if (admntool == null) {

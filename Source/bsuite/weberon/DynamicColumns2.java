@@ -1,20 +1,18 @@
 package bsuite.weberon;
-import lotus.domino.*;
-
 import java.util.Map;
 import java.util.Vector;
 
-import javax.faces.component.UIComponent;
-
-import sun.org.mozilla.javascript.internal.Context;
+import lotus.domino.Document;
+import lotus.domino.NotesException;
+import lotus.domino.Session;
+import lotus.domino.View;
+import bsuite.utility.Utility;
 
 import com.ibm.xsp.component.UIPanelEx;
 import com.ibm.xsp.extlib.component.dojo.grid.UIDojoDataGrid;
 import com.ibm.xsp.extlib.component.dojo.grid.UIDojoDataGridColumn;
-import com.ibm.xsp.extlib.component.rest.DominoViewItemFileService;
-import com.ibm.xsp.extlib.component.rest.UIRestService;
-import bsuite.utility.Utility;
 import com.ibm.xsp.extlib.component.rest.DominoViewJsonService;
+import com.ibm.xsp.extlib.component.rest.UIRestService;
 
 public class DynamicColumns2 {
 	
@@ -22,6 +20,7 @@ public class DynamicColumns2 {
 	private UIRestService rService;
 	private UIPanelEx viewPanel;
 	
+	@SuppressWarnings("unchecked")
 	public UIPanelEx getChartView()
 	{
 		rService = null;//**
@@ -32,7 +31,6 @@ public class DynamicColumns2 {
 		try {
 			createColumns(dataGrid);
 		} catch (NotesException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -56,10 +54,11 @@ public class DynamicColumns2 {
 	}
 	
 	
+	@SuppressWarnings("unchecked")
 	public void createRestService()//**
 	{
 		
-			//DominoViewItemFileService restView = new DominoViewItemFileService();
+			
 			DominoViewJsonService restView = new DominoViewJsonService();
 			Map sessionscope = (Map) JSFUtil.getVariableValue("sessionScope");
 			restView.setDatabaseName("Test/customer.nsf");
@@ -90,20 +89,20 @@ public class DynamicColumns2 {
 				
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 	}
 	
 	
+	@SuppressWarnings("unchecked")
 	public static void getSaveDoc(String[] value)throws NotesException
 	{
 		View view = null;
 		Document doc = null;
 		Session sessionObj = Utility.getCurrentSession();
 		String servName = Utility.getCurrentDatabase().getServer();
-		System.out.println("saveing doc");
+		
 		 try
 		 {
 			 
@@ -129,10 +128,10 @@ public class DynamicColumns2 {
 							
 							doc.replaceItemValue("sColumns", vec);
 							doc.save();
-							// break;
+							
 						}
 						
-						//view.getNextDocument(doc);
+						
 					}
 					
 					
@@ -144,7 +143,6 @@ public class DynamicColumns2 {
 		 
 		 catch (NotesException e) 
 		 {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 		 }
 		 catch(Exception ne){
@@ -159,6 +157,7 @@ public class DynamicColumns2 {
 	
 		
 	}
+	@SuppressWarnings("unchecked")
 	public static void getAddColumns(UIDojoDataGrid grid, String[] columns)
 	{
 		
@@ -187,6 +186,7 @@ public class DynamicColumns2 {
 	
 	
 	
+	@SuppressWarnings("unchecked")
 	public  void createColumns(UIDojoDataGrid grid)throws NotesException
 	{
 		 View view = null;//**
@@ -210,11 +210,11 @@ public class DynamicColumns2 {
 				if (viewName1 != null && viewName1.equalsIgnoreCase("Xview"))
 				{
 					cols = doc.getItemValue("sColumns");
-		//			break;
+		
 				}
 		
 		
-				//doc = view.getNextDocument(doc);
+				
 			
 				if (cols != null)
 				{
@@ -241,7 +241,6 @@ public class DynamicColumns2 {
 		
 		catch (NotesException e) 
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		finally{

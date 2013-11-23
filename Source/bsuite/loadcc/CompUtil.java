@@ -29,7 +29,6 @@ import com.ibm.xsp.extlib.builder.ControlBuilder.ControlImpl;
 import com.ibm.xsp.extlib.component.dojo.layout.UIDojoBorderContainer;
 import com.ibm.xsp.extlib.component.dojo.layout.UIDojoBorderPane;
 import com.ibm.xsp.model.domino.DominoViewData;
-import com.ibm.xsp.page.compiled.PageExpressionEvaluator;
 
 /**
  * @author SBangalorkar
@@ -131,14 +130,14 @@ public class CompUtil {
 			con.addChild(con1);
 			objBuilder.buildControl(s,con,true);
 		} catch (FacesException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         
 		
 	}
 	
-	 public static UIDojoBorderContainer createDjbordercontainer(UIComponent r, String id) {
+	 @SuppressWarnings("unchecked")
+	public static UIDojoBorderContainer createDjbordercontainer(UIComponent r, String id) {
          UIDojoBorderContainer result = new UIDojoBorderContainer();
          result.setStyle("height:682px;width:100%;");
         result.setId(id);//"djBorderContainer1"
@@ -146,12 +145,13 @@ public class CompUtil {
         return result;
      }
 
-     public static UIDojoBorderPane createDjborderpanel(UIComponent r,  String id,String position,Boolean split) {
+     @SuppressWarnings("unchecked")
+	public static UIDojoBorderPane createDjborderpanel(UIComponent r,  String id,String position,Boolean split) {
          UIDojoBorderPane result = new UIDojoBorderPane();
          result.setStyle("WIDTH:139PX;");
          result.setRegion(position);
          result.setSplitter(split);
-         result.setId(id);// setId(result, "djBorderPane1");
+         result.setId(id);
          r.getChildren().add(result);
          return result;
      }
@@ -168,12 +168,13 @@ public class CompUtil {
      * @return
      * 
      */
-     public static XspDataTableEx createDataTable(UIComponent parent, String id, String var,String value){
+     @SuppressWarnings("unchecked")
+	public static XspDataTableEx createDataTable(UIComponent parent, String id, String var,String value){
     	 XspDataTableEx result = null;
 		try {
 			result = new XspDataTableEx();
 			 result.setVar(var);//"viewentry"
-			// result.setRows(30); 
+			 
 			 result.setId(id);//"viewPanel1"  			 
 			
 			 ValueBinding vb1  = FacesContext.getCurrentInstance().getApplication().createValueBinding(value);
@@ -188,7 +189,8 @@ public class CompUtil {
          return result;
         
      }
-      public static XspColumn createDataColumn(XspDataTableEx parent, String id){
+      @SuppressWarnings("unchecked")
+	public static XspColumn createDataColumn(XspDataTableEx parent, String id){
     	  XspColumn result = new XspColumn();    	  
     	  result.setId("column"+id);
     
@@ -198,7 +200,8 @@ public class CompUtil {
      
      
       
-      public static XspOutputLink createOpenDocLink(UIComponent com,    String colnum ,String arg,String id){
+      @SuppressWarnings("unchecked")
+	public static XspOutputLink createOpenDocLink(UIComponent com,    String colnum ,String arg,String id){
     	  XspOutputLink result = new XspOutputLink();
     	  String ref = arg+colnum+"]}";
     	  ValueBinding vb1  = FacesContext.getCurrentInstance().getApplication().createValueBinding(ref);
@@ -211,7 +214,8 @@ public class CompUtil {
   	}
       
       
-     public static XspOutputText createTabComputedfield(UIComponent com,  String colnum ,String arg,String id) {
+     @SuppressWarnings("unchecked")
+	public static XspOutputText createTabComputedfield(UIComponent com,  String colnum ,String arg,String id) {
          XspOutputText result = new XspOutputText();         
          String ref = "#{javascript:"+arg+".getColumnValues()["+colnum+"]}";
          ValueBinding vb1  = FacesContext.getCurrentInstance().getApplication().createValueBinding(ref);
@@ -232,7 +236,8 @@ public class CompUtil {
      * @return
      * 
      */
-    public static XspViewPanel createViewpanel( UIComponent parent, String id, String var) {
+    @SuppressWarnings("unchecked")
+	public static XspViewPanel createViewpanel( UIComponent parent, String id, String var) {
          XspViewPanel result = new XspViewPanel();
          result.setVar(var);//"viewentry"
          result.setRows(30); 
@@ -253,7 +258,8 @@ public class CompUtil {
     	 return data;
      } 
      
-     public static XspViewColumn createViewcolumn(UIComponent parent,String columnname, String id, String link,Boolean chkbox) {
+     @SuppressWarnings("unchecked")
+	public static XspViewColumn createViewcolumn(UIComponent parent,String columnname, String id, String link,Boolean chkbox) {
          XspViewColumn result = new XspViewColumn();
          result.setShowCheckbox(chkbox);
          result.setColumnName(columnname);
@@ -265,26 +271,27 @@ public class CompUtil {
          }
          return result;
      }
-     public static XspViewColumn createViewcolumn(XspViewPanel parent,String columnname, String id) {
+     @SuppressWarnings("unchecked")
+	public static XspViewColumn createViewcolumn(XspViewPanel parent,String columnname, String id) {
          XspViewColumn result = new XspViewColumn();        
          result.setColumnName(columnname);         
          result.setId(id);   
          
-         //result.setValue("hi");
+         
          parent.getChildren().add(result);      
          return result;
      }
 
      public static XspViewColumnHeader createViewcolumnheader(XspViewColumn parent,String value, String id ) {
          XspViewColumnHeader result = new XspViewColumnHeader();
-      // result.setParent(parent);
-         //result.setTitle(value);
+      
+         
     
          result.setValue(value);
          result.setId(id);    
-        //parent.getFacets().put("header", result);
-        // parent.getFacet("header").getChildren().add(result);
-          // parent.getChildren().add(result);
+        
+        
+          
              
          return result;
      }
@@ -295,7 +302,7 @@ public class CompUtil {
          result.setId( "page"+id);
          
          
-         //result.setFor(parent.getId());
+         
          return result;
      }
    

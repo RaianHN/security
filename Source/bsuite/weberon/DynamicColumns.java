@@ -3,6 +3,7 @@ package bsuite.weberon;
 import com.ibm.xsp.component.UIPanelEx;
 import com.ibm.xsp.component.xp.XspColumn;
 import com.ibm.xsp.component.xp.XspDataTableEx;
+@SuppressWarnings("unused")
 
 public class DynamicColumns {
 

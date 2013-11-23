@@ -14,16 +14,10 @@
 				<xp:td>
 					<xp:label value="RoleName" id="label1"></xp:label></xp:td>
 				<xp:td>
-					<xp:text escape="true" id="computedField1"><xp:this.value><![CDATA[#{javascript:var val=document1.getDocument().getItemValueString("role_name");
+					<xp:text escape="true" id="computedField1" style="font-weight:bold"><xp:this.value><![CDATA[#{javascript:var val=document1.getDocument().getItemValueString("role_name");
 val;}]]></xp:this.value></xp:text></xp:td>
 			</xp:tr>
-			<xp:tr>
-				<xp:td>
-					<xp:label value="Parent Role" id="label2"></xp:label></xp:td>
-				<xp:td>
-					<xp:text escape="true" id="computedField2"><xp:this.value><![CDATA[#{javascript:var val=document1.getDocument().getItemValueString("role_to");
-val;}]]></xp:this.value></xp:text></xp:td>
-			</xp:tr>
+			
 			<xp:tr>
 				<xp:td colspan="2">
 					<xp:checkBox text="Share Data With Peers" id="checkBox1"><xp:this.defaultChecked><![CDATA[#{javascript:var val=document1.getDocument().getItemValueString("sharewithpeers");
@@ -41,7 +35,6 @@ return false;
 							refreshMode="partial" refreshId="ShowRoleDoc"
 							onStart="showWait();" onComplete="hideWait();">
 							<xp:this.action><![CDATA[#{javascript:var rolename=getComponent("computedField1").getValue();
-var parentrole=getComponent("computedField2").getValue();
 var share=getComponent("checkBox1").getValue();
 var temp;
 if(share=="true"){

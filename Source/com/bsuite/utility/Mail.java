@@ -93,7 +93,6 @@ public class Mail
 	
 	
 	
-	//public static void sendMailWithUNID(String strSubject,String strMessage,Vector strTo,String strSender,Document currentDoc ,boolean intThread )
 	@SuppressWarnings("unchecked")
 	public static void sendMailWithUNID(String dbName, String strSubject,String strMessage,Vector strTo,String strSender,Document currentDoc ,boolean intThread )
 	{
@@ -101,7 +100,6 @@ public class Mail
 		try{
 			
 			Document tempdoc = currentDoc;
-			// Document Memo = ExtLibUtil.getCurrentDatabase().createDocument();
 			Document Memo = Utility.getDatabase(dbName).createDocument();
 			Memo.replaceItemValue("form", "Memo");
 			Memo.replaceItemValue("SendTo", strTo);
@@ -117,13 +115,7 @@ public class Mail
 			
 			x.appendText(strMessage);
 			x.addNewLine(2);
-			/*
-			if (!intThread)
-			{
-				String url[]=ExtLibUtil.getXspContext().getUrl().toString().split("\\?");
-				x.appendText(url[0]+"?docUNID="+tempdoc.getUniversalID()+"&action=openDocument");
-			}
-			*/
+			
 			
 			if (!intThread)
 			{

@@ -9,26 +9,29 @@
 
 		<xp:table id="table2">
 			<xp:tr>
-				<xp:td rendered="false">
+				<xp:td>
 					&#160;
 					<xp:br id="br1"></xp:br>
-					<xp:comboBox id="comboBox2" binding="#{javascript:viewScope.profNam2}"
-						rendered="false">
+					<xp:comboBox id="comboBox2"
+						binding="#{javascript:viewScope.profNam2}">
 						<xp:selectItems id="selectItems1">
 							<xp:this.value><![CDATA[#{javascript:viewScope.profileNames}]]></xp:this.value>
 						</xp:selectItems>
+						<xp:eventHandler event="onclick" submit="true"
+							refreshMode="partial" refreshId="comboBox3">
+						</xp:eventHandler>
 					</xp:comboBox>
 				</xp:td>
 				<xp:td>
 					Module:
 					<xp:br id="br2"></xp:br>
-					<xp:comboBox id="comboBox3" binding="#{javascript:viewScope.moduleNam2}" rendered="false">
-						<xp:selectItem itemLabel="&lt;&lt;Select Module&gt;&gt;"
-							id="selectItem4">
+					<xp:comboBox id="comboBox3"
+						binding="#{javascript:viewScope.moduleNam2}">
+						<xp:selectItem
+							itemLabel="&lt;&lt;Select Module&gt;&gt;" id="selectItem4">
 						</xp:selectItem>
 						<xp:selectItems id="selectItems2">
-							<xp:this.value><![CDATA[#{javascript:var profName = "Admin";
-							
+							<xp:this.value><![CDATA[#{javascript:var profName = getComponent("comboBox2").getValue();					
 var profile = new bsuite.jsonparsing.ProfileEdit();
 if(profName!=null){
 return profile.getModuleNames(profName);
@@ -38,8 +41,7 @@ return profile.getModuleNames(profName);
 
 
 						<xp:eventHandler event="onchange" submit="true"
-							refreshMode="partial" execId="comboBox3" refreshId="table2"
-							onStart="showWait();" onComplete="hideWait();" id="eventHandler2"
+							refreshMode="norefresh" execId="comboBox3" onStart="showWait();" onComplete="hideWait();" id="eventHandler2"
 							onError="showError()">
 							<xp:this.action><![CDATA[#{javascript:/*
 var val=getComponent("comboBox3").getValue();
@@ -122,11 +124,11 @@ XSP.executeOnServer('view:_id1:accessTypePerm', "", "", result);
 				<xp:td>
 					<xp:br id="br3"></xp:br>
 					<xp:button value="Go" id="button9"
-						style="background-color:rgb(192,192,192);width:100.0px" rendered="false">
+						style="background-color:rgb(192,192,192);width:100.0px" >
 						<xp:eventHandler event="onclick" submit="true"
 							refreshMode="complete" id="eventHandler1">
-							<xp:this.action><![CDATA[#{javascript://viewScope.selProfile = getComponent("comboBox2").getValue();
-viewScope.selProfile = "Admin";
+							<xp:this.action><![CDATA[#{javascript:viewScope.selProfile = getComponent("comboBox2").getValue();
+//viewScope.selProfile = "Admin";
 viewScope.selModule = getComponent("comboBox3").getValue();
 var moduleVisib = new bsuite.jsonparsing.ProfileEdit();
 moduleVisib.getEntityPermission(viewScope.selProfile,viewScope.selModule);
@@ -203,7 +205,7 @@ XSP.executeOnServer('view:_id1:accessTypePerm', "",
 				</xp:td>
 			</xp:tr>
 
-			<xp:repeat id="repeat2" rows="30" var="rowData" rendered="false">
+			<xp:repeat id="repeat2" rows="30" var="rowData" >
 				<xp:this.value><![CDATA[#{javascript:
 
 println("in repeat");
@@ -236,15 +238,13 @@ return "public";
 return "read";
 }
 }]]></xp:this.defaultValue>
-							<xp:selectItem itemLabel="Private" itemValue="private"
-								id="selectItem1">
+							<xp:selectItem itemLabel="Private"
+								itemValue="private" id="selectItem1">
 							</xp:selectItem>
-							<xp:selectItem itemLabel="Public Read/Write"
+							<xp:selectItem itemLabel="Public"
 								itemValue="public" id="selectItem2">
 							</xp:selectItem>
-							<xp:selectItem itemLabel="Public Read Only"
-								itemValue="read" id="selectItem3">
-							</xp:selectItem>
+
 						</xp:radioGroup>
 					</xp:td>
 					<xp:td>

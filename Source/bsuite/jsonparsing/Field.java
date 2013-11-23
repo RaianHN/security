@@ -1,6 +1,9 @@
 package bsuite.jsonparsing;
 
-//This class is for the field
+ /**This class is for the field, contains getter and setters for field and its permissions
+  *@author JPrakash
+  *@created Oct 9, 2013
+ */
 public class Field{
 	
 	private String fieldName;

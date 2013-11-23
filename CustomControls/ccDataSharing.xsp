@@ -1,49 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xp:view xmlns:xp="http://www.ibm.com/xsp/core">
+<xp:view xmlns:xp="http://www.ibm.com/xsp/core"
+xmlns:xc="http://www.ibm.com/xsp/custom">
 
 	<xp:this.resources>
 		<xp:script src="/CommonFunctions.jss" clientSide="false"></xp:script>
 	</xp:this.resources>
 	<xp:div>
 		<xp:table>
+			
 			<xp:tr>
 				<xp:td>
 					<xp:label value="Module Name" id="label4"></xp:label>
 				</xp:td>
 				<xp:td>
-					<xp:comboBox id="ModuleName" rendered="false">
-					<xp:selectItem itemLabel="&lt;&lt;Select ModuleName&gt;&gt;"></xp:selectItem>
-						<xp:selectItems>
-						
-							<xp:this.value><![CDATA[#{javascript://db = new Array(@DbName()[0], 'Demo/Security.nsf');
+					<xp:comboBox id="ModuleName">
+						<xp:selectItem
+							itemLabel="&lt;&lt;Select ModuleName&gt;&gt;" id="selectItem3">
+						</xp:selectItem>
+						<xp:selectItems id="selectItems3">
 
-//@DbColumn(database,"All Documents",1);
-//getEntities();
-
-
-var profName="Admin";
-var profile = new bsuite.jsonparsing.ProfileEdit();
-if(profName!=null){
-return profile.getModuleNames(profName);
-}}]]></xp:this.value>
+							<xp:this.value><![CDATA[#{javascript:return @DbColumn("","Modules",1);}]]></xp:this.value>
 						</xp:selectItems>
 						<xp:eventHandler event="onchange" submit="true"
-							refreshMode="partial" refreshId="EntityName">
+							refreshMode="partial" refreshId="EntityName" id="eventHandler2">
+							<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("ModuleName").getValue();
+var schemaObj = new bsuite.configure.DefineModule();
+
+if(moduleName!=null){
+viewScope.DataEntities = schemaObj.getEntityNames(moduleName)
+}}]]></xp:this.action>
 						</xp:eventHandler>
 
-						
+
 					</xp:comboBox>
 				</xp:td>
 				<xp:td>
 					<xp:comboBox id="EntityName" loaded="true">
 
-						<xp:selectItems>
-							<xp:this.value><![CDATA[#{javascript:var profName="Admin";
-var moduleName=getComponent("ModuleName").getValue();
-var profile = new bsuite.jsonparsing.ProfileEdit();
-if(profName!=null && moduleName!=null && moduleName!="<<Select ModuleName>>"){
-println("profilename "+profName+" module"+moduleName)
-profile.getEntityNames(profName,moduleName);
+						<xp:selectItems id="selectItems4">
+							<xp:this.value><![CDATA[#{javascript:var vals = viewScope.DataEntities;
+if(vals!=null){
+return vals;
 }
 }]]></xp:this.value>
 						</xp:selectItems>
@@ -114,45 +111,29 @@ var com = new Array(serv,db);
 					</xp:comboBox>
 				</xp:td>
 			</xp:tr>
-			<xp:tr rendered="false">
-				<xp:td>
-					<xp:label value="Access Type" id="label3"></xp:label>
-				</xp:td>
-				<xp:td>
-					<xp:comboBox id="AccessType">
-						<xp:selectItem itemLabel="Read/Write/Delete"
-							itemValue="readwrite" id="selectItem3">
-						</xp:selectItem>
-						<xp:selectItem itemLabel="Read" itemValue="read"
-							id="selectItem4">
-						</xp:selectItem>
-					</xp:comboBox>
-				</xp:td>
-				<xp:td></xp:td>
-			</xp:tr>
-			<xp:tr rendered="false">
-				<xp:td>
-					<xp:checkBox text="Superior Allowed"
-						id="SuperiorAllowed">
-					</xp:checkBox>
-				</xp:td>
-				<xp:td></xp:td>
-				<xp:td></xp:td>
-			</xp:tr>
+
+
 			<xp:tr>
 				<xp:td></xp:td>
 				<xp:td>
 					<xp:button value="Create Sharing Rule" id="button1"
 						style="background-color:rgb(192,192,192)">
 						<xp:eventHandler event="onclick" submit="true"
-							refreshMode="complete" id="eventHandler1">
-							<xp:this.action><![CDATA[#{javascript:var securityDb:NotesDatabase = database;
+							refreshMode="complete" id="eventHandler1"
+							disableValidators="true">
+							<xp:this.action><![CDATA[#{javascript:var moduleName = getComponent("ModuleName").getValue();
+
+if(moduleName == "<<Select ModuleName>>")
+{
+	bsuite.utility.Utility.addErrorMessage("Please select Module Name and Entity before creating sharing rule ");
+}
+else
+{
+var securityDb:NotesDatabase = database;
 println("security database"+securityDb.getFileName());
 println("inside dbprofile");
 var modulename=getComponent("ModuleName").getValue();
 var entityName=getComponent("EntityName").getValue();
-var accesstype=getComponent("AccessType").getValue();
-var superior=getComponent("SuperiorAllowed").getValue();
 var sourcerole=getComponent("SourceRole").getValue();
 var targetrole=getComponent("TargetRole").getValue();
 var doc :NotesDocument = securityDb.createDocument();
@@ -161,10 +142,11 @@ doc.replaceItemValue("ModuleName",modulename);
 doc.replaceItemValue("EntityName",entityName);
 doc.replaceItemValue("TargetRole",targetrole);
 doc.replaceItemValue("SourceRole",sourcerole);
-doc.replaceItemValue("AccessType",accesstype);
 doc.save(true,false);
 doc.recycle();
+}
 	}]]></xp:this.action>
+
 						</xp:eventHandler>
 					</xp:button>
 				</xp:td>
@@ -177,4 +159,35 @@ doc.recycle();
 		</xp:table>
 	</xp:div>
 
-</xp:view>
+	<xp:br></xp:br>
+	<xp:button value="Delete Selected Rule" id="button3"
+		rendered="#{javascript:viewScope.deleSec}">
+		<xp:eventHandler event="onclick" submit="true"
+			refreshMode="complete">
+			<xp:this.action>
+				<xp:deleteSelectedDocuments view="viewPanel1"
+					message="Do you want to delete selected rules?">
+				</xp:deleteSelectedDocuments>
+			</xp:this.action>
+		</xp:eventHandler>
+	</xp:button>
+	<xp:viewPanel rows="30" id="viewPanel1">
+		<xp:this.facets>
+			<xp:pager partialRefresh="true" layout="Previous Group Next"
+				xp:key="headerPager" id="pager1">
+			</xp:pager>
+		</xp:this.facets>
+		<xp:this.data>
+			<xp:dominoView var="view1" viewName="DataSharingView"></xp:dominoView>
+		</xp:this.data>
+		<xp:viewColumn columnName="$0" id="viewColumn1" showCheckbox="true">
+			<xp:viewColumnHeader
+				value="ModuleName+EntityName+TargetRole" id="viewColumnHeader1">
+			</xp:viewColumnHeader>
+		</xp:viewColumn>
+		<xp:viewColumn columnName="SourceRole" id="viewColumn2">
+			<xp:viewColumnHeader value="SourceRole"
+				id="viewColumnHeader2">
+			</xp:viewColumnHeader>
+		</xp:viewColumn>
+	</xp:viewPanel></xp:view>

@@ -32,6 +32,7 @@ public class Mail
 	 *@param intThread, False to include the doclink
 	
 	 */
+	@SuppressWarnings("unchecked")
 	public static void sendMailWithUNID(String strSubject,String strMessage,Vector strTo,String strSender,Document currentDoc ,boolean intThread )
 	{
 		

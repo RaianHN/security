@@ -13,19 +13,20 @@
 			<xp:td>
 
 
-				<xp:label value="Role" id="label3"
-					style="font-weight:bold">
-				</xp:label>
-			</xp:td>
-			<xp:td>
 				<xp:label value="Profile" id="label2"
 					style="font-weight:bold">
 				</xp:label>
-
-
+				
 			</xp:td>
+			<xp:td>
+				
+
+
+			<xp:label value="Role" id="label3"
+				style="font-weight:bold">
+			</xp:label></xp:td>
 		</xp:tr>
-		<xp:repeat id="repeat1" var="user1">
+		<xp:repeat id="repeat1" var="user1" rows="1000">
 			<xp:this.value><![CDATA[${javascript:var path =database.getFilePath();
 var dbpath =  @LeftBack(path ,"/");
 
@@ -39,10 +40,26 @@ db=dbpath+"/admntool.nsf";
 var serv = @Word(@Implode(@DbName(),", "),", ", 1);
 var com = new Array(serv,db);
 var x= @DbColumn(com,  "employeeprofile", 1);
-@Explode(x,",;",true);}]]></xp:this.value>
+println(x);
+@Explode(x,",;",true);
+}]]></xp:this.value>
 			<xp:tr>
 				<xp:td>
 					<xp:label value="#{javascript:user1}" id="label4">
+					</xp:label>
+				</xp:td>
+				<xp:td>
+					<xp:label id="label6">
+						<xp:this.value><![CDATA[#{javascript:var assoc = new bsuite.relationship.Association();
+if(assoc!=null){
+var rolen = assoc.getAssociatedProfileName(user1);
+
+if(rolen!="" && rolen!=null){
+return rolen
+}else{
+return "--"
+}
+}}]]></xp:this.value>
 					</xp:label>
 				</xp:td>
 				<xp:td>
@@ -60,20 +77,7 @@ return "--"
 }}]]></xp:this.value>
 					</xp:label>
 				</xp:td>
-				<xp:td>
-					<xp:label id="label6">
-						<xp:this.value><![CDATA[#{javascript:var assoc = new bsuite.relationship.Association();
-if(assoc!=null){
-var rolen = assoc.getAssociatedProfileName(user1);
-
-if(rolen!="" && rolen!=null){
-return rolen
-}else{
-return "--"
-}
-}}]]></xp:this.value>
-					</xp:label>
-				</xp:td>
+				
 			</xp:tr>
 		</xp:repeat>
 

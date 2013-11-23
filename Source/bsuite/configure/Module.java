@@ -3,6 +3,11 @@ package bsuite.configure;
 import java.util.ArrayList;
 
 
+ /**Module class used to define the module schema in the module document, contains getters and setters for
+  * entities, features, groups
+  *@author JPrakash
+  *@created Oct 9, 2013
+ */
 public class Module {
 	
 	

@@ -15,6 +15,7 @@
 				<xc:ccUIConfig xp:key="config" id="config_page"></xc:ccUIConfig>
 				<xc:ccUIDefine xp:key="define" id="define_page"></xc:ccUIDefine>
 				<xc:ccUIAssoc xp:key="associate" id="assoc_page"></xc:ccUIAssoc>
+				<xc:ccDataSharing xp:key="datasharing" id="data_page"></xc:ccDataSharing>
 			</xe:this.facets>
 		</xe:dynamicContent>
 

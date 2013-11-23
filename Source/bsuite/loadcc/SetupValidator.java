@@ -14,8 +14,10 @@ import bsuite.utility.Utility;
 
 public class SetupValidator {
 
+	@SuppressWarnings("unchecked")
 	public Map sessionScope;
 	private Database currentdb;
+	@SuppressWarnings("unused")
 	private String server_g;
 	protected Session session;
 	protected String bsuitepath;
@@ -32,7 +34,7 @@ public class SetupValidator {
 		this.currentdb= Utility.getCurrentDatabase();
 		this.server_g=currentdb.getServer();
 		this.session=Utility.getCurrentSession();
-		//this.bsuiteuser = session.getEffectiveUserName();
+		
 		this.bsuitepath = getBsuitePath(currentdb);
 		}
 		catch(Exception e)
@@ -48,7 +50,7 @@ public class SetupValidator {
 			bsuitePath=tadb.getFilePath().substring(0,len);
 			return bsuitePath;
 		} catch (NotesException e) {
-			System.out.println(e.id + " " + e.text);
+			
 		}catch (Exception e){
 			e.printStackTrace();
 		}
@@ -60,24 +62,20 @@ public class SetupValidator {
 		
 		
 		try {
-			System.out.print("Inside getSetupdoc");
-			//String iscreate=(String)sessionScope.get("createSetup");
-			//if (iscreate.equals("true")){
+			
 			Database custdb = session.getDatabase(session.getServerName(), bsuitepath+"customer.nsf");
 				View setupview=custdb.getView("Setup Profile");
-				System.out.println("In sidde get setup doc");
+				
 				if(setupview!=null){
 					Document setup=setupview.getFirstDocument();
 					if (setup!=null){
 						String docid=setup.getUniversalID();
 						sessionScope.put("setupDocId", docid);
 						sessionScope.put("createSetup","");
-						System.out.println("docid----"+docid);
-						System.out.print("complete");		
+						
 					}
 				
 				}
-			//}
 			
 			
 		} catch (NotesException e) {

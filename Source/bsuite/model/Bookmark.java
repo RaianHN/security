@@ -3,19 +3,16 @@ package bsuite.model;
 import java.util.Map;
 import java.util.Vector;
 
-import bsuite.common.*;
-import bsuite.err.ErrorHandler;
-import bsuite.security.UserAccess;
-import bsuite.utility.SessionContext;
-import bsuite.utility.Utility;
-
-import bsuite.utility.Utility;
-
 import lotus.domino.Database;
 import lotus.domino.DateTime;
 import lotus.domino.Document;
 import lotus.domino.Item;
 import lotus.domino.NotesException;
+import bsuite.common.BsuiteRequest;
+import bsuite.err.ErrorHandler;
+import bsuite.security.UserAccess;
+import bsuite.utility.SessionContext;
+import bsuite.utility.Utility;
 
  /**
   *[Class containing 'bookmark common action' related business logic ]
@@ -172,6 +169,7 @@ public class Bookmark {
 	 *@param title, module title
 	
 	 */
+	@SuppressWarnings("unchecked")
 	private static void createRequestForDocuments( String requestType, String selectionType, String selectedID, String searchFormula,	int eventType, Vector varNewOption,String filename,String title){
 		try{
 			Document request;
@@ -359,14 +357,12 @@ public class Bookmark {
 	/**
 	 *[To update the selected bookmark]
 	 */
+	@SuppressWarnings("unchecked")
 	public static void updateBookmark() {
 		Map viewScope = SessionContext.getViewScope();
 		Database favDb = Utility.getDatabase("favorite.nsf");
 		String id = (String) viewScope.get("editfavdocid");
 
-		String folder = (String) viewScope.get("folder");
-		String title = getTitle();
-		String subject = (String) viewScope.get("subject");
 		Vector Groups= (Vector) viewScope.get("groups");
 		String roleCheck = (String) viewScope.get("roleCheck");
 		try {
@@ -413,13 +409,13 @@ public class Bookmark {
 	 *[to get the bookmark title from the view scope]
 	 *@return title as string
 	 */
+	@SuppressWarnings("unchecked")
 	private static String getTitle() {
 		String st;
 		Map viewScope = SessionContext.getViewScope();
 		Vector c1 = new Vector();
 		Object s = viewScope.get("bookmarktitle");// sendto;
 		String c2 = s.getClass().getName();
-		System.out.print(c2);
 		if (c2 == "java.lang.String") {
 			st = (String) s;
 		} else {
@@ -434,6 +430,7 @@ public class Bookmark {
 	 *@param favorite
 	 *@param strCategory
 	 */
+	@SuppressWarnings("unchecked")
 	private static void saveFavorite(Document favorite, String strCategory)
 	{
 		try
@@ -517,7 +514,6 @@ public class Bookmark {
 				String edit = (String) viewScope.get("editfavdocid");
 				if (edit.equals(""))
 				{
-					// TODO what is entity
 					favorite.replaceItemValue("WebsiteURL", SessionContext.getDocumentToProcess().getUniversalID());
 				}
 
@@ -536,7 +532,6 @@ public class Bookmark {
 
 			Utility.setLastModified(favorite);
 			favorite.save(true, false);
-			System.out.print("inside save favorite");
 		}
 		catch (NotesException e)
 		{
@@ -563,6 +558,7 @@ public class Bookmark {
 	 *@param filename, module name
 	 *@param title, module title
 	 */
+	@SuppressWarnings("unchecked")
 	public static void createRequestForFavorites(String requestType,String selectionType,String selectedID,String searchFormula,int eventType, Vector varNewOption,String filename,String title){
 
 		try
@@ -636,6 +632,7 @@ public class Bookmark {
 
 	
 	
+	@SuppressWarnings("unchecked")
 	public static void createBookmark()
 	{
 		
@@ -674,7 +671,6 @@ public class Bookmark {
 			String strCategory = "0";
 			Database currentdb = Utility.getCurrentDatabase();
 			String currentUser = Utility.getCurrentSession().getEffectiveUserName();
-			Map viewScope = SessionContext.getViewScope();
 			Database favdb = Utility.getDatabase("favorite.nsf");
 			Document favorite = favdb.createDocument();
 
@@ -716,6 +712,7 @@ public class Bookmark {
 	
 	
 
+	@SuppressWarnings("unchecked")
 	private static void createIntranet(Document currentDoc)
 	{
 		
@@ -748,9 +745,7 @@ public class Bookmark {
 			autitem.setAuthors(true);
 			favorite.replaceItemValue("AuthorEmployees",currentUser);
 			
-			System.out.print("inside createintranet before save");
 			saveFavorite(favorite,strCategory);
-			System.out.print("inside createintranet after save");
 			
 			if (strCategory.equals("1")&& roleCheck.equals("1")&& Type.equals("2"))
 			{ 

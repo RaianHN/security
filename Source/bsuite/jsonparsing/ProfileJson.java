@@ -2,6 +2,11 @@ package bsuite.jsonparsing;
 
 import java.util.ArrayList;
 
+ /**This is the profile json object, which will hold the profile and its permissions as a json object, contains getters and setters for
+  * its modules and its name
+  *@author JPrakash
+  *@created Oct 9, 2013
+ */
 public class ProfileJson {
 
 	private String profName;

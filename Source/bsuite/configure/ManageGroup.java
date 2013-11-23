@@ -2,8 +2,6 @@ package bsuite.configure;
 
 import java.util.ArrayList;
 import java.util.Vector;
-
-import bsuite.jsonparsing.GroupEntry;
   /**
    * This class will be used in defining the schema by creating group and adding features and entities under that, and a group of actions can be controlled in
    * admin profile interface
@@ -11,6 +9,15 @@ import bsuite.jsonparsing.GroupEntry;
   *@created Feb 13, 2013
  */
 public class ManageGroup {
+	/**
+	 * Used in adding feature or entities to groups in a particular module
+	 * 1 Add obj to given group
+	 * 2 Remove obj from entFeat list of this module
+	 *@param module module object
+	 *@param group group object
+	 *@param str feature
+	 *@return module object
+	 */
 	public static Module addObjToGrp(Module module, SchemaGroup group, String str) {
 		//Used in adding feature or entities to groups in a particular module
 		
@@ -37,6 +44,20 @@ public class ManageGroup {
 		return module;
 	}
 
+	/**Remove entity or feature from group
+	 * Add the obj to entFeat list
+	 *@param module
+	 *@param group
+	 *@param str
+	 *@return
+	 */
+	/**Remove entity or feature from group
+	 * Add the obj to entFeat list
+	 *@param module moduel object
+	 *@param group group object
+	 *@param str feature name
+	 *@return module object
+	 */
 	public static Module removeObjFrmGrp(Module module, SchemaGroup group, String str) {
 		//Remove entity or feature from group
 		//Add the obj to entFeat list
@@ -58,6 +79,11 @@ public class ManageGroup {
 	}
 	
 	//Group Crud
+	/**Used to create group and add features and entities under each group
+	 *@param module module object
+	 *@param groupName group name
+	 *@return module object
+	 */
 	public static Module createGroup(Module module, String groupName){
 		//Used to create group and add features and entities under each group
 		ArrayList<SchemaGroup> groups = null;
@@ -73,6 +99,12 @@ public class ManageGroup {
 		module.setGroups(groups);
 		return module;
 	}
+	/**Used to rename the group 
+	 *@param module module object
+	 *@param group group 
+	 *@param newName new name
+	 *@return module object
+	 */
 	public static Module renameGroup(Module module, SchemaGroup group, String newName){
 		ArrayList<SchemaGroup> groups = module.getGroups();
 		if(groups==null){
@@ -89,6 +121,11 @@ public class ManageGroup {
 		grp.setGroupName(newName);		
 		return module;
 	}
+	/**Used to delete th grou; from the module schema
+	 *@param module module object
+	 *@param groupName group name
+	 *@return module object
+	 */
 	public static Module deleteGroup(Module module, String groupName){
 		ArrayList<SchemaGroup> groups = module.getGroups();
 		ArrayList<String> grpEntries=null;
@@ -124,6 +161,11 @@ public class ManageGroup {
 		return module;
 	}
 	
+	/**To add in entFeat list of the module when a new feature or entity is added
+	 *@param module module object
+	 *@param str feature name
+	 *@return module object
+	 */
 	public static Module addEntFeat(Module module, String str){
 		//to add in entFeat list of the module when a new feature or entity is added
 		ArrayList<String> list = null;
@@ -136,6 +178,13 @@ public class ManageGroup {
 		module.setEntFeat(list);		
 		return module;
 	}
+	/**to remove from entFeat list of the module when a new feature or entity is removed.
+	 * If from group remove from entity list else if remove is called from removeEntity remove from entList and from group
+	 *@param module
+	 *@param str
+	 *@param grp
+	 *@return
+	 */
 	public static Module removeEntFeat(Module module, String str, String grp){
 		//to remove from entFeat list of the module when a new feature or entity is removed.
 		//If from group remove from entity list else if remove is called from removeEntity remove from entList and from group
@@ -156,7 +205,10 @@ public class ManageGroup {
 		
 		return module;
 	}
-	@SuppressWarnings("null")
+	/**Returns the list of feature and entity names, if it is entity e: will be appended, if it is feature f: will be appended
+	 *@param group group object
+	 *@return entry names as list
+	 */
 	public static ArrayList<String> getAllEntryNames(SchemaGroup group){
 		//Returns the list of feature and entity names, if it is entity e: will be appended, if it is feature f: will be appended
 		ArrayList<String> list = group.getGroupEntries();
@@ -171,6 +223,10 @@ public class ManageGroup {
 		return list;
 		
 	}
+	/**Returns the list of all entity and features in entFeat list in module
+	 *@param module module object
+	 *@return list of features
+	 */
 	public static Vector<String> getEntFeatList(Module module){
 		//Returns the list of all entity and features in entFeat list in module
 		
@@ -190,6 +246,11 @@ public class ManageGroup {
 				
 		return entryNames;
 	}
+	/**Removes the entFeat from any groups if the entFeat is not found in entList when an entity or feature is removed from module
+	 *@param module module object
+	 *@param entFeat feature name
+	 *@return moduleobject
+	 */
 	private static Module removeEntFeatFromGrp(Module module, String entFeat){
 		//Removes the entFeat from any groups if the entFeat is not found in entList when an entity or feature is removed from module
 		ArrayList<String> list = null;

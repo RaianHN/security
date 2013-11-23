@@ -1,7 +1,6 @@
 package bsuite.security;
 
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Vector;
 
 import lotus.domino.Database;
@@ -10,18 +9,16 @@ import lotus.domino.DocumentCollection;
 import lotus.domino.NotesException;
 import lotus.domino.View;
 import bsuite.relationship.Association;
-import bsuite.utility.*;
-
 import bsuite.utility.Utility;
 
 
 
 /**
-[Class description-- To get the user's associated rolename]
-   
+ *Maintains the role details for data visibility
   @author TSangmo
   @created On Aug 8, 2012
  */
+
 public class Role {
 
 	private String roleName;
@@ -31,6 +28,10 @@ public class Role {
 	private Vector<String> effectiveUsersList = new Vector<String>();
 	private Association as = new Association();
 	private String currentuser;
+	
+	/**
+	 * Role constructor to initialize the current user's associate role name
+	 */
 	public Role() {
 		try{
 			currentuser = Utility.getCurrentSession().getEffectiveUserName();
@@ -44,22 +45,16 @@ public class Role {
 
 	
 	/**
-	 
-	 [this is called from getmydocs() in workspace to create the search String to be applied on view]
-	  
-	  @return [It will return search string]
-	 
-	@return
+	 Returns the search string, which is called to be included in teh view selection formula
+	  @return the view search formula a string
 	 */
 	@SuppressWarnings({ "unchecked"})
-	public String createSearchString() {
-		Map viewScope = (Map) JSFUtil.getVariableValue("viewScope");
-		String moduleName = (String) viewScope.get("moduleName");
-		String entityName = (String) viewScope.get("entityName");
-		System.out.println("roleNam "+roleName);
-		this.hierarchyRoleList = getFinalRoleList(roleName);// to get the child
-															// roles of the
-															// given role
+	public String createSearchString(String moduleName, String entityName) {
+	
+		
+		//To get the child roles of a given role
+		this.hierarchyRoleList = getFinalRoleList(roleName);
+		
 		this.dataSharedRoles = getRolesFromDataSharingRules(moduleName,
 				entityName, roleName);// pass current entity the uesr is
 										// accessing and roleName
@@ -91,6 +86,11 @@ public class Role {
 		return querystr;
 	}
 
+	
+	/**Returns the list of user names by processing roleHierarchy, dataSharedRoles, dataSharedWith peers
+	 *@param RoleName role name of the current user
+	 *@return list of final users
+	 */
 	@SuppressWarnings({ "unchecked"})
 	public Vector getFinalUserList(String RoleName) {
 		Vector finallist = new Vector();
@@ -129,6 +129,10 @@ public class Role {
 		return finallist;
 	}
 
+	/**To get the roles in teh hierarchy
+	 *@param roleName current user's role name
+	 *@return list of all roles in the hierarchy
+	 */
 	@SuppressWarnings("unchecked")
 	public Vector getFinalRoleList(String roleName) {
 		hierarchyRoleList.removeAllElements();
@@ -137,6 +141,12 @@ public class Role {
 		return hierarchyRoleList;
 	}
 
+	/**Returns the roles which has shared data with the given role
+	 *@param moduleName module name
+	 *@param entityName entity name
+	 *@param roleName current role name
+	 *@return roles which has shared data with the given role
+	 */
 	@SuppressWarnings("unchecked")
 	public Vector getRolesFromDataSharingRules(String moduleName,
 			String entityName, String roleName) {
@@ -157,11 +167,15 @@ public class Role {
 			}
 
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 		return roles;
 	}
 
+	/**Recursive function to dig and return all the roles under the hierarchy
+	 *@param roleName current role name
+	 */
 	@SuppressWarnings("unchecked")
 	public void getRoleList(String roleName) {
 
@@ -173,6 +187,10 @@ public class Role {
 
 	}
 
+	/**Returns all immediate children for the current role
+	 *@param roleName current role name
+	 *@return list of roles
+	 */
 	@SuppressWarnings("unchecked")
 	public Vector getChildRoles(String roleName) {
 		Vector roles = new Vector();
@@ -196,50 +214,84 @@ public class Role {
 		return roles;
 	}
 
+	
+	/**getter for current role
+	 *@return current roleName
+	 */
 	public String getRoleName() {
 		
 		return roleName;
 	}
 
+	/**setter for current role
+	 *@param roleName
+	 */
 	public void setRoleName(String roleName) {
 
 		this.roleName = roleName;
 	}
 
-	public String getSearchString() {
-		searchString = createSearchString();
+	/**returns the search string for the given module and entity based on the hierarchy and datasharing rules
+	 *@param moduleName modulename
+	 *@param entityName entityname
+	 *@return string 
+	 */
+	public String getSearchString(String moduleName, String entityName) {
+		searchString = createSearchString(moduleName,entityName);
 		return searchString;
 	}
 
+	/**setter for the search string
+	 *@param searchString
+	 */
 	public void setSearchString(String searchString) {
 		this.searchString = searchString;
 	}
 
+	/**getter for hierarchy role list
+	 *@return
+	 */
 	@SuppressWarnings("unchecked")
 	public Vector getHierarchyRoleList() {
 		return hierarchyRoleList;
 	}
 
+	/**setter for hierarchy role list
+	 *@param hierarchyRoleList
+	 */
 	@SuppressWarnings("unchecked")
 	public void setHierarchyRoleList(Vector hierarchyRoleList) {
 		this.hierarchyRoleList = hierarchyRoleList;
 	}
 
+	/** getter for datashared roles
+	 *@return
+	 */
 	@SuppressWarnings("unchecked")
 	public Vector getDataSharedRoles() {
 		return dataSharedRoles;
 	}
 
+	/**setter for datashared roles
+	 *@param dataSharedRoles
+	 */
 	@SuppressWarnings("unchecked")
 	public void setDataSharedRoles(Vector dataSharedRoles) {
 		this.dataSharedRoles = dataSharedRoles;
 	}
 
+	/**returns the final user list based on datasharing and hierarchy
+	 *@return vector of usernames
+	 */
 	@SuppressWarnings("unchecked")
 	public Vector getEffectiveUsersList() {
 		return effectiveUsersList;
 	}
 
+	
+	/**setter for setting effective user's list
+	 *@param effectiveUsersList
+	 */
 	@SuppressWarnings("unchecked")
 	public void setEffectiveUsersList(Vector effectiveUsersList) {
 		this.effectiveUsersList = effectiveUsersList;
