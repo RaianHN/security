@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?><note class="filter" maintenanceversion="3.0" replicaid="65257C2A003F257B" version="8.5" xmlns="http://www.lotus.com/dxl">
-<noteinfo noteid="7b6" sequence="3" unid="C287139CC4D3702265257B4F001EBBE0">
-<created><datetime>20130416T110541,76+0530</datetime></created>
-<modified><datetime>20131121T170057,72+0530</datetime></modified>
-<revised><datetime>20131121T170057,71+0530</datetime></revised>
-<lastaccessed><datetime>20131121T170057,72+0530</datetime></lastaccessed>
-<addedtofile><datetime>20131121T170057,57+0530</datetime></addedtofile></noteinfo>
-<updatedby><name>CN=Shashikumar V/O=Weberon</name></updatedby>
-<wassignedby><name>CN=Shashikumar V/O=Weberon</name></wassignedby>
+<?xml version="1.0" encoding="UTF-8"?><note class="filter" maintenanceversion="3.0" replicaid="65257C1A0025BEEB" version="8.5" xmlns="http://www.lotus.com/dxl">
+<noteinfo noteid="7b2" sequence="27" unid="621249005AC66E7E65257A1C004F0687">
+<created><datetime>20120613T195310,15+0530</datetime></created>
+<modified><datetime>20131209T110104,97+0530</datetime></modified>
+<revised><datetime>20131209T110104,96+0530</datetime></revised>
+<lastaccessed><datetime>20131209T110104,97+0530</datetime></lastaccessed>
+<addedtofile><datetime>20131105T122316,50+0530</datetime></addedtofile></noteinfo>
+<updatedby><name>CN=Swamy Gunnabathula/O=Weberon</name></updatedby>
+<wassignedby><name>CN=Swamy Gunnabathula/O=Weberon</name></wassignedby>
 <item name="$TITLE" sign="true"><text>CommonFunctions</text></item>
 <item name="$Flags"><text>.5834Q</text></item>
 <item name="$PublicAccess" sign="true"><text>1</text></item>
